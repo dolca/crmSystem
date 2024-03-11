@@ -1,0 +1,16 @@
+/*
+Template Name: CRM System - Admin & Dashboard App
+Author: Adrian Dolca
+Version: 1.1.0
+Website: https://adrian_dolca.com/
+Contact: adrian.dolca@gmail.com
+File: Custom Bootstrap Css File
+*/
+
+//Core files
+@import "./node_modules/bootstrap/scss/functions";
+@import "./node_modules/bootstrap/scss/variables";
+@import "variables";
+@import "variables-dark";
+@import "components/utilities";
+@import "./node_modules/bootstrap/scss/bootstrap";

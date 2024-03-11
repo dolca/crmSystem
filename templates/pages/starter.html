@@ -1,0 +1,16 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %} Starter {% endblock title %}
+
+{% block content %}
+
+    {% block pagetitle %}
+    {% include "partials/page_title.html" with pagetitle="Pages" title="View page"%}
+    {% endblock pagetitle %}
+    
+    {% if user.is_authenticated %}
+        
+        
+        
+    {% endif %}
+{% endblock content %}

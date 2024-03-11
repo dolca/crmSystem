@@ -4,134 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0e9441da-9af5-4d19-819f-7823fb4f1f3f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/crmSystem.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contacts/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contacts/selectors.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contacts/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crmSystem/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crmSystem/asgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crmSystem/settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crmSystem/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crmSystem/wsgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layouts/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/leads/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/leads/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/listings/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/listings/selectors.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/listings/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/contacts/add_contact.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/contacts/contact_added.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/contacts/contact_deleted.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/contacts/contact_details.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/contacts/contacts.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/contacts/delete_contact.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/contacts/edit_contact.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/add_new_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/apartments/add_apartment_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/apartments/all_apartment_leads.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/apartments/apartment_lead_details.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/apartments/delete_apartment_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/apartments/edit_apartment_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/apartments/general_apartment_leads.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/apartments/my_apartment_leads.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/commercial_spaces/add_commercial_space_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/commercial_spaces/all_commercial_space_leads.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/commercial_spaces/commercial_space_lead_details.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/commercial_spaces/delete_commercial_space_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/commercial_spaces/edit_commercial_space_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/commercial_spaces/general_commercial_space_leads.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/commercial_spaces/my_commercial_space_leads.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/houses/add_house_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/houses/all_house_leads.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/houses/delete_house_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/houses/edit_house_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/houses/general_house_leads.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/houses/house_lead_details.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/houses/my_house_leads.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/industrial_spaces/add_industrial_space_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/industrial_spaces/all_industrial_space_leads.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/industrial_spaces/delete_industrial_space_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/industrial_spaces/edit_industrial_space_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/industrial_spaces/general_industrial_space_leads.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/industrial_spaces/industrial_space_lead_details.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/industrial_spaces/my_industrial_space_leads.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/lead_added.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/lead_deleted.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/office_spaces/add_office_space_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/office_spaces/all_office_space_leads.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/office_spaces/delete_office_space_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/office_spaces/edit_office_space_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/office_spaces/general_office_space_leads.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/office_spaces/my_office_space_leads.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/office_spaces/office_space_lead_details.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/terrains/add_terrain_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/terrains/all_terrain_leads.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/terrains/delete_terrain_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/terrains/edit_terrain_lead.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/terrains/general_terrain_leads.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/terrains/my_terrain_leads.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/leads/terrains/terrain_lead_details.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/add_new_property.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/apartments/add_apartment.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/apartments/all_apartments.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/apartments/apartment_details.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/apartments/delete_apartment.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/apartments/edit_apartment.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/apartments/my_apartments.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/commercial_spaces/add_commercial_space.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/commercial_spaces/all_commercial_spaces.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/commercial_spaces/commercial_space_details.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/commercial_spaces/delete_commercial_space.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/commercial_spaces/edit_commercial_space.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/commercial_spaces/my_commercial_spaces.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/houses/add_house.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/houses/all_houses.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/houses/delete_house.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/houses/edit_house.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/houses/house_details.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/houses/my_houses.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/industrial_spaces/add_industrial_space.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/industrial_spaces/all_industrial_spaces.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/industrial_spaces/delete_industrial_space.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/industrial_spaces/edit_industrial_space.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/industrial_spaces/industrial_space_details.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/industrial_spaces/my_industrial_spaces.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/office_buildings/add_office_building.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/office_buildings/delete_office_building.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/office_buildings/edit_office_building.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/office_buildings/office_building_details.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/office_buildings/office_buildings_list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/office_spaces/add_office_space.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/office_spaces/all_office_spaces.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/office_spaces/delete_office_space.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/office_spaces/edit_office_space.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/office_spaces/my_office_spaces.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/office_spaces/office_space_details.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/property_added.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/property_deleted.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/residential_ensembles/add_residential_ensemble.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/residential_ensembles/delete_residential_ensemble.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/residential_ensembles/edit_residential_ensemble.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/residential_ensembles/residential_ensemble_details.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/residential_ensembles/residential_ensembles_list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/terrains/add_terrain.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/terrains/all_terrains.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/terrains/delete_terrain.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/terrains/edit_terrain.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/terrains/my_terrains.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/listings/terrains/terrain_details.html" afterDir="false" />
+    <list default="true" id="0e9441da-9af5-4d19-819f-7823fb4f1f3f" name="Changes" comment="crmSystem">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +27,15 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="fbf75c03ba7ec6d0eab9b3fc4e8de5c845983e7a" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="abcb9247-a4d4-4c6f-b43c-6206f19d54ad" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -170,29 +52,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Django Server.crmSystem.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/adi.dolca/Desktop/pythonProjects/crmSystem/templates/leads&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/PyCharm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Django Server.crmSystem.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "django.template.preview.state": "SHOW_EDITOR",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/adi.dolca/Desktop/pythonProjects/crmSystem/templates/leads",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "ts.external.directory.path": "/Applications/PyCharm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/templates/leads" />
@@ -277,10 +159,35 @@
       <workItem from="1709914365683" duration="63925000" />
       <workItem from="1710021287668" duration="673000" />
       <workItem from="1710063511615" duration="31031000" />
+      <workItem from="1710137887273" duration="4003000" />
     </task>
+    <task id="LOCAL-00001" summary="crmSystem">
+      <option name="closed" value="true" />
+      <created>1710138171499</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1710138171499</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="crmSystem" />
+    <option name="LAST_COMMIT_MESSAGE" value="crmSystem" />
   </component>
 </project>
