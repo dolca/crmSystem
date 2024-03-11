@@ -31,8 +31,7 @@
                                                 <select class="form-select" name="id_contact" id="id_contact" required>
                                                     <option value="" disabled selected>Alege un contact</option>
                                                     {% for contact in contacts %}
-                                                        <option value="{{ contact.id }}" 
-                                                                data-subtext="{{ contact.first_name }} {{ contact.last_name }} {{ contact.phone_number }} {{ contact.email }}">
+                                                        <option value="{{ contact.id }}">
                                                             {{ contact.first_name }} 
                                                             {% if contact.last_name %}{{ contact.last_name }}{% else %}{% endif %} - 
                                                             {% if contact.phone_number %}{{ contact.phone_number }}{% else %}{% endif %} 
@@ -48,7 +47,7 @@
                                                 </button>
                                             </div>
                                         </div>
-
+                                    
                                         <div class="form-group">
                                             <label for="id_property_type" class="form-label">Tip cerere</label>
                                             <select class="form-select mb-4" name="id_property_type"
@@ -248,17 +247,28 @@
             
             var idContactElement = document.getElementById('id_contact');
             console.log('Elementul ID "Choices":', idContactElement);
-
+            
             if (idContactElement && !idContactElement.classList.contains('choices')) {
                 console.log('Inițializare "Choices"');
-                new Choices(idContactElement, {
-                    loadingText: 'Se încarcă...',
-                    noResultsText: 'Niciun rezultat găsit',
-                    searchFields: ['label', 'value', 'data-subtext'],
-                    itemSelectText: '',
-                    shouldSort: false,
-                });
+                try {
+                    var choicesInstance = new Choices(idContactElement, {
+                        loadingText: 'Se încarcă...',
+                        noResultsText: 'Niciun rezultat găsit',
+                        shouldSort: false,
+                        fuseOptions: {
+                            threshold: 0
+                        }
+                    });
+                    console.log('Inițializare "Choices" cu succes');
+                    
+                    choicesInstance.passedElement.options.forEach(function(option) {
+                        console.log('Data-search pentru opțiunea:', option.text, 'este:', option.dataset.search);
+                    });
+                } catch (error) {
+                    console.error('Eroare la inițializarea "Choices":', error);
+                }
             }
+
             var myModal = new bootstrap.Modal(document.getElementById('addContact'));
             
             document.getElementById('open-modal').addEventListener('click', function () {
@@ -271,7 +281,8 @@
         
             var formFields = ['first_name', 'last_name', 'phone_number', 'email', 'company', 'job_title', 'city', 
                 'street_address', 'street_number', 'block', 'scale', 'apartment_number', 'county', 'country', 
-                'document_type', 'id_series_nr', 'cnp', 'issue_date', 'passport_country', 'other_details'];
+                'document_type', 'id_series_nr', 'cnp', 'issue_date', 'passport_country', 'contact_type', 
+                'contact_category', 'other_details'];
         
             formFields.forEach(function (field) {
                 document.getElementById(field).addEventListener('input', function () {
@@ -312,6 +323,9 @@
                         document.getElementById('issue_date').value,
                         document.getElementById('passport_country').value,
                         
+                        document.getElementById('contact_type').value,
+                        document.getElementById('contact_category').value,
+                        
                         document.getElementById('other_details').value
                     );
                 }
@@ -349,9 +363,10 @@
                     });
             }
             
-            async function saveContact(firstName, lastName, phoneNumber, email, company, jobTitle, city, streetAddress,
-                                        streetNumber, block, scale, apartmentNumber, county, country, documentType,
-                                        idSeriesNr, cnp, issueDate, passportCountry, otherDetails) {
+            async function saveContact(firstName, lastName, phoneNumber, email, company, jobTitle, city, streetAddress, 
+                                       streetNumber, block, scale, apartmentNumber, county, country, documentType, 
+                                       idSeriesNr, cnp, issueDate, passportCountry, contactType, contactCategory, 
+                                       otherDetails) {
                 const csrfToken = getCSRFToken();
                 const headers = {
                     'Content-Type': 'application/json',
@@ -380,8 +395,11 @@
                     cnp: cnp,
                     issue_date: issueDate,
                     passport_country: passportCountry,
+                    
+                    contact_type: contactType,
+                    contact_category: contactCategory,
             
-                    other_details: otherDetails
+                    other_details: otherDetails,
                 };
                 
                 const filteredData = Object.fromEntries(
@@ -572,7 +590,6 @@
             } else if (selectedType === 'industrial_space') {
                 redirectUrl = '{% url 'leads:add_industrial_space_lead' %}';
             }
-            
             window.location.href = redirectUrl;
         }
     </script>
