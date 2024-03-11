@@ -1,0 +1,59 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Adaugă proprietate nouă {% endblock %}
+
+{% block content %}
+    
+    {% block pagetitle %}
+    {% include 'partials/page_title.html' with pagetitle='Cereri' title='Adaugă proprietate nouă'%}
+    {% endblock pagetitle %}
+    
+    {% if user.is_authenticated %}
+        <div class='row justify-content-center'>
+            <div class='col-md-6'>
+                <div class='card'>
+                    <div class='card-header'>
+                        <h4><i class='bi bi-database-add'></i> Asociază un contact și alege tipul proprietății</h4>
+                    </div>
+                    <div class='card-body'>
+                        <form method='post' action='' id='propertyForm'>
+                            {% csrf_token %}
+
+                            <label for='id_contact'>Contact asociat⋆:</label>
+                            {{ form.contact }}
+
+                            <label for='id_property_type'>Tipul proprietății⋆:</label>
+                            {{ form.property_type }}
+
+                            <button type='submit'>Continuă</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    
+{% endblock %}
+
+<script>
+
+    document.getElementById('id_property_type').addEventListener('change', function () {
+        var selectedType = this.value;
+        var form = document.getElementById('propertyForm');
+
+        if (selectedType === 'apartment') {
+            form.action = '{% url 'add_apartment' %}';
+        } else if (selectedType === 'house') {
+            form.action = '{% url 'add_house' %}';
+        } else if (selectedType === 'terrain') {
+            form.action = '{% url 'add_terrain' %}';
+        } else if (selectedType === 'commercial_space') {
+            form.action = '{% url 'add_commercial_space' %}';
+        } else if (selectedType === 'office_space') {
+            form.action = '{% url 'add_office_space' %}';
+        } else if (selectedType === 'industrial_space') {
+            form.action = '{% url 'add_industrial_space' %}';
+        }
+    });
+    
+</script>
