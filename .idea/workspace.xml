@@ -5,25 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0e9441da-9af5-4d19-819f-7823fb4f1f3f" name="Changes" comment="crmSystem">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/8345fa42-da9c-4082-ac57-4365e8bbec42.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/8345fa42-da9c-4082-ac57-4365e8bbec42.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/8345fa42-da9c-4082-ac57-4365e8bbec42/storage_v2/_src_/database/crmsystem.jZXg6Q/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/8345fa42-da9c-4082-ac57-4365e8bbec42/storage_v2/_src_/database/crmsystem.jZXg6Q/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contacts/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/contacts/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contacts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/contacts/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contacts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/contacts/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crmSystem/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/crmSystem/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/leads/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/leads/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/leads/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/leads/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/leads/selectors.py" beforeDir="false" afterPath="$PROJECT_DIR$/leads/selectors.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/leads/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/leads/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/listings/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/listings/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/listings/selectors.py" beforeDir="false" afterPath="$PROJECT_DIR$/listings/selectors.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tables-listjs.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/leads/add_new_lead.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/leads/add_new_lead.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/leads/apartments/add_apartment_lead.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/leads/apartments/add_apartment_lead.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/leads2/create_lead.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/partials/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/partials/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/partials/customizer.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/partials/customizer.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +167,7 @@
       <workItem from="1710420857982" duration="60243000" />
       <workItem from="1710668863114" duration="455000" />
       <workItem from="1710669327631" duration="448000" />
-      <workItem from="1710669924726" duration="25641000" />
+      <workItem from="1710669924726" duration="26299000" />
     </task>
     <task id="LOCAL-00001" summary="crmSystem">
       <option name="closed" value="true" />
