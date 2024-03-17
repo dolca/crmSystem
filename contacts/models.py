@@ -20,14 +20,14 @@ class Contact(Model):
     county = CharField(max_length=20, null=True, blank=True, verbose_name='Județ')
     country = CharField(max_length=50, null=True, blank=True, verbose_name='Țară')
 
-    document_type = CharField(max_length=20, choices=TIP_DOCUMENT, null=True, blank=True, verbose_name='Tip document')
+    document_type = CharField(choices=TIP_DOCUMENT, null=True, blank=True, verbose_name='Tip document')
     id_series_nr = CharField(max_length=20, blank=True, null=True, verbose_name='Serie / Număr')
     cnp = CharField(max_length=13, null=True, blank=True, verbose_name='CNP')
     issue_date = DateField(null=True, blank=True, verbose_name='Data emiterii')
     passport_country = CharField(max_length=50, blank=True, null=True, verbose_name='Țara emitentă (doar pentru pașaport)')
 
-    contact_type = CharField(max_length=22, choices=TIP_CONTACT, null=True, blank=True, verbose_name='Tip contact')
-    contact_category = CharField(max_length=13, choices=CATEGORIE, null=True, blank=True, verbose_name='Categorie')
+    contact_type = CharField(choices=TIP_CONTACT, null=True, blank=True, verbose_name='Tip contact')
+    contact_category = CharField(choices=CATEGORIE, null=True, blank=True, verbose_name='Categorie')
 
     other_details = TextField(max_length=2000, null=True, blank=True, verbose_name='Alte detalii')
 

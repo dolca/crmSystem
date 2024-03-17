@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
-from django.core.validators import RegexValidator
-from django.db.models import Model, SET_NULL, CASCADE, CharField, EmailField, ForeignKey, TextField, IntegerField, \
-    ImageField, DateTimeField, BooleanField, DecimalField
+from django.db.models import Model, SET_NULL, CASCADE, CharField, ForeignKey, TextField, IntegerField, ImageField, \
+    DateTimeField, BooleanField, DecimalField
 from contacts.models import Contact
 from leads.selectors import MODALITATE_PLATA
 from listings.selectors import STATUS_PROPRIETATE, TIP_PROPRIETATE, TIP_TRANZACTIE, DESTINATIE_AP, TIP_APARTAMENT, \
@@ -12,19 +11,19 @@ from listings.selectors import STATUS_PROPRIETATE, TIP_PROPRIETATE, TIP_TRANZACT
     DOTARI_IMOBIL, PARCARE, SISTEM_INCALZIRE, USA_INTRARE, USI_INTERIOR, MOBILIER, BUCATARIE, FERESTRE, ALTE_SPATII, \
     FACILITATI_TEREN, ALTE_FACILITATI, ELEMENTE_ECO, ALTE_FACILITATI_SP_COM, SERVICII_ASIGURATE, SIGURANTA_SECURITATE, \
     IT_C, SISTEM_ELECTRIC, ARHITECTURA, CLIMATIZARE_BIROU, FACILITATI_CLADIRE_PROXIMITATI, ALTE_FACILITATI_SP_IND, \
-    TIP_PROPRIETAR, COTA_TVA, MONEDA
+    TIP_PROPRIETAR, COTA_TVA, MONEDA, JUDETE
 
 
 class Listing(Model):
-    status = CharField(max_length=12, choices=STATUS_PROPRIETATE, default='Incompletă', verbose_name='Status proprietate⋆')
-    property_type = CharField(max_length=18, choices=TIP_PROPRIETATE, default='apartment', verbose_name='Tip proprietate⋆')
-    transaction_type = CharField(max_length=12, choices=TIP_TRANZACTIE, verbose_name='Tip tranzacție⋆')
+    status = CharField(choices=STATUS_PROPRIETATE, default='Incompletă', verbose_name='Status proprietate⋆')
+    property_type = CharField(choices=TIP_PROPRIETATE, default='apartment', verbose_name='Tip proprietate⋆')
+    transaction_type = CharField(choices=TIP_TRANZACTIE, verbose_name='Tip tranzacție⋆')
 
     contact = ForeignKey(Contact, on_delete=SET_NULL, null=True, verbose_name='Contact asociat')
 
     title = CharField(max_length=70, null=True, blank=True, verbose_name='Titlu')
     description = TextField(max_length=2000, null=True, blank=True, verbose_name='Descriere')
-    county = CharField(max_length=20, verbose_name='Județ⋆')
+    county = CharField(choices=JUDETE, verbose_name='Județ⋆')
     city = CharField(max_length=30, verbose_name='Localitate⋆')
     zone = CharField(max_length=20, verbose_name='Zonă⋆')
     street_address = CharField(max_length=40, verbose_name='Stradă⋆')
@@ -32,7 +31,7 @@ class Listing(Model):
 
     images = ImageField(upload_to='static/images/listings/', null=True, blank=True, verbose_name='Imagini')
 
-    payment_method = CharField(max_length=20, choices=MODALITATE_PLATA, null=True, blank=True, verbose_name='Modalitate plată acceptată', )
+    payment_method = CharField(choices=MODALITATE_PLATA, null=True, blank=True, verbose_name='Modalitate plată acceptată', )
     other_details = TextField(max_length=2000, null=True, blank=True, verbose_name='Alte detalii')
 
     created_at = DateTimeField(auto_now_add=True, verbose_name='Data adăugării')
@@ -42,35 +41,27 @@ class Listing(Model):
         abstract = True
 
     def __str__(self):
-        return f'{self.contact}'
+        return f'{self.title}'
 
 
 class ResidentialEnsemble(Model):
-    status = CharField(max_length=12, choices=STATUS_PROPRIETATE, default='Incompletă', verbose_name='Status proprietate⋆')
+    status = CharField(choices=STATUS_PROPRIETATE, default='Incompletă', verbose_name='Status proprietate⋆')
 
-    developer_name = CharField(max_length=35, verbose_name='Nume dezvoltator⋆')
-
-    phone_validator = RegexValidator(
-        regex=r'^\d{10,14}$',
-        message='Numărul de telefon trebuie să conțină doar cifre și să aibă între 10 și 14 caractere legate, fără spații!',
-    )
-    developer_phone = CharField(max_length=14, validators=[phone_validator], unique=True, null=True, blank=True, verbose_name='Număr de telefon')
-    developer_email = EmailField(max_length=50, unique=True, null=True, blank=True, verbose_name='Adresă de e-mail')
     contact = ForeignKey(Contact, on_delete=SET_NULL, null=True, blank=True, verbose_name='Contact asociat')
 
     title = CharField(max_length=70, null=True, blank=True, verbose_name='Titlu')
     description = TextField(max_length=2000, null=True, blank=True, verbose_name='Descriere')
-    county = CharField(max_length=20, verbose_name='Județ⋆')
+    county = CharField(choices=JUDETE, verbose_name='Județ⋆')
     city = CharField(max_length=30, verbose_name='Localitate⋆')
     zone = CharField(max_length=20, verbose_name='Zonă⋆')
     street_address = CharField(max_length=40, verbose_name='Stradă⋆')
     street_nr = IntegerField(verbose_name='Număr stradă⋆')
 
-    building_type = CharField(max_length=20, choices=TIP_IMOBIL_ANSAMBLU, verbose_name='Tip imobil⋆')
+    building_type = CharField(choices=TIP_IMOBIL_ANSAMBLU, verbose_name='Tip imobil⋆')
     construction_year = IntegerField(verbose_name='Anul construcției⋆')
-    construction_status = CharField(max_length=15, choices=STADIU_CONSTRUCTIE, verbose_name='Stadiu construcție⋆')
-    construction_materials = CharField(max_length=20, choices=MATERIALE, null=True, blank=True, verbose_name='Materiale construcție')
-    interior_finishes = CharField(max_length=18, choices=FINISAJE, verbose_name='Stare interior⋆')
+    construction_status = CharField(choices=STADIU_CONSTRUCTIE, verbose_name='Stadiu construcție⋆')
+    construction_materials = CharField(choices=MATERIALE, null=True, blank=True, verbose_name='Materiale construcție')
+    interior_finishes = CharField(choices=FINISAJE, verbose_name='Stare interior⋆')
     nr_floors = IntegerField(verbose_name='Număr etaje⋆')
     semi_basement = BooleanField(default=False, verbose_name='Demisol')
     technical_floor = BooleanField(default=False, verbose_name='Etaj tehnic')
@@ -87,8 +78,8 @@ class ResidentialEnsemble(Model):
     finishes = TextField(max_length=2000, null=True, blank=True, verbose_name='Finisaje imobil')
     technical_details = TextField(max_length=2000, null=True, blank=True, verbose_name='Detalii tehnice')
 
-    thermal_insulation = CharField(max_length=20, choices=IZOLATII_TERMICE, null=True, blank=True, verbose_name='Izolație termică')
-    other_spaces = CharField(max_length=20, choices=ALTE_SPATII, null=True, blank=True, verbose_name='Alte spații')
+    thermal_insulation = CharField(choices=IZOLATII_TERMICE, null=True, blank=True, verbose_name='Izolație termică')
+    other_spaces = CharField(choices=ALTE_SPATII, null=True, blank=True, verbose_name='Alte spații')
 
     other_details = TextField(max_length=2000, null=True, blank=True, verbose_name='Alte detalii')
 
@@ -98,36 +89,28 @@ class ResidentialEnsemble(Model):
     updated_at = DateTimeField(auto_now=True, verbose_name='Data ultimei actualizări')
 
     def __str__(self):
-        return f'{self.developer_name}'
+        return f'{self.title}'
 
 
 class OfficeBuilding(Model):
-    status = CharField(max_length=12, choices=STATUS_PROPRIETATE, default='Incompletă', verbose_name='Status proprietate⋆')
+    status = CharField(choices=STATUS_PROPRIETATE, default='Incompletă', verbose_name='Status proprietate⋆')
 
-    developer_name = CharField(max_length=35, verbose_name='Nume dezvoltator⋆')
-
-    phone_validator = RegexValidator(
-        regex=r'^\d{10,14}$',
-        message='Numărul de telefon trebuie să conțină doar cifre și să aibă între 10 și 14 caractere legate, fără spații!',
-    )
-    developer_phone = CharField(max_length=14, validators=[phone_validator], unique=True, null=True, blank=True, verbose_name='Număr de telefon')
-    developer_email = EmailField(max_length=50, unique=True, null=True, blank=True, verbose_name='Adresă de e-mail')
     contact = ForeignKey(Contact, on_delete=SET_NULL, null=True, blank=True, verbose_name='Contact asociat')
 
     title = CharField(max_length=70, null=True, blank=True, verbose_name='Titlu')
     description = TextField(max_length=2000, null=True, blank=True, verbose_name='Descriere')
-    county = CharField(max_length=20, verbose_name='Județ⋆')
+    county = CharField(choices=JUDETE, verbose_name='Județ⋆')
     city = CharField(max_length=30, verbose_name='Localitate⋆')
     zone = CharField(max_length=20, verbose_name='Zonă⋆')
     street_address = CharField(max_length=40, verbose_name='Stradă⋆')
     street_nr = IntegerField(verbose_name='Număr stradă⋆')
 
     construction_year = IntegerField(verbose_name='Anul construcției⋆')
-    construction_status = CharField(max_length=15, choices=STADIU_CONSTRUCTIE, verbose_name='Stadiu construcție⋆')
-    construction_materials = CharField(max_length=20, choices=MATERIALE, null=True, blank=True, verbose_name='Materiale construcție')
-    interior_finishes = CharField(max_length=18, choices=FINISAJE, verbose_name='Stare interior⋆')
+    construction_status = CharField(choices=STADIU_CONSTRUCTIE, verbose_name='Stadiu construcție⋆')
+    construction_materials = CharField(choices=MATERIALE, null=True, blank=True, verbose_name='Materiale construcție')
+    interior_finishes = CharField(choices=FINISAJE, verbose_name='Stare interior⋆')
     nr_floors = IntegerField(verbose_name='Număr etaje⋆')
-    space_class = CharField(max_length=2, choices=CLASA_SP_BIROURI, null=True, blank=True, verbose_name='Clasă')
+    space_class = CharField(choices=CLASA_SP_BIROURI, null=True, blank=True, verbose_name='Clasă')
     minimum_area = DecimalField(max_digits=4, decimal_places=2, null=True, blank=True, verbose_name='Suprafață minimă (mp)')
     maximum_area = DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name='Suprafață maximă (mp)')
     total_surface_offices = DecimalField(max_digits=6, decimal_places=2, verbose_name='Suprafață totală birouri (mp)⋆')
@@ -150,14 +133,14 @@ class OfficeBuilding(Model):
     finishes = TextField(max_length=2000, null=True, blank=True, verbose_name='Finisaje imobil')
     technical_details = TextField(max_length=2000, null=True, blank=True, verbose_name='Detalii tehnice')
 
-    services_provided = CharField(max_length=45, choices=SERVICII_ASIGURATE, null=True, blank=True, verbose_name='Servicii asigurate')
-    safety_security = CharField(max_length=50, choices=SIGURANTA_SECURITATE, null=True, blank=True, verbose_name='Siguranță și securitate')
-    it_c = CharField(max_length=45, choices=IT_C, null=True, blank=True, verbose_name='IT & C')
-    electrical_system = CharField(max_length=45, choices=SISTEM_ELECTRIC, null=True, blank=True, verbose_name='Sistem electric')
-    eco_elements = CharField(max_length=35, choices=ELEMENTE_ECO, null=True, blank=True, verbose_name='Elemente ECO')
-    architecture = CharField(max_length=40, choices=ARHITECTURA, null=True, blank=True, verbose_name='Arhitectură')
-    air_conditioning = CharField(max_length=55, choices=CLIMATIZARE_BIROU, null=True, blank=True, verbose_name='Climatizare birou')
-    building_facilities_proximity = CharField(max_length=32, choices=FACILITATI_CLADIRE_PROXIMITATI, null=True, blank=True,
+    services_provided = CharField(choices=SERVICII_ASIGURATE, null=True, blank=True, verbose_name='Servicii asigurate')
+    safety_security = CharField(choices=SIGURANTA_SECURITATE, null=True, blank=True, verbose_name='Siguranță și securitate')
+    it_c = CharField(choices=IT_C, null=True, blank=True, verbose_name='IT & C')
+    electrical_system = CharField(choices=SISTEM_ELECTRIC, null=True, blank=True, verbose_name='Sistem electric')
+    eco_elements = CharField(choices=ELEMENTE_ECO, null=True, blank=True, verbose_name='Elemente ECO')
+    architecture = CharField(choices=ARHITECTURA, null=True, blank=True, verbose_name='Arhitectură')
+    air_conditioning = CharField(choices=CLIMATIZARE_BIROU, null=True, blank=True, verbose_name='Climatizare birou')
+    building_facilities_proximity = CharField(choices=FACILITATI_CLADIRE_PROXIMITATI, null=True, blank=True,
                                               verbose_name='Facilități clădire / proximități')
 
     other_details = TextField(max_length=2000, null=True, blank=True, verbose_name='Alte detalii')
@@ -168,7 +151,7 @@ class OfficeBuilding(Model):
     updated_at = DateTimeField(auto_now=True, verbose_name='Data ultimei actualizări')
 
     def __str__(self):
-        return f'{self.developer_name}'
+        return f'{self.title}'
 
 
 class Apartment(Listing):
@@ -177,13 +160,13 @@ class Apartment(Listing):
     scale = CharField(max_length=3, null=True, blank=True, verbose_name='Scară')
     apartment_nr = IntegerField(verbose_name='Număr apartament⋆')
 
-    apartment_type = CharField(max_length=12, choices=TIP_APARTAMENT, verbose_name='Tip apartament⋆')
-    destination = CharField(max_length=15, choices=DESTINATIE_AP, null=True, blank=True, verbose_name='Destinație')
-    ap_compart = CharField(max_length=15, choices=COMPARTIMENTARE_AP, verbose_name='Compartimentare⋆')
-    orientation = CharField(max_length=10, choices=ORIENTARE, null=True, blank=True, verbose_name='Orientare')
-    floor = CharField(max_length=18, choices=ETAJ_AP, verbose_name='Etaj⋆')
-    comfort = CharField(max_length=4, choices=CONFORT, null=True, blank=True, verbose_name='Confort')
-    interior_finishes = CharField(max_length=18, choices=FINISAJE, verbose_name='Stare interior⋆')
+    apartment_type = CharField(choices=TIP_APARTAMENT, verbose_name='Tip apartament⋆')
+    destination = CharField(choices=DESTINATIE_AP, null=True, blank=True, verbose_name='Destinație')
+    ap_compart = CharField(choices=COMPARTIMENTARE_AP, verbose_name='Compartimentare⋆')
+    orientation = CharField(choices=ORIENTARE, null=True, blank=True, verbose_name='Orientare')
+    floor = CharField(choices=ETAJ_AP, verbose_name='Etaj⋆')
+    comfort = CharField(choices=CONFORT, null=True, blank=True, verbose_name='Confort')
+    interior_finishes = CharField(choices=FINISAJE, verbose_name='Stare interior⋆')
     useful_surface = DecimalField(max_digits=5, decimal_places=2, verbose_name='Suprafață utilă (mp)⋆')
     total_surface = DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name='Suprafață totală (mp)')
     balcony_surface = DecimalField(max_digits=4, decimal_places=2, null=True, blank=True, verbose_name='Suprafață balcoane (mp)')
@@ -198,35 +181,35 @@ class Apartment(Listing):
     garage = BooleanField(default=False, verbose_name='Garaj')
     nr_parking_spaces = IntegerField(null=True, blank=True, verbose_name='Număr locuri parcare')
 
-    building_type = CharField(max_length=20, choices=TIP_IMOBIL_AP, null=True, blank=True, verbose_name='Tip imobil')
+    building_type = CharField(choices=TIP_IMOBIL_AP, null=True, blank=True, verbose_name='Tip imobil')
     construction_year = IntegerField(verbose_name='Anul construcției⋆')
-    construction_materials = CharField(max_length=20, choices=MATERIALE, null=True, blank=True, verbose_name='Materiale construcție')
-    construction_status = CharField(max_length=15, choices=STADIU_CONSTRUCTIE, null=True, blank=True, verbose_name='Stadiu construcție')
+    construction_materials = CharField(choices=MATERIALE, null=True, blank=True, verbose_name='Materiale construcție')
+    construction_status = CharField(choices=STADIU_CONSTRUCTIE, null=True, blank=True, verbose_name='Stadiu construcție')
     nr_floors = IntegerField(verbose_name='Număr etaje⋆')
     semi_basement = BooleanField(default=False, verbose_name='Demisol')
     technical_floor = BooleanField(default=False, verbose_name='Etaj tehnic')
     loft = BooleanField(default=False, verbose_name='Mansardă')
     attic = BooleanField(default=False, verbose_name='Pod')
 
-    facilities = CharField(max_length=18, choices=DOTARI, null=True, blank=True, verbose_name='Dotări')
-    thermal_insulation = CharField(max_length=20, choices=IZOLATII_TERMICE, null=True, blank=True, verbose_name='Izolație termică')
-    building_facilities = CharField(max_length=35, choices=DOTARI_IMOBIL, null=True, blank=True, verbose_name='Dotări imobil')
-    parking = CharField(max_length=20, choices=PARCARE, null=True, blank=True, verbose_name='Parcare')
-    heating_system = CharField(max_length=25, choices=SISTEM_INCALZIRE, null=True, blank=True, verbose_name='Sistem încălzire')
-    entrance_door = CharField(max_length=20, choices=USA_INTRARE, null=True, blank=True, verbose_name='Ușă intrare')
-    interior_doors = CharField(max_length=25, choices=USI_INTERIOR, null=True, blank=True, verbose_name='Uși interior')
-    furniture = CharField(max_length=17, choices=MOBILIER, null=True, blank=True, verbose_name='Mobilier')
-    kitchen = CharField(max_length=30, choices=BUCATARIE, null=True, blank=True, verbose_name='Bucătărie')
-    windows = CharField(max_length=30, choices=FERESTRE, null=True, blank=True, verbose_name='Ferestre')
-    other_spaces = CharField(max_length=20, choices=ALTE_SPATII, null=True, blank=True, verbose_name='Alte spații')
+    facilities = CharField(choices=DOTARI, null=True, blank=True, verbose_name='Dotări')
+    thermal_insulation = CharField(choices=IZOLATII_TERMICE, null=True, blank=True, verbose_name='Izolație termică')
+    building_facilities = CharField(choices=DOTARI_IMOBIL, null=True, blank=True, verbose_name='Dotări imobil')
+    parking = CharField(choices=PARCARE, null=True, blank=True, verbose_name='Parcare')
+    heating_system = CharField(choices=SISTEM_INCALZIRE, null=True, blank=True, verbose_name='Sistem încălzire')
+    entrance_door = CharField(choices=USA_INTRARE, null=True, blank=True, verbose_name='Ușă intrare')
+    interior_doors = CharField(choices=USI_INTERIOR, null=True, blank=True, verbose_name='Uși interior')
+    furniture = CharField(choices=MOBILIER, null=True, blank=True, verbose_name='Mobilier')
+    kitchen = CharField(choices=BUCATARIE, null=True, blank=True, verbose_name='Bucătărie')
+    windows = CharField(choices=FERESTRE, null=True, blank=True, verbose_name='Ferestre')
+    other_spaces = CharField(choices=ALTE_SPATII, null=True, blank=True, verbose_name='Alte spații')
 
     price = DecimalField(max_digits=9, decimal_places=2, verbose_name='Preț tranzacționare⋆')
     last_price = DecimalField(max_digits=9, decimal_places=2, null=True, blank=True, verbose_name='Ultimul preț în mână')
     negotiable = BooleanField(default=False, verbose_name='Negociabil')
     price_per_sqm = DecimalField(max_digits=7, decimal_places=2, editable=False, verbose_name='Preț / mp')
-    owner_type = CharField(max_length=18, choices=TIP_PROPRIETAR, null=True, blank=True, verbose_name='Tip proprietar')
-    VAT_rate = CharField(max_length=17, choices=COTA_TVA, default='Nu se aplică TVA', null=True, blank=True, verbose_name='TVA')
-    currency = CharField(max_length=3, choices=MONEDA, default='€', null=True, blank=True, verbose_name='Monedă')
+    owner_type = CharField(choices=TIP_PROPRIETAR, null=True, blank=True, verbose_name='Tip proprietar')
+    VAT_rate = CharField(choices=COTA_TVA, default='Nu se aplică TVA', null=True, blank=True, verbose_name='TVA')
+    currency = CharField(choices=MONEDA, default='euro', null=True, blank=True, verbose_name='Monedă')
     percentage_commission = IntegerField(null=True, blank=True, verbose_name='Comision de la proprietar (%)')
     fixed_commission = IntegerField(null=True, blank=True, verbose_name='Comision fix de la proprietar')
     exclusive_representation = BooleanField(default=False, verbose_name='Reprezentare exclusivă')
@@ -237,9 +220,9 @@ class Apartment(Listing):
 class House(Listing):
     residential_ensemble = ForeignKey(ResidentialEnsemble, on_delete=CASCADE, null=True, blank=True, verbose_name='Ansamblu rezidențial')
 
-    house_type = CharField(max_length=12, choices=TIP_CASA, verbose_name='Tip casă⋆')
-    destination = CharField(max_length=15, choices=DESTINATIE_AP, null=True, blank=True, verbose_name='Destinație')
-    interior_finishes = CharField(max_length=18, choices=FINISAJE, verbose_name='Stare interior⋆')
+    house_type = CharField(choices=TIP_CASA, verbose_name='Tip casă⋆')
+    destination = CharField(choices=DESTINATIE_AP, null=True, blank=True, verbose_name='Destinație')
+    interior_finishes = CharField(choices=FINISAJE, verbose_name='Stare interior⋆')
     useful_surface = DecimalField(max_digits=5, decimal_places=2, verbose_name='Suprafață utilă (mp)⋆')
     built_area = DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name='Suprafață construită (mp)')
     terrain_surface = DecimalField(max_digits=6, decimal_places=2, null=True, blank=True, verbose_name='Suprafață utilă teren (mp)')
@@ -248,10 +231,10 @@ class House(Listing):
     balcony_surface = DecimalField(max_digits=4, decimal_places=2, null=True, blank=True, verbose_name='Suprafață balcoane (mp)')
     opening = DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name='Deschidere (m)')
 
-    roof = CharField(max_length=10, choices=ACOPERIS, null=True, blank=True, verbose_name='Acoperiș')
-    construction_status = CharField(max_length=15, choices=STADIU_CONSTRUCTIE, null=True, blank=True, verbose_name='Stadiu construcție')
+    roof = CharField(choices=ACOPERIS, null=True, blank=True, verbose_name='Acoperiș')
+    construction_status = CharField(choices=STADIU_CONSTRUCTIE, null=True, blank=True, verbose_name='Stadiu construcție')
     construction_year = IntegerField(verbose_name='Anul construcției⋆')
-    construction_materials = CharField(max_length=20, choices=MATERIALE, null=True, blank=True, verbose_name='Materiale construcție')
+    construction_materials = CharField(choices=MATERIALE, null=True, blank=True, verbose_name='Materiale construcție')
     nr_floors = IntegerField(null=True, blank=True, verbose_name='Număr etaje')
     semi_basement = BooleanField(default=False, verbose_name='Demisol')
     technical_floor = BooleanField(default=False, verbose_name='Etaj tehnic')
@@ -268,25 +251,25 @@ class House(Listing):
     garage = BooleanField(default=False, verbose_name='Garaj')
     nr_parking_spaces = IntegerField(null=True, blank=True, verbose_name='Număr locuri parcare')
 
-    facilities = CharField(max_length=18, choices=DOTARI, null=True, blank=True, verbose_name='Dotări')
-    thermal_insulation = CharField(max_length=20, choices=IZOLATII_TERMICE, null=True, blank=True, verbose_name='Izolație termică')
-    building_facilities = CharField(max_length=35, choices=DOTARI_IMOBIL, null=True, blank=True, verbose_name='Dotări imobil')
-    parking = CharField(max_length=20, choices=PARCARE, null=True, blank=True, verbose_name='Parcare')
-    heating_system = CharField(max_length=25, choices=SISTEM_INCALZIRE, null=True, blank=True, verbose_name='Sistem încălzire')
-    entrance_door = CharField(max_length=20, choices=USA_INTRARE, null=True, blank=True, verbose_name='Ușă intrare')
-    interior_doors = CharField(max_length=25, choices=USI_INTERIOR, null=True, blank=True, verbose_name='Uși interior')
-    furniture = CharField(max_length=17, choices=MOBILIER, null=True, blank=True, verbose_name='Mobilier')
-    kitchen = CharField(max_length=30, choices=BUCATARIE, null=True, blank=True, verbose_name='Bucătărie')
-    windows = CharField(max_length=30, choices=FERESTRE, null=True, blank=True, verbose_name='Ferestre')
-    other_spaces = CharField(max_length=20, choices=ALTE_SPATII, null=True, blank=True, verbose_name='Alte spații')
+    facilities = CharField(choices=DOTARI, null=True, blank=True, verbose_name='Dotări')
+    thermal_insulation = CharField(choices=IZOLATII_TERMICE, null=True, blank=True, verbose_name='Izolație termică')
+    building_facilities = CharField(choices=DOTARI_IMOBIL, null=True, blank=True, verbose_name='Dotări imobil')
+    parking = CharField(choices=PARCARE, null=True, blank=True, verbose_name='Parcare')
+    heating_system = CharField(choices=SISTEM_INCALZIRE, null=True, blank=True, verbose_name='Sistem încălzire')
+    entrance_door = CharField(choices=USA_INTRARE, null=True, blank=True, verbose_name='Ușă intrare')
+    interior_doors = CharField(choices=USI_INTERIOR, null=True, blank=True, verbose_name='Uși interior')
+    furniture = CharField(choices=MOBILIER, null=True, blank=True, verbose_name='Mobilier')
+    kitchen = CharField(choices=BUCATARIE, null=True, blank=True, verbose_name='Bucătărie')
+    windows = CharField(choices=FERESTRE, null=True, blank=True, verbose_name='Ferestre')
+    other_spaces = CharField(choices=ALTE_SPATII, null=True, blank=True, verbose_name='Alte spații')
 
     price = DecimalField(max_digits=9, decimal_places=2, verbose_name='Preț tranzacționare⋆')
     last_price = DecimalField(max_digits=9, decimal_places=2, null=True, blank=True, verbose_name='Ultimul preț în mână')
     negotiable = BooleanField(default=False, verbose_name='Negociabil')
     price_per_sqm = DecimalField(max_digits=7, decimal_places=2, editable=False, verbose_name='Preț / mp')
-    owner_type = CharField(max_length=18, choices=TIP_PROPRIETAR, null=True, blank=True, verbose_name='Tip proprietar')
-    VAT_rate = CharField(max_length=17, choices=COTA_TVA, default='Nu se aplică TVA', null=True, blank=True, verbose_name='TVA')
-    currency = CharField(max_length=3, choices=MONEDA, default='€', null=True, blank=True, verbose_name='Monedă')
+    owner_type = CharField(choices=TIP_PROPRIETAR, null=True, blank=True, verbose_name='Tip proprietar')
+    VAT_rate = CharField(choices=COTA_TVA, default='Nu se aplică TVA', null=True, blank=True, verbose_name='TVA')
+    currency = CharField(choices=MONEDA, default='euro', null=True, blank=True, verbose_name='Monedă')
     percentage_commission = IntegerField(null=True, blank=True, verbose_name='Comision de la proprietar (%)')
     fixed_commission = IntegerField(null=True, blank=True, verbose_name='Comision fix de la proprietar')
     exclusive_representation = BooleanField(default=False, verbose_name='Reprezentare exclusivă')
@@ -295,14 +278,14 @@ class House(Listing):
 
 
 class Terrain(Listing):
-    terrain_type = CharField(max_length=12, choices=TIP_TEREN, verbose_name='Tip teren⋆')
-    destination = CharField(max_length=17, choices=DESTINATIE_TEREN, null=True, blank=True, verbose_name='Destinație')
-    classification = CharField(max_length=11, choices=CLASIFICARE_TEREN, verbose_name='Clasificare⋆')
+    terrain_type = CharField(choices=TIP_TEREN, verbose_name='Tip teren⋆')
+    destination = CharField(choices=DESTINATIE_TEREN, null=True, blank=True, verbose_name='Destinație')
+    classification = CharField(choices=CLASIFICARE_TEREN, verbose_name='Clasificare⋆')
     terrain_surface = DecimalField(max_digits=6, decimal_places=2, verbose_name='Suprafață teren⋆')
-    unit = CharField(max_length=12, choices=UNITATE_SUPRAFATA, verbose_name='Unitate suprafață⋆')
+    unit = CharField(choices=UNITATE_SUPRAFATA, verbose_name='Unitate suprafață⋆')
     street_front = DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name='Front stradal (m)')
     nr_street_fronts = IntegerField(null=True, blank=True, verbose_name='Număr fronturi stradale')
-    opening_to = CharField(max_length=20, choices=DESCHIDERE, null=True, blank=True, verbose_name='Deschidere la')
+    opening_to = CharField(choices=DESCHIDERE, null=True, blank=True, verbose_name='Deschidere la')
     fusion_degree = IntegerField(null=True, blank=True, verbose_name='Grad de comasare (%)')
     inclination = IntegerField(null=True, blank=True, verbose_name='Înclinație (°)')
     incidence_value = IntegerField(null=True, blank=True, verbose_name='Valoare incidență')
@@ -319,16 +302,16 @@ class Terrain(Listing):
     urban_certificate = BooleanField(default=False, verbose_name='Certificat de urbanism')
     maximum_nr_levels = IntegerField(null=True, blank=True, verbose_name='Număr maxim niveluri')
 
-    land_facilities = CharField(max_length=20, choices=FACILITATI_TEREN, null=True, blank=True, verbose_name='Facilități teren')
-    other_features = CharField(max_length=30, choices=ALTE_FACILITATI, null=True, blank=True, verbose_name='Alte facilități')
+    land_facilities = CharField(choices=FACILITATI_TEREN, null=True, blank=True, verbose_name='Facilități teren')
+    other_features = CharField(choices=ALTE_FACILITATI, null=True, blank=True, verbose_name='Alte facilități')
 
     price = DecimalField(max_digits=9, decimal_places=2, verbose_name='Preț tranzacționare⋆')
     last_price = DecimalField(max_digits=9, decimal_places=2, null=True, blank=True, verbose_name='Ultimul preț în mână')
     negotiable = BooleanField(default=False, verbose_name='Negociabil')
     price_per_sqm = DecimalField(max_digits=7, decimal_places=2, editable=False, verbose_name='Preț / mp')
-    owner_type = CharField(max_length=18, choices=TIP_PROPRIETAR, null=True, blank=True, verbose_name='Tip proprietar')
-    VAT_rate = CharField(max_length=17, choices=COTA_TVA, default='Nu se aplică TVA', null=True, blank=True, verbose_name='TVA')
-    currency = CharField(max_length=3, choices=MONEDA, default='€', null=True, blank=True, verbose_name='Monedă')
+    owner_type = CharField(choices=TIP_PROPRIETAR, null=True, blank=True, verbose_name='Tip proprietar')
+    VAT_rate = CharField(choices=COTA_TVA, default='Nu se aplică TVA', null=True, blank=True, verbose_name='TVA')
+    currency = CharField(choices=MONEDA, default='euro', null=True, blank=True, verbose_name='Monedă')
     percentage_commission = IntegerField(null=True, blank=True, verbose_name='Comision de la proprietar (%)')
     fixed_commission = IntegerField(null=True, blank=True, verbose_name='Comision fix de la proprietar')
     exclusive_representation = BooleanField(default=False, verbose_name='Reprezentare exclusivă')
@@ -342,10 +325,10 @@ class CommercialSpace(Listing):
     block = CharField(max_length=4, null=True, blank=True, verbose_name='Bloc')
     space_nr = IntegerField(verbose_name='Număr spațiu⋆')
 
-    space_type = CharField(max_length=20, choices=TIP_IMOBIL_SPATIU, verbose_name='Tip imobil⋆')
-    destination = CharField(max_length=20, choices=DESTINATIE_SP_COMERCIAL, null=True, blank=True, verbose_name='Destinație')
-    pedestrian_traffic = CharField(max_length=22, choices=TRAFIC_PIETONAL, null=True, blank=True, verbose_name='Trafic pietonal')
-    floor = CharField(max_length=18, choices=ETAJ_SPATIU, verbose_name='Etaj⋆')
+    space_type = CharField(choices=TIP_IMOBIL_SPATIU, verbose_name='Tip imobil⋆')
+    destination = CharField(choices=DESTINATIE_SP_COMERCIAL, null=True, blank=True, verbose_name='Destinație')
+    pedestrian_traffic = CharField(choices=TRAFIC_PIETONAL, null=True, blank=True, verbose_name='Trafic pietonal')
+    floor = CharField(choices=ETAJ_SPATIU, verbose_name='Etaj⋆')
     rooms_number = IntegerField(null=True, blank=True, verbose_name='Număr camere')
     nr_locker_rooms = IntegerField(null=True, blank=True, verbose_name='Număr vestiare')
     nr_bathrooms = IntegerField(null=True, blank=True, verbose_name='Număr băi')
@@ -356,7 +339,7 @@ class CommercialSpace(Listing):
     street_front = DecimalField(max_digits=4, decimal_places=2, null=True, blank=True, verbose_name='Front stradal (m)')
     glass_case = DecimalField(max_digits=4, decimal_places=2, null=True, blank=True, verbose_name='Vitrină (m)')
     inside_height = DecimalField(max_digits=4, decimal_places=2, null=True, blank=True, verbose_name='Înălțime interioară (m)')
-    space_compart = CharField(max_length=25, choices=COMPARTIMENTARE_SPATIU, null=True, blank=True, verbose_name='Compartimentare')
+    space_compart = CharField(choices=COMPARTIMENTARE_SPATIU, null=True, blank=True, verbose_name='Compartimentare')
     nr_parking_spaces = IntegerField(null=True, blank=True, verbose_name='Număr locuri parcare')
 
     construction_year = IntegerField(verbose_name='Anul construcției⋆')
@@ -365,18 +348,18 @@ class CommercialSpace(Listing):
     technical_floor = BooleanField(default=False, verbose_name='Etaj tehnic')
     loft = BooleanField(default=False, verbose_name='Mansardă')
 
-    land_facilities = CharField(max_length=20, choices=FACILITATI_TEREN, null=True, blank=True, verbose_name='Facilități teren')
-    eco_elements = CharField(max_length=35, choices=ELEMENTE_ECO, null=True, blank=True, verbose_name='Elemente ECO')
-    parking = CharField(max_length=20, choices=PARCARE, null=True, blank=True, verbose_name='Parcare')
-    other_facilities_com_sp = CharField(max_length=38, choices=ALTE_FACILITATI_SP_COM, null=True, blank=True, verbose_name='Alte facilități')
+    land_facilities = CharField(choices=FACILITATI_TEREN, null=True, blank=True, verbose_name='Facilități teren')
+    eco_elements = CharField(choices=ELEMENTE_ECO, null=True, blank=True, verbose_name='Elemente ECO')
+    parking = CharField(choices=PARCARE, null=True, blank=True, verbose_name='Parcare')
+    other_facilities_com_sp = CharField(choices=ALTE_FACILITATI_SP_COM, null=True, blank=True, verbose_name='Alte facilități')
 
     price = DecimalField(max_digits=9, decimal_places=2, verbose_name='Preț tranzacționare⋆')
     last_price = DecimalField(max_digits=9, decimal_places=2, null=True, blank=True, verbose_name='Ultimul preț în mână')
     negotiable = BooleanField(default=False, verbose_name='Negociabil')
     price_per_sqm = DecimalField(max_digits=7, decimal_places=2, editable=False, verbose_name='Preț / mp')
-    owner_type = CharField(max_length=18, choices=TIP_PROPRIETAR, null=True, blank=True, verbose_name='Tip proprietar')
-    VAT_rate = CharField(max_length=17, choices=COTA_TVA, default='Nu se aplică TVA', null=True, blank=True, verbose_name='TVA')
-    currency = CharField(max_length=3, choices=MONEDA, default='€', null=True, blank=True, verbose_name='Monedă')
+    owner_type = CharField(choices=TIP_PROPRIETAR, null=True, blank=True, verbose_name='Tip proprietar')
+    VAT_rate = CharField(choices=COTA_TVA, default='Nu se aplică TVA', null=True, blank=True, verbose_name='TVA')
+    currency = CharField(choices=MONEDA, default='euro', null=True, blank=True, verbose_name='Monedă')
     percentage_commission = IntegerField(null=True, blank=True, verbose_name='Comision de la proprietar (%)')
     fixed_commission = IntegerField(null=True, blank=True, verbose_name='Comision fix de la proprietar')
     exclusive_representation = BooleanField(default=False, verbose_name='Reprezentare exclusivă')
@@ -388,9 +371,9 @@ class OfficeSpace(Listing):
     office_building = ForeignKey(OfficeBuilding, on_delete=CASCADE, null=True, blank=True, verbose_name='Clădire de birouri')
     space_nr = IntegerField(verbose_name='Număr spațiu⋆')
 
-    space_type = CharField(max_length=20, choices=TIP_IMOBIL_SPATIU, verbose_name='Tip imobil⋆')
-    floor = CharField(max_length=18, choices=ETAJ_SPATIU, verbose_name='Etaj⋆')
-    space_class = CharField(max_length=2, choices=CLASA_SP_BIROURI, null=True, blank=True, verbose_name='Clasă')
+    space_type = CharField(choices=TIP_IMOBIL_SPATIU, verbose_name='Tip imobil⋆')
+    floor = CharField(choices=ETAJ_SPATIU, verbose_name='Etaj⋆')
+    space_class = CharField(choices=CLASA_SP_BIROURI, null=True, blank=True, verbose_name='Clasă')
     rooms_number = IntegerField(null=True, blank=True, verbose_name='Număr camere')
     nr_bathrooms = IntegerField(null=True, blank=True, verbose_name='Număr băi')
     useful_surface = DecimalField(max_digits=6, decimal_places=2, verbose_name='Suprafață utilă (mp)⋆')
@@ -402,7 +385,7 @@ class OfficeSpace(Listing):
     total_surface_offices = DecimalField(max_digits=6, decimal_places=2, verbose_name='Suprafață totală birouri (mp)⋆')
     common_area_factor = IntegerField(null=True, blank=True, verbose_name='Factor suprafețe comune (%)')
     occupancy_rate = IntegerField(null=True, blank=True, verbose_name='Rata de ocupare (%)')
-    space_compart = CharField(max_length=25, choices=COMPARTIMENTARE_SPATIU, null=True, blank=True, verbose_name='Compartimentare')
+    space_compart = CharField(choices=COMPARTIMENTARE_SPATIU, null=True, blank=True, verbose_name='Compartimentare')
 
     underground_parking = BooleanField(default=False, verbose_name='Parcare subterană')
     underground_parking_available = IntegerField(null=True, blank=True, verbose_name='Parcări subterane disponibile')
@@ -418,24 +401,24 @@ class OfficeSpace(Listing):
     technical_floor = BooleanField(default=False, verbose_name='Etaj tehnic')
     loft = BooleanField(default=False, verbose_name='Mansardă')
 
-    services_provided = CharField(max_length=45, choices=SERVICII_ASIGURATE, null=True, blank=True, verbose_name='Servicii asigurate')
-    safety_security = CharField(max_length=50, choices=SIGURANTA_SECURITATE, null=True, blank=True, verbose_name='Siguranță și securitate')
-    it_c = CharField(max_length=45, choices=IT_C, null=True, blank=True, verbose_name='IT & C')
-    electrical_system = CharField(max_length=45, choices=SISTEM_ELECTRIC, null=True, blank=True, verbose_name='Sistem electric')
-    eco_elements = CharField(max_length=35, choices=ELEMENTE_ECO, null=True, blank=True, verbose_name='Elemente ECO')
-    architecture = CharField(max_length=40, choices=ARHITECTURA, null=True, blank=True, verbose_name='Arhitectură')
-    air_conditioning = CharField(max_length=55, choices=CLIMATIZARE_BIROU, null=True, blank=True, verbose_name='Climatizare birou')
-    building_facilities_proximity = CharField(max_length=32, choices=FACILITATI_CLADIRE_PROXIMITATI, null=True, blank=True,
+    services_provided = CharField(choices=SERVICII_ASIGURATE, null=True, blank=True, verbose_name='Servicii asigurate')
+    safety_security = CharField(choices=SIGURANTA_SECURITATE, null=True, blank=True, verbose_name='Siguranță și securitate')
+    it_c = CharField(choices=IT_C, null=True, blank=True, verbose_name='IT & C')
+    electrical_system = CharField(choices=SISTEM_ELECTRIC, null=True, blank=True, verbose_name='Sistem electric')
+    eco_elements = CharField(choices=ELEMENTE_ECO, null=True, blank=True, verbose_name='Elemente ECO')
+    architecture = CharField(choices=ARHITECTURA, null=True, blank=True, verbose_name='Arhitectură')
+    air_conditioning = CharField(choices=CLIMATIZARE_BIROU, null=True, blank=True, verbose_name='Climatizare birou')
+    building_facilities_proximity = CharField(choices=FACILITATI_CLADIRE_PROXIMITATI, null=True, blank=True,
                                               verbose_name='Facilități clădire / proximități')
-    parking = CharField(max_length=20, choices=PARCARE, null=True, blank=True, verbose_name='Parcare')
+    parking = CharField(choices=PARCARE, null=True, blank=True, verbose_name='Parcare')
 
     price = DecimalField(max_digits=9, decimal_places=2, verbose_name='Preț tranzacționare⋆')
     last_price = DecimalField(max_digits=9, decimal_places=2, null=True, blank=True, verbose_name='Ultimul preț în mână')
     negotiable = BooleanField(default=False, verbose_name='Negociabil')
     price_per_sqm = DecimalField(max_digits=7, decimal_places=2, editable=False, verbose_name='Preț / mp')
-    owner_type = CharField(max_length=18, choices=TIP_PROPRIETAR, null=True, blank=True, verbose_name='Tip proprietar')
-    VAT_rate = CharField(max_length=17, choices=COTA_TVA, default='Nu se aplică TVA', null=True, blank=True, verbose_name='TVA')
-    currency = CharField(max_length=3, choices=MONEDA, default='€', null=True, blank=True, verbose_name='Monedă')
+    owner_type = CharField(choices=TIP_PROPRIETAR, null=True, blank=True, verbose_name='Tip proprietar')
+    VAT_rate = CharField(choices=COTA_TVA, default='Nu se aplică TVA', null=True, blank=True, verbose_name='TVA')
+    currency = CharField(choices=MONEDA, default='euro', null=True, blank=True, verbose_name='Monedă')
     percentage_commission = IntegerField(null=True, blank=True, verbose_name='Comision de la proprietar (%)')
     fixed_commission = IntegerField(null=True, blank=True, verbose_name='Comision fix de la proprietar')
     exclusive_representation = BooleanField(default=False, verbose_name='Reprezentare exclusivă')
@@ -444,10 +427,10 @@ class OfficeSpace(Listing):
 
 
 class IndustrialSpace(Listing):
-    space_type = CharField(max_length=25, choices=TIP_SP_INDUSTRIAL, verbose_name='Tip spațiu⋆')
-    destination = CharField(max_length=12, choices=DESTINATIE_SP_INDUSTRIAL, null=True, blank=True, verbose_name='Destinație')
-    floor = CharField(max_length=13, choices=ETAJ_SP_INDUSTRIAL, null=True, blank=True, verbose_name='Etaj')
-    space_class = CharField(max_length=2, choices=CLASA_SP_BIROURI, null=True, blank=True, verbose_name='Clasă birouri')
+    space_type = CharField(choices=TIP_SP_INDUSTRIAL, verbose_name='Tip spațiu⋆')
+    destination = CharField(choices=DESTINATIE_SP_INDUSTRIAL, null=True, blank=True, verbose_name='Destinație')
+    floor = CharField(choices=ETAJ_SP_INDUSTRIAL, null=True, blank=True, verbose_name='Etaj')
+    space_class = CharField(choices=CLASA_SP_BIROURI, null=True, blank=True, verbose_name='Clasă birouri')
     rooms_number = IntegerField(null=True, blank=True, verbose_name='Număr camere')
     nr_locker_rooms = IntegerField(null=True, blank=True, verbose_name='Număr vestiare')
     nr_bathrooms = IntegerField(null=True, blank=True, verbose_name='Număr băi')
@@ -457,7 +440,7 @@ class IndustrialSpace(Listing):
     useful_surface = DecimalField(max_digits=7, decimal_places=2, verbose_name='Suprafață utilă (mp)⋆')
     built_area = DecimalField(max_digits=7, decimal_places=2, null=True, blank=True, verbose_name='Suprafață construită (mp)')
     total_surface_offices = DecimalField(max_digits=6, decimal_places=2, null=True, blank=True, verbose_name='Suprafață totală birouri (mp)')
-    space_compart = CharField(max_length=25, choices=COMPARTIMENTARE_SPATIU, null=True, blank=True, verbose_name='Compartimentare')
+    space_compart = CharField(choices=COMPARTIMENTARE_SPATIU, null=True, blank=True, verbose_name='Compartimentare')
     glass_case = DecimalField(max_digits=4, decimal_places=2, null=True, blank=True, verbose_name='Vitrină (m)')
     construction_year = IntegerField(verbose_name='Anul construcției⋆')
     terrain_surface = DecimalField(max_digits=7, decimal_places=2, verbose_name='Suprafață teren (mp)⋆')
@@ -467,18 +450,18 @@ class IndustrialSpace(Listing):
     inside_height = DecimalField(max_digits=4, decimal_places=2, verbose_name='Înălțime interioară (m)⋆')
     nr_parking_spaces = IntegerField(null=True, blank=True, verbose_name='Număr locuri parcare')
 
-    land_facilities = CharField(max_length=20, choices=FACILITATI_TEREN, null=True, blank=True, verbose_name='Facilități teren')
-    parking = CharField(max_length=20, choices=PARCARE, null=True, blank=True, verbose_name='Parcare')
-    other_facilities_ind_sp = CharField(max_length=33, choices=ALTE_FACILITATI_SP_IND, null=True, blank=True,
+    land_facilities = CharField(choices=FACILITATI_TEREN, null=True, blank=True, verbose_name='Facilități teren')
+    parking = CharField(choices=PARCARE, null=True, blank=True, verbose_name='Parcare')
+    other_facilities_ind_sp = CharField(choices=ALTE_FACILITATI_SP_IND, null=True, blank=True,
                                         verbose_name='Alte facilități spațiu industrial')
 
     price = DecimalField(max_digits=9, decimal_places=2, verbose_name='Preț tranzacționare⋆')
     last_price = DecimalField(max_digits=9, decimal_places=2, null=True, blank=True, verbose_name='Ultimul preț în mână')
     negotiable = BooleanField(default=False, verbose_name='Negociabil')
     price_per_sqm = DecimalField(max_digits=7, decimal_places=2, editable=False, verbose_name='Preț / mp')
-    owner_type = CharField(max_length=18, choices=TIP_PROPRIETAR, null=True, blank=True, verbose_name='Tip proprietar')
-    VAT_rate = CharField(max_length=17, choices=COTA_TVA, default='Nu se aplică TVA', null=True, blank=True, verbose_name='TVA')
-    currency = CharField(max_length=3, choices=MONEDA, default='€', null=True, blank=True, verbose_name='Monedă')
+    owner_type = CharField(choices=TIP_PROPRIETAR, null=True, blank=True, verbose_name='Tip proprietar')
+    VAT_rate = CharField(choices=COTA_TVA, default='Nu se aplică TVA', null=True, blank=True, verbose_name='TVA')
+    currency = CharField(choices=MONEDA, default='euro', null=True, blank=True, verbose_name='Monedă')
     percentage_commission = IntegerField(null=True, blank=True, verbose_name='Comision de la proprietar (%)')
     fixed_commission = IntegerField(null=True, blank=True, verbose_name='Comision fix de la proprietar')
     exclusive_representation = BooleanField(default=False, verbose_name='Reprezentare exclusivă')

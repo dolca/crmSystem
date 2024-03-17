@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm, Select, TextInput, Textarea, DateInput, SelectMultiple, NumberInput, CheckboxInput
+from django.forms import ModelForm, Select, TextInput, Textarea, DateInput, TimeInput, DateTimeInput, DateTimeField, \
+    SelectMultiple, NumberInput, CheckboxInput
 from leads.models import Lead, ApartmentLead, HouseLead, TerrainLead, CommercialSpaceLead, OfficeSpaceLead, \
     IndustrialSpaceLead
 
@@ -10,7 +11,7 @@ from leads.models import Lead, ApartmentLead, HouseLead, TerrainLead, Commercial
 class LeadCreateForm(ModelForm):
     class Meta:
         model = Lead
-        exclude = ['status', 'labels', 'notes', 'created_at', 'updated_at']
+        exclude = ['created_at', 'updated_at']
         widgets = {
             'status': Select(attrs={'class': 'form-control'}),
             'property_type': Select(attrs={'readonly': 'readonly'}),
@@ -34,8 +35,16 @@ class LeadCreateForm(ModelForm):
 
             'created_at': DateInput(attrs={'class': 'form-control'}),
             'updated_at': DateInput(attrs={'class': 'form-control'}),
+            'deadline_date': DateInput(attrs={'type': 'date', 'format': '%d.%m.%Y'}),
+            'deadline_time': TimeInput(attrs={'type': 'time', 'format': '%H:%M', 'step': '15'})
         }
-    
+
+    deadline = DateTimeField(
+        widget=DateTimeInput(attrs={'type': 'datetime-local', 'format': '%d.%m.%y %H:%M'}),
+        input_formats=['%d.%m.%y %H:%M'],
+        help_text="zz.ll.aaaa, hh:mm"
+    )
+
     def clean(self):
         cleaned_data = super().clean()
 
@@ -67,7 +76,7 @@ class LeadCreateForm(ModelForm):
         return cleaned_data
 
 
-class ApartmentLeadCreateForm(ModelForm):
+class ApartmentLeadCreateForm(LeadCreateForm):
     class Meta:
         model = ApartmentLead
         fields = '__all__'
@@ -121,7 +130,7 @@ class ApartmentLeadCreateForm(ModelForm):
         return cleaned_data
 
 
-class HouseLeadCreateForm(ModelForm):
+class HouseLeadCreateForm(LeadCreateForm):
     class Meta:
         model = HouseLead
         fields = '__all__'
@@ -164,7 +173,7 @@ class HouseLeadCreateForm(ModelForm):
         return cleaned_data
 
 
-class TerrainLeadCreateForm(ModelForm):
+class TerrainLeadCreateForm(LeadCreateForm):
     class Meta:
         model = TerrainLead
         fields = '__all__'
@@ -191,7 +200,7 @@ class TerrainLeadCreateForm(ModelForm):
         }
 
 
-class CommercialSpaceLeadCreateForm(ModelForm):
+class CommercialSpaceLeadCreateForm(LeadCreateForm):
     class Meta:
         model = CommercialSpaceLead
         fields = '__all__'
@@ -231,7 +240,7 @@ class CommercialSpaceLeadCreateForm(ModelForm):
         return cleaned_data
 
 
-class OfficeSpaceLeadCreateForm(ModelForm):
+class OfficeSpaceLeadCreateForm(LeadCreateForm):
     class Meta:
         model = OfficeSpaceLead
         fields = '__all__'
@@ -276,7 +285,7 @@ class OfficeSpaceLeadCreateForm(ModelForm):
         return cleaned_data
 
 
-class IndustrialSpaceLeadCreateForm(ModelForm):
+class IndustrialSpaceLeadCreateForm(LeadCreateForm):
     class Meta:
         model = IndustrialSpaceLead
         fields = '__all__'
@@ -367,7 +376,7 @@ class LeadUpdateForm(ModelForm):
         return cleaned_data
 
 
-class ApartmentLeadUpdateForm(ModelForm):
+class ApartmentLeadUpdateForm(LeadUpdateForm):
     class Meta:
         model = ApartmentLead
         fields = '__all__'
@@ -421,7 +430,7 @@ class ApartmentLeadUpdateForm(ModelForm):
         return cleaned_data
 
 
-class HouseLeadUpdateForm(ModelForm):
+class HouseLeadUpdateForm(LeadUpdateForm):
     class Meta:
         model = HouseLead
         fields = '__all__'
@@ -464,7 +473,7 @@ class HouseLeadUpdateForm(ModelForm):
         return cleaned_data
 
 
-class TerrainLeadUpdateForm(ModelForm):
+class TerrainLeadUpdateForm(LeadUpdateForm):
     class Meta:
         model = TerrainLead
         fields = '__all__'
@@ -491,7 +500,7 @@ class TerrainLeadUpdateForm(ModelForm):
         }
 
 
-class CommercialSpaceLeadUpdateForm(ModelForm):
+class CommercialSpaceLeadUpdateForm(LeadUpdateForm):
     class Meta:
         model = CommercialSpaceLead
         fields = '__all__'
@@ -531,7 +540,7 @@ class CommercialSpaceLeadUpdateForm(ModelForm):
         return cleaned_data
 
 
-class OfficeSpaceLeadUpdateForm(ModelForm):
+class OfficeSpaceLeadUpdateForm(LeadUpdateForm):
     class Meta:
         model = OfficeSpaceLead
         fields = '__all__'
@@ -576,7 +585,7 @@ class OfficeSpaceLeadUpdateForm(ModelForm):
         return cleaned_data
 
 
-class IndustrialSpaceLeadUpdateForm(ModelForm):
+class IndustrialSpaceLeadUpdateForm(LeadUpdateForm):
     class Meta:
         model = IndustrialSpaceLead
         fields = '__all__'

@@ -18,7 +18,7 @@ TIP_PROPRIETAR = [
 ]
 
 MONEDA = [
-    ('€', '€'), ('RON', 'RON'),
+    ('euro', '€'), ('lei', 'RON'),
 ]
 
 COTA_TVA = [
@@ -333,4 +333,16 @@ ALTE_FACILITATI_SP_IND = [
     ('Pod rulant', 'Pod rulant'), ('Posibilitate de compartimentare', 'Posibilitate de compartimentare'),
     ('Sistem de alarmă', 'Sistem de alarmă'), ('Teren împrejmuit', 'Teren împrejmuit'),
     ('Uși de acces', 'Uși de acces'), ('Vestiar', 'Vestiar')
+]
+
+JUDETE = [
+    ('Alba', 'Alba'), ('Argeș', 'Argeș'), ('Arad', 'Arad'), ('București', 'București'), ('Bacău', 'Bacău'),
+    ('Bihor', 'Bihor'), ('Bistrița-Năsăud', 'Bistrița-Năsăud'), ('Brăila', 'Brăila'), ('Botoșani', 'Botoșani'),
+    ('Brașov', 'Brașov'), ('Buzău', 'Buzău'), ('Cluj', 'Cluj'), ('Călărași', 'Călărași'),
+    ('Caraș-Severin', 'Caraș-Severin'), ('Constanța', 'Constanța'), ('Covasna', 'Covasna'), ('Dâmbovița', 'Dâmbovița'),
+    ('Dolj', 'Dolj'), ('Gorj', 'Gorj'), ('Galați', 'Galați'), ('Giurgiu', 'Giurgiu'), ('Hunedoara', 'Hunedoara'),
+    ('Harghita', 'Harghita'), ('Ilfov', 'Ilfov'), ('Ialomița', 'Ialomița'), ('Iași', 'Iași'), ('Mehedinți', 'Mehedinți'),
+    ('Maramureș', 'Maramureș'), ('Mureș', 'Mureș'), ('Neamț', 'Neamț'), ('Olt', 'Olt'), ('Prahova', 'Prahova'),
+    ('Sibiu', 'Sibiu'), ('Sălaj', 'Sălaj'), ('Satu-Mare', 'Satu-Mare'), ('Suceava', 'Suceava'), ('Tulcea', 'Tulcea'),
+    ('Timiș', 'Timiș'), ('Teleorman', 'Teleorman'), ('Vâlcea', 'Vâlcea'), ('Vrancea', 'Vrancea'), ('Vaslui', 'Vaslui')
 ]

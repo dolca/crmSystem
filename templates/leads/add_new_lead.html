@@ -10,7 +10,7 @@
 
     {% if user.is_authenticated %}
         <div class="row justify-content-center">
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-sm-6">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title mb-0">
@@ -19,7 +19,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-12 col-md-6">
+                            <div class="col-lg-12 col-sm-12">
                                 <div class="mb-2">
                                     <form method='post' action='' id='leadForm'>
                                         {% csrf_token %}
@@ -27,20 +27,17 @@
                                         <div class="row mb-2">
                                             <label for="id_contact" class="form-label">Contact asociat <span
                                                     class="text-danger">*</span></label>
-                                            <div class="col-md-10 mb-2">
+                                            <div class="col-lg-10 col-sm-10 mb-2">
                                                 <select class="form-select" name="id_contact" id="id_contact" required>
                                                     <option value="" disabled selected>Alege un contact</option>
                                                     {% for contact in contacts %}
                                                         <option value="{{ contact.id }}">
-                                                            {{ contact.first_name }} 
-                                                            {% if contact.last_name %}{{ contact.last_name }}{% else %}{% endif %} - 
-                                                            {% if contact.phone_number %}{{ contact.phone_number }}{% else %}{% endif %} 
-                                                            {% if contact.email %}{{ contact.email }}{% else %}{% endif %}
+                                                            {{ contact.first_name }} {% if contact.last_name %}{{ contact.last_name }}{% else %}{% endif %} - {% if contact.phone_number %}{{ contact.phone_number }}{% else %}{% endif %} {% if contact.email %}{{ contact.email }}{% else %}{% endif %}
                                                         </option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
-                                            <div class="col-md-2 d-flex justify-content-md-end justify-content-center mb-2">
+                                            <div class="col-lg-2 col-sm-2 d-flex justify-content-md-end justify-content-center mb-2">
                                                 <button type="button" class="btn btn-subtle-primary add-btn"
                                                         data-bs-toggle="modal" id="open-modal"
                                                         data-bs-target="#addContact"><strong>+</strong>
@@ -159,7 +156,7 @@
                     <div class="form-group">
                         <label for="document_type" class="form-label">Tip document</label>
                         <select class="form-select" id="document_type" name="document_type">
-                            <option value="" disabled selected>Selectează documentul de identitate</option>
+                            <option value="">--------</option>
                             <option value="Carte de identitate">Carte de identitate</option>
                             <option value="Pașaport">Pașaport</option>
                             <option value="Alt document">Alt document</option>
@@ -193,7 +190,7 @@
                     <div class="form-group">
                         <label for="contact_type" class="form-label">Tip contact</label>
                         <select class="form-select" id="contact_type" name="contact_type">
-                            <option value="" disabled selected>Selectează tipul contactului</option>
+                            <option value="">--------</option>
                             <option value="Administrator">Administrator</option>
                             <option value="Agent imobiliar">Agent imobiliar</option>
                             <option value="Chiriaș">Chiriaș</option>
@@ -209,7 +206,7 @@
                     <div class="form-group">
                         <label for="contact_category" class="form-label">Categorie</label>
                         <select class="form-select" id="contact_category" name="contact_category">
-                            <option value="" disabled selected>Selectează categoria contactului</option>
+                            <option value="">--------</option>
                             <option value="Client vechi">Client vechi</option>
                             <option value="Concurență">Concurență</option>
                             <option value="Cunoștință">Cunoștință</option>
@@ -243,32 +240,29 @@
         var isFormDirty = false;
         
         document.addEventListener('DOMContentLoaded', function () {
-            console.log('Conținutul DOM (Document Object Model) a fost încărcat.');
+            console.log('Conținutul DOM a fost încărcat.');
             
             var idContactElement = document.getElementById('id_contact');
             console.log('Elementul ID "Choices":', idContactElement);
             
-            if (idContactElement && !idContactElement.classList.contains('choices')) {
-                console.log('Inițializare "Choices"');
-                try {
-                    var choicesInstance = new Choices(idContactElement, {
-                        loadingText: 'Se încarcă...',
-                        noResultsText: 'Niciun rezultat găsit',
-                        shouldSort: false,
-                        fuseOptions: {
-                            threshold: 0
-                        }
-                    });
-                    console.log('Inițializare "Choices" cu succes');
-                    
-                    choicesInstance.passedElement.options.forEach(function(option) {
-                        console.log('Data-search pentru opțiunea:', option.text, 'este:', option.dataset.search);
-                    });
-                } catch (error) {
-                    console.error('Eroare la inițializarea "Choices":', error);
-                }
-            }
-
+            var realOptions = idContactElement.querySelectorAll('option:not([disabled])');
+            realOptions.forEach(function(option) {
+                idContactElement.append(new Option(option.textContent.trim(), option.value));
+            });
+            
+            console.log('Datele opțiunilor:', realOptions);
+            
+            new Choices(idContactElement, {
+                loadingText: 'Se încarcă...',
+                noResultsText: 'Niciun rezultat găsit',
+                searchFields: ['label'],
+                searchEnabled: true,
+                shouldSort: false,
+                renderSelectedChoices: 'always'
+            });
+            
+            console.log('Inițializare "Choices" cu succes!');
+            
             var myModal = new bootstrap.Modal(document.getElementById('addContact'));
             
             document.getElementById('open-modal').addEventListener('click', function () {

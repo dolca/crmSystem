@@ -1,5 +1,6 @@
 {% load static %}
 {% block right_sidebar %}
+
     <!--start back-to-top-->
     <button class="btn btn-dark btn-icon" id="back-to-top">
         <i class="bi bi-caret-up fs-3xl"></i>
@@ -14,6 +15,7 @@
             </div>
         </div>
     </div>
+    <!--end preloader-->
 
     <div class="customizer-setting d-none d-md-block">
         <div class="btn btn-info p-1 text-uppercase rounded-end-0 shadow-lg" data-bs-toggle="offcanvas"
@@ -26,8 +28,8 @@
     <div class="offcanvas offcanvas-end border-0" tabindex="-1" id="theme-settings-offcanvas">
         <div class="d-flex align-items-center bg-primary bg-gradient p-3 offcanvas-header">
             <div class="me-2">
-                <h5 class="mb-1 text-white">Teme și culori</h5>
-                <p class="text-white text-opacity-75 mb-0">Alege tema și aspectul preferat</p>
+                <h5 class="mb-1 text-white">Setări design sistem</h5>
+                <p class="text-white text-opacity-75 mb-0">Alege aspectul și culorile preferate</p>
             </div>
 
             <button type="button" class="btn-close btn-close-white ms-auto" id="customizerclose-btn"
@@ -188,8 +190,8 @@
                         </div><!-- end col -->
                     </div>
 
-                    <h6 class="mt-4 fs-md mb-1">Schema de culori</h6>
-                    <p class="text-muted fs-sm">Alege schemă luminoasă sau întunecată</p>
+                    <h6 class="mt-4 fs-md mb-1">Schemă de culori</h6>
+                    <p class="text-muted fs-sm">Alege schema luminoasă sau întunecată</p>
 
                     <div class="colorscheme-cardradio">
                         <div class="row g-3">
@@ -221,8 +223,8 @@
                     </div>
 
                     <div id="layout-width">
-                        <h6 class="mt-4 fs-md mb-1">Lățimea aspectului</h6>
-                        <p class="text-muted fs-sm">Alege un aspect fluid sau în cutie</p>
+                        <h6 class="mt-4 fs-md mb-1">Lățime aspect</h6>
+                        <p class="text-muted fs-sm">Alege un aspect fluid sau compartimentat</p>
 
                         <div class="row">
                             <div class="col-4">
@@ -273,27 +275,27 @@
                                     </span>
                                     </label>
                                 </div>
-                                <h5 class="fs-sm text-center fw-medium mt-2">În cutie</h5>
+                                <h5 class="fs-sm text-center fw-medium mt-2">Compartimentat</h5>
                             </div>
                         </div>
                     </div>
 
                     <div id="layout-position">
-                        <h6 class="mt-4 fs-md mb-1">Poziția aspectului</h6>
+                        <h6 class="mt-4 fs-md mb-1">Poziție aspect</h6>
                         <p class="text-muted fs-sm">Alege o poziție fixă sau derulabilă</p>
 
                         <div class="btn-group radio" role="group">
-                            <input type="radio" class="btn-check" name="data-layout-position" id="layout-position-fixed"
-                                   value="fixed">
-                            <label class="btn btn-light w-sm" for="layout-position-fixed">Fixă</label>
+                            <input type="radio" class="btn-check" name="data-layout-position" 
+                                   id="layout-position-fixed" value="fixed">
+                            <label class="btn btn-light w-sm" for="layout-position-fixed">Fix</label>
 
                             <input type="radio" class="btn-check" name="data-layout-position"
                                    id="layout-position-scrollable" value="scrollable">
-                            <label class="btn btn-light w-sm ms-0" for="layout-position-scrollable">Derulabilă</label>
+                            <label class="btn btn-light w-sm ms-0" for="layout-position-scrollable">Derulabil</label>
                         </div>
                     </div>
 
-                    <h6 class="mt-4 fs-md mb-1">Culoarea barei de sus</h6>
+                    <h6 class="mt-4 fs-md mb-1">Culoare bară superioară</h6>
                     <p class="text-muted fs-sm">Alege culoarea barei superioare luminoasă sau întunecată</p>
 
                     <div class="row">
@@ -350,7 +352,7 @@
                     </div>
 
                     <div id="sidebar-size">
-                        <h6 class="mt-4 fs-md mb-1">Dimensiunea barei laterale</h6>
+                        <h6 class="mt-4 fs-md mb-1">Dimensiune bară laterală</h6>
                         <p class="text-muted fs-sm">Alege o dimensiune a barei laterale</p>
 
                         <div class="row">
@@ -429,7 +431,7 @@
                                     </span>
                                     </label>
                                 </div>
-                                <h5 class="fs-sm text-center fw-medium mt-2">Mic (pictograme)</h5>
+                                <h5 class="fs-sm text-center fw-medium mt-2">Îngust (pictograme)</h5>
                             </div>
 
                             <div class="col-4">
@@ -455,7 +457,7 @@
                                     </span>
                                     </label>
                                 </div>
-                                <h5 class="fs-sm text-center fw-medium mt-2">Mic ascuns</h5>
+                                <h5 class="fs-sm text-center fw-medium mt-2">Îngust / Ascuns</h5>
                             </div>
                         </div>
                     </div>
@@ -519,8 +521,8 @@
                         </div>
                     </div>
                     <div id="sidebar-color">
-                        <h6 class="mt-4 fs-md mb-1">Culoarea barei laterale</h6>
-                        <p class="text-muted fs-sm">Alege o culoare pentru bara laterală</p>
+                        <h6 class="mt-4 fs-md mb-1">Culoare bară laterală</h6>
+                        <p class="text-muted fs-sm">Alege o culoare a barei laterale</p>
 
                         <div class="row">
                             <div class="col-4">
@@ -641,7 +643,7 @@
                     </div>
 
                     <div id="sidebar-img">
-                        <h6 class="mt-4 fw-semibold fs-base">Imagini ale barei laterale</h6>
+                        <h6 class="mt-4 fw-semibold fs-base">Imagini bară laterală</h6>
                         <p class="text-muted fs-sm">Alege o imagine a barei laterale</p>
 
                         <div class="d-flex gap-2 flex-wrap img-switch">

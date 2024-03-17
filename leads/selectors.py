@@ -17,13 +17,13 @@ MODALITATE_PLATA =[
 ]
 
 URGENTA = [
-    ('Critic', 'Critic'),
+    ('DA', 'DA'),
     ('3 zile', '3 zile'),
     ('7 zile', '7 zile'),
     ('Normal', 'Normal'),
     ('14 zile', '14 zile'),
     ('1 lună', '1 lună'),
-    ('Nu', 'Nu')
+    ('NU', 'NU')
 ]
 
 ETICHETA = [

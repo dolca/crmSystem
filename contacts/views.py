@@ -25,7 +25,7 @@ class CreateContactDoneView(TemplateView):
 class ContactListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Contact
     template_name = 'contacts/contacts.html'
-    context_object_name = 'contacts'
+    context_object_name = 'all_contacts'
     permission_required = 'contacts.view_contact'
 
 
@@ -189,3 +189,45 @@ def save_contact(request):
         return JsonResponse({'success': True, 'message': 'Contactul a fost salvat cu succes!'})
     except ValueError as e:
         return JsonResponse({'success': False, 'message': str(e)})
+
+
+@login_required
+@require_GET
+def get_contact_details(request, contact_id):
+    try:
+        contact = Contact.objects.get(id=contact_id)
+        contact_data = {
+            'first_name': contact.first_name,
+            'last_name': contact.last_name,
+            'phone_number': contact.phone_number,
+            'email': contact.email,
+
+            'company': contact.company,
+            'job_title': contact.job_title,
+
+            'city': contact.city,
+            'street_address': contact.street_address,
+            'street_number': contact.street_number,
+            'block': contact.block,
+            'scale': contact.scale,
+            'apartment_number': contact.apartment_number,
+            'county': contact.county,
+            'country': contact.country,
+
+            'document_type': contact.document_type,
+            'id_series_nr': contact.id_series_nr,
+            'cnp': contact.cnp,
+            'issue_date': contact.issue_date,
+            'passport_country': contact.passport_country,
+
+            'contact_type': contact.contact_type,
+            'contact_category': contact.contact_category,
+
+            'other_details': contact.other_details,
+
+            'created_at': contact.created_at,
+            'updated_at': contact.updated_at
+        }
+        return JsonResponse(contact_data)
+    except Contact.DoesNotExist:
+        return JsonResponse({'error': 'Contactul nu a fost găsit!'}, status=404)
