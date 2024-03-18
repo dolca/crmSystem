@@ -1,8 +1,8 @@
 /*
    Template Name: CRM System - Admin & Dashboard App
-   Author: adrian_dolca
-   Website: https://adrian_dolca.com/
-   Contact: adrian_dolca@gmail.com
+   Author: Adrian Dolca
+   Website: https://adrian-dolca.ro
+   Contact: adrian.dolca@proton.me
    File: invoice list init js
 */
 
@@ -12,14 +12,14 @@ var Invoices = [
     {
         invoice_no: '24301901',
         logo_img: '/static/images/logo-light.png',
-        customer: 'adrian_dolca',
-        email: "adrian_dolca@crmsystem.com",
+        customer: 'Adrian Dolca',
+        email: "adrian.dolca@crmsystem.com",
         createDate: "28 Mar, 2023",
         dueDate: "06 Apr, 2023",
         invoice_amount: 381.76,
         status: 'Paid',
         billing_address: {
-            full_name: 'adrian_dolca',
+            full_name: 'Adrian Dolca',
             address: '5114 Adipiscing St. Puno United States 46782',
             phone: '(926) 817-7835',
             tax: '123456789'
@@ -59,8 +59,8 @@ var Invoices = [
         },
         company_details: {
             legal_registration_no: "987654",
-            email: 'crmsystem@adrian_dolca.com',
-            website: 'www.adrian_dolca.com',
+            email: 'contact@adrian-dolca.ro',
+            website: 'www.adrian-dolca.ro',
             contact_no: '+(01) 234 6789'
         },
         order_summary: {
@@ -115,8 +115,8 @@ var Invoices = [
         },
         company_details: {
             legal_registration_no: "987654",
-            email: 'crmsystem@adrian_dolca.com',
-            website: 'www.adrian_dolca.com',
+            email: 'contact@adrian-dolca.ro',
+            website: 'www.adrian-dolca.ro',
             contact_no: '+(01) 234 6789',
         },
         order_summary: {
@@ -164,8 +164,8 @@ var Invoices = [
         },
         company_details: {
             legal_registration_no: "987654",
-            email: 'crmsystem@adrian_dolca.com',
-            website: 'www.adrian_dolca.com',
+            email: 'contact@adrian-dolca.ro',
+            website: 'www.adrian-dolca.ro',
             contact_no: '+(01) 234 6789',
         },
         order_summary: {
@@ -227,8 +227,8 @@ var Invoices = [
         },
         company_details: {
             legal_registration_no: "987654",
-            email: 'crmsystem@adrian_dolca.com',
-            website: 'www.adrian_dolca.com',
+            email: 'contact@adrian-dolca.ro',
+            website: 'www.adrian-dolca.ro',
             contact_no: '+(01) 234 6789',
         },
         order_summary: {
@@ -283,8 +283,8 @@ var Invoices = [
         },
         company_details: {
             legal_registration_no: "987654",
-            email: 'crmsystem@adrian_dolca.com',
-            website: 'www.adrian_dolca.com',
+            email: 'contact@adrian-dolca.ro',
+            website: 'www.adrian-dolca.ro',
             contact_no: '+(01) 234 6789',
         },
         order_summary: {
@@ -339,8 +339,8 @@ var Invoices = [
         },
         company_details: {
             legal_registration_no: "987654",
-            email: 'crmsystem@adrian_dolca.com',
-            website: 'www.adrian_dolca.com',
+            email: 'contact@adrian-dolca.ro',
+            website: 'www.adrian-dolca.ro',
             contact_no: '+(01) 234 6789',
         },
         order_summary: {
@@ -389,8 +389,8 @@ var Invoices = [
         },
         company_details: {
             legal_registration_no: "987654",
-            email: 'crmsystem@adrian_dolca.com',
-            website: 'www.adrian_dolca.com',
+            email: 'contact@adrian-dolca.ro',
+            website: 'www.adrian-dolca.ro',
             contact_no: '+(01) 234 6789',
         },
         order_summary: {
@@ -452,8 +452,8 @@ var Invoices = [
         },
         company_details: {
             legal_registration_no: "987654",
-            email: 'crmsystem@adrian_dolca.com',
-            website: 'www.adrian_dolca.com',
+            email: 'contact@adrian-dolca.ro',
+            website: 'www.adrian-dolca.ro',
             contact_no: '+(01) 234 6789',
         },
         order_summary: {
@@ -515,8 +515,8 @@ var Invoices = [
         },
         company_details: {
             legal_registration_no: "987654",
-            email: 'crmsystem@adrian_dolca.com',
-            website: 'www.adrian_dolca.com',
+            email: 'contact@adrian-dolca.ro',
+            website: 'www.adrian-dolca.ro',
             contact_no: '+(01) 234 6789',
         },
         order_summary: {
@@ -564,8 +564,8 @@ var Invoices = [
         },
         company_details: {
             legal_registration_no: "987654",
-            email: 'crmsystem@adrian_dolca.com',
-            website: 'www.adrian_dolca.com',
+            email: 'contact@adrian-dolca.ro',
+            website: 'www.adrian-dolca.ro',
             contact_no: '+(01) 234 6789',
         },
         order_summary: {
@@ -620,8 +620,8 @@ var Invoices = [
         },
         company_details: {
             legal_registration_no: "987654",
-            email: 'crmsystem@adrian_dolca.com',
-            website: 'www.adrian_dolca.com',
+            email: 'contact@adrian-dolca.ro',
+            website: 'www.adrian-dolca.ro',
             contact_no: '+(01) 234 6789',
         },
         order_summary: {

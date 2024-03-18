@@ -1,6 +1,6 @@
 {% extends 'partials/base.html' %}
 {% load static %}
-{% block title %} Apartamente - Toate cererile {% endblock title %}
+{% block title %} Toate cererile | Apartamente {% endblock title %}
 
 {% block extra_css %}
 {% endblock extra_css %}
@@ -8,7 +8,7 @@
 {% block content %}
 
     {% block pagetitle %}
-        {% include "partials/page_title.html" with pagetitle="Cereri" title="Toate cererile" %}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Toate cererile | Apartamente" %}
     {% endblock pagetitle %}
 
     {% if user.is_authenticated %}
@@ -185,12 +185,12 @@
         });
     </script>
     
-    <!-- prismjs plugin -->
+    <!-- Prism.js plugin -->
     <script src="{% static 'libs/prismjs/prism.js' %}"></script>
     <script src="{% static 'libs/list.js/dist/list.min.js' %}"></script>
     <script src="{% static 'libs/list.pagination.js/dist/list.pagination.min.js' %}"></script>
 
-    <!-- listjs init -->
+    <!-- List.js init -->
     <script src="{% static 'js/pages/listjs.init.js' %}"></script>
 
 {% endblock extra_javascript %}

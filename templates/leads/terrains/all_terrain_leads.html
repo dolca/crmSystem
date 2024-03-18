@@ -1,6 +1,6 @@
 {% extends 'partials/base.html' %}
 {% load static %}
-{% block title %} Terenuri - Toate cererile {% endblock title %}
+{% block title %} Toate cererile | Terenuri {% endblock title %}
 
 {% block extra_css %}
 {% endblock extra_css %}
@@ -8,7 +8,7 @@
 {% block content %}
 
     {% block pagetitle %}
-        {% include "partials/page_title.html" with pagetitle="Cereri" title="Toate cererile" %}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Toate cererile | Terenuri" %}
     {% endblock pagetitle %}
 
     {% if user.is_authenticated %}

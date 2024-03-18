@@ -1,8 +1,8 @@
 /*
 Template Name: CRM System - Admin & Dashboard App
-Author: adrian_dolca
-Website: https://adrian_dolca.com/
-Contact: adrian_dolca@gmail.comom
+Author: Adrian Dolca
+Website: https://adrian-dolca.ro
+Contact: adrian.dolca@proton.me
 File: Radar Chart init js
 */
 

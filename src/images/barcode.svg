@@ -3,7 +3,7 @@
    "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg width="576" height="118" version="1.1"
    xmlns="http://www.w3.org/2000/svg">
-   <desc>http://adrian_dolca.com/
+   <desc>http://adrian-dolca.ro
    </desc>
 
    <g id="barcode" fill="#000000">
@@ -89,7 +89,7 @@
       <rect x="572.00" y="0.00" width="4.00" height="100.00" />
       <text x="288.00" y="118.00" text-anchor="middle"
          font-family="Helvetica" font-size="16.0" fill="#000000" >
-         http://adrian_dolca.com/
+         http://adrian-dolca.ro
       </text>
    </g>
 </svg>

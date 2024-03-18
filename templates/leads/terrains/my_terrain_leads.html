@@ -1,6 +1,6 @@
 {% extends 'partials/base.html' %}
 {% load static %}
-{% block title %} Terenuri - Cererile mele {% endblock title %}
+{% block title %} Cererile mele | Terenuri {% endblock title %}
 
 {% block extra_css %}
 {% endblock extra_css %}
@@ -8,7 +8,7 @@
 {% block content %}
 
     {% block pagetitle %}
-        {% include "partials/page_title.html" with pagetitle="Cereri" title="Cererile mele" %}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Cererile mele | Terenuri" %}
     {% endblock pagetitle %}
 
     {% if user.is_authenticated %}

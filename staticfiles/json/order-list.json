@@ -63,7 +63,7 @@
         "customer": "Ophelia Steuber",
         "shop": [{
             "img": "/static/images/companies/img-4.png",
-            "name": "adrian_dolca"
+            "name": "Adrian Dolca"
         }],
         "pay_method": "COD",
         "price": "$330.00",
@@ -119,7 +119,7 @@
         "customer": "Axel Kozey",
         "shop": [{
             "img": "/static/images/companies/img-4.png",
-            "name": "adrian_dolca"
+            "name": "Adrian Dolca"
         }],
         "pay_method": "Visa",
         "price": "$136.14",

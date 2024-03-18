@@ -1,8 +1,8 @@
 /*
 Template Name: CRM System - Admin & Dashboard App
 Author: Adrian Dolca
-Website: https://adrian_dolca.com/
-Contact: adrian_dolca@gmail.com
+Website: https://adrian-dolca.ro
+Contact: adrian.dolca@proton.me
 File: real estate list map Init Js File
 */
 

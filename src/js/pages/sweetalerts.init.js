@@ -1,8 +1,8 @@
 /*
 Template Name: CRM System - Admin & Dashboard App
-Author: adrian_dolca
-Website: https://adrian_dolca.com/
-Contact: adrian_dolca@gmail.com
+Author: Adrian Dolca
+Website: https://adrian-dolca.ro
+Contact: adrian.dolca@proton.me
 File: Sweatalerts init js
 */
 
@@ -192,7 +192,7 @@ if (document.getElementById("custom-html-alert"))
             title: '<i>HTML</i> <u>example</u>',
             icon: 'info',
             html: 'You can use <b>bold text</b>, ' +
-                '<a href="//adrian_dolca.in/">links</a> ' +
+                '<a href="//adrian-dolca.ro/">links</a> ' +
                 'and other HTML tags',
             showCloseButton: true,
             showCancelButton: true,
@@ -370,7 +370,7 @@ if (document.getElementById("custom-sa-community"))
         Swal.fire({
             title: 'Join Our Community',
             html: 'You can use <b>bold text</b>, ' +
-                '<a href="//adrian_dolca.in/">links</a> ' +
+                '<a href="//adrian-dolca.ro/">links</a> ' +
                 'and other HTML tags',
             html: '<div class="mt-3 text-start">' +
                 '<label for="input-email" class="form-label fs-sm">Email</label>' +

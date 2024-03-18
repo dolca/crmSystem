@@ -2,8 +2,8 @@
 Template Name: CRM System - Admin & Dashboard App
 Author: Adrian Dolca
 Version: 1.1.0
-Website: https://adrian_dolca.com/
-Contact: adrian.dolca@gmail.com
+Website: https://adrian-dolca.ro
+Contact: adrian.dolca@proton.me
 File: Layout Js File
 */
 

@@ -31,12 +31,12 @@
         "agency": [{
             "img": "/static/images/companies/img-5.png",
             "img_alt": "img-5.png",
-            "name": "adrian_dolca"
+            "name": "Adrian Dolca"
         }],
         "location": "Sobrado, Spain",
         "property": "953",
         "employee": "17",
-        "email": "adrian_dolca@crmsystem.com",
+        "email": "adrian.dolca@crmsystem.com",
         "contact": "(21) 2345-6789"
     },{
         "id": 4,

@@ -1,6 +1,6 @@
 {% extends 'partials/base.html' %}
 {% load static %}
-{% block title %} Apartamente - Cererile mele {% endblock title %}
+{% block title %} Cererile mele | Apartamente {% endblock title %}
 
 {% block extra_css %}
 {% endblock extra_css %}
@@ -8,7 +8,7 @@
 {% block content %}
 
     {% block pagetitle %}
-        {% include "partials/page_title.html" with pagetitle="Cereri" title="Cererile mele" %}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Cererile mele | Apartamente" %}
     {% endblock pagetitle %}
 
     {% if user.is_authenticated %}

@@ -1,13 +1,13 @@
 {% extends 'partials/base.html' %}
 {% load static %}
-{% block title %} Adaugă cerere nouă {% endblock %}
+{% block title %} Adaugă cerere nouă {% endblock title %}
 
 {% block content %}
-
+    
     {% block pagetitle %}
         {% include 'partials/page_title.html' with pagetitle='Cereri' title='Adaugă cerere nouă' %}
     {% endblock pagetitle %}
-
+    
     {% if user.is_authenticated %}
         <div class="row justify-content-center">
             <div class="col-lg-4 col-sm-6">
@@ -233,6 +233,10 @@
             </div>
         </div>
     </div>
+
+{% endblock content %}
+
+{% block extra_javascript %}
     
     <script src="{% static 'libs/choices.js/public/assets/scripts/choices.min.js' %}"></script>
     
@@ -588,4 +592,4 @@
         }
     </script>
 
-{% endblock %}
+{% endblock extra_javascript %}

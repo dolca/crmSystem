@@ -1,8 +1,8 @@
 /*
 Template Name: CRM System - Admin & Dashboard App
 Author: Adrian Dolca
-Website: https://adrian_dolca.com/
-Contact: adrian.dolca@gmail.com
+Website: https://adrian-dolca.ro
+Contact: adrian.dolca@proton.me
 File: Notifications init js
 */
 

@@ -1,11 +1,11 @@
 {% extends 'partials/base.html' %}
-
-{% block title %} Informații cerere nouă apartament {% endblock %}
+{% load static %}
+{% block title %} Cerere nouă | Apartament {% endblock title %}
 
 {% block content %}
-
+    
     {% block pagetitle %}
-        {% include "partials/page_title.html" with pagetitle="Cereri" title="Informații cerere nouă apartament" %}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Cerere nouă | Apartament" %}
     {% endblock pagetitle %}
 
     {% if user.is_authenticated %}
@@ -287,7 +287,7 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="lead_other_details" class="form-label">Alte detalii</label>
                                                 <textarea type="text" id="lead_other_details" name="other_details" 
-                                                          class="form-control"></textarea>
+                                                          rows="4" class="form-control"></textarea>
                                             </div>
                                             <hr class="border-secondary-subtle">
                                             <div class="col-lg-12 mb-3">
@@ -310,7 +310,7 @@
                                             <div class="col-lg-12">
                                                 <label for="lead_deadline_time" class="form-label">Ora limită</label>
                                                 <input type="time" id="lead_deadline_time" name="deadline_time" 
-                                                       class="form-control">
+                                                       class="form-control" step="600">
                                             </div>
                                         </div>
                                     </div>
@@ -364,55 +364,61 @@
                     </div>
                 </div>
             </div>
-            {{ form.as_p }}
         {% endif %}
     {% endif %}
 
+{% endblock content %}
+
+{% block extra_javascript %}
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            console.log('Conținutul DOM a fost încărcat.');
+            
+            var deadlineTimeInput = document.getElementById('lead_deadline_time');
+            deadlineTimeInput.step = 600;
+            
             var storedType = localStorage.getItem('selectedType');
             var storedContactId = localStorage.getItem('selectedContact');
-
+        
             console.log('Tip cerere:', storedType);
             console.log('ID contact:', storedContactId);
-
-            document.getElementById('id_property_type').value = storedType;
-            document.getElementById('id_contact').value = storedContactId;
-
-            fetch('/contacts/api/contact-details/' + storedContactId)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Eroare la solicitarea datelor contactului!');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    document.getElementById('firstName').innerText = data.first_name;
-                    document.getElementById('lastName').innerText = data.last_name;
-                    document.getElementById('phoneNumber').innerText = data.phone_number;
-                    document.getElementById('email').innerText = data.email;
-                })
-                .catch(error => {
-                    console.error('Eroare:', error);
-                });
-
+        
+            if (document.getElementById('id_property_type')) {
+                document.getElementById('id_property_type').value = storedType;
+            }
+            if (document.getElementById('id_contact')) {
+                document.getElementById('id_contact').value = storedContactId;
+            }
+        
+            if (storedContactId) {
+                fetch('/contacts/api/contact-details/' + storedContactId)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Eroare la solicitarea datelor contactului!');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        document.getElementById('firstName').innerText = data.first_name;
+                        document.getElementById('lastName').innerText = data.last_name;
+                        document.getElementById('phoneNumber').innerText = data.phone_number;
+                        document.getElementById('email').innerText = data.email;
+                    })
+                    .catch(error => {
+                        console.error('Eroare:', error);
+                    });
+            }
+        
             localStorage.removeItem('selectedType');
             localStorage.removeItem('selectedContact');
-
+        
             $('#lead_assigned_listings').on('input', function () {
                 var inputValue = $(this).val();
                 var optionHtml = '<li>' + inputValue + '</li>';
                 $('#assignedListingsOptions').append(optionHtml);
             });
-            
-            var citySelect = document.getElementById('city');
-            var otherCityInput = document.getElementById('otherCity');
-            if (citySelect.value === 'other') {
-                otherCityInput.style.display = 'inline-block';
-            } else {
-                otherCityInput.style.display = 'none';
-            }
         });
     </script>
 
-{% endblock %}
+{% endblock extra_javascript %}

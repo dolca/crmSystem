@@ -130,10 +130,10 @@
         "instructor": [{
             "img": "/static/images/users/32/avatar-1.jpg",
             "img_alt": "avatar-1.jpg",
-            "name": "adrian_dolca"
+            "name": "Adrian Dolca"
         }],
         "total_course": "159",
-        "email": "adrian_dolca@crmsystem.com",
+        "email": "adrian.dolca@crmsystem.com",
         "experience": "2 Years",
         "students": "49",
         "contact": "+(123) 15962 32145",
