@@ -71,5 +71,5 @@ class PasswordSetForm(SetPasswordForm):
         self.fields['password2'].widget = forms.PasswordInput(
             attrs={'class': 'form-control mb-2', 'placeholder': 'Confirmă parola nouă', 'id': 'password8'})
 
-        self.fields['password1'].label = 'Parolă nouă'
-        self.fields['password2'].label = 'Confirmă parola nouă'
+        self.fields['password1'].label = 'Parolă'
+        self.fields['password2'].label = 'Confirmă parola'
