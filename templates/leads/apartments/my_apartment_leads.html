@@ -1,0 +1,190 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %} Cererile mele | Apartamente {% endblock title %}
+
+{% block content %}
+
+    {% block pagetitle %}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Cererile mele | Apartamente" %}
+    {% endblock pagetitle %}
+
+    {% if user.is_authenticated %}
+        {% if perms.apartmentlead.view_apartment_lead %}
+            <div class="row">
+                <div class="col-lg-12">
+                
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="customerList">
+                                <div class="row g-4 mb-3">
+                                    <div class="col-sm-auto">
+                                        <div>
+                                            <a href="{% url 'leads:add_new_lead' %}" class="btn btn-subtle-success"><i 
+                                                    class="ri-add-line align-bottom me-1"></i> Adaugă cerere nouă
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="d-flex justify-content-sm-end">
+                                            <div class="search-box ms-2">
+                                                <input type="text" class="form-control search" placeholder="Caută cereri">
+                                                <i class="ri-search-line search-icon"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive table-card mt-3 mb-1">
+                                    <table class="table align-middle table-nowrap table-hover">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th scope="col" style="width: 50px;">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="checkAll" value="option">
+                                                    </div>
+                                                </th>
+                                                <th>ID</th>
+                                                <th class="sort" data-sort="customer_name">Date contact</th>
+                                                <th>Tip cerere</th>
+                                                <th>Buget alocat</th>
+                                                <th>Adresă</th>
+                                                <th>Urgență</th>
+                                                <th class="sort" data-sort="date">Adăugată în</th>
+                                                <th>Proprietăți asociate</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list form-check-all">
+                                            {% if my_apartment_leads %}
+                                                {% for apartment in my_apartment_leads %}
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" name="chk_child" value="option1">
+                                                            </div>
+                                                        </th>
+                                                        <td>
+                                                            {{ apartment.id }}
+                                                        </td>
+                                                        <td>
+                                                            <div class="customer_name">
+                                                                <strong>{{ apartment.contact.first_name }} {{ apartment.contact.last_name }}</strong>
+                                                            </div>
+                                                            <div class="text-muted">{% if apartment.contact.email %}
+                                                                {{ apartment.contact.email }}{% else %}Fără e-mail{% endif %}
+                                                            </div>
+                                                            <div>{% if apartment.contact.phone_number %}
+                                                                {{ apartment.contact.phone_number }}{% else %}Fără nr. telefon{% endif %}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div>{{ apartment.transaction_type }}</div>
+                                                            <div>{{ apartment.get_property_type_display }}</div>
+                                                            <div>{{ apartment.destination }}</div>
+                                                        </td>
+                                                        <td>
+                                                            <div>{% if apartment.budget %}<strong>{{ apartment.budget }}</strong>
+                                                            {% else %}Buget necunoscut{% endif %}</div>
+                                                            <div>{% if apartment.payment_method %}{{ apartment.payment_method }}
+                                                            {% else %}Metodă plată<br>nespecificată{% endif %}</div>
+                                                        </td>
+                                                        <td>
+                                                            <div>{% if apartment.street %}{{ apartment.street }}
+                                                            {% else %}Stradă nespecificată{% endif %}</div>
+                                                            <div>{% if apartment.zone %}{{ apartment.zone }}
+                                                            {% else %}Zonă nespecificată{% endif %}</div>
+                                                            <div>{{ apartment.city }}</div>
+                                                            <div>{{ apartment.county }}</div>
+                                                        </td>
+                                                        <td>
+                                                            {{ apartment.urgency }}
+                                                        </td>
+                                                        <td class="date">
+                                                            {{ apartment.created_at|date:'d M Y' }}
+                                                        </td>
+                                                        <td>
+                                                            {% if apartment.assigned_listings.exists %}
+                                                                {% for apartment in apartment.assigned_listings.all %}
+                                                                    {{ apartment.id }}
+                                                                    {% if not forloop.last %}, {% endif %}
+                                                                {% endfor %}
+                                                            {% else %}
+                                                                Nu există
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if perms.apartment_lead.view_apartment_lead_details %}
+                                                                {% if apartment.id %}
+                                                                    <a class='btn btn-subtle-primary btn-custom-width'
+                                                                       target='_blank' data-exclude-clickthrough='true'
+                                                                       href="{% url 'leads:apartment_lead_details' apartment.id %}">Detalii
+                                                                    </a>
+                                                                {% endif %}
+                                                            {% endif %}
+                                                            <br>
+                                                            {% if perms.apartment_lead.change_apartment_lead %}
+                                                                {% if apartment.id %}
+                                                                    <a class='btn btn-subtle-info btn-custom-width'
+                                                                       target='_blank'
+                                                                       data-exclude-clickthrough='true'
+                                                                       href="{% url 'leads:edit_apartment_lead' apartment.id %}">Editează
+                                                                    </a>
+                                                                {% endif %}
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="10"><h5 class="d-flex justify-content-md-center justify-content-sm-start">
+                                                        Nu ai cereri disponibile!</h5>
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+    
+{% endblock content %}
+
+{% block extra_javascript %}
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.search').keyup(function () {
+                var searchText = $(this).val().toLowerCase();
+
+                $('table tbody tr').each(function () {
+                    var cellText = $(this).text().toLowerCase();
+
+                    if (cellText.indexOf(searchText) === -1) {
+                        $(this).hide();
+                    } else {
+                        $(this).show();
+                    }
+                });
+            });
+        });
+    </script>
+    
+    <!-- prism.js plugin -->
+    <script src="{% static 'libs/prismjs/prism.js' %}"></script>
+    <script src="{% static 'libs/list.js/dist/list.min.js' %}"></script>
+    <script src="{% static 'libs/list.pagination.js/dist/list.pagination.min.js' %}"></script>
+
+    <!-- list.js init -->
+    <script src="{% static 'js/pages/listjs.init.js' %}"></script>
+
+{% endblock extra_javascript %}

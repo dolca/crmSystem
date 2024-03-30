@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ro" {% block html %} data-layout="vertical" data-sidebar="dark" data-sidebar-size="lg"
+      data-preloader="disable" data-theme="default" data-bs-theme="light" {% endblock html %} >
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock title %} | CRM System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Adrian Dolca" name="author">
+    <meta content="Real Estate CRM System App" name="description">
+    <meta content="real estate, crm, imobiliare" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{% static "images/favicon.ico" %}" rel="icon">
+    <link href="{% static "images/apple-touch-icon.png" %}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    {% block css %}
+
+        {% block extra_css %}
+        {% endblock extra_css %}
+
+        <!-- Layout config JS -->
+        <script src="{% static 'js/layout.js' %}"></script>
+        <!-- Bootstrap CSS -->
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+        <!-- Icons CSS -->
+        <link href="{% static 'css/icons.min.css' %}" rel="stylesheet" type="text/css">
+        <!-- App CSS-->
+        <link href="{% static 'css/app.min.css' %}" rel="stylesheet" type="text/css">
+        <!-- Custom CSS-->
+        <link href="{% static 'css/custom.css' %}" rel="stylesheet" type="text/css">
+
+    {% endblock css %}
+
+</head>
+
+<body>
+<!-- start layout-wrapper -->
+<div id="layout-wrapper">
+
+    {% block header %}
+        {% include "partials/topbar.html" %}
+    {% endblock header %}
+
+    {% block sidebar %}
+        {% include "partials/sidebar.html" %}
+    {% endblock sidebar %}
+
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+
+                {% block content %}
+                {% endblock content %}
+
+            </div><!-- end container-fluid -->
+        </div><!-- end page-content -->
+
+        {% block footer %}
+            {% include "partials/footer.html" %}
+        {% endblock footer %}
+
+    </div><!-- end main-content -->
+
+</div><!-- end layout-wrapper -->
+
+{% block extra_content %}
+{% endblock extra_content %}
+
+<!-- start right sidebar -->
+{% block right_sidebar %}
+    {% include "partials/customizer.html" %}
+{% endblock right_sidebar %}
+<!-- end right sidebar -->
+
+{% block javascript %}
+
+    <!-- JavaScript -->
+    <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'libs/simplebar/dist/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/plugins.js' %}"></script>
+
+    {% block extra_javascript %}
+    {% endblock extra_javascript %}
+
+    <!-- App JS -->
+    <script src="{% static 'js/app.js' %}"></script>
+
+{% endblock javascript %}
+
+</body>
+
+</html>

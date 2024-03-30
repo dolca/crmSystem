@@ -1,0 +1,10 @@
+{% load account %}
+{% load allauth %}
+{% user_display user as user_display %}
+{% element alert %}
+    {% slot message %}
+        <div style="color: firebrick;">
+            <strong>Notă</strong>: Ești deja autentificat ca "{{ user_display }}".
+        </div>
+    {% endslot %}
+{% endelement %}

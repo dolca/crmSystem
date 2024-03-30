@@ -1,0 +1,32 @@
+/*
+Application: Real Estate CRM System App
+Developed by: Adrian Dolca
+Website: https://adrian-dolca.ro
+Contact: contact@adrian-dolca.ro
+File: Custom Css File
+*/
+/* Table buttons */
+.btn-custom-width {
+    width: 100%;
+    margin-bottom: 3px;
+}
+
+/* Sidebar font-size */
+span.sidebar-text {
+    font-size: 14px;
+}
+
+/* Password view addon */
+.password-toggle {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    background-color: transparent;
+    border: none;
+}
+
+.password-toggle:focus {
+    outline: none;
+}

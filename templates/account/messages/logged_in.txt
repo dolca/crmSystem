@@ -1,0 +1,4 @@
+{% load account %}
+{% user_display user as name %}
+Te-ai conectat cu succes.
+Bine ai venit, {{name}}.

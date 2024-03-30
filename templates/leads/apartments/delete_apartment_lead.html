@@ -1,0 +1,37 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Șterge cererea {% endblock title %}
+
+{% block content %}
+    
+    {% block pagetitle %}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Șterge cererea" %}
+    {% endblock pagetitle %}
+    
+    {% if user.is_authenticated %}
+        {% if perms.leads.delete_apartment_lead %}
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="col-md-12 mb-3">
+                                    <h5 class="text-center"><i class="bi bi-exclamation-triangle"></i> 
+                                        Sigur vrei să ștergi cererea asociată contactului cu numele {{ leads.contact }}?
+                                    </h5>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <button type="submit" class="btn btn-subtle-danger">DA</button>
+                                    <a href="{% url 'leads:apartment_lead_details' apartmentlead.id %}" 
+                                       class="btn btn-subtle-primary">NU</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock content %}

@@ -1,0 +1,160 @@
+{% load static %}
+{% block sidebar %}
+
+    <div class="app-menu navbar-menu">
+
+        <div class="navbar-brand-box">
+            <a href="{% url 'dashboard:dashboard' %}" class="logo logo-dark">
+            <span class="logo-sm">
+                <img src="{% static 'images/logo-sm.png' %}" alt="" height="22">
+            </span>
+                <span class="logo-lg">
+                <img src="{% static 'images/logo-dark.png' %}" alt="" height="22">
+            </span>
+            </a>
+            <a href="{% url 'dashboard:dashboard' %}" class="logo logo-light">
+            <span class="logo-sm">
+                <img src="{% static 'images/logo-sm.png' %}" alt="" height="22">
+            </span>
+                <span class="logo-lg">
+                <img src="{% static 'images/logo-light.png' %}" alt="" height="22">
+            </span>
+            </a>
+            <button type="button" class="btn btn-sm p-0 fs-3xl header-item float-end btn-vertical-sm-hover"
+                    id="vertical-hover">
+                <i class="ri-record-circle-line"></i>
+            </button>
+        </div>
+
+        <div id="scrollbar">
+            <div class="container-fluid">
+
+                <div id="two-column-menu">
+                </div>
+                <ul class="navbar-nav" id="navbar-nav">
+
+                    <li class="menu-title"><span>Meniu</span></li>
+                    <li class="nav-item">
+                        <a href="{% url 'dashboard:dashboard' %}" class="nav-link menu-link"> <i 
+                                class='bi bi-grid fs-2xl'></i> <span class="sidebar-text">Dashboard</span> 
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link menu-link collapsed" href="#leadsMultilevel" data-bs-toggle="collapse"
+                           role="button" aria-expanded="false" aria-controls="leadsMultilevel">
+                            <i class="bi bi-database-fill"></i> <span class="sidebar-text">Cereri</span> 
+                        </a>
+                        <div class="collapse menu-dropdown" id="leadsMultilevel">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="#myLeads" class="nav-link" data-bs-toggle="collapse" role="button"
+                                       aria-expanded="false" aria-controls="myLeads"> Cererile mele </a>
+                                    <div class="collapse menu-dropdown" id="myLeads">
+                                        <ul class="nav nav-sm flex-column">
+                                            <li class="nav-item">
+                                                <a href="{% url 'leads:my_apartment_leads' %}" class="nav-link">
+                                                    Apartamente </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{% url 'leads:my_house_leads' %}" class="nav-link"> Case </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{% url 'leads:my_terrain_leads' %}" class="nav-link">
+                                                    Terenuri </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{% url 'leads:my_commercial_space_leads' %}" class="nav-link">
+                                                    Spații comerciale </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{% url 'leads:my_office_space_leads' %}" class="nav-link">
+                                                    Spații de birouri </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{% url 'leads:my_industrial_space_leads' %}" class="nav-link">
+                                                    Spații industriale </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#generalLeads" class="nav-link" data-bs-toggle="collapse" role="button"
+                                       aria-expanded="false" aria-controls="generalLeads"> Cereri generale </a>
+                                    <div class="collapse menu-dropdown" id="generalLeads">
+                                        <ul class="nav nav-sm flex-column">
+                                            <li class="nav-item">
+                                                <a href="{% url 'leads:general_apartment_leads' %}" class="nav-link">
+                                                    Apartamente </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{% url 'leads:general_house_leads' %}" class="nav-link">
+                                                    Case </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{% url 'leads:general_terrain_leads' %}" class="nav-link">
+                                                    Terenuri </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{% url 'leads:general_commercial_space_leads' %}"
+                                                   class="nav-link">
+                                                    Spații comerciale </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{% url 'leads:general_office_space_leads' %}" class="nav-link">
+                                                    Spații de birouri </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{% url 'leads:general_industrial_space_leads' %}"
+                                                   class="nav-link">
+                                                    Spații industriale </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#allLeads" class="nav-link" data-bs-toggle="collapse" role="button"
+                                       aria-expanded="false" aria-controls="allLeads"> Toate cererile </a>
+                                    <div class="collapse menu-dropdown" id="allLeads">
+                                        <ul class="nav nav-sm flex-column">
+                                            <li class="nav-item">
+                                                <a href="{% url 'leads:all_apartment_leads' %}" class="nav-link">
+                                                    Apartamente </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{% url 'leads:all_house_leads' %}" class="nav-link"> Case </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{% url 'leads:all_terrain_leads' %}" class="nav-link">
+                                                    Terenuri </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{% url 'leads:all_commercial_space_leads' %}" class="nav-link">
+                                                    Spații comerciale </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{% url 'leads:all_office_space_leads' %}" class="nav-link">
+                                                    Spații de birouri </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{% url 'leads:all_industrial_space_leads' %}" class="nav-link">
+                                                    Spații industriale </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- Sidebar -->
+        </div>
+
+        <div class="sidebar-background"></div>
+    </div>
+
+    <div class="vertical-overlay"></div>
+
+{% endblock sidebar %}

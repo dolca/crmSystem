@@ -1,0 +1,1 @@
+Ai confirmat cu succes adresa de e-mail "{{email}}".

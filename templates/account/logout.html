@@ -1,0 +1,36 @@
+{% extends "account/base.html" %}
+{% load static %}
+{% block title %} Deconectare {% endblock title %}
+
+{% block content %}
+
+    <div class="col-xxl-6 mx-auto">
+        <div class="card mb-0 border-0 shadow-none">
+            <div class="card-body p-sm-5 m-lg-4">
+                <div class="display-5 text-center">
+                    <i class="bi bi-box-arrow-right"></i>
+                </div>
+                <div class="mt-2 pt-2 text-center">
+                    <h5 class="fs-2xl">Mulțumim că ești alături de noi</h5>
+                    <div class="mt-4 mb-2">
+                        <p>Sigur dorești să te deconectezi de la contul tău?</p>
+                        <form method="post" action="{% url 'account_logout' %}">
+                            {% csrf_token %}
+                            {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+                            {% endif %}
+                            <button type="submit" class="btn btn-primary w-100">Deconectează-mă</button>
+                        </form>
+                        
+                        <div class="mt-4 text-center">
+                            <p>Înapoi la <a href="{% url 'dashboard:dashboard' %}" 
+                                    class="fw-semibold text-primary text-decoration-underline">Dashboard</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end card body -->
+        </div><!-- end card -->
+    </div><!--end col-->
+
+{% endblock content %}

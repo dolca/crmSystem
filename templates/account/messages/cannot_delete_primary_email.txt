@@ -1,0 +1,1 @@
+Nu poți șterge adresa de e-mail principală ({{email}}).
