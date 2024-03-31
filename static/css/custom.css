@@ -5,18 +5,18 @@ Website: https://adrian-dolca.ro
 Contact: contact@adrian-dolca.ro
 File: Custom Css File
 */
-/* Table buttons */
+/* Butoane tabele */
 .btn-custom-width {
     width: 100%;
     margin-bottom: 3px;
 }
 
-/* Sidebar font-size */
+/* Mărime font bară laterală */
 span.sidebar-text {
     font-size: 14px;
 }
 
-/* Password view addon */
+/* Buton vizualizare parole */
 .password-toggle {
     position: absolute;
     right: 0;
@@ -29,4 +29,27 @@ span.sidebar-text {
 
 .password-toggle:focus {
     outline: none;
+}
+
+/* Container Allauth acasă */
+.alert-container {
+    display: none;
+    z-index: 9999;
+}
+
+.alert {
+    position: relative;
+    display: block;
+}
+
+.position-fixed {
+    position: fixed !important;
+}
+
+.top-0 {
+    top: 60px !important;
+}
+
+.end-0 {
+    right: 0 !important;
 }

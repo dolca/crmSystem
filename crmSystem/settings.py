@@ -51,8 +51,8 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-CRISPY_TEMPLATE_PACK = "bootstrap5"
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 ROOT_URLCONF = 'crmSystem.urls'
 
@@ -75,11 +75,11 @@ TEMPLATES = [
 ]
 
 ACCOUNT_FORMS = {
-    "login": "crmSystem.forms.UserLoginForm",
-    "set_password": "crmSystem.forms.PasswordSetForm",
-    "change_password": "crmSystem.forms.PasswordChangeForm",
-    "reset_password": "crmSystem.forms.PasswordResetForm",
-    "reset_password_from_key": "crmSystem.forms.PasswordResetKeyForm",
+    'login': 'crmSystem.forms.UserLoginForm',
+    'set_password': 'crmSystem.forms.PasswordSetForm',
+    'change_password': 'crmSystem.forms.PasswordChangeForm',
+    'reset_password': 'crmSystem.forms.PasswordResetForm',
+    'reset_password_from_key': 'crmSystem.forms.PasswordResetKeyForm',
 }
 
 AUTHENTICATION_BACKENDS = [
@@ -93,21 +93,21 @@ AUTHENTICATION_BACKENDS = [
 # All Auth Configurations
 
 LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = "account_login"
+LOGIN_URL = 'account_login'
 ACCOUNT_LOGOUT_ON_GET = False
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 
 
 # Messages customize
 
 MESSAGE_TAGS = {
-    messages.DEBUG: "alert-info",
-    messages.INFO: "alert-info",
-    messages.SUCCESS: "alert-success",
-    messages.WARNING: "alert-warning",
-    messages.ERROR: "alert-danger",
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
 }
 
 WSGI_APPLICATION = 'crmSystem.wsgi.application'
@@ -133,25 +133,25 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
         'OPTIONS': {
-            'min_length': 8,  # Lungimea minimă
+            'min_length': 8,  # Lungime minimă
         }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumUppercaseValidator',
         'OPTIONS': {
-            'min_uppercase': 1,  # Numărul minim de litere majuscule
+            'min_uppercase': 1,  # Număr minim de litere majuscule
         }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLowercaseValidator',
         'OPTIONS': {
-            'min_lowercase': 1,  # Numărul minim de litere mici
+            'min_lowercase': 1,  # Număr minim de litere mici
         }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
         'OPTIONS': {
-            'min_digits': 1,  # Numărul minim de cifre
+            'min_digits': 1,  # Număr minim de cifre
         }
     },
     {

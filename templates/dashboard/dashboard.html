@@ -1,40 +1,45 @@
 {% extends 'partials/base.html' %}
 {% load static %}
-{% block title %} Dashboard {% endblock title %}
+{% block title %} Acasă {% endblock title %}
 
 {% block content %}
     
-        <div id="successModal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Conectare cu succes</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Te-ai conectat cu succes!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Închide</button>
-                </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Acasă</h4>
             </div>
         </div>
     </div>
-
+    
+    <div class="alert-container position-fixed top-0 end-0 p-3">
+        {% if messages %}
+            <div class="alert alert-success" role="alert">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    
 {% endblock content %}
 
 {% block extra_javascript %}
     
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var successModal = document.getElementById('successModal');
-            if (successModal) {
-                $('#successModal').modal('show');
+            var alertContainer = document.querySelector('.alert-container');
+            var alert = document.querySelector('.alert');
+            
+            function showMessage() {
+                alertContainer.style.display = 'block';
+                setTimeout(function () {
+                    alertContainer.style.display = 'none';
+                }, 5000);
+            }
+            
+            if (alert && alert.innerHTML.trim() !== '') {
+                showMessage();
             }
         });
     </script>

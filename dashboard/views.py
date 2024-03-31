@@ -6,4 +6,4 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     pass
 
 
-dashboard_view = DashboardView.as_view(template_name="dashboard/dashboard.html")
+dashboard_view = DashboardView.as_view(template_name='dashboard/dashboard.html')
