@@ -42,7 +42,7 @@ class LeadCreateForm(ModelForm):
         deadline = DateTimeField(
             widget=DateTimeInput(attrs={'type': 'datetime-local', 'format': '%d.%m.%Y %H:%M'}),
             input_formats=['%d.%m.%Y %H:%M'],
-            help_text="zz.ll.aaaa hh:mm"
+            help_text='ZZ.LL.AAAA OO:MM'
         )
 
 
@@ -312,13 +312,13 @@ class LeadUpdateForm(ModelForm):
             'created_at': DateInput(attrs={'readonly': 'readonly'}),
             'updated_at': DateInput(attrs={'readonly': 'readonly'}),
             'deadline_date': DateInput(attrs={'type': 'date', 'format': '%d.%m.%Y'}),
-            'deadline_time': TimeInput(attrs={'type': 'time', 'format': '%H:%M', 'step': '15'})
+            'deadline_time': TimeInput(attrs={'type': 'time', 'format': '%H:%M', 'step': '10'})
         }
 
         deadline = DateTimeField(
             widget=DateTimeInput(attrs={'type': 'datetime-local', 'format': '%d.%m.%Y %H:%M'}),
             input_formats=['%d.%m.%Y %H:%M'],
-            help_text="zz.ll.aaaa, hh:mm"
+            help_text='ZZ.LL.AAAA OO:MM'
         )
 
 

@@ -36,23 +36,32 @@
 {% endblock %}
 
 <script>
-
+    
     document.getElementById('id_property_type').addEventListener('change', function () {
-        var selectedType = this.value;
-        var form = document.getElementById('propertyForm');
-
-        if (selectedType === 'apartment') {
-            form.action = '{% url 'add_apartment' %}';
-        } else if (selectedType === 'house') {
-            form.action = '{% url 'add_house' %}';
-        } else if (selectedType === 'terrain') {
-            form.action = '{% url 'add_terrain' %}';
-        } else if (selectedType === 'commercial_space') {
-            form.action = '{% url 'add_commercial_space' %}';
-        } else if (selectedType === 'office_space') {
-            form.action = '{% url 'add_office_space' %}';
-        } else if (selectedType === 'industrial_space') {
-            form.action = '{% url 'add_industrial_space' %}';
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            var selectedContact = document.getElementById('id_contact').value;
+            var selectedType = document.getElementById('id_property_type').value;
+            
+            sessionStorage.setItem('selectedContact', selectedContact);
+            sessionStorage.setItem('selectedType', selectedType);
+            
+            var redirectUrl = '';
+            if (selectedType === 'Apartament') {
+                redirectUrl = '{% url 'leads:add_apartment_lead' %}';
+            } else if (selectedType === 'Casă') {
+                redirectUrl = '{% url 'leads:add_house_lead' %}';
+            } else if (selectedType === 'Teren') {
+                redirectUrl = '{% url 'leads:add_terrain_lead' %}';
+            } else if (selectedType === 'Spațiu comercial') {
+                redirectUrl = '{% url 'leads:add_commercial_space_lead' %}';
+            } else if (selectedType === 'Spațiu de birouri') {
+                redirectUrl = '{% url 'leads:add_office_space_lead' %}';
+            } else if (selectedType === 'Spațiu industrial') {
+                redirectUrl = '{% url 'leads:add_industrial_space_lead' %}';
+            }
+            window.location.href = redirectUrl;
         }
     });
     

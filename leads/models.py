@@ -11,14 +11,14 @@ from listings.selectors import TIP_PROPRIETATE, TIP_APARTAMENT, DESTINATIE_AP, E
 
 
 class Lead(Model):
-    status = CharField(choices=STATUS, default='Activă', verbose_name='Status cerere⋆')
-    property_type = CharField(choices=TIP_PROPRIETATE, default='apartment', verbose_name='Tip proprietate⋆')
-    transaction_type = CharField(choices=TIP_TRANZACTIE, verbose_name='Tip tranzacție⋆')
+    status = CharField(choices=STATUS, default='Activă', verbose_name='Status cerere')
+    property_type = CharField(choices=TIP_PROPRIETATE, default='Apartament', verbose_name='Tip cerere')
+    transaction_type = CharField(choices=TIP_TRANZACTIE, verbose_name='Tip tranzacție')
 
     contact = ForeignKey(Contact, on_delete=SET_NULL, null=True, verbose_name='Contact asociat')
 
-    county = CharField(choices=JUDETE, verbose_name='Județ⋆')
-    city = CharField(max_length=30, verbose_name='Localitate⋆')
+    county = CharField(choices=JUDETE, verbose_name='Județ')
+    city = CharField(max_length=30, verbose_name='Localitate')
     zone = CharField(max_length=30, null=True, blank=True, verbose_name='Zonă')
     street = CharField(max_length=40, null=True, blank=True, verbose_name='Stradă')
 
@@ -43,8 +43,8 @@ class Lead(Model):
 
 
 class ApartmentLead(Lead):
-    apartment_type = CharField(choices=TIP_APARTAMENT, verbose_name='Tip apartament⋆')
-    destination = CharField(choices=DESTINATIE_AP, verbose_name='Destinație⋆')
+    apartment_type = CharField(choices=TIP_APARTAMENT, verbose_name='Tip apartament')
+    destination = CharField(choices=DESTINATIE_AP, verbose_name='Destinație')
 
     rooms_number = IntegerField(null=True, blank=True, verbose_name='Număr camere')
     nr_bedrooms = IntegerField(null=True, blank=True, verbose_name='Număr dormitoare')
@@ -77,7 +77,7 @@ class ApartmentLead(Lead):
 
 
 class HouseLead(Lead):
-    house_type = CharField(choices=TIP_CASA, verbose_name='Tip casă⋆')
+    house_type = CharField(choices=TIP_CASA, verbose_name='Tip casă')
     destination = CharField(choices=DESTINATIE_AP, null=True, blank=True, verbose_name='Destinație')
 
     rooms_number = IntegerField(null=True, blank=True, verbose_name='Număr camere')
@@ -106,9 +106,9 @@ class HouseLead(Lead):
 
 
 class TerrainLead(Lead):
-    terrain_type = CharField(choices=TIP_TEREN, verbose_name='Tip teren⋆')
-    destination = CharField(choices=DESTINATIE_TEREN, verbose_name='Destinație⋆')
-    classification = CharField(choices=CLASIFICARE_TEREN, verbose_name='Clasificare⋆')
+    terrain_type = CharField(choices=TIP_TEREN, verbose_name='Tip teren')
+    destination = CharField(choices=DESTINATIE_TEREN, verbose_name='Destinație')
+    classification = CharField(choices=CLASIFICARE_TEREN, verbose_name='Clasificare')
 
     terrain_surface = DecimalField(max_digits=6, decimal_places=2, null=True, blank=True, verbose_name='Suprafață teren')
     unit = CharField(choices=UNITATE_SUPRAFATA, null=True, blank=True, verbose_name='Unitate suprafață')
@@ -130,7 +130,7 @@ class TerrainLead(Lead):
 
 
 class CommercialSpaceLead(Lead):
-    space_type = CharField(choices=TIP_IMOBIL_SPATIU, verbose_name='Tip imobil⋆')
+    space_type = CharField(choices=TIP_IMOBIL_SPATIU, verbose_name='Tip imobil')
     destination = CharField(choices=DESTINATIE_SP_COMERCIAL, null=True, blank=True, verbose_name='Destinație')
     pedestrian_traffic = CharField(choices=TRAFIC_PIETONAL, null=True, blank=True, verbose_name='Trafic pietonal')
 
@@ -156,7 +156,7 @@ class CommercialSpaceLead(Lead):
 
 
 class OfficeSpaceLead(Lead):
-    space_type = CharField(choices=TIP_IMOBIL_SPATIU, verbose_name='Tip imobil⋆')
+    space_type = CharField(choices=TIP_IMOBIL_SPATIU, verbose_name='Tip imobil')
     space_class = CharField(choices=CLASA_SP_BIROURI, null=True, blank=True, verbose_name='Clasă')
 
     rooms_number = IntegerField(null=True, blank=True, verbose_name='Număr camere')
@@ -187,7 +187,7 @@ class OfficeSpaceLead(Lead):
 
 
 class IndustrialSpaceLead(Lead):
-    space_type = CharField(choices=TIP_SP_INDUSTRIAL, verbose_name='Tip spațiu⋆')
+    space_type = CharField(choices=TIP_SP_INDUSTRIAL, verbose_name='Tip spațiu')
     destination = CharField(choices=DESTINATIE_SP_INDUSTRIAL, null=True, blank=True, verbose_name='Destinație')
 
     rooms_number = IntegerField(null=True, blank=True, verbose_name='Număr camere')

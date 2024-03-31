@@ -5,10 +5,11 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, DetailView, TemplateView
+from contacts.models import Contact
 from listings.forms import ResidentialEnsembleCreateForm, ResidentialEnsembleUpdateForm, OfficeBuildingCreateForm, \
     OfficeBuildingUpdateForm, ApartmentCreateForm, ApartmentUpdateForm, HouseCreateForm, HouseUpdateForm, \
     TerrainCreateForm, TerrainUpdateForm, CommercialSpaceCreateForm, CommercialSpaceUpdateForm, OfficeSpaceCreateForm, \
-    OfficeSpaceUpdateForm, IndustrialSpaceCreateForm, IndustrialSpaceUpdateForm, ListingCreateForm
+    OfficeSpaceUpdateForm, IndustrialSpaceCreateForm, IndustrialSpaceUpdateForm
 from listings.models import ResidentialEnsemble, OfficeBuilding, Apartment, House, Terrain, CommercialSpace, \
     OfficeSpace, IndustrialSpace
 
@@ -570,41 +571,24 @@ class DeletePropertyDoneView(TemplateView):
 
 
 def add_new_property(request):
-    listing_instance = None
+    contacts = Contact.objects.all()
 
     if request.method == 'POST':
-        form = ApartmentCreateForm(request.POST)
-        if form.is_valid():
-            contact = form.cleaned_data['contact']
-            property_type = form.cleaned_data['property_type']
+        contact_id = request.POST.get('id_contact')
+        property_type = request.POST.get('id_property_type')
 
-            if property_type == 'apartment':
-                listing_instance = Apartment(contact=contact)
-                form = ApartmentCreateForm(request.POST)
-            elif property_type == 'house':
-                listing_instance = House(contact=contact)
-                form = HouseCreateForm(request.POST)
-            elif property_type == 'terrain':
-                listing_instance = Terrain(contact=contact)
-                form = TerrainCreateForm(request.POST)
-            elif property_type == 'commercial_space':
-                listing_instance = CommercialSpace(contact=contact)
-                form = CommercialSpaceCreateForm(request.POST)
-            elif property_type == 'office_space':
-                listing_instance = OfficeSpace(contact=contact)
-                form = OfficeSpaceCreateForm(request.POST)
-            elif property_type == 'industrial_space':
-                listing_instance = IndustrialSpace(contact=contact)
-                form = IndustrialSpaceCreateForm(request.POST)
-            else:
-                pass
+        if property_type == 'Apartament':
+            return redirect(reverse('leads:add_apartment_lead') + f'?id_contact={contact_id}')
+        elif property_type == 'Casă':
+            return redirect(reverse('leads:add_house_lead') + f'?id_contact={contact_id}')
+        elif property_type == 'Teren':
+            return redirect(reverse('leads:add_terrain_lead') + f'?id_contact={contact_id}')
+        elif property_type == 'Spațiu comercial':
+            return redirect(reverse('leads:add_commercial_space_lead') + f'?id_contact={contact_id}')
+        elif property_type == 'Spațiu de birouri':
+            return redirect(reverse('leads:add_office_space_lead') + f'?id_contact={contact_id}')
+        elif property_type == 'Spațiu industrial':
+            return redirect(reverse('leads:add_industrial_space_lead') + f'?id_contact={contact_id}')
 
-            if listing_instance:
-                listing_instance.save()
-                return redirect(f'add_{property_type}', pk=listing_instance.pk)
-            else:
-                pass
-    else:
-        form = ApartmentCreateForm()
-
-    return render(request, 'listings/add_new_property.html', {'form': form})
+    form = ApartmentCreateForm()
+    return render(request, 'listings/add_new_property.html', {'form': form, 'contacts': contacts})

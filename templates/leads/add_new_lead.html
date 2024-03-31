@@ -49,12 +49,12 @@
                                             <label for="id_property_type" class="form-label">Tip cerere</label>
                                             <select class="form-select mb-4" name="id_property_type"
                                                     id="id_property_type">
-                                                <option value="apartment">Apartament</option>
-                                                <option value="house">Casă</option>
-                                                <option value="terrain">Teren</option>
-                                                <option value="commercial_space">Spațiu comercial</option>
-                                                <option value="office_space">Spațiu de birouri</option>
-                                                <option value="industrial_space">Spațiu industrial</option>
+                                                <option value="Apartament">Apartament</option>
+                                                <option value="Casă">Casă</option>
+                                                <option value="Teren">Teren</option>
+                                                <option value="Spațiu comercial">Spațiu comercial</option>
+                                                <option value="Spațiu de birouri">Spațiu de birouri</option>
+                                                <option value="Spațiu industrial">Spațiu industrial</option>
                                             </select>
                                         </div>
 
@@ -571,21 +571,21 @@
             var selectedContact = document.getElementById('id_contact').value;
             var selectedType = document.getElementById('id_property_type').value;
             
-            localStorage.setItem('selectedContact', selectedContact);
-            localStorage.setItem('selectedType', selectedType);
+            sessionStorage.setItem('selectedContact', selectedContact);
+            sessionStorage.setItem('selectedType', selectedType);
             
             var redirectUrl = '';
-            if (selectedType === 'apartment') {
+            if (selectedType === 'Apartament') {
                 redirectUrl = '{% url 'leads:add_apartment_lead' %}';
-            } else if (selectedType === 'house') {
+            } else if (selectedType === 'Casă') {
                 redirectUrl = '{% url 'leads:add_house_lead' %}';
-            } else if (selectedType === 'terrain') {
+            } else if (selectedType === 'Teren') {
                 redirectUrl = '{% url 'leads:add_terrain_lead' %}';
-            } else if (selectedType === 'commercial_space') {
+            } else if (selectedType === 'Spațiu comercial') {
                 redirectUrl = '{% url 'leads:add_commercial_space_lead' %}';
-            } else if (selectedType === 'office_space') {
+            } else if (selectedType === 'Spațiu de birouri') {
                 redirectUrl = '{% url 'leads:add_office_space_lead' %}';
-            } else if (selectedType === 'industrial_space') {
+            } else if (selectedType === 'Spațiu industrial') {
                 redirectUrl = '{% url 'leads:add_industrial_space_lead' %}';
             }
             window.location.href = redirectUrl;

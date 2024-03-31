@@ -5,8 +5,8 @@ STATUS_PROPRIETATE = [
 ]
 
 TIP_PROPRIETATE = [
-    ('apartment', 'Apartament'), ('house', 'Casă'), ('terrain', 'Teren'), ('commercial_space', 'Spațiu comercial'),
-    ('office_space', 'Spațiu de birouri'), ('industrial_space', 'Spațiu industrial')
+    ('Apartament', 'Apartament'), ('Casă', 'Casă'), ('Teren', 'Teren'), ('Spațiu comercial', 'Spațiu comercial'),
+    ('Spațiu de birouri', 'Spațiu de birouri'), ('Spațiu industrial', 'Spațiu industrial')
 ]
 
 TIP_TRANZACTIE = [

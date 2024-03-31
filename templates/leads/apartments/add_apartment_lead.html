@@ -1,6 +1,5 @@
 {% extends 'partials/base.html' %}
 {% load static %}
-
 {% block title %} Cerere nouă | Apartament {% endblock title %}
 
 {% block content %}
@@ -274,8 +273,7 @@
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="lead_budget" class="form-label">Buget alocat</label>
-                                                <input type="text" id="lead_budget" name="budget"
-                                                       class="form-control">
+                                                <input type="text" id="lead_budget" name="budget" class="form-control">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="lead_payment_method" class="form-label">Metodă de plată</label>
@@ -306,12 +304,12 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="lead_deadline_date" class="form-label">Data limită</label>
                                                 <input type="date" id="lead_deadline_date" name="deadline_date" 
-                                                       class="form-control">
+                                                       class="form-control" placeholder="ZZ.LL.AAAA">
                                             </div>
                                             <div class="col-lg-12">
                                                 <label for="lead_deadline_time" class="form-label">Ora limită</label>
                                                 <input type="time" id="lead_deadline_time" name="deadline_time" 
-                                                       class="form-control" step="600">
+                                                       class="form-control" step="600" placeholder="OO:MM">
                                             </div>
                                         </div>
                                     </div>
@@ -323,7 +321,7 @@
                                                 <label for="lead_assigned_listings" class="form-label">
                                                     Proprietăți asociate</label>
                                                 <select class="form-control" id="lead_assigned_listings" 
-                                                        name="assigned_listings" data-choices multiple>
+                                                        name="assigned_listings" multiple>
                                                     {% for value, label in form.fields.assigned_listings.choices %}
                                                         <option value="{{ value }}"></option>
                                                     {% endfor %}
@@ -331,7 +329,7 @@
                                             </div>
                                             <div class="col-lg-12">
                                                 <label for="lead_labels" class="form-label">Etichete</label>
-                                                <select class="form-select" id="lead_labels" data-choices multiple>
+                                                <select class="form-select" id="lead_labels" multiple>
                                                     {% for value, label in form.fields.labels.choices %}
                                                         <option value="{{ value }}"></option>
                                                     {% endfor %}
@@ -345,8 +343,8 @@
                                         <div class="card-body">
                                             <div class="col-lg-12">
                                                 <label for="lead_notes" class="form-label">Notițe proprii</label>
-                                                <textarea type="text" id="lead_notes" name="notes"
-                                                          rows="5" class="form-control"></textarea>
+                                                <textarea type="text" id="lead_notes" name="notes" rows="5" 
+                                                          class="form-control"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -372,15 +370,15 @@
 
 {% block extra_javascript %}
     
+    <!-- Choices.js -->
+    <script src="{% static 'libs/choices.js/public/assets/scripts/choices.min.js' %}"></script>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             console.log('Conținutul DOM a fost încărcat.');
             
-            var deadlineTimeInput = document.getElementById('lead_deadline_time');
-            deadlineTimeInput.step = 600;
-            
-            var storedType = localStorage.getItem('selectedType');
-            var storedContactId = localStorage.getItem('selectedContact');
+            var storedType = sessionStorage.getItem('selectedType');
+            var storedContactId = sessionStorage.getItem('selectedContact');
             
             console.log('Tip cerere:', storedType);
             console.log('ID contact:', storedContactId);
@@ -411,8 +409,15 @@
                     });
             }
             
-            localStorage.removeItem('selectedType');
-            localStorage.removeItem('selectedContact');
+            var leadAssignedListings = document.getElementById('lead_assigned_listings');
+            new Choices(leadAssignedListings, {
+                noResultsText: 'Nu există proprietăți disponibile.'
+            });
+            
+            var leadLabels = document.getElementById('lead_labels');
+            new Choices(leadLabels, {
+                noResultsText: 'Nu există alte etichete.'
+            });
         });
     </script>
     

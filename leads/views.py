@@ -502,17 +502,17 @@ def add_new_lead(request):
         contact_id = request.POST.get('id_contact')
         property_type = request.POST.get('id_property_type')
 
-        if property_type == 'apartment':
+        if property_type == 'Apartament':
             return redirect(reverse('leads:add_apartment_lead') + f'?id_contact={contact_id}')
-        elif property_type == 'house':
+        elif property_type == 'Casă':
             return redirect(reverse('leads:add_house_lead') + f'?id_contact={contact_id}')
-        elif property_type == 'terrain':
+        elif property_type == 'Teren':
             return redirect(reverse('leads:add_terrain_lead') + f'?id_contact={contact_id}')
-        elif property_type == 'commercial_space':
+        elif property_type == 'Spațiu comercial':
             return redirect(reverse('leads:add_commercial_space_lead') + f'?id_contact={contact_id}')
-        elif property_type == 'office_space':
+        elif property_type == 'Spațiu de birouri':
             return redirect(reverse('leads:add_office_space_lead') + f'?id_contact={contact_id}')
-        elif property_type == 'industrial_space':
+        elif property_type == 'Spațiu industrial':
             return redirect(reverse('leads:add_industrial_space_lead') + f'?id_contact={contact_id}')
 
     form = ApartmentLeadCreateForm()
