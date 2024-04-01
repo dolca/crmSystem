@@ -49,12 +49,9 @@
                                             <label for="id_property_type" class="form-label">Tip cerere</label>
                                             <select class="form-select mb-4" name="id_property_type"
                                                     id="id_property_type">
-                                                <option value="Apartament">Apartament</option>
-                                                <option value="Casă">Casă</option>
-                                                <option value="Teren">Teren</option>
-                                                <option value="Spațiu comercial">Spațiu comercial</option>
-                                                <option value="Spațiu de birouri">Spațiu de birouri</option>
-                                                <option value="Spațiu industrial">Spațiu industrial</option>
+                                                {% for value, label in form.fields.property_type.choices %}
+                                                    <option value="{{ value }}">{{ label }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
 

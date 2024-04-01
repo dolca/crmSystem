@@ -23,19 +23,23 @@ class ApartmentLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
     success_url = reverse_lazy('leads:lead_added')
     permission_required = 'leads.add_apartment_lead'
 
-    def form_valid(self, form):
-        try:
-            form.clean()
-        except ValidationError as err:
-            form.add_error('field_name', str(err))
-            return self.form_invalid(form)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        stored_contact_id = self.request.session.get('selectedContact')
+        context['storedContactId'] = stored_contact_id
+        return context
 
-        return super().form_valid(form)
+    def form_valid(self, form):
+        if form.is_valid():
+            self.object = form.save()
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return self.form_invalid(form)
 
 
 @login_required
 def my_apartment_leads_view(request):
-    my_apartment_leads = ApartmentLead.objects.filter(created_by=request.user).order_by('-deadline')
+    my_apartment_leads = ApartmentLead.objects.filter(created_by=request.user).order_by('-deadline_date')
     return render(request, 'leads/apartments/my_apartment_leads.html', {
         'my_apartment_leads': my_apartment_leads
     })
@@ -114,7 +118,7 @@ class HouseLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
 
 @login_required
 def my_house_leads_view(request):
-    my_house_leads = HouseLead.objects.filter(created_by=request.user).order_by('-deadline')
+    my_house_leads = HouseLead.objects.filter(created_by=request.user).order_by('-deadline_date')
     return render(request, 'leads/houses/my_house_leads.html', {'my_house_leads': my_house_leads})
 
 
@@ -191,7 +195,7 @@ class TerrainLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateV
 
 @login_required
 def my_terrain_leads_view(request):
-    my_terrain_leads = TerrainLead.objects.filter(created_by=request.user).order_by('-deadline')
+    my_terrain_leads = TerrainLead.objects.filter(created_by=request.user).order_by('-deadline_date')
     return render(request, 'leads/terrains/my_terrain_leads.html', {
         'my_terrain_leads': my_terrain_leads
     })
@@ -270,7 +274,7 @@ class CommercialSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin,
 
 @login_required
 def my_commercial_space_leads_view(request):
-    my_commercial_space_leads = CommercialSpaceLead.objects.filter(created_by=request.user).order_by('-deadline')
+    my_commercial_space_leads = CommercialSpaceLead.objects.filter(created_by=request.user).order_by('-deadline_date')
     return render(request, 'leads/commercial_spaces/my_commercial_space_leads.html', {
         'my_commercial_space_leads': my_commercial_space_leads
     })
@@ -349,7 +353,7 @@ class OfficeSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, Cre
 
 @login_required
 def my_office_space_leads_view(request):
-    my_office_space_leads = OfficeSpaceLead.objects.filter(created_by=request.user).order_by('-deadline')
+    my_office_space_leads = OfficeSpaceLead.objects.filter(created_by=request.user).order_by('-deadline_date')
     return render(request, 'leads/office_spaces/my_office_space_leads.html', {
         'my_office_space_leads': my_office_space_leads
     })
@@ -428,7 +432,7 @@ class IndustrialSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin,
 
 @login_required
 def my_industrial_space_leads_view(request):
-    my_industrial_space_leads = IndustrialSpaceLead.objects.filter(created_by=request.user).order_by('-deadline')
+    my_industrial_space_leads = IndustrialSpaceLead.objects.filter(created_by=request.user).order_by('-deadline_date')
     return render(request, 'leads/industrial_spaces/my_industrial_space_leads.html', {
         'my_industrial_space_leads': my_industrial_space_leads
     })

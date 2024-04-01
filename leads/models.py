@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
-from django.db.models import Model, SET_NULL, CharField, DecimalField, TextField, DateTimeField, IntegerField, \
-    BooleanField, ForeignKey
+from django.db.models import Model, SET_NULL, CharField, DecimalField, TextField, DateTimeField, DateField, TimeField, \
+    IntegerField, BooleanField, ForeignKey
 from contacts.models import Contact
 from leads.selectors import STATUS, TIP_TRANZACTIE, MODALITATE_PLATA, URGENTA, ETICHETA, FINISAJE
 from listings.models import Apartment, House, Terrain, CommercialSpace, OfficeSpace, IndustrialSpace
@@ -11,7 +11,7 @@ from listings.selectors import TIP_PROPRIETATE, TIP_APARTAMENT, DESTINATIE_AP, E
 
 
 class Lead(Model):
-    status = CharField(choices=STATUS, default='Activă', verbose_name='Status cerere')
+    lead_status = CharField(choices=STATUS, default='Activă', verbose_name='Status cerere')
     property_type = CharField(choices=TIP_PROPRIETATE, default='Apartament', verbose_name='Tip cerere')
     transaction_type = CharField(choices=TIP_TRANZACTIE, verbose_name='Tip tranzacție')
 
@@ -33,7 +33,8 @@ class Lead(Model):
 
     created_at = DateTimeField(auto_now_add=True, verbose_name='Data introducerii')
     updated_at = DateTimeField(auto_now=True, verbose_name='Data ultimei actualizări')
-    deadline = DateTimeField(null=True, blank=True, verbose_name='Termen limită')
+    deadline_date = DateField(null=True, blank=True, verbose_name='Data limită')
+    deadline_time = TimeField(null=True, blank=True, verbose_name='Ora limită')
 
     class Meta:
         abstract = True

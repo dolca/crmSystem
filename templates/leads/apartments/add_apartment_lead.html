@@ -11,12 +11,13 @@
     {% if user.is_authenticated %}
         {% if perms.leads.add_apartment_lead %}
             <div class="row">
-                <div class="col-md-12 mb-5 pb-5">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <form method="post" enctype="multipart/form-data" class="row">
+                            <form id="add_lead_form" method="post" enctype="multipart/form-data" class="row" 
+                                  action="{% url 'leads:add_apartment_lead' %}">
                                 {% csrf_token %}
-                                <div class="col-md-3 col-sm-6">
+                                <div class="col-lg-3 col-md-6 col-sm-6">
                                     <div class="card">
                                         <div class="card-body">
                                             <div id="contactInfo">
@@ -24,11 +25,24 @@
                                                 <div id="phoneNumber"></div>
                                                 <div id="email"></div>
                                             </div>
+                                            <input id="id_contact" name="contact" type="hidden" 
+                                                   value="{{ storedContactId }}">
                                             <hr class="border-secondary-subtle">
                                             <div class="col-lg-12 mb-3">
                                                 <label for="property_type" class="form-label">Tip cerere</label>
-                                                <select class="form-control" id="property_type" disabled>
+                                                <select id="property_type" class="form-control" name="property_type" 
+                                                        disabled>
                                                     {% for value, label in form.fields.property_type.choices %}
+                                                        <option value="{{ value }}">{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="apartment_type" class="form-label">
+                                                    Tip apartament <span class="text-danger">*</span></label>
+                                                <select id="apartment_type" class="form-select" name="apartment_type" 
+                                                        required>
+                                                    {% for value, label in form.fields.apartment_type.choices %}
                                                         <option value="{{ value }}">{{ label }}</option>
                                                     {% endfor %}
                                                 </select>
@@ -36,95 +50,93 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="transaction_type" class="form-label">Tip tranzacție <span
                                                         class="text-danger">*</span></label>
-                                                <select class="form-select" id="transaction_type" required>
+                                                <select id="transaction_type" class="form-select" name="transaction_type" 
+                                                        required>
                                                     {% for value, label in form.fields.transaction_type.choices %}
                                                         <option value="{{ value }}">{{ label }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
-                                            <div class="col-lg-12 mb-3">
+                                            <div class="col-lg-12">
                                                 <label for="lead_status" class="form-label">Status cerere <span
                                                         class="text-danger">*</span></label>
-                                                <select class="form-select" id="lead_status" required>
-                                                    {% for value, label in form.fields.status.choices %}
+                                                <select id="lead_status" class="form-select" name="lead_status" required>
+                                                    {% for value, label in form.fields.lead_status.choices %}
                                                         <option value="{{ value }}">{{ label }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
                                             <hr class="border-secondary-subtle">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_county" class="form-label">Județ <span
+                                                <label for="county" class="form-label">Județ <span
                                                         class="text-danger">*</span></label>
-                                                <select class="form-control" id="lead_county" data-choices required>
+                                                <select id="county" class="form-control" name="county" data-choices 
+                                                        required>
                                                     {% for value, label in form.fields.county.choices %}
                                                         <option value="{{ value }}">{{ label }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_city" class="form-label">Localitate <span
+                                                <label for="city" class="form-label">Localitate <span
                                                         class="text-danger">*</span></label>
-                                                <input type="text" id="lead_city" name="city" 
-                                                       class="form-control" required>
+                                                <input id="city" class="form-control" name="city" type="text" required>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_zone" class="form-label">Zonă</label>
-                                                <input type="text" id="lead_zone" name="zone" class="form-control">
+                                                <label for="zone" class="form-label">Zonă</label>
+                                                <input id="zone" class="form-control" name="zone" type="text">
                                             </div>
                                             <div class="col-lg-12">
-                                                <label for="lead_street" class="form-label">Stradă</label>
-                                                <input type="text" id="lead_street" name="street" class="form-control">
+                                                <label for="street" class="form-label">Stradă</label>
+                                                <input id="street" class="form-control" name="street" type="text">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 col-sm-6">
+                                <div class="col-lg-3 col-md-6 col-sm-6">
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_apartment_type" class="form-label">
-                                                    Tip apartament <span class="text-danger">*</span></label>
-                                                <select class="form-select" id="lead_apartment_type" required>
-                                                    {% for value, label in form.fields.apartment_type.choices %}
-                                                        <option value="{{ value }}">{{ label }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-12 mb-3">
-                                                <label for="lead_destination" class="form-label">Destinație <span
+                                                <label for="destination" class="form-label">Destinație <span
                                                         class="text-danger">*</span></label>
-                                                <select class="form-select" id="lead_destination" required>
+                                                <select id="destination" class="form-select" name="destination" required>
                                                     {% for value, label in form.fields.destination.choices %}
                                                         <option value="{{ value }}">{{ label }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_rooms_number" class="form-label">Număr camere</label>
-                                                <input type="text" id="lead_rooms_number" name="rooms_number"
-                                                       class="form-control">
+                                                <label for="rooms_number" class="form-label">Număr camere</label>
+                                                <input id="rooms_number" class="form-control" name="rooms_number" 
+                                                       type="text">
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_nr_bedrooms" class="form-label">Număr dormitoare</label>
-                                                <input type="text" id="lead_nr_bedrooms" name="nr_bedrooms"
-                                                       class="form-control">
+                                                <label for="nr_bedrooms" class="form-label">Număr dormitoare</label>
+                                                <input id="nr_bedrooms" class="form-control" name="nr_bedrooms" 
+                                                       type="text">
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_nr_bathrooms" class="form-label">Număr băi</label>
-                                                <input type="text" id="lead_nr_bathrooms" name="nr_bathrooms"
-                                                       class="form-control">
+                                                <label for="nr_bathrooms" class="form-label">Număr băi</label>
+                                                <input id="nr_bathrooms" class="form-control" name="nr_bathrooms" 
+                                                       type="text">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input"
-                                                           id="lead_bathroom_window" name="nr_bathrooms">
-                                                    <label class="form-check-label" for="lead_bathroom_window">
+                                                    <input id="bathroom_window" class="form-check-input" 
+                                                           name="bathroom_window" type="checkbox">
+                                                    <label for="bathroom_window" class="form-check-label">
                                                         Geam la baie</label>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_floor" class="form-label">Etaj</label>
-                                                <select class="form-select" id="lead_floor">
+                                                <label for="minimal_surface" class="form-label">
+                                                    Suprafață minimă (mp)</label>
+                                                <input id="minimal_surface" class="form-control" name="minimal_surface" 
+                                                       type="text">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="floor" class="form-label">Etaj</label>
+                                                <select id="floor" class="form-select" name="floor">
                                                     {% for value, label in form.fields.floor.choices %}
                                                         <option value="{{ value }}">{{ label }}</option>
                                                     {% endfor %}
@@ -132,166 +144,160 @@
                                             </div>
                                             <div class="col-lg-12 mb-2">
                                                 <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input"
-                                                           id="lead_excluded_ground_floor" name="excluded_ground_floor">
-                                                    <label class="form-check-label" for="lead_excluded_ground_floor">
+                                                    <input id="excluded_ground_floor" class="form-check-input" 
+                                                           name="excluded_ground_floor" type="checkbox">
+                                                    <label for="excluded_ground_floor" class="form-check-label">
                                                         Exclus parter</label>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input"
-                                                           id="lead_excluded_top_floor" name="excluded_top_floor">
-                                                    <label class="form-check-label" for="lead_excluded_top_floor">
+                                                    <input id="excluded_top_floor" class="form-check-input" 
+                                                           name="excluded_top_floor" type="checkbox">
+                                                    <label for="excluded_top_floor" class="form-check-label">
                                                         Exclus ultimul etaj</label>
                                                 </div>
                                             </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="nr_floors" class="form-label">Număr etaje</label>
+                                                <input id="nr_floors" class="form-control" name="nr_floors" type="text">
+                                            </div>
                                             <div class="col-lg-12">
-                                                <label for="lead_nr_floors" class="form-label">Număr etaje</label>
-                                                <input type="text" id="lead_nr_floors" name="nr_floors"
-                                                       class="form-control">
+                                                <label for="construction_year" class="form-label">
+                                                    Anul construcției</label>
+                                                <input id="construction_year" class="form-control" 
+                                                       name="construction_year" type="text">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 col-sm-6">
+                                <div class="col-lg-3 col-md-6 col-sm-6">
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_minimal_surface" class="form-label">
-                                                    Suprafață minimă (mp)</label>
-                                                <input type="text" id="lead_minimal_surface" name="minimal_surface"
-                                                       class="form-control">
-                                            </div>
-                                            <div class="col-lg-12 mb-3">
-                                                <label for="lead_construction_status" class="form-label">
+                                                <label for="construction_status" class="form-label">
                                                     Stadiu construcție</label>
-                                                <select class="form-select" id="lead_construction_status">
+                                                <select id="construction_status" class="form-select" 
+                                                        name="construction_status">
                                                     {% for value, label in form.fields.construction_status.choices %}
                                                         <option value="{{ value }}">{{ label }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_furniture" class="form-label">Mobilier</label>
-                                                <select class="form-select" id="lead_furniture">
+                                                <label for="furniture" class="form-label">Mobilier</label>
+                                                <select id="furniture" class="form-select" name="furniture">
                                                     {% for value, label in form.fields.furniture.choices %}
                                                         <option value="{{ value }}">{{ label }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_comfort" class="form-label">Confort</label>
-                                                <select class="form-select" id="lead_comfort">
+                                                <label for="comfort" class="form-label">Confort</label>
+                                                <select id="comfort" class="form-select" name="comfort">
                                                     {% for value, label in form.fields.comfort.choices %}
                                                         <option value="{{ value }}">{{ label }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_ap_compart" class="form-label">Compartimentare</label>
-                                                <select class="form-select" id="lead_ap_compart">
+                                                <label for="ap_compart" class="form-label">Compartimentare</label>
+                                                <select id="ap_compart" class="form-select" name="ap_compart">
                                                     {% for value, label in form.fields.ap_compart.choices %}
                                                         <option value="{{ value }}">{{ label }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_orientation" class="form-label">Orientare</label>
-                                                <select class="form-select" id="lead_orientation">
+                                                <label for="orientation" class="form-label">Orientare</label>
+                                                <select id="orientation" class="form-select" name="orientation">
                                                     {% for value, label in form.fields.orientation.choices %}
                                                         <option value="{{ value }}">{{ label }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_interior_finishes" class="form-label">
-                                                    Stare interior</label>
-                                                <select class="form-select" id="lead_interior_finishes">
+                                                <label for="interior_finishes" class="form-label">Stare interior</label>
+                                                <select id="interior_finishes" class="form-select" 
+                                                        name="interior_finishes">
                                                     {% for value, label in form.fields.interior_finishes.choices %}
                                                         <option value="{{ value }}">{{ label }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <label for="lead_construction_year" class="form-label">
-                                                    Anul construcției</label>
-                                                <input type="text" id="lead_construction_year" name="construction_year"
-                                                       class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <div class="card">
-                                        <div class="card-body">
                                             <div class="row">
                                                 <div class="col-lg-6 col-sm-6 mb-2">
                                                     <div class="form-check">
-                                                        <input type="checkbox" class="form-check-input"
-                                                               id="lead_basement" name="basement">
-                                                        <label class="form-check-label" for="lead_basement">Subsol</label>
+                                                        <input id="basement" class="form-check-input" 
+                                                               name="basement" type="checkbox">
+                                                        <label for="basement" class="form-check-label">Subsol</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-sm-6 mb-2">
                                                     <div class="form-check">
-                                                        <input type="checkbox" class="form-check-input"
-                                                               id="lead_semi_basement" name="semi_basement">
-                                                        <label class="form-check-label" for="lead_semi_basement">
+                                                        <input id="semi_basement" class="form-check-input" 
+                                                               name="semi_basement" type="checkbox">
+                                                        <label for="semi_basement" class="form-check-label">
                                                             Demisol</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-sm-6 mb-2">
                                                     <div class="form-check">
-                                                        <input type="checkbox" class="form-check-input"
-                                                               id="lead_technical_floor" name="technical_floor">
-                                                        <label class="form-check-label" for="lead_technical_floor">
+                                                        <input id="technical_floor" class="form-check-input" 
+                                                               name="technical_floor" type="checkbox">
+                                                        <label for="technical_floor" class="form-check-label">
                                                             Etaj tehnic</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-sm-6 mb-2">
                                                     <div class="form-check">
-                                                        <input type="checkbox" class="form-check-input"
-                                                               id="lead_loft" name="loft">
-                                                        <label class="form-check-label" for="lead_loft">Mansardă</label>
+                                                        <input id="loft" class="form-check-input" name="loft" 
+                                                               type="checkbox">
+                                                        <label for="loft" class="form-check-label">Mansardă</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-sm-6 mb-2">
                                                     <div class="form-check">
-                                                        <input type="checkbox" class="form-check-input"
-                                                               id="lead_attic" name="attic">
-                                                        <label class="form-check-label" for="lead_attic">Pod</label>
+                                                        <input id="attic" class="form-check-input" name="attic" 
+                                                               type="checkbox">
+                                                        <label for="attic" class="form-check-label">Pod</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-sm-6 mb-3">
                                                     <div class="form-check">
-                                                        <input type="checkbox" class="form-check-input"
-                                                               id="lead_elevator" name="elevator">
-                                                        <label class="form-check-label" for="lead_elevator">Lift</label>
+                                                        <input id="elevator" class="form-check-input" name="elevator" 
+                                                               type="checkbox">
+                                                        <label for="elevator" class="form-check-label">Lift</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_budget" class="form-label">Buget alocat</label>
-                                                <input type="text" id="lead_budget" name="budget" class="form-control">
+                                                <label for="other_details" class="form-label">Alte detalii</label>
+                                                <textarea id="other_details" class="form-control" name="other_details" 
+                                                          type="text" rows="4"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="budget" class="form-label">Buget alocat</label>
+                                                <input id="budget" class="form-control" name="budget" type="text">
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_payment_method" class="form-label">Metodă de plată</label>
-                                                <select class="form-select" id="lead_payment_method">
+                                                <label for="payment_method" class="form-label">Metodă de plată</label>
+                                                <select id="payment_method" class="form-select" name="payment_method">
                                                     {% for value, label in form.fields.payment_method.choices %}
                                                         <option value="{{ value }}">{{ label }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
-                                            <div class="col-lg-12 mb-3">
-                                                <label for="lead_other_details" class="form-label">Alte detalii</label>
-                                                <textarea type="text" id="lead_other_details" name="other_details" 
-                                                          rows="4" class="form-control"></textarea>
-                                            </div>
                                             <hr class="border-secondary-subtle">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_urgency" class="form-label">Urgență</label>
-                                                <select class="form-select" id="lead_urgency">
+                                                <label for="urgency" class="form-label">Urgență</label>
+                                                <select id="urgency" class="form-select" name="urgency">
                                                     {% for value, label in form.fields.urgency.choices %}
                                                         {% if value == "Normal" %}
                                                             <option value="{{ value }}" selected>{{ label }}</option>
@@ -302,49 +308,37 @@
                                                 </select>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_deadline_date" class="form-label">Data limită</label>
-                                                <input type="date" id="lead_deadline_date" name="deadline_date" 
-                                                       class="form-control" placeholder="ZZ.LL.AAAA">
+                                                <label for="deadline_date" class="form-label">Data limită</label>
+                                                <input id="deadline_date" class="form-control" name="deadline_date" 
+                                                       type="date" placeholder="ZZ.LL.AAAA">
                                             </div>
-                                            <div class="col-lg-12">
-                                                <label for="lead_deadline_time" class="form-label">Ora limită</label>
-                                                <input type="time" id="lead_deadline_time" name="deadline_time" 
-                                                       class="form-control" step="600" placeholder="OO:MM">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-sm-6">
-                                    <div class="card">
-                                        <div class="card-body">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="lead_assigned_listings" class="form-label">
+                                                <label for="deadline_time" class="form-label">Ora limită</label>
+                                                <input id="deadline_time" class="form-control" name="deadline_time" 
+                                                       type="time" step="600" placeholder="OO:MM">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="assigned_listings" class="form-label">
                                                     Proprietăți asociate</label>
-                                                <select class="form-control" id="lead_assigned_listings" 
+                                                <select id="assigned_listings" class="form-control" 
                                                         name="assigned_listings" multiple>
                                                     {% for value, label in form.fields.assigned_listings.choices %}
                                                         <option value="{{ value }}"></option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <label for="lead_labels" class="form-label">Etichete</label>
-                                                <select class="form-select" id="lead_labels" multiple>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="labels" class="form-label">Etichete</label>
+                                                <select id="labels" class="form-select" name="labels" multiple>
                                                     {% for value, label in form.fields.labels.choices %}
                                                         <option value="{{ value }}"></option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-sm-6">
-                                    <div class="card">
-                                        <div class="card-body">
                                             <div class="col-lg-12">
-                                                <label for="lead_notes" class="form-label">Notițe proprii</label>
-                                                <textarea type="text" id="lead_notes" name="notes" rows="5" 
-                                                          class="form-control"></textarea>
+                                                <label for="notes" class="form-label">Notițe proprii</label>
+                                                <textarea id="notes" class="form-control" name="notes" type="text" 
+                                                          rows="4"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -369,9 +363,6 @@
 {% endblock content %}
 
 {% block extra_javascript %}
-    
-    <!-- Choices.js -->
-    <script src="{% static 'libs/choices.js/public/assets/scripts/choices.min.js' %}"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -408,15 +399,43 @@
                         console.error('Eroare:', error);
                     });
             }
-            
-            var leadAssignedListings = document.getElementById('lead_assigned_listings');
+
+            var leadAssignedListings = document.getElementById('assigned_listings');
             new Choices(leadAssignedListings, {
+                allowHTML: true,
+                loadingText: 'Se încarcă...',
                 noResultsText: 'Nu există proprietăți disponibile.'
             });
-            
-            var leadLabels = document.getElementById('lead_labels');
+
+            var leadLabels = document.getElementById('labels');
             new Choices(leadLabels, {
+                allowHTML: true,
+                loadingText: 'Se încarcă...',
                 noResultsText: 'Nu există alte etichete.'
+            });
+            
+            document.getElementById('add_lead_form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                console.log('Trimiterea datelor...');
+                
+                fetch('/leads/add-apartment-lead', {
+                    method: 'POST',
+                    body: new FormData(document.getElementById('add_lead_form')),
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('A apărut o eroare în timpul salvării.');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    console.log('Datele au fost salvate cu succes:', data);
+                    window.location.href = '/leads/lead_added';
+                })
+                .catch(error => {
+                    console.error('Eroare în timpul salvării:', error);
+                });
             });
         });
     </script>

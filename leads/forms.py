@@ -14,10 +14,10 @@ class LeadCreateForm(ModelForm):
         exclude = ['created_at', 'updated_at']
         widgets = {
             'status': Select(attrs={'class': 'form-control'}),
-            'property_type': Select(attrs={'readonly': 'readonly'}),
+            'property_type': Select(attrs={'class': 'form-control'}),
             'transaction_type': Select(attrs={'class': 'form-control'}),
 
-            'contact': Select(attrs={'readonly': 'readonly'}),
+            'contact': Select(attrs={'class': 'form-control'}),
 
             'county': TextInput(attrs={'class': 'form-control'}),
             'city': TextInput(attrs={'class': 'form-control'}),
@@ -35,15 +35,9 @@ class LeadCreateForm(ModelForm):
 
             'created_at': DateInput(attrs={'class': 'form-control'}),
             'updated_at': DateInput(attrs={'class': 'form-control'}),
-            'deadline_date': DateInput(attrs={'type': 'date', 'format': '%d.%m.%Y'}),
-            'deadline_time': TimeInput(attrs={'type': 'time', 'format': '%H:%M', 'step': '10'})
+            'deadline_date': DateInput(attrs={'type': 'date'}),
+            'deadline_time': TimeInput(attrs={'type': 'time', 'step': '600'})
         }
-
-        deadline = DateTimeField(
-            widget=DateTimeInput(attrs={'type': 'datetime-local', 'format': '%d.%m.%Y %H:%M'}),
-            input_formats=['%d.%m.%Y %H:%M'],
-            help_text='ZZ.LL.AAAA OO:MM'
-        )
 
 
 class ApartmentLeadCreateForm(LeadCreateForm):
@@ -311,15 +305,9 @@ class LeadUpdateForm(ModelForm):
 
             'created_at': DateInput(attrs={'readonly': 'readonly'}),
             'updated_at': DateInput(attrs={'readonly': 'readonly'}),
-            'deadline_date': DateInput(attrs={'type': 'date', 'format': '%d.%m.%Y'}),
-            'deadline_time': TimeInput(attrs={'type': 'time', 'format': '%H:%M', 'step': '10'})
+            'deadline_date': DateInput(attrs={'type': 'date'}),
+            'deadline_time': TimeInput(attrs={'type': 'time', 'step': '600'})
         }
-
-        deadline = DateTimeField(
-            widget=DateTimeInput(attrs={'type': 'datetime-local', 'format': '%d.%m.%Y %H:%M'}),
-            input_formats=['%d.%m.%Y %H:%M'],
-            help_text='ZZ.LL.AAAA OO:MM'
-        )
 
 
 class ApartmentLeadUpdateForm(LeadUpdateForm):
