@@ -83,7 +83,7 @@ ACCOUNT_FORMS = {
 }
 
 AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin, regardless of `allauth`
+    # Needed to log in by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
 
     # `allauth` specific authentication methods, such as login by e-mail
@@ -119,8 +119,8 @@ WSGI_APPLICATION = 'crmSystem.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'crm_system',
-        'HOST': 'localhost',
+        'NAME': 'crm',
+        'HOST': '127.0.0.1',
         'USER': 'postgres',
         'PORT': '5432'
     }
@@ -131,34 +131,19 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': {
-            'min_length': 8,  # Lungime minimă
-        }
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumUppercaseValidator',
-        'OPTIONS': {
-            'min_uppercase': 1,  # Număr minim de litere majuscule
-        }
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLowercaseValidator',
-        'OPTIONS': {
-            'min_lowercase': 1,  # Număr minim de litere mici
-        }
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-        'OPTIONS': {
-            'min_digits': 1,  # Număr minim de cifre
-        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-        # Verifică dacă parola este una comună și ușor de ghicit
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -186,23 +171,3 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'crmSystem.log',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-}

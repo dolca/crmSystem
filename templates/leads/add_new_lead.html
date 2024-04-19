@@ -25,10 +25,10 @@
                                         {% csrf_token %}
 
                                         <div class="row mb-2">
-                                            <label for="id_contact" class="form-label">Contact asociat <span
+                                            <label for="contact" class="form-label">Contact asociat <span
                                                     class="text-danger">*</span></label>
                                             <div class="col-lg-10 col-sm-10 mb-2">
-                                                <select class="form-select" name="id_contact" id="id_contact" required>
+                                                <select id="contact" class="form-select" name="contact" required>
                                                     <option value="" disabled selected>Alege un contact</option>
                                                     {% for contact in contacts %}
                                                         <option value="{{ contact.id }}">
@@ -38,17 +38,16 @@
                                                 </select>
                                             </div>
                                             <div class="col-lg-2 col-sm-2 d-flex justify-content-md-end justify-content-center mb-2">
-                                                <button type="button" class="btn btn-subtle-primary add-btn"
-                                                        data-bs-toggle="modal" id="open-modal"
-                                                        data-bs-target="#addContact"><strong>+</strong>
+                                                <button id="open-modal" class="btn btn-subtle-primary add-btn" type="button" 
+                                                        data-bs-toggle="modal" data-bs-target="#addContact"><strong>+</strong>
                                                 </button>
                                             </div>
                                         </div>
                                     
                                         <div class="form-group">
-                                            <label for="id_property_type" class="form-label">Tip cerere</label>
-                                            <select class="form-select mb-4" name="id_property_type"
-                                                    id="id_property_type">
+                                            <label for="property_type" class="form-label">Tip cerere <span 
+                                                    class="text-danger">*</span></label>
+                                            <select id="property_type" class="form-select mb-4" name="property_type">
                                                 {% for value, label in form.fields.property_type.choices %}
                                                     <option value="{{ value }}">{{ label }}</option>
                                                 {% endfor %}
@@ -78,80 +77,80 @@
                     <div class="form-group">
                         <label for="first_name" class="form-label">Prenume <span class="text-danger">*</span></label>
                         <div id="firstNameError" class="error-message text-danger"></div>
-                        <input type="text" id="first_name" class="form-control" name="first_name" required>
+                        <input id="first_name" class="form-control" name="first_name" type="text" required>
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="last_name" class="form-label">Nume de familie</label>
-                        <input type="text" id="last_name" class="form-control" name="last_name">
+                        <input id="last_name" class="form-control" name="last_name" type="text">
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="phone_number" class="form-label">Număr de telefon <span
                                 class="text-danger">*</span></label>
                         <div id="phoneError" class="error-message text-danger"></div>
-                        <input type="text" id="phone_number" class="form-control" name="phone_number">
+                        <input id="phone_number" class="form-control" name="phone_number" type="text">
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="email" class="form-label">Adresă de e-mail</label>
                         <div id="emailError" class="error-message text-danger"></div>
-                        <input type="email" id="email" class="form-control" name="email">
+                        <input id="email" class="form-control" name="email" type="email">
                     </div>
                     <hr class="border-secondary-subtle">
                     <div class="form-group">
                         <label for="company" class="form-label">Companie</label>
-                        <input type="text" id="company" class="form-control" name="company">
+                        <input id="company" class="form-control" name="company" type="text">
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="job_title" class="form-label">Funcție</label>
-                        <input type="text" id="job_title" class="form-control" name="job_title">
+                        <input id="job_title" class="form-control" name="job_title" type="text">
                     </div>
                     <hr class="border-secondary-subtle">
                     <div class="form-group">
                         <label for="city" class="form-label">Localitate</label>
-                        <input type="text" id="city" class="form-control" name="city">
+                        <input id="city" class="form-control" name="city" type="text">
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="street_address" class="form-label">Stradă</label>
-                        <input type="text" id="street_address" class="form-control" name="street_address">
+                        <input id="street_address" class="form-control" name="street_address" type="text">
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="street_number" class="form-label">Număr stradă</label>
-                        <input type="number" id="street_number" class="form-control" name="street_number">
+                        <input id="street_number" class="form-control" name="street_number" type="number">
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="block" class="form-label">Bloc</label>
-                        <input type="text" id="block" class="form-control" name="block">
+                        <input id="block" class="form-control" name="block" type="text">
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="scale" class="form-label">Scară</label>
-                        <input type="text" id="scale" class="form-control" name="scale">
+                        <input id="scale" class="form-control" name="scale" type="text">
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="apartment_number" class="form-label">Număr apartament</label>
-                        <input type="number" id="apartment_number" class="form-control" name="apartment_number">
+                        <input id="apartment_number" class="form-control" name="apartment_number" type="number">
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="county" class="form-label">Județ</label>
-                        <input type="text" id="county" class="form-control" name="county">
+                        <input id="county" class="form-control" name="county" type="text">
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="country" class="form-label">Țară</label>
-                        <input type="text" id="country" class="form-control" name="country">
+                        <input id="country" class="form-control" name="country" type="text">
                     </div>
                     <hr class="border-secondary-subtle">
                     <div class="form-group">
                         <label for="document_type" class="form-label">Tip document</label>
-                        <select class="form-select" id="document_type" name="document_type">
+                        <select id="document_type" class="form-select" name="document_type">
                             <option value="">--------</option>
                             <option value="Carte de identitate">Carte de identitate</option>
                             <option value="Pașaport">Pașaport</option>
@@ -162,30 +161,30 @@
                     <div class="form-group">
                         <label for="id_series_nr" class="form-label">Serie / Număr document</label>
                         <div id="idSeriesNrError" class="error-message text-danger"></div>
-                        <input type="text" id="id_series_nr" class="form-control" name="id_series_nr">
+                        <input id="id_series_nr" class="form-control" name="id_series_nr" type="text">
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="cnp" class="form-label">CNP</label>
                         <div id="cnpError" class="error-message text-danger"></div>
-                        <input type="number" id="cnp" class="form-control" name="cnp">
+                        <input id="cnp" class="form-control" name="cnp" type="number">
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="issue_date" class="form-label">Data emiterii</label>
                         <div id="issueDateError" class="error-message text-danger"></div>
-                        <input type="date" id="issue_date" class="form-control" name="issue_date">
+                        <input id="issue_date" class="form-control" name="issue_date" type="date">
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="passport_country" class="form-label">Țara emitentă (doar pentru pașaport)</label>
                         <div id="passportCountryError" class="error-message text-danger"></div>
-                        <input type="text" id="passport_country" class="form-control" name="passport_country">
+                        <input id="passport_country" class="form-control" name="passport_country" type="text">
                     </div>
                     <hr class="border-secondary-subtle">
                     <div class="form-group">
                         <label for="contact_type" class="form-label">Tip contact</label>
-                        <select class="form-select" id="contact_type" name="contact_type">
+                        <select id="contact_type" class="form-select" name="contact_type">
                             <option value="">--------</option>
                             <option value="Administrator">Administrator</option>
                             <option value="Agent imobiliar">Agent imobiliar</option>
@@ -201,7 +200,7 @@
                     <p>
                     <div class="form-group">
                         <label for="contact_category" class="form-label">Categorie</label>
-                        <select class="form-select" id="contact_category" name="contact_category">
+                        <select id="contact_category" class="form-select" name="contact_category">
                             <option value="">--------</option>
                             <option value="Client vechi">Client vechi</option>
                             <option value="Concurență">Concurență</option>
@@ -220,9 +219,9 @@
 
                 <div class="modal-footer border-top">
                     <div class="hstack gap-2 justify-content-end">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal" aria-label="Close" 
-                                id="close-modal">Închide</button>
-                        <button type="submit" class="btn btn-subtle-success" id="save-modal">Salvează contactul</button>
+                        <button id="close-modal" class="btn btn-light" type="button" data-bs-dismiss="modal" 
+                                aria-label="Close">Închide</button>
+                        <button id="save-modal" class="btn btn-subtle-success" type="submit">Salvează contactul</button>
                     </div>
                 </div>
 
@@ -243,7 +242,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             console.log('Conținutul DOM a fost încărcat.');
             
-            var idContactElement = document.getElementById('id_contact');
+            var idContactElement = document.getElementById('contact');
             console.log('Elementul ID "Choices":', idContactElement);
             
             var realOptions = idContactElement.querySelectorAll('option:not([disabled])');
@@ -565,8 +564,8 @@
         function handleFormSubmit(event) {
             event.preventDefault();
         
-            var selectedContact = document.getElementById('id_contact').value;
-            var selectedType = document.getElementById('id_property_type').value;
+            var selectedContact = document.getElementById('contact').value;
+            var selectedType = document.getElementById('property_type').value;
             
             sessionStorage.setItem('selectedContact', selectedContact);
             sessionStorage.setItem('selectedType', selectedType);

@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
+from django.utils import timezone
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, DetailView, TemplateView
 from contacts.models import Contact
 from leads.forms import ApartmentLeadCreateForm, ApartmentLeadUpdateForm, HouseLeadCreateForm, HouseLeadUpdateForm, \
@@ -21,20 +22,27 @@ class ApartmentLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
     form_class = ApartmentLeadCreateForm
     template_name = 'leads/apartments/add_apartment_lead.html'
     success_url = reverse_lazy('leads:lead_added')
-    permission_required = 'leads.add_apartment_lead'
+    permission_required = 'leads.add_apartmentlead'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        stored_contact_id = self.request.session.get('selectedContact')
-        context['storedContactId'] = stored_contact_id
+        stored_contact = self.request.session.get('storedContactId')
+        stored_type = self.request.session.get('storedType')
+        context['storedContactId'] = stored_contact
+        context['storedType'] = stored_type
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            self.object = form.save()
+        form.instance.created_at = timezone.now()
+        form.instance.updated_at = timezone.now()
+        form.instance.created_by = self.request.user
+
+        try:
+            response = super().form_valid(form)
+            return response
+        except Exception as e:
+            print(f"Eroare în timpul salvării datelor: {e}")
             return HttpResponseRedirect(self.get_success_url())
-        else:
-            return self.form_invalid(form)
 
 
 @login_required

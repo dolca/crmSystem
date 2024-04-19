@@ -9,7 +9,7 @@
     {% endblock pagetitle %}
     
     {% if user.is_authenticated %}
-        {% if perms.leads.add_apartment_lead %}
+        {% if perms.leads.add_apartmentlead %}
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -25,17 +25,14 @@
                                                 <div id="phoneNumber"></div>
                                                 <div id="email"></div>
                                             </div>
-                                            <input id="id_contact" name="contact" type="hidden" 
-                                                   value="{{ storedContactId }}">
+                                            <input id="contact" name="contact" type="hidden" value="{{ storedContactId }}" 
+                                                   required>
                                             <hr class="border-secondary-subtle">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="property_type" class="form-label">Tip cerere</label>
-                                                <select id="property_type" class="form-control" name="property_type" 
-                                                        disabled>
-                                                    {% for value, label in form.fields.property_type.choices %}
-                                                        <option value="{{ value }}">{{ label }}</option>
-                                                    {% endfor %}
-                                                </select>
+                                                <label for="property_type" class="form-label">Tip cerere <span 
+                                                        class="text-danger">*</span></label>
+                                                <input id="property_type" class="form-control text-muted" 
+                                                       name="property_type" value="{{ storedType }}" readonly required>
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="apartment_type" class="form-label">
@@ -368,19 +365,22 @@
         document.addEventListener('DOMContentLoaded', function () {
             console.log('Conținutul DOM a fost încărcat.');
             
+            // Obține datele stocate din sessionStorage
             var storedType = sessionStorage.getItem('selectedType');
             var storedContactId = sessionStorage.getItem('selectedContact');
             
             console.log('Tip cerere:', storedType);
             console.log('ID contact:', storedContactId);
             
-            if (document.getElementById('id_property_type')) {
-                document.getElementById('id_property_type').value = storedType;
+            // Completează valorile din câmpurile formularului, dacă există
+            if (document.getElementById('property_type')) {
+                document.getElementById('property_type').value = storedType;
             }
-            if (document.getElementById('id_contact')) {
-                document.getElementById('id_contact').value = storedContactId;
+            if (document.getElementById('contact')) {
+                document.getElementById('contact').value = storedContactId;
             }
             
+            // Populează informațiile contactului, dacă există un ID de contact
             if (storedContactId) {
                 fetch('/contacts/api/contact-details/' + storedContactId)
                     .then(response => {
@@ -390,6 +390,7 @@
                         return response.json();
                     })
                     .then(data => {
+                        // Afisează datele contactului în câmpurile corespunzătoare
                         document.getElementById('firstName').innerText = data.first_name;
                         document.getElementById('lastName').innerText = data.last_name;
                         document.getElementById('phoneNumber').innerText = data.phone_number;
@@ -399,14 +400,15 @@
                         console.error('Eroare:', error);
                     });
             }
-
+            
+            // Inițializează dropdown-urile cu opțiunile corespunzătoare
             var leadAssignedListings = document.getElementById('assigned_listings');
             new Choices(leadAssignedListings, {
                 allowHTML: true,
                 loadingText: 'Se încarcă...',
                 noResultsText: 'Nu există proprietăți disponibile.'
             });
-
+            
             var leadLabels = document.getElementById('labels');
             new Choices(leadLabels, {
                 allowHTML: true,
@@ -414,14 +416,19 @@
                 noResultsText: 'Nu există alte etichete.'
             });
             
+            // Ascultă evenimentul de submit al formularului
             document.getElementById('add_lead_form').addEventListener('submit', function(event) {
                 event.preventDefault();
                 
-                console.log('Trimiterea datelor...');
+                // Colectează datele formularului
+                var formData = new FormData(this);
                 
+                console.log('Datele trimise sunt:', formData);
+                
+                // Trimite datele către server
                 fetch('/leads/add-apartment-lead', {
                     method: 'POST',
-                    body: new FormData(document.getElementById('add_lead_form')),
+                    body: formData,
                 })
                 .then(response => {
                     if (!response.ok) {
@@ -431,7 +438,7 @@
                 })
                 .then(data => {
                     console.log('Datele au fost salvate cu succes:', data);
-                    window.location.href = '/leads/lead_added';
+                    window.location.href = 'lead-added';
                 })
                 .catch(error => {
                     console.error('Eroare în timpul salvării:', error);
