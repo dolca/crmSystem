@@ -1,6 +1,9 @@
 from django.contrib.messages import constants as messages
 from pathlib import Path
 import os
+import environ
+
+env = environ.Env()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -10,8 +13,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
+
+# Take environment variables from .env file
+environ.Env.read_env(BASE_DIR / '.env')
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3(z1rdoc@+$)1qz4ann@c@4$cdgcn)ov-_g4s_4ymj2+gg7wq4'
+SECRET_KEY = env('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -90,6 +99,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+
 # All Auth Configurations
 
 LOGIN_REDIRECT_URL = '/'
@@ -125,6 +135,7 @@ DATABASES = {
         'PORT': '5432'
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -166,6 +177,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
