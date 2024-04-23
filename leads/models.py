@@ -26,10 +26,10 @@ class Lead(Model):
     payment_method = CharField(choices=MODALITATE_PLATA, null=True, blank=True, verbose_name='Modalitate plată', )
 
     urgency = CharField(choices=URGENTA, default='Normal', verbose_name='Urgență')
-    other_details = TextField(max_length=255, null=True, blank=True, verbose_name='Alte detalii')
+    other_details = TextField(max_length=2000, null=True, blank=True, verbose_name='Alte detalii')
 
     labels = CharField(choices=ETICHETA, null=True, blank=True, verbose_name='Etichete')
-    notes = TextField(max_length=255, null=True, blank=True, verbose_name='Notițe proprii')
+    notes = TextField(max_length=2000, null=True, blank=True, verbose_name='Notițe proprii')
 
     created_at = DateTimeField(auto_now_add=True, verbose_name='Data introducerii')
     updated_at = DateTimeField(auto_now=True, verbose_name='Data ultimei actualizări')
@@ -76,6 +76,9 @@ class ApartmentLead(Lead):
     assigned_listings = ForeignKey(Apartment, on_delete=SET_NULL, null=True, blank=True,
                                    related_name='assigned_apartment_key', verbose_name='Proprietăți asociate')
 
+    def __str__(self):
+        return f'{self.apartment_type} - {self.created_by}'
+
 
 class HouseLead(Lead):
     house_type = CharField(choices=TIP_CASA, verbose_name='Tip casă')
@@ -105,6 +108,9 @@ class HouseLead(Lead):
     assigned_listings = ForeignKey(House, on_delete=SET_NULL, null=True, blank=True,
                                    related_name='assigned_house_key', verbose_name='Proprietăți asociate')
 
+    def __str__(self):
+        return f'{self.house_type} - {self.created_by}'
+
 
 class TerrainLead(Lead):
     terrain_type = CharField(choices=TIP_TEREN, verbose_name='Tip teren')
@@ -128,6 +134,9 @@ class TerrainLead(Lead):
     created_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='my_terrain_key', verbose_name='Agent asociat')
     assigned_listings = ForeignKey(Terrain, on_delete=SET_NULL, null=True, blank=True,
                                    related_name='assigned_terrain_key', verbose_name='Proprietăți asociate')
+
+    def __str__(self):
+        return f'{self.terrain_type} - {self.created_by}'
 
 
 class CommercialSpaceLead(Lead):
@@ -154,6 +163,9 @@ class CommercialSpaceLead(Lead):
     created_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='my_commercial_space_key', verbose_name='Agent asociat')
     assigned_listings = ForeignKey(CommercialSpace, on_delete=SET_NULL, null=True, blank=True,
                                    related_name='assigned_commercial_space_key', verbose_name='Proprietăți asociate')
+
+    def __str__(self):
+        return f'{self.space_type} - {self.created_by}'
 
 
 class OfficeSpaceLead(Lead):
@@ -186,6 +198,9 @@ class OfficeSpaceLead(Lead):
     assigned_listings = ForeignKey(OfficeSpace, on_delete=SET_NULL, null=True, blank=True,
                                    related_name='assigned_office_space_key', verbose_name='Proprietăți asociate')
 
+    def __str__(self):
+        return f'{self.space_type} - {self.created_by}'
+
 
 class IndustrialSpaceLead(Lead):
     space_type = CharField(choices=TIP_SP_INDUSTRIAL, verbose_name='Tip spațiu')
@@ -208,3 +223,6 @@ class IndustrialSpaceLead(Lead):
     created_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='my_industrial_space_key', verbose_name='Agent asociat')
     assigned_listings = ForeignKey(IndustrialSpace, on_delete=SET_NULL, null=True, blank=True,
                                    related_name='assigned_industrial_space_key', verbose_name='Proprietăți asociate')
+
+    def __str__(self):
+        return f'{self.space_type} - {self.created_by}'

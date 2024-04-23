@@ -365,14 +365,12 @@
         document.addEventListener('DOMContentLoaded', function () {
             console.log('Conținutul DOM a fost încărcat.');
             
-            // Obține datele stocate din sessionStorage
             var storedType = sessionStorage.getItem('selectedType');
             var storedContactId = sessionStorage.getItem('selectedContact');
             
             console.log('Tip cerere:', storedType);
             console.log('ID contact:', storedContactId);
             
-            // Completează valorile din câmpurile formularului, dacă există
             if (document.getElementById('property_type')) {
                 document.getElementById('property_type').value = storedType;
             }
@@ -380,7 +378,6 @@
                 document.getElementById('contact').value = storedContactId;
             }
             
-            // Populează informațiile contactului, dacă există un ID de contact
             if (storedContactId) {
                 fetch('/contacts/api/contact-details/' + storedContactId)
                     .then(response => {
@@ -390,7 +387,6 @@
                         return response.json();
                     })
                     .then(data => {
-                        // Afisează datele contactului în câmpurile corespunzătoare
                         document.getElementById('firstName').innerText = data.first_name;
                         document.getElementById('lastName').innerText = data.last_name;
                         document.getElementById('phoneNumber').innerText = data.phone_number;
@@ -401,7 +397,6 @@
                     });
             }
             
-            // Inițializează dropdown-urile cu opțiunile corespunzătoare
             var leadAssignedListings = document.getElementById('assigned_listings');
             new Choices(leadAssignedListings, {
                 allowHTML: true,
@@ -416,16 +411,13 @@
                 noResultsText: 'Nu există alte etichete.'
             });
             
-            // Ascultă evenimentul de submit al formularului
             document.getElementById('add_lead_form').addEventListener('submit', function(event) {
                 event.preventDefault();
                 
-                // Colectează datele formularului
                 var formData = new FormData(this);
                 
                 console.log('Datele trimise sunt:', formData);
                 
-                // Trimite datele către server
                 fetch('/leads/add-apartment-lead', {
                     method: 'POST',
                     body: formData,

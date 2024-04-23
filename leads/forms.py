@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm, Select, TextInput, Textarea, DateInput, TimeInput, DateTimeInput, DateTimeField, \
-    SelectMultiple, NumberInput, CheckboxInput
+from django.forms import ModelForm, Select, TextInput, Textarea, DateInput, TimeInput, SelectMultiple, NumberInput, \
+    CheckboxInput
 from leads.models import Lead, ApartmentLead, HouseLead, TerrainLead, CommercialSpaceLead, OfficeSpaceLead, \
     IndustrialSpaceLead
 
@@ -11,7 +11,7 @@ from leads.models import Lead, ApartmentLead, HouseLead, TerrainLead, Commercial
 class LeadCreateForm(ModelForm):
     class Meta:
         model = Lead
-        exclude = ['created_at', 'updated_at']
+        fields = '__all__'
         widgets = {
             'status': Select(attrs={'class': 'form-control'}),
             'property_type': Select(attrs={'class': 'form-control'}),

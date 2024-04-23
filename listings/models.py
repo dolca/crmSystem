@@ -29,7 +29,7 @@ class Listing(Model):
     street_address = CharField(max_length=40, verbose_name='Stradă')
     street_nr = IntegerField(verbose_name='Număr stradă')
 
-    images = ImageField(upload_to='static/images/listings/', null=True, blank=True, verbose_name='Imagini')
+    images = ImageField(upload_to='media/listings/', null=True, blank=True, verbose_name='Imagini')
 
     payment_method = CharField(choices=MODALITATE_PLATA, null=True, blank=True, verbose_name='Modalitate plată acceptată', )
     other_details = TextField(max_length=2000, null=True, blank=True, verbose_name='Alte detalii')
@@ -81,9 +81,9 @@ class ResidentialEnsemble(Model):
     thermal_insulation = CharField(choices=IZOLATII_TERMICE, null=True, blank=True, verbose_name='Izolație termică')
     other_spaces = CharField(choices=ALTE_SPATII, null=True, blank=True, verbose_name='Alte spații')
 
-    other_details = TextField(max_length=2000, null=True, blank=True, verbose_name='Alte detalii')
+    images = ImageField(upload_to='media/listings/', null=True, blank=True, verbose_name='Imagini')
 
-    images = ImageField(upload_to='static/images/listings/', null=True, blank=True, verbose_name='Imagini')
+    other_details = TextField(max_length=2000, null=True, blank=True, verbose_name='Alte detalii')
 
     created_at = DateTimeField(auto_now_add=True, verbose_name='Data adăugării')
     updated_at = DateTimeField(auto_now=True, verbose_name='Data ultimei actualizări')
@@ -143,9 +143,9 @@ class OfficeBuilding(Model):
     building_facilities_proximity = CharField(choices=FACILITATI_CLADIRE_PROXIMITATI, null=True, blank=True,
                                               verbose_name='Facilități clădire / proximități')
 
-    other_details = TextField(max_length=2000, null=True, blank=True, verbose_name='Alte detalii')
+    images = ImageField(upload_to='media/listings/', null=True, blank=True, verbose_name='Imagini')
 
-    images = ImageField(upload_to='static/images/listings/', null=True, blank=True, verbose_name='Imagini')
+    other_details = TextField(max_length=2000, null=True, blank=True, verbose_name='Alte detalii')
 
     created_at = DateTimeField(auto_now_add=True, verbose_name='Data adăugării')
     updated_at = DateTimeField(auto_now=True, verbose_name='Data ultimei actualizări')
@@ -216,6 +216,9 @@ class Apartment(Listing):
 
     assigned_user = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='my_apartment_list', verbose_name='Agent asociat')
 
+    def __str__(self):
+        return f'{self.apartment_type} - {self.assigned_user}'
+
 
 class House(Listing):
     residential_ensemble = ForeignKey(ResidentialEnsemble, on_delete=CASCADE, null=True, blank=True, verbose_name='Ansamblu rezidențial')
@@ -276,6 +279,9 @@ class House(Listing):
 
     assigned_user = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='my_house_list', verbose_name='Agent asociat')
 
+    def __str__(self):
+        return f'{self.house_type} - {self.assigned_user}'
+
 
 class Terrain(Listing):
     terrain_type = CharField(choices=TIP_TEREN, verbose_name='Tip teren')
@@ -317,6 +323,9 @@ class Terrain(Listing):
     exclusive_representation = BooleanField(default=False, verbose_name='Reprezentare exclusivă')
 
     assigned_user = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='my_terrain_list', verbose_name='Agent asociat')
+
+    def __str__(self):
+        return f'{self.terrain_type} - {self.assigned_user}'
 
 
 class CommercialSpace(Listing):
@@ -365,6 +374,9 @@ class CommercialSpace(Listing):
     exclusive_representation = BooleanField(default=False, verbose_name='Reprezentare exclusivă')
 
     assigned_user = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='my_commercial_space_list', verbose_name='Agent asociat')
+
+    def __str__(self):
+        return f'{self.space_type} - {self.assigned_user}'
 
 
 class OfficeSpace(Listing):
@@ -425,6 +437,9 @@ class OfficeSpace(Listing):
 
     assigned_user = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='my_office_space_list', verbose_name='Agent asociat')
 
+    def __str__(self):
+        return f'{self.space_type} - {self.assigned_user}'
+
 
 class IndustrialSpace(Listing):
     space_type = CharField(choices=TIP_SP_INDUSTRIAL, verbose_name='Tip spațiu')
@@ -467,3 +482,6 @@ class IndustrialSpace(Listing):
     exclusive_representation = BooleanField(default=False, verbose_name='Reprezentare exclusivă')
 
     assigned_user = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='my_industrial_space_list', verbose_name='Agent asociat')
+
+    def __str__(self):
+        return f'{self.space_type} - {self.assigned_user}'
