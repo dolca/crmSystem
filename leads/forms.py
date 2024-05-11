@@ -1,6 +1,5 @@
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm, Select, TextInput, Textarea, DateInput, TimeInput, SelectMultiple, NumberInput, \
-    CheckboxInput
+from django.forms import ModelForm, Select, TextInput, Textarea, DateInput, TimeInput, NumberInput, CheckboxInput
 from leads.models import Lead, ApartmentLead, HouseLead, TerrainLead, CommercialSpaceLead, OfficeSpaceLead, \
     IndustrialSpaceLead
 
@@ -45,25 +44,25 @@ class ApartmentLeadCreateForm(LeadCreateForm):
         model = ApartmentLead
         fields = '__all__'
         widgets = {
-            'apartment_type': SelectMultiple(attrs={'class': 'form-control'}),
+            'apartment_type': Select(attrs={'class': 'form-control'}),
             'destination': Select(attrs={'class': 'form-control'}),
 
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
             'nr_bedrooms': NumberInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': NumberInput(attrs={'class': 'form-control'}),
             'bathroom_window': CheckboxInput(attrs={'class': 'form-check-input'}),
-            'floor': SelectMultiple(attrs={'class': 'form-control'}),
+            'floor': Select(attrs={'class': 'form-control'}),
             'excluded_ground_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
             'excluding_top_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
             'nr_floors': NumberInput(attrs={'class': 'form-control'}),
 
             'minimal_surface': NumberInput(attrs={'class': 'form-control'}),
-            'construction_status': SelectMultiple(attrs={'class': 'form-control'}),
-            'furniture': SelectMultiple(attrs={'class': 'form-control'}),
-            'comfort': SelectMultiple(attrs={'class': 'form-control'}),
-            'ap_compart': SelectMultiple(attrs={'class': 'form-control'}),
-            'orientation': SelectMultiple(attrs={'class': 'form-control'}),
-            'interior_finishes': SelectMultiple(attrs={'class': 'form-control'}),
+            'construction_status': Select(attrs={'class': 'form-control'}),
+            'furniture': Select(attrs={'class': 'form-control'}),
+            'comfort': Select(attrs={'class': 'form-control'}),
+            'ap_compart': Select(attrs={'class': 'form-control'}),
+            'orientation': Select(attrs={'class': 'form-control'}),
+            'interior_finishes': Select(attrs={'class': 'form-control'}),
             'construction_year': NumberInput(attrs={'class': 'form-control'}),
 
             'basement': CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -99,7 +98,7 @@ class HouseLeadCreateForm(LeadCreateForm):
         model = HouseLead
         fields = '__all__'
         widgets = {
-            'house_type': SelectMultiple(attrs={'class': 'form-control'}),
+            'house_type': Select(attrs={'class': 'form-control'}),
             'destination': Select(attrs={'class': 'form-control'}),
 
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
@@ -111,9 +110,9 @@ class HouseLeadCreateForm(LeadCreateForm):
 
             'minimal_surface': NumberInput(attrs={'class': 'form-control'}),
             'terrain_surface': NumberInput(attrs={'class': 'form-control'}),
-            'construction_status': SelectMultiple(attrs={'class': 'form-control'}),
-            'furniture': SelectMultiple(attrs={'class': 'form-control'}),
-            'interior_finishes': SelectMultiple(attrs={'class': 'form-control'}),
+            'construction_status': Select(attrs={'class': 'form-control'}),
+            'furniture': Select(attrs={'class': 'form-control'}),
+            'interior_finishes': Select(attrs={'class': 'form-control'}),
             'construction_year': NumberInput(attrs={'class': 'form-control'}),
 
             'basement': CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -149,7 +148,7 @@ class TerrainLeadCreateForm(LeadCreateForm):
             'terrain_surface': NumberInput(attrs={'class': 'form-control'}),
             'unit': Select(attrs={'class': 'form-control'}),
             'street_front': NumberInput(attrs={'class': 'form-control'}),
-            'opening_to': SelectMultiple(attrs={'class': 'form-control'}),
+            'opening_to': Select(attrs={'class': 'form-control'}),
             'access_road_width': NumberInput(attrs={'class': 'form-control'}),
 
             'pot': TextInput(attrs={'class': 'form-control'}),
@@ -169,20 +168,20 @@ class CommercialSpaceLeadCreateForm(LeadCreateForm):
         model = CommercialSpaceLead
         fields = '__all__'
         widgets = {
-            'space_type': SelectMultiple(attrs={'class': 'form-control'}),
+            'space_type': Select(attrs={'class': 'form-control'}),
             'destination': Select(attrs={'class': 'form-control'}),
-            'pedestrian_traffic': SelectMultiple(attrs={'class': 'form-control'}),
+            'pedestrian_traffic': Select(attrs={'class': 'form-control'}),
 
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
             'nr_locker_rooms': NumberInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': NumberInput(attrs={'class': 'form-control'}),
-            'floor': SelectMultiple(attrs={'class': 'form-control'}),
+            'floor': Select(attrs={'class': 'form-control'}),
             'nr_floors': NumberInput(attrs={'class': 'form-control'}),
 
             'minimal_surface': NumberInput(attrs={'class': 'form-control'}),
             'glass_case': NumberInput(attrs={'class': 'form-control'}),
             'inside_height': NumberInput(attrs={'class': 'form-control'}),
-            'space_compart': SelectMultiple(attrs={'class': 'form-control'}),
+            'space_compart': Select(attrs={'class': 'form-control'}),
             'nr_parking_spaces': NumberInput(attrs={'class': 'form-control'}),
 
             'semi_basement': CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -209,19 +208,19 @@ class OfficeSpaceLeadCreateForm(LeadCreateForm):
         model = OfficeSpaceLead
         fields = '__all__'
         widgets = {
-            'space_type': SelectMultiple(attrs={'class': 'form-control'}),
+            'space_type': Select(attrs={'class': 'form-control'}),
             'space_class': Select(attrs={'class': 'form-control'}),
 
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': NumberInput(attrs={'class': 'form-control'}),
-            'floor': SelectMultiple(attrs={'class': 'form-control'}),
+            'floor': Select(attrs={'class': 'form-control'}),
             'nr_floors': NumberInput(attrs={'class': 'form-control'}),
 
             'useful_surface': NumberInput(attrs={'class': 'form-control'}),
             'minimum_area': NumberInput(attrs={'class': 'form-control'}),
             'maximum_area': NumberInput(attrs={'class': 'form-control'}),
             'total_surface_offices': NumberInput(attrs={'class': 'form-control'}),
-            'space_compart': SelectMultiple(attrs={'class': 'form-control'}),
+            'space_compart': Select(attrs={'class': 'form-control'}),
 
             'nr_underground_parking': NumberInput(attrs={'class': 'form-control'}),
             'underground_parking_cost': NumberInput(attrs={'class': 'form-control'}),
@@ -254,16 +253,16 @@ class IndustrialSpaceLeadCreateForm(LeadCreateForm):
         model = IndustrialSpaceLead
         fields = '__all__'
         widgets = {
-            'space_type': SelectMultiple(attrs={'class': 'form-control'}),
-            'destination': SelectMultiple(attrs={'class': 'form-control'}),
+            'space_type': Select(attrs={'class': 'form-control'}),
+            'destination': Select(attrs={'class': 'form-control'}),
 
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
             'nr_locker_rooms': NumberInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': NumberInput(attrs={'class': 'form-control'}),
-            'floor': SelectMultiple(attrs={'class': 'form-control'}),
+            'floor': Select(attrs={'class': 'form-control'}),
 
             'minimal_surface': NumberInput(attrs={'class': 'form-control'}),
-            'space_compart': SelectMultiple(attrs={'class': 'form-control'}),
+            'space_compart': Select(attrs={'class': 'form-control'}),
             'terrain_surface': NumberInput(attrs={'class': 'form-control'}),
             'entrance_door_dimensions': TextInput(attrs={'class': 'form-control'}),
             'inside_height': NumberInput(attrs={'class': 'form-control'}),
@@ -315,25 +314,25 @@ class ApartmentLeadUpdateForm(LeadUpdateForm):
         model = ApartmentLead
         fields = '__all__'
         widgets = {
-            'apartment_type': SelectMultiple(attrs={'class': 'form-control'}),
+            'apartment_type': Select(attrs={'class': 'form-control'}),
             'destination': Select(attrs={'class': 'form-control'}),
 
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
             'nr_bedrooms': NumberInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': NumberInput(attrs={'class': 'form-control'}),
             'bathroom_window': CheckboxInput(attrs={'class': 'form-check-input'}),
-            'floor': SelectMultiple(attrs={'class': 'form-control'}),
+            'floor': Select(attrs={'class': 'form-control'}),
             'excluded_ground_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
             'excluding_top_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
             'nr_floors': NumberInput(attrs={'class': 'form-control'}),
 
             'minimal_surface': NumberInput(attrs={'class': 'form-control'}),
-            'construction_status': SelectMultiple(attrs={'class': 'form-control'}),
-            'furniture': SelectMultiple(attrs={'class': 'form-control'}),
-            'comfort': SelectMultiple(attrs={'class': 'form-control'}),
-            'ap_compart': SelectMultiple(attrs={'class': 'form-control'}),
-            'orientation': SelectMultiple(attrs={'class': 'form-control'}),
-            'interior_finishes': SelectMultiple(attrs={'class': 'form-control'}),
+            'construction_status': Select(attrs={'class': 'form-control'}),
+            'furniture': Select(attrs={'class': 'form-control'}),
+            'comfort': Select(attrs={'class': 'form-control'}),
+            'ap_compart': Select(attrs={'class': 'form-control'}),
+            'orientation': Select(attrs={'class': 'form-control'}),
+            'interior_finishes': Select(attrs={'class': 'form-control'}),
             'construction_year': NumberInput(attrs={'class': 'form-control'}),
 
             'basement': CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -369,7 +368,7 @@ class HouseLeadUpdateForm(LeadUpdateForm):
         model = HouseLead
         fields = '__all__'
         widgets = {
-            'house_type': SelectMultiple(attrs={'class': 'form-control'}),
+            'house_type': Select(attrs={'class': 'form-control'}),
             'destination': Select(attrs={'class': 'form-control'}),
 
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
@@ -381,9 +380,9 @@ class HouseLeadUpdateForm(LeadUpdateForm):
 
             'minimal_surface': NumberInput(attrs={'class': 'form-control'}),
             'terrain_surface': NumberInput(attrs={'class': 'form-control'}),
-            'construction_status': SelectMultiple(attrs={'class': 'form-control'}),
-            'furniture': SelectMultiple(attrs={'class': 'form-control'}),
-            'interior_finishes': SelectMultiple(attrs={'class': 'form-control'}),
+            'construction_status': Select(attrs={'class': 'form-control'}),
+            'furniture': Select(attrs={'class': 'form-control'}),
+            'interior_finishes': Select(attrs={'class': 'form-control'}),
             'construction_year': NumberInput(attrs={'class': 'form-control'}),
 
             'basement': CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -419,7 +418,7 @@ class TerrainLeadUpdateForm(LeadUpdateForm):
             'terrain_surface': NumberInput(attrs={'class': 'form-control'}),
             'unit': Select(attrs={'class': 'form-control'}),
             'street_front': NumberInput(attrs={'class': 'form-control'}),
-            'opening_to': SelectMultiple(attrs={'class': 'form-control'}),
+            'opening_to': Select(attrs={'class': 'form-control'}),
             'access_road_width': NumberInput(attrs={'class': 'form-control'}),
 
             'pot': TextInput(attrs={'class': 'form-control'}),
@@ -439,20 +438,20 @@ class CommercialSpaceLeadUpdateForm(LeadUpdateForm):
         model = CommercialSpaceLead
         fields = '__all__'
         widgets = {
-            'space_type': SelectMultiple(attrs={'class': 'form-control'}),
+            'space_type': Select(attrs={'class': 'form-control'}),
             'destination': Select(attrs={'class': 'form-control'}),
-            'pedestrian_traffic': SelectMultiple(attrs={'class': 'form-control'}),
+            'pedestrian_traffic': Select(attrs={'class': 'form-control'}),
 
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
             'nr_locker_rooms': NumberInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': NumberInput(attrs={'class': 'form-control'}),
-            'floor': SelectMultiple(attrs={'class': 'form-control'}),
+            'floor': Select(attrs={'class': 'form-control'}),
             'nr_floors': NumberInput(attrs={'class': 'form-control'}),
 
             'minimal_surface': NumberInput(attrs={'class': 'form-control'}),
             'glass_case': NumberInput(attrs={'class': 'form-control'}),
             'inside_height': NumberInput(attrs={'class': 'form-control'}),
-            'space_compart': SelectMultiple(attrs={'class': 'form-control'}),
+            'space_compart': Select(attrs={'class': 'form-control'}),
             'nr_parking_spaces': NumberInput(attrs={'class': 'form-control'}),
 
             'semi_basement': CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -479,19 +478,19 @@ class OfficeSpaceLeadUpdateForm(LeadUpdateForm):
         model = OfficeSpaceLead
         fields = '__all__'
         widgets = {
-            'space_type': SelectMultiple(attrs={'class': 'form-control'}),
+            'space_type': Select(attrs={'class': 'form-control'}),
             'space_class': Select(attrs={'class': 'form-control'}),
 
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': NumberInput(attrs={'class': 'form-control'}),
-            'floor': SelectMultiple(attrs={'class': 'form-control'}),
+            'floor': Select(attrs={'class': 'form-control'}),
             'nr_floors': NumberInput(attrs={'class': 'form-control'}),
 
             'useful_surface': NumberInput(attrs={'class': 'form-control'}),
             'minimum_area': NumberInput(attrs={'class': 'form-control'}),
             'maximum_area': NumberInput(attrs={'class': 'form-control'}),
             'total_surface_offices': NumberInput(attrs={'class': 'form-control'}),
-            'space_compart': SelectMultiple(attrs={'class': 'form-control'}),
+            'space_compart': Select(attrs={'class': 'form-control'}),
 
             'nr_underground_parking': NumberInput(attrs={'class': 'form-control'}),
             'underground_parking_cost': NumberInput(attrs={'class': 'form-control'}),
@@ -524,16 +523,16 @@ class IndustrialSpaceLeadUpdateForm(LeadUpdateForm):
         model = IndustrialSpaceLead
         fields = '__all__'
         widgets = {
-            'space_type': SelectMultiple(attrs={'class': 'form-control'}),
-            'destination': SelectMultiple(attrs={'class': 'form-control'}),
+            'space_type': Select(attrs={'class': 'form-control'}),
+            'destination': Select(attrs={'class': 'form-control'}),
 
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
             'nr_locker_rooms': NumberInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': NumberInput(attrs={'class': 'form-control'}),
-            'floor': SelectMultiple(attrs={'class': 'form-control'}),
+            'floor': Select(attrs={'class': 'form-control'}),
 
             'minimal_surface': NumberInput(attrs={'class': 'form-control'}),
-            'space_compart': SelectMultiple(attrs={'class': 'form-control'}),
+            'space_compart': Select(attrs={'class': 'form-control'}),
             'terrain_surface': NumberInput(attrs={'class': 'form-control'}),
             'entrance_door_dimensions': TextInput(attrs={'class': 'form-control'}),
             'inside_height': NumberInput(attrs={'class': 'form-control'}),

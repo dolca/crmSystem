@@ -1,8 +1,8 @@
 from decimal import Decimal
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
-from django.forms import ModelForm, Select, TextInput, Textarea, EmailInput, NumberInput, DateInput, SelectMultiple, \
-    CheckboxInput, ModelChoiceField, HiddenInput
+from django.forms import ModelForm, Select, TextInput, Textarea, EmailInput, NumberInput, DateInput, CheckboxInput, \
+    ModelChoiceField, HiddenInput
 from multiupload.fields import MultiImageField
 from contacts.models import Contact
 from listings.models import Listing, ResidentialEnsemble, OfficeBuilding, Apartment, House, Terrain, CommercialSpace, \
@@ -83,7 +83,7 @@ class ApartmentCreateForm(ModelForm):
             'apartment_nr': TextInput(attrs={'class': 'form-control'}),
 
             'apartment_type': Select(attrs={'class': 'form-control'}),
-            'destination': SelectMultiple(attrs={'class': 'form-control'}),
+            'destination': Select(attrs={'class': 'form-control'}),
             'ap_compart': Select(attrs={'class': 'form-control'}),
             'orientation': Select(attrs={'class': 'form-control'}),
             'floor': Select(attrs={'class': 'form-control'}),
@@ -105,7 +105,7 @@ class ApartmentCreateForm(ModelForm):
 
             'building_type': Select(attrs={'class': 'form-control'}),
             'construction_year': TextInput(attrs={'class': 'form-control'}),
-            'construction_materials': SelectMultiple(attrs={'class': 'form-control'}),
+            'construction_materials': Select(attrs={'class': 'form-control'}),
             'construction_status': Select(attrs={'class': 'form-control'}),
             'nr_floors': TextInput(attrs={'class': 'form-control'}),
             'semi_basement': CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -113,17 +113,17 @@ class ApartmentCreateForm(ModelForm):
             'loft': CheckboxInput(attrs={'class': 'form-check-input'}),
             'attic': CheckboxInput(attrs={'class': 'form-check-input'}),
 
-            'facilities': SelectMultiple(attrs={'class': 'form-control'}),
-            'thermal_insulation': SelectMultiple(attrs={'class': 'form-control'}),
-            'building_facilities': SelectMultiple(attrs={'class': 'form-control'}),
-            'parking': SelectMultiple(attrs={'class': 'form-control'}),
-            'heating_system': SelectMultiple(attrs={'class': 'form-control'}),
-            'entrance_door': SelectMultiple(attrs={'class': 'form-control'}),
-            'interior_doors': SelectMultiple(attrs={'class': 'form-control'}),
-            'furniture': SelectMultiple(attrs={'class': 'form-control'}),
-            'kitchen': SelectMultiple(attrs={'class': 'form-control'}),
-            'windows': SelectMultiple(attrs={'class': 'form-control'}),
-            'other_spaces': SelectMultiple(attrs={'class': 'form-control'}),
+            'facilities': Select(attrs={'class': 'form-control'}),
+            'thermal_insulation': Select(attrs={'class': 'form-control'}),
+            'building_facilities': Select(attrs={'class': 'form-control'}),
+            'parking': Select(attrs={'class': 'form-control'}),
+            'heating_system': Select(attrs={'class': 'form-control'}),
+            'entrance_door': Select(attrs={'class': 'form-control'}),
+            'interior_doors': Select(attrs={'class': 'form-control'}),
+            'furniture': Select(attrs={'class': 'form-control'}),
+            'kitchen': Select(attrs={'class': 'form-control'}),
+            'windows': Select(attrs={'class': 'form-control'}),
+            'other_spaces': Select(attrs={'class': 'form-control'}),
 
             'price': TextInput(attrs={'class': 'form-control'}),
             'last_price': TextInput(attrs={'class': 'form-control'}),
@@ -184,7 +184,7 @@ class HouseCreateForm(ModelForm):
             'residential_ensemble': Select(attrs={'class': 'form-control'}),
 
             'house_type': Select(attrs={'class': 'form-control'}),
-            'destination': SelectMultiple(attrs={'class': 'form-control'}),
+            'destination': Select(attrs={'class': 'form-control'}),
             'interior_finishes': Select(attrs={'class': 'form-control'}),
             'useful_surface': TextInput(attrs={'class': 'form-control'}),
             'built_area': TextInput(attrs={'class': 'form-control'}),
@@ -197,7 +197,7 @@ class HouseCreateForm(ModelForm):
             'roof': Select(attrs={'class': 'form-control'}),
             'construction_status': Select(attrs={'class': 'form-control'}),
             'construction_year': TextInput(attrs={'class': 'form-control'}),
-            'construction_materials': SelectMultiple(attrs={'class': 'form-control'}),
+            'construction_materials': Select(attrs={'class': 'form-control'}),
             'nr_floors': TextInput(attrs={'class': 'form-control'}),
             'semi_basement': CheckboxInput(attrs={'class': 'form-check-input'}),
             'technical_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -214,17 +214,17 @@ class HouseCreateForm(ModelForm):
             'garage': CheckboxInput(attrs={'class': 'form-check-input'}),
             'nr_parking_spaces': TextInput(attrs={'class': 'form-control'}),
 
-            'facilities': SelectMultiple(attrs={'class': 'form-control'}),
-            'thermal_insulation': SelectMultiple(attrs={'class': 'form-control'}),
-            'building_facilities': SelectMultiple(attrs={'class': 'form-control'}),
-            'parking': SelectMultiple(attrs={'class': 'form-control'}),
-            'heating_system': SelectMultiple(attrs={'class': 'form-control'}),
-            'entrance_door': SelectMultiple(attrs={'class': 'form-control'}),
-            'interior_doors': SelectMultiple(attrs={'class': 'form-control'}),
-            'furniture': SelectMultiple(attrs={'class': 'form-control'}),
-            'kitchen': SelectMultiple(attrs={'class': 'form-control'}),
-            'windows': SelectMultiple(attrs={'class': 'form-control'}),
-            'other_spaces': SelectMultiple(attrs={'class': 'form-control'}),
+            'facilities': Select(attrs={'class': 'form-control'}),
+            'thermal_insulation': Select(attrs={'class': 'form-control'}),
+            'building_facilities': Select(attrs={'class': 'form-control'}),
+            'parking': Select(attrs={'class': 'form-control'}),
+            'heating_system': Select(attrs={'class': 'form-control'}),
+            'entrance_door': Select(attrs={'class': 'form-control'}),
+            'interior_doors': Select(attrs={'class': 'form-control'}),
+            'furniture': Select(attrs={'class': 'form-control'}),
+            'kitchen': Select(attrs={'class': 'form-control'}),
+            'windows': Select(attrs={'class': 'form-control'}),
+            'other_spaces': Select(attrs={'class': 'form-control'}),
 
             'price': TextInput(attrs={'class': 'form-control'}),
             'last_price': TextInput(attrs={'class': 'form-control'}),
@@ -277,7 +277,7 @@ class TerrainCreateForm(ModelForm):
         fields = '__all__'
         widgets = {
             'terrain_type': Select(attrs={'class': 'form-control'}),
-            'destination': SelectMultiple(attrs={'class': 'form-control'}),
+            'destination': Select(attrs={'class': 'form-control'}),
             'classification': Select(attrs={'class': 'form-control'}),
             'terrain_surface': TextInput(attrs={'class': 'form-control'}),
             'unit': Select(attrs={'class': 'form-control'}),
@@ -300,8 +300,8 @@ class TerrainCreateForm(ModelForm):
             'urban_certificate': CheckboxInput(attrs={'class': 'form-check-input'}),
             'maximum_nr_levels': TextInput(attrs={'class': 'form-control'}),
 
-            'land_facilities': SelectMultiple(attrs={'class': 'form-control'}),
-            'other_features': SelectMultiple(attrs={'class': 'form-control'}),
+            'land_facilities': Select(attrs={'class': 'form-control'}),
+            'other_features': Select(attrs={'class': 'form-control'}),
 
             'price': TextInput(attrs={'class': 'form-control'}),
             'last_price': TextInput(attrs={'class': 'form-control'}),
@@ -347,9 +347,9 @@ class CommercialSpaceCreateForm(ModelForm):
             'space_nr': TextInput(attrs={'class': 'form-control'}),
 
             'space_type': Select(attrs={'class': 'form-control'}),
-            'destination': SelectMultiple(attrs={'class': 'form-control'}),
+            'destination': Select(attrs={'class': 'form-control'}),
             'pedestrian_traffic': Select(attrs={'class': 'form-control'}),
-            'floor': SelectMultiple(attrs={'class': 'form-control'}),
+            'floor': Select(attrs={'class': 'form-control'}),
             'rooms_number': TextInput(attrs={'class': 'form-control'}),
             'nr_locker_rooms': TextInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': TextInput(attrs={'class': 'form-control'}),
@@ -369,10 +369,10 @@ class CommercialSpaceCreateForm(ModelForm):
             'technical_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
             'loft': CheckboxInput(attrs={'class': 'form-check-input'}),
 
-            'land_facilities': SelectMultiple(attrs={'class': 'form-control'}),
-            'eco_elements': SelectMultiple(attrs={'class': 'form-control'}),
-            'parking': SelectMultiple(attrs={'class': 'form-control'}),
-            'other_facilities_com_sp': SelectMultiple(attrs={'class': 'form-control'}),
+            'land_facilities': Select(attrs={'class': 'form-control'}),
+            'eco_elements': Select(attrs={'class': 'form-control'}),
+            'parking': Select(attrs={'class': 'form-control'}),
+            'other_facilities_com_sp': Select(attrs={'class': 'form-control'}),
 
             'price': TextInput(attrs={'class': 'form-control'}),
             'last_price': TextInput(attrs={'class': 'form-control'}),
@@ -428,7 +428,7 @@ class OfficeSpaceCreateForm(ModelForm):
             'space_nr': TextInput(attrs={'class': 'form-control'}),
 
             'space_type': Select(attrs={'class': 'form-control'}),
-            'floor': SelectMultiple(attrs={'class': 'form-control'}),
+            'floor': Select(attrs={'class': 'form-control'}),
             'space_class': Select(attrs={'class': 'form-control'}),
             'rooms_number': TextInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': TextInput(attrs={'class': 'form-control'}),
@@ -457,15 +457,15 @@ class OfficeSpaceCreateForm(ModelForm):
             'technical_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
             'loft': CheckboxInput(attrs={'class': 'form-check-input'}),
 
-            'services_provided': SelectMultiple(attrs={'class': 'form-control'}),
-            'safety_security': SelectMultiple(attrs={'class': 'form-control'}),
-            'it_c': SelectMultiple(attrs={'class': 'form-control'}),
-            'electrical_system': SelectMultiple(attrs={'class': 'form-control'}),
-            'eco_elements': SelectMultiple(attrs={'class': 'form-control'}),
-            'architecture': SelectMultiple(attrs={'class': 'form-control'}),
-            'air_conditioning': SelectMultiple(attrs={'class': 'form-control'}),
-            'building_facilities_proximity': SelectMultiple(attrs={'class': 'form-control'}),
-            'parking': SelectMultiple(attrs={'class': 'form-control'}),
+            'services_provided': Select(attrs={'class': 'form-control'}),
+            'safety_security': Select(attrs={'class': 'form-control'}),
+            'it_c': Select(attrs={'class': 'form-control'}),
+            'electrical_system': Select(attrs={'class': 'form-control'}),
+            'eco_elements': Select(attrs={'class': 'form-control'}),
+            'architecture': Select(attrs={'class': 'form-control'}),
+            'air_conditioning': Select(attrs={'class': 'form-control'}),
+            'building_facilities_proximity': Select(attrs={'class': 'form-control'}),
+            'parking': Select(attrs={'class': 'form-control'}),
 
             'price': TextInput(attrs={'class': 'form-control'}),
             'last_price': TextInput(attrs={'class': 'form-control'}),
@@ -524,8 +524,8 @@ class IndustrialSpaceCreateForm(ModelForm):
         fields = '__all__'
         widgets = {
             'space_type': Select(attrs={'class': 'form-control'}),
-            'destination': SelectMultiple(attrs={'class': 'form-control'}),
-            'floor': SelectMultiple(attrs={'class': 'form-control'}),
+            'destination': Select(attrs={'class': 'form-control'}),
+            'floor': Select(attrs={'class': 'form-control'}),
             'space_class': Select(attrs={'class': 'form-control'}),
             'rooms_number': TextInput(attrs={'class': 'form-control'}),
             'nr_locker_rooms': TextInput(attrs={'class': 'form-control'}),
@@ -546,9 +546,9 @@ class IndustrialSpaceCreateForm(ModelForm):
             'inside_height': TextInput(attrs={'class': 'form-control'}),
             'nr_parking_spaces': TextInput(attrs={'class': 'form-control'}),
 
-            'land_facilities': SelectMultiple(attrs={'class': 'form-control'}),
-            'parking': SelectMultiple(attrs={'class': 'form-control'}),
-            'other_facilities_ind_sp': SelectMultiple(attrs={'class': 'form-control'}),
+            'land_facilities': Select(attrs={'class': 'form-control'}),
+            'parking': Select(attrs={'class': 'form-control'}),
+            'other_facilities_ind_sp': Select(attrs={'class': 'form-control'}),
 
             'price': TextInput(attrs={'class': 'form-control'}),
             'last_price': TextInput(attrs={'class': 'form-control'}),
@@ -614,7 +614,7 @@ class ResidentialEnsembleCreateForm(ModelForm):
             'building_type': Select(attrs={'class': 'form-control'}),
             'construction_year': TextInput(attrs={'class': 'form-control'}),
             'construction_status': Select(attrs={'class': 'form-control'}),
-            'construction_materials': SelectMultiple(attrs={'class': 'form-control'}),
+            'construction_materials': Select(attrs={'class': 'form-control'}),
             'interior_finishes': Select(attrs={'class': 'form-control'}),
             'nr_floors': TextInput(attrs={'class': 'form-control'}),
             'semi_basement': CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -632,8 +632,8 @@ class ResidentialEnsembleCreateForm(ModelForm):
             'finishes': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
             'technical_details': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
 
-            'thermal_insulation': SelectMultiple(attrs={'class': 'form-control'}),
-            'other_spaces': SelectMultiple(attrs={'class': 'form-control'}),
+            'thermal_insulation': Select(attrs={'class': 'form-control'}),
+            'other_spaces': Select(attrs={'class': 'form-control'}),
 
             'other_details': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
 
@@ -694,7 +694,7 @@ class OfficeBuildingCreateForm(ModelForm):
 
             'construction_year': TextInput(attrs={'class': 'form-control'}),
             'construction_status': Select(attrs={'class': 'form-control'}),
-            'construction_materials': SelectMultiple(attrs={'class': 'form-control'}),
+            'construction_materials': Select(attrs={'class': 'form-control'}),
             'interior_finishes': Select(attrs={'class': 'form-control'}),
             'nr_floors': TextInput(attrs={'class': 'form-control'}),
             'space_class': Select(attrs={'class': 'form-control'}),
@@ -720,14 +720,14 @@ class OfficeBuildingCreateForm(ModelForm):
             'finishes': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
             'technical_details': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
 
-            'services_provided': SelectMultiple(attrs={'class': 'form-control'}),
-            'safety_security': SelectMultiple(attrs={'class': 'form-control'}),
-            'it_c': SelectMultiple(attrs={'class': 'form-control'}),
-            'electrical_system': SelectMultiple(attrs={'class': 'form-control'}),
-            'eco_elements': SelectMultiple(attrs={'class': 'form-control'}),
-            'architecture': SelectMultiple(attrs={'class': 'form-control'}),
-            'air_conditioning': SelectMultiple(attrs={'class': 'form-control'}),
-            'building_facilities_proximity': SelectMultiple(attrs={'class': 'form-control'}),
+            'services_provided': Select(attrs={'class': 'form-control'}),
+            'safety_security': Select(attrs={'class': 'form-control'}),
+            'it_c': Select(attrs={'class': 'form-control'}),
+            'electrical_system': Select(attrs={'class': 'form-control'}),
+            'eco_elements': Select(attrs={'class': 'form-control'}),
+            'architecture': Select(attrs={'class': 'form-control'}),
+            'air_conditioning': Select(attrs={'class': 'form-control'}),
+            'building_facilities_proximity': Select(attrs={'class': 'form-control'}),
 
             'other_details': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
 
@@ -840,7 +840,7 @@ class ApartmentUpdateForm(ModelForm):
             'apartment_nr': TextInput(attrs={'class': 'form-control'}),
 
             'apartment_type': Select(attrs={'class': 'form-control'}),
-            'destination': SelectMultiple(attrs={'class': 'form-control'}),
+            'destination': Select(attrs={'class': 'form-control'}),
             'ap_compart': Select(attrs={'class': 'form-control'}),
             'orientation': Select(attrs={'class': 'form-control'}),
             'floor': Select(attrs={'class': 'form-control'}),
@@ -862,7 +862,7 @@ class ApartmentUpdateForm(ModelForm):
 
             'building_type': Select(attrs={'class': 'form-control'}),
             'construction_year': TextInput(attrs={'class': 'form-control'}),
-            'construction_materials': SelectMultiple(attrs={'class': 'form-control'}),
+            'construction_materials': Select(attrs={'class': 'form-control'}),
             'construction_status': Select(attrs={'class': 'form-control'}),
             'nr_floors': TextInput(attrs={'class': 'form-control'}),
             'semi_basement': CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -870,17 +870,17 @@ class ApartmentUpdateForm(ModelForm):
             'loft': CheckboxInput(attrs={'class': 'form-check-input'}),
             'attic': CheckboxInput(attrs={'class': 'form-check-input'}),
 
-            'facilities': SelectMultiple(attrs={'class': 'form-control'}),
-            'thermal_insulation': SelectMultiple(attrs={'class': 'form-control'}),
-            'building_facilities': SelectMultiple(attrs={'class': 'form-control'}),
-            'parking': SelectMultiple(attrs={'class': 'form-control'}),
-            'heating_system': SelectMultiple(attrs={'class': 'form-control'}),
-            'entrance_door': SelectMultiple(attrs={'class': 'form-control'}),
-            'interior_doors': SelectMultiple(attrs={'class': 'form-control'}),
-            'furniture': SelectMultiple(attrs={'class': 'form-control'}),
-            'kitchen': SelectMultiple(attrs={'class': 'form-control'}),
-            'windows': SelectMultiple(attrs={'class': 'form-control'}),
-            'other_spaces': SelectMultiple(attrs={'class': 'form-control'}),
+            'facilities': Select(attrs={'class': 'form-control'}),
+            'thermal_insulation': Select(attrs={'class': 'form-control'}),
+            'building_facilities': Select(attrs={'class': 'form-control'}),
+            'parking': Select(attrs={'class': 'form-control'}),
+            'heating_system': Select(attrs={'class': 'form-control'}),
+            'entrance_door': Select(attrs={'class': 'form-control'}),
+            'interior_doors': Select(attrs={'class': 'form-control'}),
+            'furniture': Select(attrs={'class': 'form-control'}),
+            'kitchen': Select(attrs={'class': 'form-control'}),
+            'windows': Select(attrs={'class': 'form-control'}),
+            'other_spaces': Select(attrs={'class': 'form-control'}),
 
             'price': TextInput(attrs={'class': 'form-control'}),
             'last_price': TextInput(attrs={'class': 'form-control'}),
@@ -941,7 +941,7 @@ class HouseUpdateForm(ModelForm):
             'residential_ensemble': Select(attrs={'class': 'form-control'}),
 
             'house_type': Select(attrs={'class': 'form-control'}),
-            'destination': SelectMultiple(attrs={'class': 'form-control'}),
+            'destination': Select(attrs={'class': 'form-control'}),
             'interior_finishes': Select(attrs={'class': 'form-control'}),
             'useful_surface': TextInput(attrs={'class': 'form-control'}),
             'built_area': TextInput(attrs={'class': 'form-control'}),
@@ -954,7 +954,7 @@ class HouseUpdateForm(ModelForm):
             'roof': Select(attrs={'class': 'form-control'}),
             'construction_status': Select(attrs={'class': 'form-control'}),
             'construction_year': TextInput(attrs={'class': 'form-control'}),
-            'construction_materials': SelectMultiple(attrs={'class': 'form-control'}),
+            'construction_materials': Select(attrs={'class': 'form-control'}),
             'nr_floors': TextInput(attrs={'class': 'form-control'}),
             'semi_basement': CheckboxInput(attrs={'class': 'form-check-input'}),
             'technical_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -971,17 +971,17 @@ class HouseUpdateForm(ModelForm):
             'garage': CheckboxInput(attrs={'class': 'form-check-input'}),
             'nr_parking_spaces': TextInput(attrs={'class': 'form-control'}),
 
-            'facilities': SelectMultiple(attrs={'class': 'form-control'}),
-            'thermal_insulation': SelectMultiple(attrs={'class': 'form-control'}),
-            'building_facilities': SelectMultiple(attrs={'class': 'form-control'}),
-            'parking': SelectMultiple(attrs={'class': 'form-control'}),
-            'heating_system': SelectMultiple(attrs={'class': 'form-control'}),
-            'entrance_door': SelectMultiple(attrs={'class': 'form-control'}),
-            'interior_doors': SelectMultiple(attrs={'class': 'form-control'}),
-            'furniture': SelectMultiple(attrs={'class': 'form-control'}),
-            'kitchen': SelectMultiple(attrs={'class': 'form-control'}),
-            'windows': SelectMultiple(attrs={'class': 'form-control'}),
-            'other_spaces': SelectMultiple(attrs={'class': 'form-control'}),
+            'facilities': Select(attrs={'class': 'form-control'}),
+            'thermal_insulation': Select(attrs={'class': 'form-control'}),
+            'building_facilities': Select(attrs={'class': 'form-control'}),
+            'parking': Select(attrs={'class': 'form-control'}),
+            'heating_system': Select(attrs={'class': 'form-control'}),
+            'entrance_door': Select(attrs={'class': 'form-control'}),
+            'interior_doors': Select(attrs={'class': 'form-control'}),
+            'furniture': Select(attrs={'class': 'form-control'}),
+            'kitchen': Select(attrs={'class': 'form-control'}),
+            'windows': Select(attrs={'class': 'form-control'}),
+            'other_spaces': Select(attrs={'class': 'form-control'}),
 
             'price': TextInput(attrs={'class': 'form-control'}),
             'last_price': TextInput(attrs={'class': 'form-control'}),
@@ -1034,7 +1034,7 @@ class TerrainUpdateForm(ModelForm):
         fields = '__all__'
         widgets = {
             'terrain_type': Select(attrs={'class': 'form-control'}),
-            'destination': SelectMultiple(attrs={'class': 'form-control'}),
+            'destination': Select(attrs={'class': 'form-control'}),
             'classification': Select(attrs={'class': 'form-control'}),
             'terrain_surface': TextInput(attrs={'class': 'form-control'}),
             'unit': Select(attrs={'class': 'form-control'}),
@@ -1057,8 +1057,8 @@ class TerrainUpdateForm(ModelForm):
             'urban_certificate': CheckboxInput(attrs={'class': 'form-check-input'}),
             'maximum_nr_levels': TextInput(attrs={'class': 'form-control'}),
 
-            'land_facilities': SelectMultiple(attrs={'class': 'form-control'}),
-            'other_features': SelectMultiple(attrs={'class': 'form-control'}),
+            'land_facilities': Select(attrs={'class': 'form-control'}),
+            'other_features': Select(attrs={'class': 'form-control'}),
 
             'price': TextInput(attrs={'class': 'form-control'}),
             'last_price': TextInput(attrs={'class': 'form-control'}),
@@ -1104,9 +1104,9 @@ class CommercialSpaceUpdateForm(ModelForm):
             'space_nr': TextInput(attrs={'class': 'form-control'}),
 
             'space_type': Select(attrs={'class': 'form-control'}),
-            'destination': SelectMultiple(attrs={'class': 'form-control'}),
+            'destination': Select(attrs={'class': 'form-control'}),
             'pedestrian_traffic': Select(attrs={'class': 'form-control'}),
-            'floor': SelectMultiple(attrs={'class': 'form-control'}),
+            'floor': Select(attrs={'class': 'form-control'}),
             'rooms_number': TextInput(attrs={'class': 'form-control'}),
             'nr_locker_rooms': TextInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': TextInput(attrs={'class': 'form-control'}),
@@ -1126,10 +1126,10 @@ class CommercialSpaceUpdateForm(ModelForm):
             'technical_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
             'loft': CheckboxInput(attrs={'class': 'form-check-input'}),
 
-            'land_facilities': SelectMultiple(attrs={'class': 'form-control'}),
-            'eco_elements': SelectMultiple(attrs={'class': 'form-control'}),
-            'parking': SelectMultiple(attrs={'class': 'form-control'}),
-            'other_facilities_com_sp': SelectMultiple(attrs={'class': 'form-control'}),
+            'land_facilities': Select(attrs={'class': 'form-control'}),
+            'eco_elements': Select(attrs={'class': 'form-control'}),
+            'parking': Select(attrs={'class': 'form-control'}),
+            'other_facilities_com_sp': Select(attrs={'class': 'form-control'}),
 
             'price': TextInput(attrs={'class': 'form-control'}),
             'last_price': TextInput(attrs={'class': 'form-control'}),
@@ -1185,7 +1185,7 @@ class OfficeSpaceUpdateForm(ModelForm):
             'space_nr': TextInput(attrs={'class': 'form-control'}),
 
             'space_type': Select(attrs={'class': 'form-control'}),
-            'floor': SelectMultiple(attrs={'class': 'form-control'}),
+            'floor': Select(attrs={'class': 'form-control'}),
             'space_class': Select(attrs={'class': 'form-control'}),
             'rooms_number': TextInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': TextInput(attrs={'class': 'form-control'}),
@@ -1214,15 +1214,15 @@ class OfficeSpaceUpdateForm(ModelForm):
             'technical_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
             'loft': CheckboxInput(attrs={'class': 'form-check-input'}),
 
-            'services_provided': SelectMultiple(attrs={'class': 'form-control'}),
-            'safety_security': SelectMultiple(attrs={'class': 'form-control'}),
-            'it_c': SelectMultiple(attrs={'class': 'form-control'}),
-            'electrical_system': SelectMultiple(attrs={'class': 'form-control'}),
-            'eco_elements': SelectMultiple(attrs={'class': 'form-control'}),
-            'architecture': SelectMultiple(attrs={'class': 'form-control'}),
-            'air_conditioning': SelectMultiple(attrs={'class': 'form-control'}),
-            'building_facilities_proximity': SelectMultiple(attrs={'class': 'form-control'}),
-            'parking': SelectMultiple(attrs={'class': 'form-control'}),
+            'services_provided': Select(attrs={'class': 'form-control'}),
+            'safety_security': Select(attrs={'class': 'form-control'}),
+            'it_c': Select(attrs={'class': 'form-control'}),
+            'electrical_system': Select(attrs={'class': 'form-control'}),
+            'eco_elements': Select(attrs={'class': 'form-control'}),
+            'architecture': Select(attrs={'class': 'form-control'}),
+            'air_conditioning': Select(attrs={'class': 'form-control'}),
+            'building_facilities_proximity': Select(attrs={'class': 'form-control'}),
+            'parking': Select(attrs={'class': 'form-control'}),
 
             'price': TextInput(attrs={'class': 'form-control'}),
             'last_price': TextInput(attrs={'class': 'form-control'}),
@@ -1281,8 +1281,8 @@ class IndustrialSpaceUpdateForm(ModelForm):
         fields = '__all__'
         widgets = {
             'space_type': Select(attrs={'class': 'form-control'}),
-            'destination': SelectMultiple(attrs={'class': 'form-control'}),
-            'floor': SelectMultiple(attrs={'class': 'form-control'}),
+            'destination': Select(attrs={'class': 'form-control'}),
+            'floor': Select(attrs={'class': 'form-control'}),
             'space_class': Select(attrs={'class': 'form-control'}),
             'rooms_number': TextInput(attrs={'class': 'form-control'}),
             'nr_locker_rooms': TextInput(attrs={'class': 'form-control'}),
@@ -1303,9 +1303,9 @@ class IndustrialSpaceUpdateForm(ModelForm):
             'inside_height': TextInput(attrs={'class': 'form-control'}),
             'nr_parking_spaces': TextInput(attrs={'class': 'form-control'}),
 
-            'land_facilities': SelectMultiple(attrs={'class': 'form-control'}),
-            'parking': SelectMultiple(attrs={'class': 'form-control'}),
-            'other_facilities_ind_sp': SelectMultiple(attrs={'class': 'form-control'}),
+            'land_facilities': Select(attrs={'class': 'form-control'}),
+            'parking': Select(attrs={'class': 'form-control'}),
+            'other_facilities_ind_sp': Select(attrs={'class': 'form-control'}),
 
             'price': TextInput(attrs={'class': 'form-control'}),
             'last_price': TextInput(attrs={'class': 'form-control'}),
@@ -1371,7 +1371,7 @@ class ResidentialEnsembleUpdateForm(ModelForm):
             'building_type': Select(attrs={'class': 'form-control'}),
             'construction_year': TextInput(attrs={'class': 'form-control'}),
             'construction_status': Select(attrs={'class': 'form-control'}),
-            'construction_materials': SelectMultiple(attrs={'class': 'form-control'}),
+            'construction_materials': Select(attrs={'class': 'form-control'}),
             'interior_finishes': Select(attrs={'class': 'form-control'}),
             'nr_floors': TextInput(attrs={'class': 'form-control'}),
             'semi_basement': CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -1389,8 +1389,8 @@ class ResidentialEnsembleUpdateForm(ModelForm):
             'finishes': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
             'technical_details': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
 
-            'thermal_insulation': SelectMultiple(attrs={'class': 'form-control'}),
-            'other_spaces': SelectMultiple(attrs={'class': 'form-control'}),
+            'thermal_insulation': Select(attrs={'class': 'form-control'}),
+            'other_spaces': Select(attrs={'class': 'form-control'}),
 
             'other_details': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
 
@@ -1451,7 +1451,7 @@ class OfficeBuildingUpdateForm(ModelForm):
 
             'construction_year': TextInput(attrs={'class': 'form-control'}),
             'construction_status': Select(attrs={'class': 'form-control'}),
-            'construction_materials': SelectMultiple(attrs={'class': 'form-control'}),
+            'construction_materials': Select(attrs={'class': 'form-control'}),
             'interior_finishes': Select(attrs={'class': 'form-control'}),
             'nr_floors': TextInput(attrs={'class': 'form-control'}),
             'space_class': Select(attrs={'class': 'form-control'}),
@@ -1477,14 +1477,14 @@ class OfficeBuildingUpdateForm(ModelForm):
             'finishes': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
             'technical_details': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
 
-            'services_provided': SelectMultiple(attrs={'class': 'form-control'}),
-            'safety_security': SelectMultiple(attrs={'class': 'form-control'}),
-            'it_c': SelectMultiple(attrs={'class': 'form-control'}),
-            'electrical_system': SelectMultiple(attrs={'class': 'form-control'}),
-            'eco_elements': SelectMultiple(attrs={'class': 'form-control'}),
-            'architecture': SelectMultiple(attrs={'class': 'form-control'}),
-            'air_conditioning': SelectMultiple(attrs={'class': 'form-control'}),
-            'building_facilities_proximity': SelectMultiple(attrs={'class': 'form-control'}),
+            'services_provided': Select(attrs={'class': 'form-control'}),
+            'safety_security': Select(attrs={'class': 'form-control'}),
+            'it_c': Select(attrs={'class': 'form-control'}),
+            'electrical_system': Select(attrs={'class': 'form-control'}),
+            'eco_elements': Select(attrs={'class': 'form-control'}),
+            'architecture': Select(attrs={'class': 'form-control'}),
+            'air_conditioning': Select(attrs={'class': 'form-control'}),
+            'building_facilities_proximity': Select(attrs={'class': 'form-control'}),
 
             'other_details': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
 
