@@ -82,13 +82,16 @@ class ApartmentLeadCreateForm(LeadCreateForm):
         bedrooms_number = cleaned_data.get('nr_bedrooms')
 
         if bedrooms_number is not None and rooms_number is not None and bedrooms_number > rooms_number:
-            raise ValidationError('Numărul de dormitoare nu poate fi mai mare decât numărul total de camere.')
+            raise ValidationError({'nr_bedrooms': [
+                'Numărul de dormitoare nu poate fi mai mare decât numărul total de camere.']})
 
         floor = cleaned_data.get('floor')
         nr_floors = cleaned_data.get('nr_floors')
 
-        if floor is not None and nr_floors is not None and floor > nr_floors:
-            raise ValidationError('Numărul etajului apartamentului nu poate fi mai mare decât numărul total de etaje.')
+        if isinstance(floor, str) and floor.isdigit():
+            if floor is not None and nr_floors is not None and int(floor) > nr_floors:
+                raise ValidationError({'floor': [
+                    'Numărul etajului apartamentului nu poate fi mai mare decât numărul total de etaje.']})
 
         return cleaned_data
 
@@ -131,7 +134,8 @@ class HouseLeadCreateForm(LeadCreateForm):
         bedrooms_number = cleaned_data.get('nr_bedrooms')
 
         if bedrooms_number is not None and rooms_number is not None and bedrooms_number > rooms_number:
-            raise ValidationError('Numărul de dormitoare nu poate fi mai mare decât numărul total de camere.')
+            raise ValidationError({'nr_bedrooms': [
+                'Numărul de dormitoare nu poate fi mai mare decât numărul total de camere.']})
 
         return cleaned_data
 
@@ -197,8 +201,10 @@ class CommercialSpaceLeadCreateForm(LeadCreateForm):
         floor = cleaned_data.get('floor')
         nr_floors = cleaned_data.get('nr_floors')
 
-        if floor is not None and nr_floors is not None and floor > nr_floors:
-            raise ValidationError('Numărul etajului spațiului comercial nu poate fi mai mare decât numărul total de etaje.')
+        if isinstance(floor, str) and floor.isdigit():
+            if floor is not None and nr_floors is not None and int(floor) > nr_floors:
+                raise ValidationError({'floor': [
+                    'Numărul etajului spațiului comercial nu poate fi mai mare decât numărul total de etaje.']})
 
         return cleaned_data
 
@@ -243,7 +249,8 @@ class OfficeSpaceLeadCreateForm(LeadCreateForm):
         maximum_area = cleaned_data.get('maximum_area')
 
         if minimum_area is not None and maximum_area is not None and minimum_area >= maximum_area:
-            raise ValidationError('Suprafața minimă nu poate fi mai mare sau egală cu suprafața maximă.')
+            raise ValidationError({'minimum_area': [
+                'Suprafața minimă nu poate fi mai mare sau egală cu suprafața maximă.']})
 
         return cleaned_data
 
@@ -352,13 +359,16 @@ class ApartmentLeadUpdateForm(LeadUpdateForm):
         bedrooms_number = cleaned_data.get('nr_bedrooms')
 
         if bedrooms_number is not None and rooms_number is not None and bedrooms_number > rooms_number:
-            raise ValidationError('Numărul de dormitoare nu poate fi mai mare decât numărul total de camere.')
+            raise ValidationError({'nr_bedrooms': [
+                'Numărul de dormitoare nu poate fi mai mare decât numărul total de camere.']})
 
         floor = cleaned_data.get('floor')
         nr_floors = cleaned_data.get('nr_floors')
 
-        if floor is not None and nr_floors is not None and floor > nr_floors:
-            raise ValidationError('Numărul etajului apartamentului nu poate fi mai mare decât numărul total de etaje.')
+        if isinstance(floor, str) and floor.isdigit():
+            if floor is not None and nr_floors is not None and int(floor) > nr_floors:
+                raise ValidationError({'floor': [
+                    'Numărul etajului apartamentului nu poate fi mai mare decât numărul total de etaje.']})
 
         return cleaned_data
 
@@ -401,7 +411,8 @@ class HouseLeadUpdateForm(LeadUpdateForm):
         bedrooms_number = cleaned_data.get('nr_bedrooms')
 
         if bedrooms_number is not None and rooms_number is not None and bedrooms_number > rooms_number:
-            raise ValidationError('Numărul de dormitoare nu poate fi mai mare decât numărul total de camere.')
+            raise ValidationError({'nr_bedrooms': [
+                'Numărul de dormitoare nu poate fi mai mare decât numărul total de camere.']})
 
         return cleaned_data
 
@@ -467,8 +478,10 @@ class CommercialSpaceLeadUpdateForm(LeadUpdateForm):
         floor = cleaned_data.get('floor')
         nr_floors = cleaned_data.get('nr_floors')
 
-        if floor is not None and nr_floors is not None and floor > nr_floors:
-            raise ValidationError('Numărul etajului spațiului comercial nu poate fi mai mare decât numărul total de etaje.')
+        if isinstance(floor, str) and floor.isdigit():
+            if floor is not None and nr_floors is not None and int(floor) > nr_floors:
+                raise ValidationError({'floor': [
+                    'Numărul etajului spațiului comercial nu poate fi mai mare decât numărul total de etaje.']})
 
         return cleaned_data
 
@@ -513,7 +526,8 @@ class OfficeSpaceLeadUpdateForm(LeadUpdateForm):
         maximum_area = cleaned_data.get('maximum_area')
 
         if minimum_area is not None and maximum_area is not None and minimum_area >= maximum_area:
-            raise ValidationError('Suprafața minimă nu poate fi mai mare sau egală cu suprafața maximă.')
+            raise ValidationError({'minimum_area': [
+                'Suprafața minimă nu poate fi mai mare sau egală cu suprafața maximă.']})
 
         return cleaned_data
 

@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import ValidationError
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
@@ -37,12 +37,11 @@ class ApartmentLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
         form.instance.updated_at = timezone.now()
         form.instance.created_by = self.request.user
 
-        try:
-            response = super().form_valid(form)
-            return response
-        except Exception as e:
-            print(f"Eroare în timpul salvării datelor: {e}")
-            return HttpResponseRedirect(self.get_success_url())
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        errors = form.errors.get_json_data()
+        return JsonResponse({'errors': errors}, status=400)
 
 
 @login_required

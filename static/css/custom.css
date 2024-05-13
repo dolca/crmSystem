@@ -53,3 +53,8 @@ span.sidebar-text {
 .end-0 {
     right: 0 !important;
 }
+
+/* Culoare mesaj eroare */
+.error-message {
+    color: firebrick;
+}

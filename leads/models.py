@@ -39,9 +39,6 @@ class Lead(Model):
     class Meta:
         abstract = True
 
-    def __str__(self):
-        return f'{self.contact}'
-
 
 class ApartmentLead(Lead):
     apartment_type = CharField(choices=TIP_APARTAMENT, verbose_name='Tip apartament')
@@ -77,7 +74,7 @@ class ApartmentLead(Lead):
                                    related_name='assigned_apartment_key', verbose_name='Proprietăți asociate')
 
     def __str__(self):
-        return f'{self.apartment_type} - {self.created_by}'
+        return f'{self.property_type} (Tip: {self.apartment_type}) - Contact: {self.contact} / Agent: {self.created_by}'
 
 
 class HouseLead(Lead):
@@ -109,7 +106,7 @@ class HouseLead(Lead):
                                    related_name='assigned_house_key', verbose_name='Proprietăți asociate')
 
     def __str__(self):
-        return f'{self.house_type} - {self.created_by}'
+        return f'{self.property_type} (Tip: {self.house_type}) - Contact: {self.contact} / Agent: {self.created_by}'
 
 
 class TerrainLead(Lead):
@@ -136,7 +133,7 @@ class TerrainLead(Lead):
                                    related_name='assigned_terrain_key', verbose_name='Proprietăți asociate')
 
     def __str__(self):
-        return f'{self.terrain_type} - {self.created_by}'
+        return f'{self.property_type} (Tip: {self.terrain_type}) - Contact: {self.contact} / Agent: {self.created_by}'
 
 
 class CommercialSpaceLead(Lead):
@@ -165,7 +162,7 @@ class CommercialSpaceLead(Lead):
                                    related_name='assigned_commercial_space_key', verbose_name='Proprietăți asociate')
 
     def __str__(self):
-        return f'{self.space_type} - {self.created_by}'
+        return f'{self.property_type} (Tip: {self.space_type}) - Contact: {self.contact} / Agent: {self.created_by}'
 
 
 class OfficeSpaceLead(Lead):
@@ -199,7 +196,7 @@ class OfficeSpaceLead(Lead):
                                    related_name='assigned_office_space_key', verbose_name='Proprietăți asociate')
 
     def __str__(self):
-        return f'{self.space_type} - {self.created_by}'
+        return f'{self.property_type} (Tip: {self.space_type}) - Contact: {self.contact} / Agent: {self.created_by}'
 
 
 class IndustrialSpaceLead(Lead):
@@ -225,4 +222,4 @@ class IndustrialSpaceLead(Lead):
                                    related_name='assigned_industrial_space_key', verbose_name='Proprietăți asociate')
 
     def __str__(self):
-        return f'{self.space_type} - {self.created_by}'
+        return f'{self.property_type} (Tip: {self.space_type}) - Contact: {self.contact} / Agent: {self.created_by}'
