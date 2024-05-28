@@ -9,7 +9,7 @@
     {% endblock pagetitle %}
 
     {% if user.is_authenticated %}
-        {% if perms.leads.view_lead_details %}
+        {% if perms.leads.view_apartmentlead_details %}
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="card">
@@ -39,14 +39,14 @@
                                     . . . 
                                 {% endif %}</p>
                             {% if perms.leads.change_lead %}
-                                <a href="{% url 'leads:update_lead' lead.id %}" class="btn btn-subtle-success my-1 mx-1">Editează</a>
+                                <a href="{% url 'leads:edit_apartment_lead' apartmentlead.id %}" class="btn btn-subtle-success my-1 mx-1">Editează</a>
                             {% endif %}
                             {% if perms.leads.view_lead %}
-                                <a href="{% url 'leads:my_leads' %}" class="btn btn-subtle-primary my-1">Cererile mele</a>
-                                <a href="{% url 'leads:general_leads' %}" class="btn btn-subtle-primary my-1">Cereri generale</a>
+                                <a href="{% url 'leads:my_apartment_leads' %}" class="btn btn-subtle-primary my-1">Cererile mele</a>
+                                <a href="{% url 'leads:general_apartment_leads' %}" class="btn btn-subtle-primary my-1">Cereri generale</a>
                             {% endif %}
                             {% if perms.leads.delete_lead %}
-                                <a href="{% url 'leads:delete_lead' lead.id %}" class="btn btn-subtle-danger my-1 mx-1">Șterge</a>
+                                <a href="{% url 'leads:delete_apartment_lead' apartmentlead.id %}" class="btn btn-subtle-danger my-1 mx-1">Șterge</a>
                             {% endif %}
                         </div>
                         <div class="card-footer text-body-secondary">

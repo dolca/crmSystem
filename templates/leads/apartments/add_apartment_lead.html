@@ -368,20 +368,20 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             console.log('Conținutul DOM a fost încărcat.');
-            
+
             var storedType = sessionStorage.getItem('selectedType');
             var storedContactId = sessionStorage.getItem('selectedContact');
-            
+
             console.log('Tip cerere:', storedType);
             console.log('ID contact:', storedContactId);
-            
+
             if (document.getElementById('property_type')) {
                 document.getElementById('property_type').value = storedType;
             }
             if (document.getElementById('contact')) {
                 document.getElementById('contact').value = storedContactId;
             }
-            
+
             if (storedContactId) {
                 fetch('/contacts/api/contact-details/' + storedContactId)
                     .then(response => {
@@ -400,28 +400,28 @@
                         console.error('Eroare:', error);
                     });
             }
-            
+
             var leadAssignedListings = document.getElementById('assigned_listings');
             new Choices(leadAssignedListings, {
                 allowHTML: true,
                 loadingText: 'Se încarcă...',
                 noResultsText: 'Nu există proprietăți disponibile.'
             });
-            
+
             var leadLabels = document.getElementById('labels');
             new Choices(leadLabels, {
                 allowHTML: true,
                 loadingText: 'Se încarcă...',
                 noResultsText: 'Nu există alte etichete.'
             });
-            
+
             document.getElementById('add_lead_form').addEventListener('submit', function(event) {
                 event.preventDefault();
-                
+
                 var formData = new FormData(this);
-                
+
                 console.log('Datele trimise sunt:', formData);
-                
+
                 fetch('/leads/add-apartment-lead', {
                     method: 'POST',
                     body: formData,
