@@ -14,7 +14,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title mb-0">
-                            Alege un contact sau adaugă unul nou și selectează tipul de cerere
+                            Selectează un contact sau adaugă unul nou și selectează tipul de cerere
                         </h4>
                     </div>
                     <div class="card-body">
@@ -29,10 +29,10 @@
                                                     class="text-danger">*</span></label>
                                             <div class="col-lg-10 col-sm-10 mb-2">
                                                 <select id="contact" class="form-select" name="contact" required>
-                                                    <option value="" disabled selected>Alege un contact</option>
+                                                    <option value="" disabled selected>Selectează un contact</option>
                                                     {% for contact in contacts %}
                                                         <option value="{{ contact.id }}">
-                                                            {{ contact.first_name }} {% if contact.last_name %}{{ contact.last_name }}{% else %}{% endif %} - {% if contact.phone_number %}{{ contact.phone_number }}{% else %}{% endif %} {% if contact.email %}{{ contact.email }}{% else %}{% endif %}
+                                                            {{ contact.first_name }} {{ contact.last_name|default_if_none:"" }} - {{ contact.phone_number|default_if_none:"" }} {{ contact.email|default_if_none:"" }}
                                                         </option>
                                                     {% endfor %}
                                                 </select>
@@ -54,7 +54,9 @@
                                             </select>
                                         </div>
 
-                                        <button type='submit' class="btn btn-subtle-success">Continuă</button>
+                                        <div class="d-flex justify-content-center w-100">
+                                            <button type="submit" class="btn btn-subtle-success col-12">Continuă</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -232,9 +234,6 @@
 {% endblock content %}
 
 {% block extra_javascript %}
-    
-    <!-- Choices.js -->
-    <script src="{% static 'libs/choices.js/public/assets/scripts/choices.min.js' %}"></script>
     
     <script>
         var isFormDirty = false;

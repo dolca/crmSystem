@@ -31,10 +31,11 @@ class Lead(Model):
     labels = CharField(choices=ETICHETA, null=True, blank=True, verbose_name='Etichete')
     notes = TextField(max_length=2000, null=True, blank=True, verbose_name='Notițe proprii')
 
-    created_at = DateTimeField(auto_now_add=True, verbose_name='Data introducerii')
-    updated_at = DateTimeField(auto_now=True, verbose_name='Data ultimei actualizări')
     deadline_date = DateField(null=True, blank=True, verbose_name='Data limită')
     deadline_time = TimeField(null=True, blank=True, verbose_name='Ora limită')
+
+    created_at = DateTimeField(auto_now_add=True, verbose_name='Data introducerii')
+    updated_at = DateTimeField(auto_now=True, verbose_name='Data ultimei actualizări')
 
     class Meta:
         abstract = True
@@ -69,12 +70,14 @@ class ApartmentLead(Lead):
     attic = BooleanField(default=False, verbose_name='Pod')
     elevator = BooleanField(default=False, verbose_name='Lift')
 
-    created_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='my_apartment_key', verbose_name='Agent asociat')
-    assigned_listings = ForeignKey(Apartment, on_delete=SET_NULL, null=True, blank=True,
-                                   related_name='assigned_apartment_key', verbose_name='Proprietăți asociate')
+    created_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='created_apartment_leads',
+                            verbose_name='Agent asociat')
+    updated_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='updated_apartment_leads',
+                            verbose_name='Actualizată de')
+    assigned_listings = ForeignKey(Apartment, on_delete=SET_NULL, null=True, blank=True, verbose_name='Proprietăți asociate')
 
     def __str__(self):
-        return f'{self.property_type} (Tip: {self.apartment_type}) - Contact: {self.contact} / Agent: {self.created_by}'
+        return f'{self.id}. {self.property_type} (Tip: {self.apartment_type}) - Contact: {self.contact} | Agent: {self.created_by}'
 
 
 class HouseLead(Lead):
@@ -101,12 +104,14 @@ class HouseLead(Lead):
     attic = BooleanField(default=False, verbose_name='Pod')
     garage = BooleanField(default=False, verbose_name='Garaj')
 
-    created_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='my_house_key', verbose_name='Agent asociat')
-    assigned_listings = ForeignKey(House, on_delete=SET_NULL, null=True, blank=True,
-                                   related_name='assigned_house_key', verbose_name='Proprietăți asociate')
+    created_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='created_house_leads',
+                            verbose_name='Agent asociat')
+    updated_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='updated_house_leads',
+                            verbose_name='Actualizată de')
+    assigned_listings = ForeignKey(House, on_delete=SET_NULL, null=True, blank=True, verbose_name='Proprietăți asociate')
 
     def __str__(self):
-        return f'{self.property_type} (Tip: {self.house_type}) - Contact: {self.contact} / Agent: {self.created_by}'
+        return f'{self.id}. {self.property_type} (Tip: {self.house_type}) - Contact: {self.contact} | Agent: {self.created_by}'
 
 
 class TerrainLead(Lead):
@@ -128,12 +133,14 @@ class TerrainLead(Lead):
     puz = BooleanField(default=False, verbose_name='PUZ aprobat')
     pud = BooleanField(default=False, verbose_name='PUD aprobat')
 
-    created_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='my_terrain_key', verbose_name='Agent asociat')
-    assigned_listings = ForeignKey(Terrain, on_delete=SET_NULL, null=True, blank=True,
-                                   related_name='assigned_terrain_key', verbose_name='Proprietăți asociate')
+    created_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='created_terrain_leads',
+                            verbose_name='Agent asociat')
+    updated_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='updated_terrain_leads',
+                            verbose_name='Actualizată de')
+    assigned_listings = ForeignKey(Terrain, on_delete=SET_NULL, null=True, blank=True, verbose_name='Proprietăți asociate')
 
     def __str__(self):
-        return f'{self.property_type} (Tip: {self.terrain_type}) - Contact: {self.contact} / Agent: {self.created_by}'
+        return f'{self.id}. {self.property_type} (Tip: {self.terrain_type}) - Contact: {self.contact} | Agent: {self.created_by}'
 
 
 class CommercialSpaceLead(Lead):
@@ -157,12 +164,14 @@ class CommercialSpaceLead(Lead):
     technical_floor = BooleanField(default=False, verbose_name='Etaj tehnic')
     loft = BooleanField(default=False, verbose_name='Mansardă')
 
-    created_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='my_commercial_space_key', verbose_name='Agent asociat')
-    assigned_listings = ForeignKey(CommercialSpace, on_delete=SET_NULL, null=True, blank=True,
-                                   related_name='assigned_commercial_space_key', verbose_name='Proprietăți asociate')
+    created_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='created_commercial_space_leads',
+                            verbose_name='Agent asociat')
+    updated_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='updated_commercial_space_leads',
+                            verbose_name='Actualizată de')
+    assigned_listings = ForeignKey(CommercialSpace, on_delete=SET_NULL, null=True, blank=True, verbose_name='Proprietăți asociate')
 
     def __str__(self):
-        return f'{self.property_type} (Tip: {self.space_type}) - Contact: {self.contact} / Agent: {self.created_by}'
+        return f'{self.id}. {self.property_type} (Tip: {self.space_type}) - Contact: {self.contact} | Agent: {self.created_by}'
 
 
 class OfficeSpaceLead(Lead):
@@ -191,12 +200,14 @@ class OfficeSpaceLead(Lead):
     loft = BooleanField(default=False, verbose_name='Mansardă')
     elevator = BooleanField(default=False, verbose_name='Lift')
 
-    created_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='my_office_space_key', verbose_name='Agent asociat')
-    assigned_listings = ForeignKey(OfficeSpace, on_delete=SET_NULL, null=True, blank=True,
-                                   related_name='assigned_office_space_key', verbose_name='Proprietăți asociate')
+    created_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='created_office_space_leads',
+                            verbose_name='Agent asociat')
+    updated_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='updated_office_space_leads',
+                            verbose_name='Actualizată de')
+    assigned_listings = ForeignKey(OfficeSpace, on_delete=SET_NULL, null=True, blank=True, verbose_name='Proprietăți asociate')
 
     def __str__(self):
-        return f'{self.property_type} (Tip: {self.space_type}) - Contact: {self.contact} / Agent: {self.created_by}'
+        return f'{self.id}. {self.property_type} (Tip: {self.space_type}) - Contact: {self.contact} | Agent: {self.created_by}'
 
 
 class IndustrialSpaceLead(Lead):
@@ -217,9 +228,11 @@ class IndustrialSpaceLead(Lead):
     powerline = BooleanField(default=False, verbose_name='Trifazic (380V)')
     truck_access = BooleanField(default=False, verbose_name='Acces camion')
 
-    created_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='my_industrial_space_key', verbose_name='Agent asociat')
-    assigned_listings = ForeignKey(IndustrialSpace, on_delete=SET_NULL, null=True, blank=True,
-                                   related_name='assigned_industrial_space_key', verbose_name='Proprietăți asociate')
+    created_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='created_industrial_space_leads',
+                            verbose_name='Agent asociat')
+    updated_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='updated_industrial_space_leads',
+                            verbose_name='Actualizată de')
+    assigned_listings = ForeignKey(IndustrialSpace, on_delete=SET_NULL, null=True, blank=True, verbose_name='Proprietăți asociate')
 
     def __str__(self):
-        return f'{self.property_type} (Tip: {self.space_type}) - Contact: {self.contact} / Agent: {self.created_by}'
+        return f'{self.id}. {self.property_type} (Tip: {self.space_type}) - Contact: {self.contact} | Agent: {self.created_by}'

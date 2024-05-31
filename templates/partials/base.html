@@ -81,18 +81,29 @@
 <!-- end right sidebar -->
 
 {% block javascript %}
-
+    
     <!-- JavaScript -->
     <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'libs/simplebar/dist/simplebar.min.js' %}"></script>
     <script src="{% static 'js/plugins.js' %}"></script>
-
+    
+    <!-- Choices.js -->
+    <script src="{% static 'libs/choices.js/public/assets/scripts/choices.min.js' %}"></script>
+    
+    <!-- Prism.js plugin -->
+    <script src="{% static 'libs/prismjs/prism.js' %}"></script>
+    <script src="{% static 'libs/list.js/dist/list.min.js' %}"></script>
+    <script src="{% static 'libs/list.pagination.js/dist/list.pagination.min.js' %}"></script>
+    
+    <!-- List.js init -->
+    <script src="{% static 'js/pages/listjs.init.js' %}"></script>
+    
     {% block extra_javascript %}
     {% endblock extra_javascript %}
-
+    
     <!-- App JS -->
     <script src="{% static 'js/app.js' %}"></script>
-
+    
 {% endblock javascript %}
 
 </body>

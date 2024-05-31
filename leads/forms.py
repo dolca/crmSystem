@@ -32,10 +32,11 @@ class LeadCreateForm(ModelForm):
             'labels': Select(attrs={'class': 'form-control'}),
             'notes': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
 
+            'deadline_date': DateInput(attrs={'type': 'date'}),
+            'deadline_time': TimeInput(attrs={'type': 'time', 'step': '600'}),
+
             'created_at': DateInput(attrs={'class': 'form-control'}),
             'updated_at': DateInput(attrs={'class': 'form-control'}),
-            'deadline_date': DateInput(attrs={'type': 'date'}),
-            'deadline_time': TimeInput(attrs={'type': 'time', 'step': '600'})
         }
 
 
@@ -309,10 +310,11 @@ class LeadUpdateForm(ModelForm):
             'labels': Select(attrs={'class': 'form-control'}),
             'notes': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
 
+            'deadline_date': DateInput(attrs={'type': 'date'}),
+            'deadline_time': TimeInput(attrs={'type': 'time', 'step': '600'}),
+
             'created_at': DateInput(attrs={'readonly': 'readonly'}),
             'updated_at': DateInput(attrs={'readonly': 'readonly'}),
-            'deadline_date': DateInput(attrs={'type': 'date'}),
-            'deadline_time': TimeInput(attrs={'type': 'time', 'step': '600'})
         }
 
 

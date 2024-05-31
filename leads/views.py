@@ -52,7 +52,7 @@ def my_apartment_leads_view(request):
     })
 
 
-@login_required()
+@login_required
 def general_apartment_leads_view(request):
     general_apartment_leads = ApartmentLead.objects.filter(assigned_listings__isnull=True).order_by('-updated_at')
     return render(request, 'leads/apartments/general_apartment_leads.html', {
@@ -64,7 +64,7 @@ class ApartmentLeadListView(LoginRequiredMixin, PermissionRequiredMixin, ListVie
     model = ApartmentLead
     template_name = 'leads/apartments/all_apartment_leads.html'
     context_object_name = 'all_apartment_leads'
-    permission_required = 'leads.view_apartment_lead'
+    permission_required = 'leads.view_apartmentlead'
 
     def get_queryset(self):
         return ApartmentLead.objects.all().order_by('-updated_at')
@@ -74,33 +74,38 @@ class ApartmentLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin, Updat
     model = ApartmentLead
     form_class = ApartmentLeadUpdateForm
     template_name = 'leads/apartments/edit_apartment_lead.html'
-    success_url = reverse_lazy('leads:apartment_lead_details')
-    permission_required = 'leads.change_apartment_lead'
+    permission_required = 'leads.change_apartmentlead'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        return context
 
     def form_valid(self, form):
-        try:
-            form.clean()
-        except ValidationError as err:
-            form.add_error('field_name', str(err))
-            return self.form_invalid(form)
-
+        form.instance.updated_at = timezone.now()
         form.instance.updated_by = self.request.user
 
-        update_success = form.save()
-        return HttpResponseRedirect(reverse('leads:apartment_lead_details', args=[update_success.pk]))
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        errors = form.errors.get_json_data()
+        return JsonResponse({'errors': errors}, status=400)
+
+    def get_success_url(self):
+        return reverse_lazy('leads:apartment_lead_details', kwargs={'pk': self.object.pk})
 
 
 class ApartmentLeadDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = ApartmentLead
     template_name = 'leads/apartments/delete_apartment_lead.html'
     success_url = reverse_lazy('leads:lead_deleted')
-    permission_required = 'leads.delete_apartment_lead'
+    permission_required = 'leads.delete_apartmentlead'
 
 
 class ApartmentLeadDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = ApartmentLead
     template_name = 'leads/apartments/apartment_lead_details.html'
-    permission_required = 'leads.view_apartment_lead_details'
+    permission_required = 'leads.view_apartmentlead_details'
 
 
 ########################################################################################################################
@@ -129,7 +134,7 @@ def my_house_leads_view(request):
     return render(request, 'leads/houses/my_house_leads.html', {'my_house_leads': my_house_leads})
 
 
-@login_required()
+@login_required
 def general_house_leads_view(request):
     general_house_leads = HouseLead.objects.filter(assigned_listings__isnull=True).order_by('-updated_at')
     return render(request, 'leads/houses/general_house_leads.html', {
@@ -208,7 +213,7 @@ def my_terrain_leads_view(request):
     })
 
 
-@login_required()
+@login_required
 def general_terrain_leads_view(request):
     general_terrain_leads = TerrainLead.objects.filter(assigned_listings__isnull=True).order_by('-updated_at')
     return render(request, 'leads/terrains/general_terrain_leads.html', {
@@ -287,7 +292,7 @@ def my_commercial_space_leads_view(request):
     })
 
 
-@login_required()
+@login_required
 def general_commercial_space_leads_view(request):
     general_commercial_space_leads = CommercialSpaceLead.objects.filter(assigned_listings__isnull=True).order_by('-updated_at')
     return render(request, 'leads/commercial_spaces/general_commercial_space_leads.html', {
@@ -366,7 +371,7 @@ def my_office_space_leads_view(request):
     })
 
 
-@login_required()
+@login_required
 def general_office_space_leads_view(request):
     general_office_space_leads = (OfficeSpaceLead.objects.filter(assigned_listings__isnull=True).order_by('-updated_at'))
     return render(request, 'leads/office_spaces/general_office_space_leads.html', {
@@ -445,7 +450,7 @@ def my_industrial_space_leads_view(request):
     })
 
 
-@login_required()
+@login_required
 def general_industrial_space_leads_view(request):
     general_industrial_space_leads = IndustrialSpaceLead.objects.filter(assigned_listings__isnull=True).order_by('-updated_at')
     return render(request, 'leads/industrial_spaces/general_industrial_space_leads.html', {

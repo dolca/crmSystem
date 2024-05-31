@@ -14,7 +14,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            <h4><i class="bi bi-info-square"></i> Detalii - {{ lead.client_name }}</h4>
+                            <h4><i class="bi bi-info-square"></i> Detalii - {{ apartmentlead.contact }}</h4>
                         </div>
                         <div class="card-body">
                             <p class="card-text"><strong>Număr de telefon:</strong> {% if lead.phone_number %}
@@ -38,20 +38,20 @@
                                 {% else %} 
                                     . . . 
                                 {% endif %}</p>
-                            {% if perms.leads.change_lead %}
+                            {% if perms.apartmentleads.change_apartmentlead %}
                                 <a href="{% url 'leads:edit_apartment_lead' apartmentlead.id %}" class="btn btn-subtle-success my-1 mx-1">Editează</a>
                             {% endif %}
-                            {% if perms.leads.view_lead %}
+                            {% if perms.apartmentleads.view_apartmentlead %}
                                 <a href="{% url 'leads:my_apartment_leads' %}" class="btn btn-subtle-primary my-1">Cererile mele</a>
                                 <a href="{% url 'leads:general_apartment_leads' %}" class="btn btn-subtle-primary my-1">Cereri generale</a>
                             {% endif %}
-                            {% if perms.leads.delete_lead %}
+                            {% if perms.apartmentleads.delete_apartmentlead %}
                                 <a href="{% url 'leads:delete_apartment_lead' apartmentlead.id %}" class="btn btn-subtle-danger my-1 mx-1">Șterge</a>
                             {% endif %}
                         </div>
                         <div class="card-footer text-body-secondary">
-                            Adăugată în data de {{ lead.created_at|date:"d.m.Y" }}<br>
-                            Ultima actualizare în data de {{ lead.updated_at|date:"d.m.Y" }}
+                            Adăugată în data de {{ apartmentlead.created_at|date:"d.m.Y" }}<br>
+                            Ultima actualizare în data de {{ apartmentlead.updated_at|date:"d.m.Y" }}
                         </div>
                     </div>
                 </div>
