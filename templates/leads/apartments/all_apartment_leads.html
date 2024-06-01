@@ -22,8 +22,9 @@
                                 <div class="row g-4 mb-3">
                                     <div class="col-sm-auto">
                                         <div>
-                                            <a href="{% url 'leads:add_new_lead' %}" class="btn btn-subtle-success"><i 
-                                                    class="ri-add-line align-bottom me-1"></i> Adaugă cerere nouă
+                                            <a href="{% url 'leads:add_new_lead' %}" class="btn btn-subtle-success">
+                                                <strong><i class="ri-add-line align-bottom me-1"></i></strong> 
+                                                Adaugă cerere nouă
                                             </a>
                                         </div>
                                     </div>
@@ -82,7 +83,8 @@
                                                     <tr>
                                                         <th scope="row">
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" name="chk_child" value="option1">
+                                                                <input class="form-check-input" type="checkbox" 
+                                                                       name="chk_child" value="option1">
                                                             </div>
                                                         </th>
                                                         <td class="id">
@@ -106,9 +108,11 @@
                                                             <div class="destination">{{ apartment.destination }}</div>
                                                         </td>
                                                         <td>
-                                                            <div class="budget">{% if apartment.budget %}<strong>{{ apartment.budget }}</strong>
+                                                            <div class="budget">{% if apartment.budget %}
+                                                                <strong>{{ apartment.budget }}</strong>
                                                             {% else %}Buget necunoscut{% endif %}</div>
-                                                            <div class="payment_method">{% if apartment.payment_method %}{{ apartment.payment_method }}
+                                                            <div class="payment_method">{% if apartment.payment_method %}
+                                                                {{ apartment.payment_method }}
                                                             {% else %}Metodă plată<br>nespecificată{% endif %}</div>
                                                         </td>
                                                         <td>
@@ -140,7 +144,8 @@
                                                                 {% if apartment.id %}
                                                                     <a class='btn btn-subtle-primary btn-custom-width'
                                                                        data-exclude-clickthrough='true'
-                                                                       href="{% url 'leads:apartment_lead_details' apartment.id %}">Detalii
+                                                                       href="{% url 'leads:apartment_lead_details' apartment.id %}">
+                                                                        Detalii
                                                                     </a>
                                                                 {% endif %}
                                                             {% endif %}
@@ -149,7 +154,8 @@
                                                                 {% if apartment.id %}
                                                                     <a class='btn btn-subtle-info btn-custom-width'
                                                                        data-exclude-clickthrough='true'
-                                                                       href="{% url 'leads:edit_apartment_lead' apartment.id %}">Editează
+                                                                       href="{% url 'leads:edit_apartment_lead' apartment.id %}">
+                                                                        Editează
                                                                     </a>
                                                                 {% endif %}
                                                             {% endif %}
@@ -184,7 +190,6 @@
                                         </a>
                                     </div>
                                 </div>
-                            
                             </div>
                         </div>
                     </div>
