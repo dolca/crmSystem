@@ -28,6 +28,7 @@
                                             </a>
                                         </div>
                                     </div>
+                                    
                                     <div class="col-sm">
                                         <div class="d-flex justify-content-sm-end">
                                             <div class="dropdown">
@@ -37,20 +38,29 @@
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="sort-button" 
                                                      style="width: 200px;">
-                                                    <select id="sort-by" class="form-select mb-2">
-                                                        <option value="id">ID cerere</option>
-                                                        <option value="customer_name">Nume client</option>
-                                                        <option value="date">Data adăugării</option>
-                                                    </select>
-                                                    <select id="sort-order" class="form-select">
-                                                        <option value="asc">Ascendent</option>
-                                                        <option value="desc">Descendent</option>
-                                                    </select>
+                                                    <div class="mb-2">
+                                                        <label for="sort-by" class="form-label">Sortează după</label>
+                                                        <select id="sort-by" class="form-select">
+                                                            <option value="customer_name">Nume client</option>
+                                                            <option value="date">Data adăugării</option>
+                                                            <option value="id">ID cerere</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="sort-order" class="form-label">Ordine</label>
+                                                        <select id="sort-order" class="form-select">
+                                                            <option value="asc">Ascendent</option>
+                                                            <option value="desc">Descendent</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="d-grid">
+                                                        <button id="apply-sort" class="btn btn-subtle-primary">Sortează</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                             
                                             <div class="search-box ms-2">
-                                                <input type="text" class="form-control search" placeholder="Caută cerere">
+                                                <input type="text" class="form-control search" placeholder="Caută cereri">
                                                 <i class="ri-search-line search-icon"></i>
                                             </div>
                                         </div>
@@ -140,7 +150,7 @@
                                                             {% endif %}
                                                         </td>
                                                         <td>
-                                                            {% if perms.apartment_lead.view_apartment_lead_details %}
+                                                            {% if perms.apartmentlead.view_apartmentlead_details %}
                                                                 {% if apartment.id %}
                                                                     <a class='btn btn-subtle-primary btn-custom-width'
                                                                        data-exclude-clickthrough='true'
@@ -150,7 +160,7 @@
                                                                 {% endif %}
                                                             {% endif %}
                                                             <br>
-                                                            {% if perms.apartment_lead.change_apartment_lead %}
+                                                            {% if perms.apartmentlead.change_apartmentlead %}
                                                                 {% if apartment.id %}
                                                                     <a class='btn btn-subtle-info btn-custom-width'
                                                                        data-exclude-clickthrough='true'
@@ -190,7 +200,6 @@
                                         </a>
                                     </div>
                                 </div>
-                            
                             </div>
                         </div>
                     </div>
@@ -215,7 +224,7 @@
             var leadList = new List('apartmentLeadsTable', options);
             
             // Funcția pentru sortare
-            document.querySelector('#sort-button').addEventListener('click', function() {
+            document.querySelector('#apply-sort').addEventListener('click', function() {
                 var sortBy = document.querySelector('#sort-by').value;
                 var sortOrder = document.querySelector('#sort-order').value;
                 

@@ -12,16 +12,13 @@
     {% endblock pagetitle %}
 
     {% if user.is_authenticated %}
-        {% if perms.houselead.view_house_lead %}
+        {% if perms.houselead.view_houselead %}
             <div class="row">
                 <div class="col-lg-12">
                 
                     <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title mb-0">Case</h4>
-                        </div>
                         <div class="card-body">
-                            <div id="customerList">
+                            <div id="houseLeadsTable">
                                 <div class="row g-4 mb-3">
                                     <div class="col-sm-auto">
                                         <div>
@@ -31,10 +28,39 @@
                                             </a>
                                         </div>
                                     </div>
+                                    
                                     <div class="col-sm">
                                         <div class="d-flex justify-content-sm-end">
+                                            <div class="dropdown">
+                                                <button id="sort-button" class="btn btn-subtle-primary dropdown-toggle" 
+                                                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="bi bi-funnel-fill"></i>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="sort-button" 
+                                                     style="width: 200px;">
+                                                    <div class="mb-2">
+                                                        <label for="sort-by" class="form-label">Sortează după</label>
+                                                        <select id="sort-by" class="form-select">
+                                                            <option value="customer_name">Nume client</option>
+                                                            <option value="date">Data adăugării</option>
+                                                            <option value="id">ID cerere</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="sort-order" class="form-label">Ordine</label>
+                                                        <select id="sort-order" class="form-select">
+                                                            <option value="asc">Ascendent</option>
+                                                            <option value="desc">Descendent</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="d-grid">
+                                                        <button id="apply-sort" class="btn btn-subtle-primary">Sortează</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
                                             <div class="search-box ms-2">
-                                                <input type="text" class="form-control search" placeholder="Caută . . .">
+                                                <input type="text" class="form-control search" placeholder="Caută cereri">
                                                 <i class="ri-search-line search-icon"></i>
                                             </div>
                                         </div>
@@ -51,12 +77,12 @@
                                                     </div>
                                                 </th>
                                                 <th>ID</th>
-                                                <th class="sort" data-sort="customer_name">Date contact</th>
+                                                <th>Date contact</th>
                                                 <th>Tip cerere</th>
                                                 <th>Buget alocat</th>
                                                 <th>Adresă</th>
                                                 <th>Urgență</th>
-                                                <th class="sort" data-sort="date">Adăugată în</th>
+                                                <th>Adăugată în</th>
                                                 <th>Proprietăți asociate</th>
                                                 <th></th>
                                             </tr>
@@ -67,49 +93,53 @@
                                                     <tr>
                                                         <th scope="row">
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" name="chk_child" value="option1">
+                                                                <input class="form-check-input" type="checkbox" 
+                                                                       name="chk_child" value="option1">
                                                             </div>
                                                         </th>
-                                                        <td>
+                                                        <td class="id">
                                                             {{ house.id }}
                                                         </td>
                                                         <td>
                                                             <div class="customer_name">
-                                                                <strong>{{ house.contact.first_name }} {{ house.contact.last_name }}</strong>
+                                                                <strong>{{ house.contact.first_name|default_if_none:"" }} 
+                                                                    {{ house.contact.last_name|default_if_none:"" }}</strong>
                                                             </div>
-                                                            <div class="text-muted">{% if house.contact.email %}
+                                                            <div class="email">{% if house.contact.email %}
                                                                 {{ house.contact.email }}{% else %}Fără e-mail{% endif %}
                                                             </div>
-                                                            <div>{% if house.contact.phone_number %}
+                                                            <div class="phone_number">{% if house.contact.phone_number %}
                                                                 {{ house.contact.phone_number }}{% else %}Fără nr. telefon{% endif %}
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div>{{ house.transaction_type }}</div>
-                                                            <div>{{ house.get_property_type_display }}</div>
-                                                            <div>{{ house.destination }}</div>
+                                                            <div class="transaction_type">{{ house.transaction_type }}</div>
+                                                            <div class="property_type">{{ house.property_type }}</div>
+                                                            <div class="destination">{{ house.destination }}</div>
                                                         </td>
                                                         <td>
-                                                            <div>{% if house.budget %}<strong>{{ house.budget }}</strong>
+                                                            <div class="budget">{% if house.budget %}
+                                                                <strong>{{ house.budget }}</strong>
                                                             {% else %}Buget necunoscut{% endif %}</div>
-                                                            <div>{% if house.payment_method %}{{ house.payment_method }}
+                                                            <div class="payment_method">{% if house.payment_method %}
+                                                                {{ house.payment_method }}
                                                             {% else %}Metodă plată<br>nespecificată{% endif %}</div>
                                                         </td>
                                                         <td>
-                                                            <div>{% if house.street %}{{ house.street }}
+                                                            <div class="street">{% if house.street %}{{ house.street }}
                                                             {% else %}Stradă nespecificată{% endif %}</div>
-                                                            <div>{% if house.zone %}{{ house.zone }}
+                                                            <div class="zone">{% if house.zone %}{{ house.zone }}
                                                             {% else %}Zonă nespecificată{% endif %}</div>
-                                                            <div>{{ house.city }}</div>
-                                                            <div>{{ house.county }}</div>
+                                                            <div class="city">{{ house.city }}</div>
+                                                            <div class="county">{{ house.county }}</div>
                                                         </td>
-                                                        <td>
+                                                        <td class="urgency">
                                                             {{ house.urgency }}
                                                         </td>
                                                         <td class="date">
                                                             {{ house.created_at|date:'d M Y' }}
                                                         </td>
-                                                        <td>
+                                                        <td class="assigned_listings">
                                                             {% if house.assigned_listings.exists %}
                                                                 {% for house in house.assigned_listings.all %}
                                                                     {{ house.id }}
@@ -120,21 +150,22 @@
                                                             {% endif %}
                                                         </td>
                                                         <td>
-                                                            {% if perms.house_lead.view_house_lead_details %}
+                                                            {% if perms.houselead.view_houselead_details %}
                                                                 {% if house.id %}
                                                                     <a class='btn btn-subtle-primary btn-custom-width'
-                                                                       target='_blank' data-exclude-clickthrough='true'
-                                                                       href="{% url 'leads:house_lead_details' house.id %}">Detalii
+                                                                       data-exclude-clickthrough='true'
+                                                                       href="{% url 'leads:house_lead_details' house.id %}">
+                                                                        Detalii
                                                                     </a>
                                                                 {% endif %}
                                                             {% endif %}
                                                             <br>
-                                                            {% if perms.house_lead.change_house_lead %}
+                                                            {% if perms.houselead.change_houselead %}
                                                                 {% if house.id %}
                                                                     <a class='btn btn-subtle-info btn-custom-width'
-                                                                       target='_blank'
                                                                        data-exclude-clickthrough='true'
-                                                                       href="{% url 'leads:edit_house_lead' house.id %}">Editează
+                                                                       href="{% url 'leads:edit_house_lead' house.id %}">
+                                                                        Editează
                                                                     </a>
                                                                 {% endif %}
                                                             {% endif %}
@@ -152,6 +183,23 @@
                                     </table>
                                 </div>
                             
+                                <div id="noResultsMessage" class="d-none">
+                                    <h5 class="d-flex justify-content-md-center justify-content-sm-start">
+                                        Nu există cereri pentru căutarea ta!
+                                    </h5>
+                                </div>
+                            
+                                <div class="d-flex justify-content-end">
+                                    <div class="pagination-wrap hstack gap-2">
+                                        <a class="page-item pagination-prev disabled" href="#">
+                                            <i class="bi bi-caret-left-fill"></i>
+                                        </a>
+                                        <ul class="pagination listjs-pagination mb-0"></ul>
+                                        <a class="page-item pagination-next" href="#">
+                                            <i class="bi bi-caret-right-fill"></i>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -165,33 +213,134 @@
 
 {% block extra_javascript %}
     
-        <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
     <script>
-        $(document).ready(function () {
-            $('.search').keyup(function () {
-                var searchText = $(this).val().toLowerCase();
-
-                $('table tbody tr').each(function () {
-                    var cellText = $(this).text().toLowerCase();
-
+        document.addEventListener('DOMContentLoaded', function() {
+            var options = {
+                valueNames: ['id', 'customer_name', 'email', 'phone_number', 'transaction_type', 'property_type', 
+                    'destination', 'budget', 'payment_method', 'street', 'zone', 'city', 'county', 'urgency', 'date', 
+                    'assigned_listings']
+            };
+            
+            var leadList = new List('houseLeadsTable', options);
+            
+            // Funcția pentru sortare
+            document.querySelector('#apply-sort').addEventListener('click', function() {
+                var sortBy = document.querySelector('#sort-by').value;
+                var sortOrder = document.querySelector('#sort-order').value;
+                
+                leadList.sort(sortBy, { order: sortOrder });
+            });
+            
+            // Funcția pentru căutare
+            document.querySelector('.search').addEventListener('keyup', function() {
+                var searchText = this.value.toLowerCase();
+                var rows = document.querySelectorAll('table tbody tr');
+                var noResultsMessage = document.getElementById('noResultsMessage');
+                var visibleRowCount = 0;
+                
+                rows.forEach(function(row) {
+                    var cellText = row.textContent.toLowerCase();
                     if (cellText.indexOf(searchText) === -1) {
-                        $(this).hide();
+                        row.style.display = 'none';
                     } else {
-                        $(this).show();
+                        row.style.display = '';
+                        visibleRowCount++;
                     }
                 });
+                
+                if (visibleRowCount === 0) {
+                    noResultsMessage.classList.remove('d-none');
+                } else {
+                    noResultsMessage.classList.add('d-none');
+                }
+                
+                // Reinitializez paginarea după căutare
+                currentPage = 1;
+                rows = document.querySelectorAll('table tbody tr');  // actualizez rândurile după căutare
+                totalPages = Math.ceil(Array.from(rows).filter(row => row.style.display !== 'none').length / itemsPerPage);
+                createPagination(totalPages);
+                showPage(currentPage);
             });
+            
+            // Pagina curentă și numărul de elemente pe pagină
+            var currentPage = 1;
+            var itemsPerPage = 10;
+            
+            function showPage(page) {
+                var rows = document.querySelectorAll('table tbody tr');
+                var totalPages = Math.ceil(rows.length / itemsPerPage);
+                
+                // Ascund toate rândurile
+                rows.forEach(function(row, index) {
+                    row.style.display = 'none';
+                });
+                
+                // Afișez rândurile pentru pagina curentă
+                var start = (page - 1) * itemsPerPage;
+                var end = start + itemsPerPage;
+                for (var i = start; i < end; i++) {
+                    if (rows[i]) {
+                        rows[i].style.display = '';
+                    }
+                }
+                
+                // Actualizez starea butoanelor de paginare
+                document.querySelector('.pagination-prev').classList.toggle('disabled', page === 1);
+                document.querySelector('.pagination-next').classList.toggle('disabled', page === totalPages);
+                
+                // Actualizez stilul pentru pagina activă
+                var paginationItems = document.querySelectorAll('.pagination.listjs-pagination li');
+                paginationItems.forEach(function(item) {
+                    item.classList.remove('active');
+                });
+                if (paginationItems[page - 1]) {
+                    paginationItems[page - 1].classList.add('active');
+                }
+            }
+            
+            // Evenimentele pentru butoanele de paginare
+            document.querySelector('.pagination-prev').addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    showPage(currentPage);
+                }
+            });
+            
+            document.querySelector('.pagination-next').addEventListener('click', function() {
+                var rows = document.querySelectorAll('table tbody tr');
+                var totalPages = Math.ceil(rows.length / itemsPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    showPage(currentPage);
+                }
+            });
+            
+            // Evenimentele pentru numerele de pagină
+            function createPagination(totalPages) {
+                var paginationList = document.querySelector('.pagination.listjs-pagination');
+                paginationList.innerHTML = '';
+                
+                for (var i = 1; i <= totalPages; i++) {
+                    var li = document.createElement('li');
+                    li.classList.add('page-item');
+                    li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                    paginationList.appendChild(li);
+                    
+                    li.addEventListener('click', (function(page) {
+                        return function() {
+                            currentPage = page;
+                            showPage(currentPage);
+                        };
+                    })(i));
+                }
+            }
+            
+            // Inițializez paginarea
+            var rows = document.querySelectorAll('table tbody tr');
+            var totalPages = Math.ceil(rows.length / itemsPerPage);
+            createPagination(totalPages);
+            showPage(currentPage);
         });
     </script>
     
-    <!-- prismjs plugin -->
-    <script src="{% static 'libs/prismjs/prism.js' %}"></script>
-    <script src="{% static 'libs/list.js/dist/list.min.js' %}"></script>
-    <script src="{% static 'libs/list.pagination.js/dist/list.pagination.min.js' %}"></script>
-
-    <!-- listjs init -->
-    <script src="{% static 'js/pages/listjs.init.js' %}"></script>
-
 {% endblock extra_javascript %}
