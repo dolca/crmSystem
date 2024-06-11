@@ -157,13 +157,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
 LANGUAGE_CODE = 'ro'
-
 TIME_ZONE = 'Europe/Bucharest'
-
 DATE_FORMAT = '%d.%m.%Y'
 
 USE_I18N = False
-
 USE_TZ = True
 
 

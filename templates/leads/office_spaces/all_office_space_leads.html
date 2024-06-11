@@ -1,4 +1,4 @@
-{% extends 'partials/base.html' %}
+{% extends "partials/base.html" %}
 {% load static %}
 {% block title %} Toate cererile | Spații de birouri {% endblock title %}
 
@@ -12,7 +12,7 @@
     {% endblock pagetitle %}
 
     {% if user.is_authenticated %}
-        {% if perms.officespacelead.view_officespacelead %}
+        {% if perms.officespaceleads.view_officespacelead %}
             <div class="row">
                 <div class="col-lg-12">
                 
@@ -22,7 +22,7 @@
                                 <div class="row g-4 mb-3">
                                     <div class="col-sm-auto">
                                         <div>
-                                            <a href="{% url 'leads:add_new_lead' %}" class="btn btn-subtle-success">
+                                            <a href="{% url "leads:add_new_lead" %}" class="btn btn-subtle-success">
                                                 <strong><i class="ri-add-line align-bottom me-1"></i></strong> 
                                                 Adaugă cerere nouă
                                             </a>
@@ -38,7 +38,7 @@
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="sort-button" 
                                                      style="width: 200px;">
-                                                    <div class="mb-2">
+                                                    <div class="mb-3">
                                                         <label for="sort-by" class="form-label">Sortează după</label>
                                                         <select id="sort-by" class="form-select">
                                                             <option value="customer_name">Nume client</option>
@@ -105,15 +105,16 @@
                                                                 <strong>{{ off_sp.contact.first_name|default_if_none:"" }} 
                                                                     {{ off_sp.contact.last_name|default_if_none:"" }}</strong>
                                                             </div>
-                                                            <div class="email">{% if off_sp.contact.email %}
-                                                                {{ off_sp.contact.email }}{% else %}Fără e-mail{% endif %}
-                                                            </div>
                                                             <div class="phone_number">{% if off_sp.contact.phone_number %}
                                                                 {{ off_sp.contact.phone_number }}{% else %}Fără nr. telefon{% endif %}
+                                                            </div>
+                                                            <div class="email">{% if off_sp.contact.email %}
+                                                                {{ off_sp.contact.email }}{% else %}Fără e-mail{% endif %}
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div class="transaction_type">{{ off_sp.transaction_type }}</div>
+                                                            <div class="space_type">{{ off_sp.space_type }}</div>
                                                             <div class="property_type">{{ off_sp.property_type }}</div>
                                                         </td>
                                                         <td>
@@ -215,7 +216,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var options = {
-                valueNames: ['id', 'customer_name', 'email', 'phone_number', 'transaction_type', 'property_type', 
+                valueNames: ['id', 'customer_name', 'email', 'phone_number', 'transaction_type', 'space_type', 
                     'destination', 'budget', 'payment_method', 'street', 'zone', 'city', 'county', 'urgency', 'date', 
                     'assigned_listings']
             };

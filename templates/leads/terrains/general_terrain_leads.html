@@ -1,4 +1,4 @@
-{% extends 'partials/base.html' %}
+{% extends "partials/base.html" %}
 {% load static %}
 {% block title %} Cereri generale | Terenuri {% endblock title %}
 
@@ -12,7 +12,7 @@
     {% endblock pagetitle %}
 
     {% if user.is_authenticated %}
-        {% if perms.terrainlead.view_terrainlead %}
+        {% if perms.terrainleads.view_terrainlead %}
             <div class="row">
                 <div class="col-lg-12">
                 
@@ -22,7 +22,7 @@
                                 <div class="row g-4 mb-3">
                                     <div class="col-sm-auto">
                                         <div>
-                                            <a href="{% url 'leads:add_new_lead' %}" class="btn btn-subtle-success">
+                                            <a href="{% url "leads:add_new_lead" %}" class="btn btn-subtle-success">
                                                 <strong><i class="ri-add-line align-bottom me-1"></i></strong> 
                                                 Adaugă cerere nouă
                                             </a>
@@ -38,7 +38,7 @@
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="sort-button" 
                                                      style="width: 200px;">
-                                                    <div class="mb-2">
+                                                    <div class="mb-3">
                                                         <label for="sort-by" class="form-label">Sortează după</label>
                                                         <select id="sort-by" class="form-select">
                                                             <option value="customer_name">Nume client</option>
@@ -105,16 +105,16 @@
                                                                 <strong>{{ terrain.contact.first_name|default_if_none:"" }} 
                                                                     {{ terrain.contact.last_name|default_if_none:"" }}</strong>
                                                             </div>
-                                                            <div class="email">{% if terrain.contact.email %}
-                                                                {{ terrain.contact.email }}{% else %}Fără e-mail{% endif %}
-                                                            </div>
                                                             <div class="phone_number">{% if terrain.contact.phone_number %}
                                                                 {{ terrain.contact.phone_number }}{% else %}Fără nr. telefon{% endif %}
+                                                            </div>
+                                                            <div class="email">{% if terrain.contact.email %}
+                                                                {{ terrain.contact.email }}{% else %}Fără e-mail{% endif %}
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div class="transaction_type">{{ terrain.transaction_type }}</div>
-                                                            <div class="property_type">{{ terrain.property_type }}</div>
+                                                            <div class="terrain_type">{{ terrain.terrain_type }}</div>
                                                             <div class="destination">{{ terrain.destination }}</div>
                                                         </td>
                                                         <td>
@@ -216,7 +216,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var options = {
-                valueNames: ['id', 'customer_name', 'email', 'phone_number', 'transaction_type', 'property_type', 
+                valueNames: ['id', 'customer_name', 'email', 'phone_number', 'transaction_type', 'terrain_type', 
                     'destination', 'budget', 'payment_method', 'street', 'zone', 'city', 'county', 'urgency', 'date', 
                     'assigned_listings']
             };

@@ -1,31 +1,299 @@
-{% extends 'partials/base.html' %}
+{% extends "partials/base.html" %}
 
-{% block title %} Actualizează cererea {% endblock title %}
+{% block title %} Actualizare cerere | Teren {% endblock title %}
 
 {% block content %}
     
     {% block pagetitle %}
-    {% include "partials/page_title.html" with pagetitle="Cereri" title="Actualizează cererea"%}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Actualizare cerere | Teren"%}
     {% endblock pagetitle %}
     
     {% if user.is_authenticated %}
-        {% if perms.leads.change_terrain_lead %}
-            <div class="row justify-content-center">
-                <div class="col-md-6">
+        {% if perms.terrainleads.change_terrainlead %}
+            <div class="row">
+                <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h4><i class="bi bi-database-add"></i> Actualizează informațiile cererii</h4>
-                        </div>
                         <div class="card-body">
-                            <form method="post" enctype="multipart/form-data" class="row g-3">
+                            <form id="edit_terrain_lead" method="post" enctype="multipart/form-data" class="row" 
+                                  action="{% url "leads:edit_terrain_lead" terrainlead.pk %}">
                                 {% csrf_token %}
-                                <div class="col-md-12 mb-3">
-                                    {{ form.as_p }}
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="contactInfo">
+                                                <h5><span id="firstName">{{ terrainlead.contact.first_name }}</span> 
+                                                    <span id="lastName">{{ terrainlead.contact.last_name }}</span></h5>
+                                                <div id="phoneNumber">{{ terrainlead.contact.phone_number }}</div>
+                                                <div id="email">{{ terrainlead.contact.email }}</div>
+                                            </div>
+                                            <input id="contact" name="contact" type="hidden" value="{{ terrainlead.contact.id }}" 
+                                                   required>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="property_type" class="form-label">Tip cerere <span 
+                                                        class="firebrick-message">*</span></label>
+                                                <input id="property_type" class="form-control text-muted" 
+                                                       name="property_type" value="{{ terrainlead.property_type }}" 
+                                                       readonly required>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="terrain_type" class="form-label">Tip teren <span 
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="terrain_type" class="form-select" name="terrain_type" 
+                                                        required>
+                                                    {% for value, label in form.fields.terrain_type.choices %}
+                                                        <option value="{{ value }}" {% if terrainlead.terrain_type == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="transaction_type" class="form-label">Tip tranzacție <span
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="transaction_type" class="form-select" name="transaction_type" 
+                                                        required>
+                                                    {% for value, label in form.fields.transaction_type.choices %}
+                                                        <option value="{{ value }}" {% if terrainlead.transaction_type == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <label for="lead_status" class="form-label">Status cerere <span
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="lead_status" class="form-select" name="lead_status" required>
+                                                    {% for value, label in form.fields.lead_status.choices %}
+                                                        <option value="{{ value }}" {% if terrainlead.lead_status == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="county" class="form-label">Județ <span
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="county" class="form-control" name="county" data-choices 
+                                                        required>
+                                                    {% for value, label in form.fields.county.choices %}
+                                                        <option value="{{ value }}" {% if terrainlead.county == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="city" class="form-label">Localitate <span
+                                                        class="firebrick-message">*</span></label>
+                                                <input id="city" class="form-control" name="city" type="text" 
+                                                       value="{{ terrainlead.city|default_if_none:'' }}" required>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="zone" class="form-label">Zonă</label>
+                                                <input id="zone" class="form-control" name="zone" type="text" 
+                                                       value="{{ terrainlead.zone|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <label for="street" class="form-label">Stradă</label>
+                                                <input id="street" class="form-control" name="street" type="text" 
+                                                       value="{{ terrainlead.street|default_if_none:'' }}">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-footer text-center">
-                                    <button type="submit" class="btn btn-subtle-success">
-                                        Actualizează cererea
-                                    </button>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="destination" class="form-label">Destinație <span
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="destination" class="form-select" name="destination" required>
+                                                    {% for value, label in form.fields.destination.choices %}
+                                                        <option value="{{ value }}" {% if terrainlead.destination == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="classification" class="form-label">Clasificare</label>
+                                                <select id="classification" class="form-select" name="classification">
+                                                    {% for value, label in form.fields.classification.choices %}
+                                                        <option value="{{ value }}" {% if terrainlead.classification == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="terrain_surface" class="form-label">Suprafață teren</label>
+                                                <input id="terrain_surface" class="form-control" name="terrain_surface" 
+                                                       type="text" value="{{ terrainlead.terrain_surface|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="unit" class="form-label">Unitate suprafață</label>
+                                                <select id="unit" class="form-select" name="unit">
+                                                    {% for value, label in form.fields.unit.choices %}
+                                                        <option value="{{ value }}" {% if terrainlead.unit == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="street_front" class="form-label">Front stradal (m)</label>
+                                                <input id="street_front" class="form-control" name="street_front" 
+                                                       type="text" value="{{ terrainlead.street_front|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="opening_to" class="form-label">Deschidere la</label>
+                                                <select id="opening_to" class="form-select" name="opening_to">
+                                                    {% for value, label in form.fields.opening_to.choices %}
+                                                        <option value="{{ value }}" {% if terrainlead.opening_to == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="access_road_width" class="form-label">Lățime drum acces (m)</label>
+                                                <input id="access_road_width" class="form-control" name="access_road_width" 
+                                                       type="text" value="{{ terrainlead.access_road_width|default_if_none:'' }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="pot" class="form-label">POT (%)</label>
+                                                <input id="pot" class="form-control" name="pot" type="text" 
+                                                       value="{{ terrainlead.pot|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="cut" class="form-label">CUT</label>
+                                                <input id="cut" class="form-control" name="cut" type="text" 
+                                                       value="{{ terrainlead.cut|default_if_none:'' }}">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="urban_certificate" class="form-check-input" 
+                                                               name="urban_certificate" type="checkbox" 
+                                                               {% if terrainlead.urban_certificate %}checked{% endif %}>
+                                                        <label for="urban_certificate" class="form-check-label">
+                                                            Certificat de urbanism</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="building_permit" class="form-check-input" 
+                                                               name="building_permit" type="checkbox" 
+                                                               {% if terrainlead.building_permit %}checked{% endif %}>
+                                                        <label for="building_permit" class="form-check-label">
+                                                            Autorizație de construcție</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="pug" class="form-check-input" name="pug" 
+                                                               type="checkbox" {% if terrainlead.pug %}checked{% endif %}>
+                                                        <label for="pug" class="form-check-label">PUG aprobat</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="puz" class="form-check-input" name="puz" 
+                                                               type="checkbox" {% if terrainlead.puz %}checked{% endif %}>
+                                                        <label for="puz" class="form-check-label">PUZ aprobat</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-3">
+                                                    <div class="form-check">
+                                                        <input id="pud" class="form-check-input" name="pud" 
+                                                               type="checkbox" {% if terrainlead.pud %}checked{% endif %}>
+                                                        <label for="pud" class="form-check-label">PUD aprobat</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="other_details" class="form-label">Alte detalii</label>
+                                                <textarea id="other_details" class="form-control" name="other_details" type="text" 
+                                                          rows="4">{{ terrainlead.other_details|default_if_none:'' }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="budget" class="form-label">Buget alocat</label>
+                                                <input id="budget" class="form-control" name="budget" type="text" 
+                                                       value="{{ terrainlead.budget|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="payment_method" class="form-label">Metodă de plată</label>
+                                                <select id="payment_method" class="form-select" name="payment_method">
+                                                    {% for value, label in form.fields.payment_method.choices %}
+                                                        <option value="{{ value }}" {% if terrainlead.payment_method == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="urgency" class="form-label">Urgență</label>
+                                                <select id="urgency" class="form-select" name="urgency">
+                                                    {% for value, label in form.fields.urgency.choices %}
+                                                        <option value="{{ value }}" {% if terrainlead.urgency == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="deadline_date" class="form-label">Data limită</label>
+                                                <input id="deadline_date" class="form-control" name="deadline_date" 
+                                                       type="date" value="{{ terrainlead.deadline_date|default_if_none:'' }}" 
+                                                       placeholder="zz.ll.aaaa">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="deadline_time" class="form-label">Ora limită</label>
+                                                <input id="deadline_time" class="form-control" name="deadline_time" 
+                                                       type="time" value="{{ terrainlead.deadline_time|default_if_none:'' }}" 
+                                                       step="600" placeholder="oo:mm">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="assigned_listings" class="form-label">
+                                                    Proprietăți asociate</label>
+                                                <select id="assigned_listings" class="form-control" 
+                                                        name="assigned_listings" multiple>
+                                                    {% for value, label in form.fields.assigned_listings.choices %}
+                                                        <option value="{{ value }}" {% if value in terrainlead.assigned_listings %}
+                                                                selected{% endif %}></option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="labels" class="form-label">Etichete</label>
+                                                <select id="labels" class="form-select" name="labels" multiple>
+                                                    {% for value, label in form.fields.labels.choices %}
+                                                        <option value="{{ value }}" {% if value in terrainlead.labels %}
+                                                                selected{% endif %}></option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <label for="notes" class="form-label">Notițe proprii</label>
+                                                <textarea id="notes" class="form-control" name="notes" type="text" 
+                                                          rows="4">{{ terrainlead.notes|default_if_none:'' }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-subtle-success float-end">
+                                                Actualizează cererea
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -36,3 +304,118 @@
     {% endif %}
     
 {% endblock content %}
+
+{% block extra_javascript %}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Conținutul DOM a fost încărcat.');
+            
+            var storedContactId = "{{ terrainlead.contact.id }}";
+            var pk = "{{ terrainlead.id }}";
+            
+            console.log('ID contact:', storedContactId);
+            
+            fetch(`/contacts/api/contact-details/${storedContactId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Eroare la solicitarea datelor contactului!');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('firstName').innerText = data.first_name;
+                    document.getElementById('lastName').innerText = data.last_name;
+                    document.getElementById('phoneNumber').innerText = data.phone_number;
+                    document.getElementById('email').innerText = data.email;
+                })
+                .catch(error => {
+                    console.error('Eroare:', error);
+                });
+            
+            // Inițializez flatpickr pentru câmpul de dată
+            flatpickr('#deadline_date', {
+                dateFormat: 'd.m.Y',
+                altInput: true,
+                altFormat: 'd.m.Y',
+                allowInput: true,
+                locale: {
+                    firstDayOfWeek: 1,
+                    weekdays: {
+                        shorthand: ['Dum', 'Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sâm'],
+                        longhand: ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă']
+                    },
+                    months: {
+                        shorthand: ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Noi', 'Dec'],
+                        longhand: ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 
+                            'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie']
+                    }
+                }
+            });
+            
+            // Inițializez flatpickr pentru câmpul de timp
+            flatpickr('#deadline_time', {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                allowInput: true,
+                minuteIncrement: 10
+            });
+            
+            var leadAssignedListings = document.getElementById('assigned_listings');
+            new Choices(leadAssignedListings, {
+                loadingText: 'Se încarcă...',
+                noResultsText: 'Nu există proprietăți disponibile.'
+            });
+            
+            var leadLabels = document.getElementById('labels');
+            new Choices(leadLabels, {
+                loadingText: 'Se încarcă...',
+                noResultsText: 'Nu există alte etichete.'
+            });
+            
+            document.getElementById('edit_terrain_lead').addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                var formData = new FormData(this);
+                
+                // Convertesc virgula în punct pentru toate zecimalele
+                formData.forEach(function(value, key) {
+                    if (typeof value === 'string') {
+                        formData.set(key, value.replace(/,/g, '.'));
+                    }
+                });
+                
+                console.log('Datele trimise sunt:', formData);
+                
+                fetch(`/leads/edit-terrain-lead/${pk}`, {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = `/leads/terrain-lead-details/${pk}`;
+                    } else {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    if (data && data.errors) {
+                        Object.keys(data.errors).forEach(field => {
+                            const errorMessage = data.errors[field][0].message;
+                            const fieldElement = document.getElementById(field + '-error');
+                            if (fieldElement) {
+                                fieldElement.textContent = errorMessage;
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Eroare în timpul salvării:', error);
+                });
+            });
+        });
+    </script>
+
+{% endblock extra_javascript %}

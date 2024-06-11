@@ -246,6 +246,14 @@ class OfficeSpaceLeadCreateForm(LeadCreateForm):
     def clean(self):
         cleaned_data = super().clean()
 
+        floor = cleaned_data.get('floor')
+        nr_floors = cleaned_data.get('nr_floors')
+
+        if isinstance(floor, str) and floor.isdigit():
+            if floor is not None and nr_floors is not None and int(floor) > nr_floors:
+                raise ValidationError({'floor': [
+                    'Numărul etajului spațiului de birouri nu poate fi mai mare decât numărul total de etaje.']})
+
         minimum_area = cleaned_data.get('minimum_area')
         maximum_area = cleaned_data.get('maximum_area')
 
@@ -523,6 +531,14 @@ class OfficeSpaceLeadUpdateForm(LeadUpdateForm):
 
     def clean(self):
         cleaned_data = super().clean()
+
+        floor = cleaned_data.get('floor')
+        nr_floors = cleaned_data.get('nr_floors')
+
+        if isinstance(floor, str) and floor.isdigit():
+            if floor is not None and nr_floors is not None and int(floor) > nr_floors:
+                raise ValidationError({'floor': [
+                    'Numărul etajului spațiului de birouri nu poate fi mai mare decât numărul total de etaje.']})
 
         minimum_area = cleaned_data.get('minimum_area')
         maximum_area = cleaned_data.get('maximum_area')

@@ -3,7 +3,7 @@ Application: Real Estate CRM System App
 Developed by: Adrian Dolca
 Website: https://adrian-dolca.ro
 Contact: contact@adrian-dolca.ro
-File: Custom Css File
+File: Custom CSS File
 */
 /* Butoane tabele */
 .btn-custom-width {
@@ -14,21 +14,6 @@ File: Custom Css File
 /* Mărime font bară laterală */
 span.sidebar-text {
     font-size: 14px;
-}
-
-/* Buton vizualizare parole */
-.password-toggle {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1000;
-    background-color: transparent;
-    border: none;
-}
-
-.password-toggle:focus {
-    outline: none;
 }
 
 /* Container Allauth acasă */
@@ -54,7 +39,7 @@ span.sidebar-text {
     right: 0 !important;
 }
 
-/* Culoare mesaj eroare */
-.error-message {
+/* Culoare mesaj */
+.firebrick-message {
     color: firebrick;
 }

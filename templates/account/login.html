@@ -29,14 +29,15 @@
                         {% csrf_token %}
                         <div class="mb-4">
                             <label for="id_login"><strong>Nume utilizator</strong> <span
-                                    class="text-danger">*</span></label>
+                                    class="firebrick-message">*</span></label>
                             <input type="text" name="login" class="form-control" id="id_login" required>
                         </div>
                         
                         <div class="mb-4 form-group position-relative">
                             <div class="input-group">
-                                <label for="id_password"><strong>Parolă</strong> <span class="text-danger">*</span></label>
-                                <button class="btn btn-link position-absolute end-0 top-50 translate-middle-y text-decoration-none text-muted password-toggle" 
+                                <label for="id_password"><strong>Parolă</strong> <span 
+                                        class="firebrick-message">*</span></label>
+                                <button class="btn btn-link position-absolute end-0 top-50 translate-middle-y text-decoration-none text-muted" 
                                         type="button" id="password-addon">Afișează parola&nbsp;&nbsp;<i 
                                         class="ri-eye-off-fill align-middle"></i></button>
                             </div>

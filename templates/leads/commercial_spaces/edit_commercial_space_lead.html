@@ -1,31 +1,300 @@
-{% extends 'partials/base.html' %}
+{% extends "partials/base.html" %}
 
-{% block title %} Actualizează cererea {% endblock title %}
+{% block title %} Actualizare cerere | Spațiu comercial {% endblock title %}
 
 {% block content %}
     
     {% block pagetitle %}
-    {% include "partials/page_title.html" with pagetitle="Cereri" title="Actualizează cererea"%}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Actualizare cerere | Spațiu comercial"%}
     {% endblock pagetitle %}
     
     {% if user.is_authenticated %}
-        {% if perms.leads.change_commercial_space_lead %}
-            <div class="row justify-content-center">
-                <div class="col-md-6">
+        {% if perms.commercialspaceleads.change_commercialspacelead %}
+            <div class="row">
+                <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h4><i class="bi bi-database-add"></i> Actualizează informațiile cererii</h4>
-                        </div>
                         <div class="card-body">
-                            <form method="post" enctype="multipart/form-data" class="row g-3">
+                            <form id="edit_commercial_space_lead" method="post" enctype="multipart/form-data" class="row" 
+                                  action="{% url "leads:edit_commercial_space_lead" commercialspacelead.pk %}">
                                 {% csrf_token %}
-                                <div class="col-md-12 mb-3">
-                                    {{ form.as_p }}
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="contactInfo">
+                                                <h5><span id="firstName">{{ commercialspacelead.contact.first_name }}</span> 
+                                                    <span id="lastName">{{ commercialspacelead.contact.last_name }}</span></h5>
+                                                <div id="phoneNumber">{{ commercialspacelead.contact.phone_number }}</div>
+                                                <div id="email">{{ commercialspacelead.contact.email }}</div>
+                                            </div>
+                                            <input id="contact" name="contact" type="hidden" value="{{ commercialspacelead.contact.id }}" 
+                                                   required>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="property_type" class="form-label">Tip cerere <span 
+                                                        class="firebrick-message">*</span></label>
+                                                <input id="property_type" class="form-control text-muted" 
+                                                       name="property_type" value="{{ commercialspacelead.property_type }}" 
+                                                       readonly required>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="space_type" class="form-label">Tip spațiu comercial <span 
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="space_type" class="form-select" name="space_type" required>
+                                                    {% for value, label in form.fields.space_type.choices %}
+                                                        <option value="{{ value }}" {% if commercialspacelead.space_type == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="transaction_type" class="form-label">Tip tranzacție <span
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="transaction_type" class="form-select" name="transaction_type" 
+                                                        required>
+                                                    {% for value, label in form.fields.transaction_type.choices %}
+                                                        <option value="{{ value }}" {% if commercialspacelead.transaction_type == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <label for="lead_status" class="form-label">Status cerere <span
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="lead_status" class="form-select" name="lead_status" required>
+                                                    {% for value, label in form.fields.lead_status.choices %}
+                                                        <option value="{{ value }}" {% if commercialspacelead.lead_status == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="county" class="form-label">Județ <span
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="county" class="form-control" name="county" data-choices 
+                                                        required>
+                                                    {% for value, label in form.fields.county.choices %}
+                                                        <option value="{{ value }}" {% if commercialspacelead.county == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="city" class="form-label">Localitate <span
+                                                        class="firebrick-message">*</span></label>
+                                                <input id="city" class="form-control" name="city" type="text" 
+                                                       value="{{ commercialspacelead.city|default_if_none:'' }}" required>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="zone" class="form-label">Zonă</label>
+                                                <input id="zone" class="form-control" name="zone" type="text" 
+                                                       value="{{ commercialspacelead.zone|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <label for="street" class="form-label">Stradă</label>
+                                                <input id="street" class="form-control" name="street" type="text" 
+                                                       value="{{ commercialspacelead.street|default_if_none:'' }}">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-footer text-center">
-                                    <button type="submit" class="btn btn-subtle-success">
-                                        Actualizează cererea
-                                    </button>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="destination" class="form-label">Destinație <span
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="destination" class="form-select" name="destination" required>
+                                                    {% for value, label in form.fields.destination.choices %}
+                                                        <option value="{{ value }}" {% if commercialspacelead.destination == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="pedestrian_traffic" class="form-label">Trafic pietonal</label>
+                                                <select id="pedestrian_traffic" class="form-select" name="pedestrian_traffic">
+                                                    {% for value, label in form.fields.pedestrian_traffic.choices %}
+                                                        <option value="{{ value }}" {% if commercialspacelead.pedestrian_traffic == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="rooms_number" class="form-label">Număr camere</label>
+                                                <input id="rooms_number" class="form-control" name="rooms_number" type="text" 
+                                                       value="{{ commercialspacelead.rooms_number|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="nr_locker_rooms" class="form-label">Număr vestiare</label>
+                                                <input id="nr_locker_rooms" class="form-control" name="nr_locker_rooms" type="text" 
+                                                       value="{{ commercialspacelead.nr_locker_rooms|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="nr_bathrooms" class="form-label">Număr băi</label>
+                                                <input id="nr_bathrooms" class="form-control" name="nr_bathrooms" type="text" 
+                                                       value="{{ commercialspacelead.nr_bathrooms|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="floor" class="form-label">Etaj</label>
+                                                <select id="floor" class="form-select" name="floor">
+                                                    {% for value, label in form.fields.floor.choices %}
+                                                        <option value="{{ value }}" {% if commercialspacelead.floor == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <p></p>
+                                                <div id="floor-error" class="firebrick-message"></div>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="nr_floors" class="form-label">Număr etaje</label>
+                                                <input id="nr_floors" class="form-control" name="nr_floors" type="text" 
+                                                       value="{{ commercialspacelead.nr_floors|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="minimal_surface" class="form-label">Suprafață minimă (mp)</label>
+                                                <input id="minimal_surface" class="form-control" name="minimal_surface" type="text" 
+                                                       value="{{ commercialspacelead.minimal_surface|default_if_none:'' }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="glass_case" class="form-label">Vitrină (m)</label>
+                                                <input id="glass_case" class="form-control" name="glass_case" type="text" 
+                                                       value="{{ commercialspacelead.glass_case|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="inside_height" class="form-label">Înălțime interioară (m)</label>
+                                                <input id="inside_height" class="form-control" name="inside_height" type="text" 
+                                                       value="{{ commercialspacelead.inside_height|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="space_compart" class="form-label">Compartimentare</label>
+                                                <select id="space_compart" class="form-select" name="space_compart">
+                                                    {% for value, label in form.fields.space_compart.choices %}
+                                                        <option value="{{ value }}" {% if commercialspacelead.space_compart == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="nr_parking_spaces" class="form-label">Număr locuri parcare</label>
+                                                <input id="nr_parking_spaces" class="form-control" name="nr_parking_spaces" type="text" 
+                                                       value="{{ commercialspacelead.nr_parking_spaces|default_if_none:'' }}">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="semi_basement" class="form-check-input" 
+                                                               name="semi_basement" type="checkbox" 
+                                                               {% if commercialspacelead.semi_basement %}checked{% endif %}>
+                                                        <label for="semi_basement" class="form-check-label">Demisol</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="technical_floor" class="form-check-input" 
+                                                               name="technical_floor" type="checkbox" 
+                                                               {% if commercialspacelead.technical_floor %}checked{% endif %}>
+                                                        <label for="technical_floor" class="form-check-label">
+                                                            Etaj tehnic</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-3">
+                                                    <div class="form-check">
+                                                        <input id="loft" class="form-check-input" name="loft" 
+                                                               type="checkbox" {% if commercialspacelead.loft %}checked{% endif %}>
+                                                        <label for="loft" class="form-check-label">Mansardă</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="other_details" class="form-label">Alte detalii</label>
+                                                <textarea id="other_details" class="form-control" name="other_details" type="text" 
+                                                          rows="4">{{ commercialspacelead.other_details|default_if_none:'' }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="budget" class="form-label">Buget alocat</label>
+                                                <input id="budget" class="form-control" name="budget" type="text" 
+                                                       value="{{ commercialspacelead.budget|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="payment_method" class="form-label">Metodă de plată</label>
+                                                <select id="payment_method" class="form-select" name="payment_method">
+                                                    {% for value, label in form.fields.payment_method.choices %}
+                                                        <option value="{{ value }}" {% if commercialspacelead.payment_method == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="urgency" class="form-label">Urgență</label>
+                                                <select id="urgency" class="form-select" name="urgency">
+                                                    {% for value, label in form.fields.urgency.choices %}
+                                                        <option value="{{ value }}" {% if commercialspacelead.urgency == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="deadline_date" class="form-label">Data limită</label>
+                                                <input id="deadline_date" class="form-control" name="deadline_date" 
+                                                       type="date" value="{{ commercialspacelead.deadline_date|default_if_none:'' }}" 
+                                                       placeholder="zz.ll.aaaa">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="deadline_time" class="form-label">Ora limită</label>
+                                                <input id="deadline_time" class="form-control" name="deadline_time" 
+                                                       type="time" value="{{ commercialspacelead.deadline_time|default_if_none:'' }}" 
+                                                       step="600" placeholder="oo:mm">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="assigned_listings" class="form-label">
+                                                    Proprietăți asociate</label>
+                                                <select id="assigned_listings" class="form-control" 
+                                                        name="assigned_listings" multiple>
+                                                    {% for value, label in form.fields.assigned_listings.choices %}
+                                                        <option value="{{ value }}" {% if value in commercialspacelead.assigned_listings %}
+                                                                selected{% endif %}></option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="labels" class="form-label">Etichete</label>
+                                                <select id="labels" class="form-select" name="labels" multiple>
+                                                    {% for value, label in form.fields.labels.choices %}
+                                                        <option value="{{ value }}" {% if value in commercialspacelead.labels %}
+                                                                selected{% endif %}></option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <label for="notes" class="form-label">Notițe proprii</label>
+                                                <textarea id="notes" class="form-control" name="notes" type="text" 
+                                                          rows="4">{{ commercialspacelead.notes|default_if_none:'' }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-subtle-success float-end">
+                                                Actualizează cererea
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -36,3 +305,118 @@
     {% endif %}
     
 {% endblock content %}
+
+{% block extra_javascript %}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Conținutul DOM a fost încărcat.');
+            
+            var storedContactId = "{{ commercialspacelead.contact.id }}";
+            var pk = "{{ commercialspacelead.id }}";
+            
+            console.log('ID contact:', storedContactId);
+            
+            fetch(`/contacts/api/contact-details/${storedContactId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Eroare la solicitarea datelor contactului!');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('firstName').innerText = data.first_name;
+                    document.getElementById('lastName').innerText = data.last_name;
+                    document.getElementById('phoneNumber').innerText = data.phone_number;
+                    document.getElementById('email').innerText = data.email;
+                })
+                .catch(error => {
+                    console.error('Eroare:', error);
+                });
+            
+            // Inițializez flatpickr pentru câmpul de dată
+            flatpickr('#deadline_date', {
+                dateFormat: 'd.m.Y',
+                altInput: true,
+                altFormat: 'd.m.Y',
+                allowInput: true,
+                locale: {
+                    firstDayOfWeek: 1,
+                    weekdays: {
+                        shorthand: ['Dum', 'Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sâm'],
+                        longhand: ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă']
+                    },
+                    months: {
+                        shorthand: ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Noi', 'Dec'],
+                        longhand: ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 
+                            'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie']
+                    }
+                }
+            });
+            
+            // Inițializez flatpickr pentru câmpul de timp
+            flatpickr('#deadline_time', {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                allowInput: true,
+                minuteIncrement: 10
+            });
+            
+            var leadAssignedListings = document.getElementById('assigned_listings');
+            new Choices(leadAssignedListings, {
+                loadingText: 'Se încarcă...',
+                noResultsText: 'Nu există proprietăți disponibile.'
+            });
+            
+            var leadLabels = document.getElementById('labels');
+            new Choices(leadLabels, {
+                loadingText: 'Se încarcă...',
+                noResultsText: 'Nu există alte etichete.'
+            });
+            
+            document.getElementById('edit_commercial_space_lead').addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                var formData = new FormData(this);
+                
+                // Convertesc virgula în punct pentru toate zecimalele
+                formData.forEach(function(value, key) {
+                    if (typeof value === 'string') {
+                        formData.set(key, value.replace(/,/g, '.'));
+                    }
+                });
+                
+                console.log('Datele trimise sunt:', formData);
+                
+                fetch(`/leads/edit-commercial-space-lead/${pk}`, {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = `/leads/commercial-space-lead-details/${pk}`;
+                    } else {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    if (data && data.errors) {
+                        Object.keys(data.errors).forEach(field => {
+                            const errorMessage = data.errors[field][0].message;
+                            const fieldElement = document.getElementById(field + '-error');
+                            if (fieldElement) {
+                                fieldElement.textContent = errorMessage;
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Eroare în timpul salvării:', error);
+                });
+            });
+        });
+    </script>
+
+{% endblock extra_javascript %}

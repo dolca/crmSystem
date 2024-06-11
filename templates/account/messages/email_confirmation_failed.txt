@@ -1,1 +1,1 @@
-Nu se poate confirma adresa de e-mail "{{email}}" deoarece este deja confirmată de un alt cont.
+Nu se poate confirma adresa de e-mail "{{email}}", deoarece este deja confirmată de către un alt utilizator.

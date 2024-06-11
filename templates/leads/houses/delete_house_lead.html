@@ -1,15 +1,15 @@
-{% extends 'partials/base.html' %}
+{% extends "partials/base.html" %}
 
-{% block title %} Șterge cererea {% endblock title %}
+{% block title %} Șterge cerere | Casă {% endblock title %}
 
 {% block content %}
     
     {% block pagetitle %}
-        {% include "partials/page_title.html" with pagetitle="Cereri" title="Șterge cererea" %}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Șterge cerere | Casă" %}
     {% endblock pagetitle %}
     
     {% if user.is_authenticated %}
-        {% if perms.leads.delete_house_lead %}
+        {% if perms.houseleads.delete_houselead %}
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="card">
@@ -17,14 +17,16 @@
                             <form method="post">
                                 {% csrf_token %}
                                 <div class="col-md-12 mb-3">
-                                    <h5 class="text-center"><i class="bi bi-exclamation-triangle"></i> 
-                                        Sigur vrei să ștergi cererea asociată contactului cu numele {{ leads.contact }}?
-                                    </h5>
+                                    <h4 class="text-center"><i class="bi bi-exclamation-triangle"></i> 
+                                        Sigur vrei să ștergi cererea asociată contactului cu numele 
+                                        {{ houselead.contact.first_name|default_if_none:"" }} 
+                                        {{ houselead.contact.last_name|default_if_none:"" }}?
+                                    </h4>
                                 </div>
                                 <div class="card-footer text-center">
-                                    <button type="submit" class="btn btn-subtle-danger">DA</button>
-                                    <a href="{% url 'leads:house_lead_details' houselead.id %}" 
-                                       class="btn btn-subtle-primary">NU</a>
+                                    <button type="submit" class="btn btn-subtle-danger"><strong>DA</strong></button>
+                                    <a href="{% url "leads:house_lead_details" houselead.id %}" 
+                                       class="btn btn-subtle-primary"><strong>NU</strong></a>
                                 </div>
                             </form>
                         </div>

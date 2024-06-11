@@ -1,31 +1,329 @@
-{% extends 'partials/base.html' %}
+{% extends "partials/base.html" %}
 
-{% block title %} Actualizează cererea {% endblock title %}
+{% block title %} Actualizare cerere | Casă {% endblock title %}
 
 {% block content %}
     
     {% block pagetitle %}
-    {% include "partials/page_title.html" with pagetitle="Cereri" title="Actualizează cererea"%}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Actualizare cerere | Casă"%}
     {% endblock pagetitle %}
     
     {% if user.is_authenticated %}
-        {% if perms.leads.change_house_lead %}
-            <div class="row justify-content-center">
-                <div class="col-md-6">
+        {% if perms.houseleads.change_houselead %}
+            <div class="row">
+                <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h4><i class="bi bi-database-add"></i> Actualizează informațiile cererii</h4>
-                        </div>
                         <div class="card-body">
-                            <form method="post" enctype="multipart/form-data" class="row g-3">
+                            <form id="edit_house_lead" method="post" enctype="multipart/form-data" class="row" 
+                                  action="{% url "leads:edit_house_lead" houselead.pk %}">
                                 {% csrf_token %}
-                                <div class="col-md-12 mb-3">
-                                    {{ form.as_p }}
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="contactInfo">
+                                                <h5><span id="firstName">{{ houselead.contact.first_name }}</span> 
+                                                    <span id="lastName">{{ houselead.contact.last_name }}</span></h5>
+                                                <div id="phoneNumber">{{ houselead.contact.phone_number }}</div>
+                                                <div id="email">{{ houselead.contact.email }}</div>
+                                            </div>
+                                            <input id="contact" name="contact" type="hidden" value="{{ houselead.contact.id }}" 
+                                                   required>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="property_type" class="form-label">Tip cerere <span 
+                                                        class="firebrick-message">*</span></label>
+                                                <input id="property_type" class="form-control text-muted" 
+                                                       name="property_type" value="{{ houselead.property_type }}" 
+                                                       readonly required>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="house_type" class="form-label">Tip casă <span 
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="house_type" class="form-select" name="house_type" 
+                                                        required>
+                                                    {% for value, label in form.fields.house_type.choices %}
+                                                        <option value="{{ value }}" {% if houselead.house_type == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="transaction_type" class="form-label">Tip tranzacție <span
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="transaction_type" class="form-select" name="transaction_type" 
+                                                        required>
+                                                    {% for value, label in form.fields.transaction_type.choices %}
+                                                        <option value="{{ value }}" {% if houselead.transaction_type == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <label for="lead_status" class="form-label">Status cerere <span
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="lead_status" class="form-select" name="lead_status" required>
+                                                    {% for value, label in form.fields.lead_status.choices %}
+                                                        <option value="{{ value }}" {% if houselead.lead_status == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="county" class="form-label">Județ <span
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="county" class="form-control" name="county" data-choices 
+                                                        required>
+                                                    {% for value, label in form.fields.county.choices %}
+                                                        <option value="{{ value }}" {% if houselead.county == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="city" class="form-label">Localitate <span
+                                                        class="firebrick-message">*</span></label>
+                                                <input id="city" class="form-control" name="city" type="text" 
+                                                       value="{{ houselead.city|default_if_none:'' }}" required>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="zone" class="form-label">Zonă</label>
+                                                <input id="zone" class="form-control" name="zone" type="text" 
+                                                       value="{{ houselead.zone|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <label for="street" class="form-label">Stradă</label>
+                                                <input id="street" class="form-control" name="street" type="text" 
+                                                       value="{{ houselead.street|default_if_none:'' }}">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-footer text-center">
-                                    <button type="submit" class="btn btn-subtle-success">
-                                        Actualizează cererea
-                                    </button>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="destination" class="form-label">Destinație <span
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="destination" class="form-select" name="destination" required>
+                                                    {% for value, label in form.fields.destination.choices %}
+                                                        <option value="{{ value }}" {% if houselead.destination == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="rooms_number" class="form-label">Număr camere</label>
+                                                <input id="rooms_number" class="form-control" name="rooms_number" 
+                                                       type="text" value="{{ houselead.rooms_number|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="nr_bedrooms" class="form-label">Număr dormitoare</label>
+                                                <input id="nr_bedrooms" class="form-control" name="nr_bedrooms" 
+                                                       type="text" value="{{ houselead.nr_bedrooms|default_if_none:'' }}">
+                                                <p></p>
+                                                <div id="nr_bedrooms-error" class="firebrick-message"></div>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="nr_kitchens" class="form-label">Număr bucătării</label>
+                                                <input id="nr_kitchens" class="form-control" name="nr_kitchens" 
+                                                       type="text" value="{{ houselead.nr_kitchens|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="nr_bathrooms" class="form-label">Număr băi</label>
+                                                <input id="nr_bathrooms" class="form-control" name="nr_bathrooms" 
+                                                       type="text" value="{{ houselead.nr_bathrooms|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <div class="form-check">
+                                                    <input id="bathroom_window" class="form-check-input" 
+                                                           name="bathroom_window" type="checkbox" 
+                                                           {% if houselead.bathroom_window %}checked{% endif %}>
+                                                    <label for="bathroom_window" class="form-check-label">
+                                                        Geam la baie</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="minimal_surface" class="form-label">Suprafață minimă (mp)</label>
+                                                <input id="minimal_surface" class="form-control" name="minimal_surface" 
+                                                       type="text" value="{{ houselead.minimal_surface|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="nr_floors" class="form-label">Număr etaje</label>
+                                                <input id="nr_floors" class="form-control" name="nr_floors" type="text" 
+                                                       value="{{ houselead.nr_floors|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <label for="construction_year" class="form-label">Anul construcției</label>
+                                                <input id="construction_year" class="form-control" 
+                                                       name="construction_year" type="text" 
+                                                       value="{{ houselead.construction_year|default_if_none:'' }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="construction_status" class="form-label">
+                                                    Stadiu construcție</label>
+                                                <select id="construction_status" class="form-select" 
+                                                        name="construction_status">
+                                                    {% for value, label in form.fields.construction_status.choices %}
+                                                        <option value="{{ value }}" {% if houselead.construction_status == value %}
+                                                                selected{% endif %}>{{ label }}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="furniture" class="form-label">Mobilier</label>
+                                                <select id="furniture" class="form-select" name="furniture">
+                                                    {% for value, label in form.fields.furniture.choices %}
+                                                        <option value="{{ value }}" {% if houselead.furniture == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="interior_finishes" class="form-label">Stare interior</label>
+                                                <select id="interior_finishes" class="form-select" 
+                                                        name="interior_finishes">
+                                                    {% for value, label in form.fields.interior_finishes.choices %}
+                                                        <option value="{{ value }}" {% if houselead.interior_finishes == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="basement" class="form-check-input" name="basement" 
+                                                               type="checkbox" 
+                                                               {% if houselead.basement %}checked{% endif %}>
+                                                        <label for="basement" class="form-check-label">Subsol</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="semi_basement" class="form-check-input" 
+                                                               name="semi_basement" type="checkbox" 
+                                                               {% if houselead.semi_basement %}checked{% endif %}>
+                                                        <label for="semi_basement" class="form-check-label">
+                                                            Demisol</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="loft" class="form-check-input" name="loft" 
+                                                               type="checkbox" {% if houselead.loft %}checked{% endif %}>
+                                                        <label for="loft" class="form-check-label">Mansardă</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="attic" class="form-check-input" name="attic" 
+                                                               type="checkbox" {% if houselead.attic %}checked{% endif %}>
+                                                        <label for="attic" class="form-check-label">Pod</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-3">
+                                                    <div class="form-check">
+                                                        <input id="garage" class="form-check-input" name="garage" 
+                                                               type="checkbox" {% if houselead.garage %}checked{% endif %}>
+                                                        <label for="garage" class="form-check-label">Garaj</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="terrain_surface" class="form-label">
+                                                    Suprafață teren (mp)</label>
+                                                <input id="terrain_surface" class="form-control" name="terrain_surface" 
+                                                       type="text" value="{{ houselead.terrain_surface|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="other_details" class="form-label">Alte detalii</label>
+                                                <textarea id="other_details" class="form-control" name="other_details" type="text" 
+                                                          rows="4">{{ houselead.other_details|default_if_none:'' }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="budget" class="form-label">Buget alocat</label>
+                                                <input id="budget" class="form-control" name="budget" type="text" 
+                                                       value="{{ houselead.budget|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="payment_method" class="form-label">Metodă de plată</label>
+                                                <select id="payment_method" class="form-select" name="payment_method">
+                                                    {% for value, label in form.fields.payment_method.choices %}
+                                                        <option value="{{ value }}" {% if houselead.payment_method == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="urgency" class="form-label">Urgență</label>
+                                                <select id="urgency" class="form-select" name="urgency">
+                                                    {% for value, label in form.fields.urgency.choices %}
+                                                        <option value="{{ value }}" {% if houselead.urgency == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="deadline_date" class="form-label">Data limită</label>
+                                                <input id="deadline_date" class="form-control" name="deadline_date" 
+                                                       type="date" value="{{ houselead.deadline_date|default_if_none:'' }}" 
+                                                       placeholder="zz.ll.aaaa">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="deadline_time" class="form-label">Ora limită</label>
+                                                <input id="deadline_time" class="form-control" name="deadline_time" 
+                                                       type="time" value="{{ houselead.deadline_time|default_if_none:'' }}" 
+                                                       step="600" placeholder="oo:mm">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="assigned_listings" class="form-label">
+                                                    Proprietăți asociate</label>
+                                                <select id="assigned_listings" class="form-control" 
+                                                        name="assigned_listings" multiple>
+                                                    {% for value, label in form.fields.assigned_listings.choices %}
+                                                        <option value="{{ value }}" {% if value in houselead.assigned_listings %}
+                                                                selected{% endif %}></option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="labels" class="form-label">Etichete</label>
+                                                <select id="labels" class="form-select" name="labels" multiple>
+                                                    {% for value, label in form.fields.labels.choices %}
+                                                        <option value="{{ value }}" {% if value in houselead.labels %}
+                                                                selected{% endif %}></option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <label for="notes" class="form-label">Notițe proprii</label>
+                                                <textarea id="notes" class="form-control" name="notes" type="text" 
+                                                          rows="4">{{ houselead.notes|default_if_none:'' }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-subtle-success float-end">
+                                                Actualizează cererea
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -36,3 +334,118 @@
     {% endif %}
     
 {% endblock content %}
+
+{% block extra_javascript %}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Conținutul DOM a fost încărcat.');
+            
+            var storedContactId = "{{ houselead.contact.id }}";
+            var pk = "{{ houselead.id }}";
+            
+            console.log('ID contact:', storedContactId);
+            
+            fetch(`/contacts/api/contact-details/${storedContactId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Eroare la solicitarea datelor contactului!');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('firstName').innerText = data.first_name;
+                    document.getElementById('lastName').innerText = data.last_name;
+                    document.getElementById('phoneNumber').innerText = data.phone_number;
+                    document.getElementById('email').innerText = data.email;
+                })
+                .catch(error => {
+                    console.error('Eroare:', error);
+                });
+            
+            // Inițializez flatpickr pentru câmpul de dată
+            flatpickr('#deadline_date', {
+                dateFormat: 'd.m.Y',
+                altInput: true,
+                altFormat: 'd.m.Y',
+                allowInput: true,
+                locale: {
+                    firstDayOfWeek: 1,
+                    weekdays: {
+                        shorthand: ['Dum', 'Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sâm'],
+                        longhand: ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă']
+                    },
+                    months: {
+                        shorthand: ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Noi', 'Dec'],
+                        longhand: ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 
+                            'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie']
+                    }
+                }
+            });
+            
+            // Inițializez flatpickr pentru câmpul de timp
+            flatpickr('#deadline_time', {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                allowInput: true,
+                minuteIncrement: 10
+            });
+            
+            var leadAssignedListings = document.getElementById('assigned_listings');
+            new Choices(leadAssignedListings, {
+                loadingText: 'Se încarcă...',
+                noResultsText: 'Nu există proprietăți disponibile.'
+            });
+            
+            var leadLabels = document.getElementById('labels');
+            new Choices(leadLabels, {
+                loadingText: 'Se încarcă...',
+                noResultsText: 'Nu există alte etichete.'
+            });
+            
+            document.getElementById('edit_house_lead').addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                var formData = new FormData(this);
+                
+                // Convertesc virgula în punct pentru toate zecimalele
+                formData.forEach(function(value, key) {
+                    if (typeof value === 'string') {
+                        formData.set(key, value.replace(/,/g, '.'));
+                    }
+                });
+                
+                console.log('Datele trimise sunt:', formData);
+                
+                fetch(`/leads/edit-house-lead/${pk}`, {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = `/leads/house-lead-details/${pk}`;
+                    } else {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    if (data && data.errors) {
+                        Object.keys(data.errors).forEach(field => {
+                            const errorMessage = data.errors[field][0].message;
+                            const fieldElement = document.getElementById(field + '-error');
+                            if (fieldElement) {
+                                fieldElement.textContent = errorMessage;
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Eroare în timpul salvării:', error);
+                });
+            });
+        });
+    </script>
+
+{% endblock extra_javascript %}

@@ -1,7 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.core.exceptions import ValidationError
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
@@ -22,7 +21,7 @@ class ApartmentLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
     form_class = ApartmentLeadCreateForm
     template_name = 'leads/apartments/add_apartment_lead.html'
     success_url = reverse_lazy('leads:lead_added')
-    permission_required = 'leads.add_apartmentlead'
+    permission_required = 'apartmentleads.add_apartmentlead'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -46,7 +45,7 @@ class ApartmentLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
 
 @login_required
 def my_apartment_leads_view(request):
-    my_apartment_leads = ApartmentLead.objects.filter(created_by=request.user).order_by('-deadline_date')
+    my_apartment_leads = ApartmentLead.objects.filter(created_by=request.user).order_by('-updated_at', '-deadline_date')
     return render(request, 'leads/apartments/my_apartment_leads.html', {
         'my_apartment_leads': my_apartment_leads
     })
@@ -64,7 +63,7 @@ class ApartmentLeadListView(LoginRequiredMixin, PermissionRequiredMixin, ListVie
     model = ApartmentLead
     template_name = 'leads/apartments/all_apartment_leads.html'
     context_object_name = 'all_apartment_leads'
-    permission_required = 'leads.view_apartmentlead'
+    permission_required = 'apartmentleads.view_apartmentlead'
 
     def get_queryset(self):
         return ApartmentLead.objects.all().order_by('-updated_at')
@@ -74,7 +73,7 @@ class ApartmentLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin, Updat
     model = ApartmentLead
     form_class = ApartmentLeadUpdateForm
     template_name = 'leads/apartments/edit_apartment_lead.html'
-    permission_required = 'leads.change_apartmentlead'
+    permission_required = 'apartmentleads.change_apartmentlead'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -99,13 +98,13 @@ class ApartmentLeadDeleteView(LoginRequiredMixin, PermissionRequiredMixin, Delet
     model = ApartmentLead
     template_name = 'leads/apartments/delete_apartment_lead.html'
     success_url = reverse_lazy('leads:lead_deleted')
-    permission_required = 'leads.delete_apartmentlead'
+    permission_required = 'apartmentleads.delete_apartmentlead'
 
 
 class ApartmentLeadDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = ApartmentLead
     template_name = 'leads/apartments/apartment_lead_details.html'
-    permission_required = 'leads.view_apartmentlead_details'
+    permission_required = 'apartmentleads.view_apartmentlead_details'
 
 
 ########################################################################################################################
@@ -116,21 +115,31 @@ class HouseLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
     form_class = HouseLeadCreateForm
     template_name = 'leads/houses/add_house_lead.html'
     success_url = reverse_lazy('leads:lead_added')
-    permission_required = 'leads.add_house_lead'
+    permission_required = 'houseleads.add_houselead'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        stored_contact = self.request.session.get('storedContactId')
+        stored_type = self.request.session.get('storedType')
+        context['storedContactId'] = stored_contact
+        context['storedType'] = stored_type
+        return context
 
     def form_valid(self, form):
-        try:
-            form.clean()
-        except ValidationError as err:
-            form.add_error('field_name', str(err))
-            return self.form_invalid(form)
+        form.instance.created_at = timezone.now()
+        form.instance.updated_at = timezone.now()
+        form.instance.created_by = self.request.user
 
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        errors = form.errors.get_json_data()
+        return JsonResponse({'errors': errors}, status=400)
 
 
 @login_required
 def my_house_leads_view(request):
-    my_house_leads = HouseLead.objects.filter(created_by=request.user).order_by('-deadline_date')
+    my_house_leads = HouseLead.objects.filter(created_by=request.user).order_by('-updated_at', '-deadline_date')
     return render(request, 'leads/houses/my_house_leads.html', {'my_house_leads': my_house_leads})
 
 
@@ -146,7 +155,7 @@ class HouseLeadListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = HouseLead
     template_name = 'leads/houses/all_house_leads.html'
     context_object_name = 'all_house_leads'
-    permission_required = 'leads.view_house_lead'
+    permission_required = 'houseleads.view_houselead'
 
     def get_queryset(self):
         return HouseLead.objects.all().order_by('-updated_at')
@@ -157,32 +166,38 @@ class HouseLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateVie
     form_class = HouseLeadUpdateForm
     template_name = 'leads/houses/edit_house_lead.html'
     success_url = reverse_lazy('leads:house_lead_details')
-    permission_required = 'leads.change_house_lead'
+    permission_required = 'houseleads.change_houselead'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        return context
 
     def form_valid(self, form):
-        try:
-            form.clean()
-        except ValidationError as err:
-            form.add_error('field_name', str(err))
-            return self.form_invalid(form)
-
+        form.instance.updated_at = timezone.now()
         form.instance.updated_by = self.request.user
 
-        update_success = form.save()
-        return HttpResponseRedirect(reverse('leads:house_lead_details', args=[update_success.pk]))
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        errors = form.errors.get_json_data()
+        return JsonResponse({'errors': errors}, status=400)
+
+    def get_success_url(self):
+        return reverse_lazy('leads:house_lead_details', kwargs={'pk': self.object.pk})
 
 
 class HouseLeadDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = HouseLead
     template_name = 'leads/houses/delete_house_lead.html'
     success_url = reverse_lazy('leads:lead_deleted')
-    permission_required = 'leads.delete_house_lead'
+    permission_required = 'houseleads.delete_houselead'
 
 
 class HouseLeadDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = HouseLead
     template_name = 'leads/houses/house_lead_details.html'
-    permission_required = 'leads.view_house_lead_details'
+    permission_required = 'houseleads.view_houselead_details'
 
 
 ########################################################################################################################
@@ -193,21 +208,31 @@ class TerrainLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateV
     form_class = TerrainLeadCreateForm
     template_name = 'leads/terrains/add_terrain_lead.html'
     success_url = reverse_lazy('leads:lead_added')
-    permission_required = 'leads.add_terrain_lead'
+    permission_required = 'terrainleads.add_terrainlead'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        stored_contact = self.request.session.get('storedContactId')
+        stored_type = self.request.session.get('storedType')
+        context['storedContactId'] = stored_contact
+        context['storedType'] = stored_type
+        return context
 
     def form_valid(self, form):
-        try:
-            form.clean()
-        except ValidationError as err:
-            form.add_error('field_name', str(err))
-            return self.form_invalid(form)
+        form.instance.created_at = timezone.now()
+        form.instance.updated_at = timezone.now()
+        form.instance.created_by = self.request.user
 
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        errors = form.errors.get_json_data()
+        return JsonResponse({'errors': errors}, status=400)
 
 
 @login_required
 def my_terrain_leads_view(request):
-    my_terrain_leads = TerrainLead.objects.filter(created_by=request.user).order_by('-deadline_date')
+    my_terrain_leads = TerrainLead.objects.filter(created_by=request.user).order_by('-updated_at', '-deadline_date')
     return render(request, 'leads/terrains/my_terrain_leads.html', {
         'my_terrain_leads': my_terrain_leads
     })
@@ -225,7 +250,7 @@ class TerrainLeadListView(LoginRequiredMixin, PermissionRequiredMixin, ListView)
     model = TerrainLead
     template_name = 'leads/terrains/all_terrain_leads.html'
     context_object_name = 'all_terrain_leads'
-    permission_required = 'leads.view_terrain_lead'
+    permission_required = 'terrainleads.view_terrainlead'
 
     def get_queryset(self):
         return TerrainLead.objects.all().order_by('-updated_at')
@@ -236,32 +261,38 @@ class TerrainLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateV
     form_class = TerrainLeadUpdateForm
     template_name = 'leads/terrains/edit_terrain_lead.html'
     success_url = reverse_lazy('leads:terrain_lead_details')
-    permission_required = 'leads.change_terrain_lead'
+    permission_required = 'terrainleads.change_terrainlead'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        return context
 
     def form_valid(self, form):
-        try:
-            form.clean()
-        except ValidationError as err:
-            form.add_error('field_name', str(err))
-            return self.form_invalid(form)
-
+        form.instance.updated_at = timezone.now()
         form.instance.updated_by = self.request.user
 
-        update_success = form.save()
-        return HttpResponseRedirect(reverse('leads:terrain_lead_details', args=[update_success.pk]))
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        errors = form.errors.get_json_data()
+        return JsonResponse({'errors': errors}, status=400)
+
+    def get_success_url(self):
+        return reverse_lazy('leads:terrain_lead_details', kwargs={'pk': self.object.pk})
 
 
 class TerrainLeadDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = TerrainLead
     template_name = 'leads/terrains/delete_terrain_lead.html'
     success_url = reverse_lazy('leads:lead_deleted')
-    permission_required = 'leads.delete_terrain_lead'
+    permission_required = 'terrainleads.delete_terrainlead'
 
 
 class TerrainLeadDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = TerrainLead
     template_name = 'leads/terrains/terrain_lead_details.html'
-    permission_required = 'leads.view_terrain_lead_details'
+    permission_required = 'terrainleads.view_terrainlead_details'
 
 
 ########################################################################################################################
@@ -272,21 +303,31 @@ class CommercialSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin,
     form_class = CommercialSpaceLeadCreateForm
     template_name = 'leads/commercial_spaces/add_commercial_space_lead.html'
     success_url = reverse_lazy('leads:lead_added')
-    permission_required = 'leads.add_commercial_space_lead'
+    permission_required = 'commercialspaceleads.add_commercialspacelead'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        stored_contact = self.request.session.get('storedContactId')
+        stored_type = self.request.session.get('storedType')
+        context['storedContactId'] = stored_contact
+        context['storedType'] = stored_type
+        return context
 
     def form_valid(self, form):
-        try:
-            form.clean()
-        except ValidationError as err:
-            form.add_error('field_name', str(err))
-            return self.form_invalid(form)
+        form.instance.created_at = timezone.now()
+        form.instance.updated_at = timezone.now()
+        form.instance.created_by = self.request.user
 
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        errors = form.errors.get_json_data()
+        return JsonResponse({'errors': errors}, status=400)
 
 
 @login_required
 def my_commercial_space_leads_view(request):
-    my_commercial_space_leads = CommercialSpaceLead.objects.filter(created_by=request.user).order_by('-deadline_date')
+    my_commercial_space_leads = CommercialSpaceLead.objects.filter(created_by=request.user).order_by('-updated_at', '-deadline_date')
     return render(request, 'leads/commercial_spaces/my_commercial_space_leads.html', {
         'my_commercial_space_leads': my_commercial_space_leads
     })
@@ -304,7 +345,7 @@ class CommercialSpaceLeadListView(LoginRequiredMixin, PermissionRequiredMixin, L
     model = CommercialSpaceLead
     template_name = 'leads/commercial_spaces/all_commercial_space_leads.html'
     context_object_name = 'all_commercial_space_leads'
-    permission_required = 'leads.view_commercial_space_lead'
+    permission_required = 'commercialspaceleads.view_commercialspacelead'
 
     def get_queryset(self):
         return CommercialSpaceLead.objects.all().order_by('-updated_at')
@@ -315,32 +356,38 @@ class CommercialSpaceLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin,
     form_class = CommercialSpaceLeadUpdateForm
     template_name = 'leads/commercial_spaces/edit_commercial_space_lead.html'
     success_url = reverse_lazy('leads:commercial_space_lead_details')
-    permission_required = 'leads.change_commercial_space_lead'
+    permission_required = 'commercialspaceleads.change_commercialspacelead'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        return context
 
     def form_valid(self, form):
-        try:
-            form.clean()
-        except ValidationError as err:
-            form.add_error('field_name', str(err))
-            return self.form_invalid(form)
-
+        form.instance.updated_at = timezone.now()
         form.instance.updated_by = self.request.user
 
-        update_success = form.save()
-        return HttpResponseRedirect(reverse('leads:commercial_space_lead_details', args=[update_success.pk]))
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        errors = form.errors.get_json_data()
+        return JsonResponse({'errors': errors}, status=400)
+
+    def get_success_url(self):
+        return reverse_lazy('leads:commercial_space_lead_details', kwargs={'pk': self.object.pk})
 
 
 class CommercialSpaceLeadDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = CommercialSpaceLead
     template_name = 'leads/commercial_spaces/delete_commercial_space_lead.html'
     success_url = reverse_lazy('leads:lead_deleted')
-    permission_required = 'leads.delete_commercial_space_lead'
+    permission_required = 'commercialspaceleads.delete_commercialspacelead'
 
 
 class CommercialSpaceLeadDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = CommercialSpaceLead
     template_name = 'leads/commercial_spaces/commercial_space_lead_details.html'
-    permission_required = 'leads.view_commercial_space_lead_details'
+    permission_required = 'commercialspaceleads.view_commercialspacelead_details'
 
 
 ########################################################################################################################
@@ -351,21 +398,31 @@ class OfficeSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, Cre
     form_class = OfficeSpaceLeadCreateForm
     template_name = 'leads/office_spaces/add_office_space_lead.html'
     success_url = reverse_lazy('leads:lead_added')
-    permission_required = 'leads.add_office_space_lead'
+    permission_required = 'officespaceleads.add_officespacelead'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        stored_contact = self.request.session.get('storedContactId')
+        stored_type = self.request.session.get('storedType')
+        context['storedContactId'] = stored_contact
+        context['storedType'] = stored_type
+        return context
 
     def form_valid(self, form):
-        try:
-            form.clean()
-        except ValidationError as err:
-            form.add_error('field_name', str(err))
-            return self.form_invalid(form)
+        form.instance.created_at = timezone.now()
+        form.instance.updated_at = timezone.now()
+        form.instance.created_by = self.request.user
 
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        errors = form.errors.get_json_data()
+        return JsonResponse({'errors': errors}, status=400)
 
 
 @login_required
 def my_office_space_leads_view(request):
-    my_office_space_leads = OfficeSpaceLead.objects.filter(created_by=request.user).order_by('-deadline_date')
+    my_office_space_leads = OfficeSpaceLead.objects.filter(created_by=request.user).order_by('-updated_at', '-deadline_date')
     return render(request, 'leads/office_spaces/my_office_space_leads.html', {
         'my_office_space_leads': my_office_space_leads
     })
@@ -383,7 +440,7 @@ class OfficeSpaceLeadListView(LoginRequiredMixin, PermissionRequiredMixin, ListV
     model = OfficeSpaceLead
     template_name = 'leads/office_spaces/all_office_space_leads.html'
     context_object_name = 'all_office_space_leads'
-    permission_required = 'leads.view_office_space_lead'
+    permission_required = 'officespaceleads.view_officespacelead'
 
     def get_queryset(self):
         return OfficeSpaceLead.objects.all().order_by('-updated_at')
@@ -394,32 +451,38 @@ class OfficeSpaceLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin, Upd
     form_class = OfficeSpaceLeadUpdateForm
     template_name = 'leads/office_spaces/edit_office_space_lead.html'
     success_url = reverse_lazy('leads:office_space_lead_details')
-    permission_required = 'leads.change_office_space_lead'
+    permission_required = 'officespaceleads.change_officespacelead'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        return context
 
     def form_valid(self, form):
-        try:
-            form.clean()
-        except ValidationError as err:
-            form.add_error('field_name', str(err))
-            return self.form_invalid(form)
-
+        form.instance.updated_at = timezone.now()
         form.instance.updated_by = self.request.user
 
-        update_success = form.save()
-        return HttpResponseRedirect(reverse('leads:office_space_lead_details', args=[update_success.pk]))
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        errors = form.errors.get_json_data()
+        return JsonResponse({'errors': errors}, status=400)
+
+    def get_success_url(self):
+        return reverse_lazy('leads:office_space_lead_details', kwargs={'pk': self.object.pk})
 
 
 class OfficeSpaceLeadDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = OfficeSpaceLead
     template_name = 'leads/office_spaces/delete_office_space_lead.html'
     success_url = reverse_lazy('leads:lead_deleted')
-    permission_required = 'leads.delete_office_space_lead'
+    permission_required = 'officespaceleads.delete_officespacelead'
 
 
 class OfficeSpaceLeadDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = OfficeSpaceLead
     template_name = 'leads/office_spaces/office_space_lead_details.html'
-    permission_required = 'leads.view_office_space_lead_details'
+    permission_required = 'officespaceleads.view_officespacelead_details'
 
 
 ########################################################################################################################
@@ -430,21 +493,31 @@ class IndustrialSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin,
     form_class = IndustrialSpaceLeadCreateForm
     template_name = 'leads/industrial_spaces/add_industrial_space_lead.html'
     success_url = reverse_lazy('leads:lead_added')
-    permission_required = 'leads.add_industrial_space_lead'
+    permission_required = 'industrialspaceleads.add_industrialspacelead'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        stored_contact = self.request.session.get('storedContactId')
+        stored_type = self.request.session.get('storedType')
+        context['storedContactId'] = stored_contact
+        context['storedType'] = stored_type
+        return context
 
     def form_valid(self, form):
-        try:
-            form.clean()
-        except ValidationError as err:
-            form.add_error('field_name', str(err))
-            return self.form_invalid(form)
+        form.instance.created_at = timezone.now()
+        form.instance.updated_at = timezone.now()
+        form.instance.created_by = self.request.user
 
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        errors = form.errors.get_json_data()
+        return JsonResponse({'errors': errors}, status=400)
 
 
 @login_required
 def my_industrial_space_leads_view(request):
-    my_industrial_space_leads = IndustrialSpaceLead.objects.filter(created_by=request.user).order_by('-deadline_date')
+    my_industrial_space_leads = IndustrialSpaceLead.objects.filter(created_by=request.user).order_by('-updated_at', '-deadline_date')
     return render(request, 'leads/industrial_spaces/my_industrial_space_leads.html', {
         'my_industrial_space_leads': my_industrial_space_leads
     })
@@ -462,7 +535,7 @@ class IndustrialSpaceLeadListView(LoginRequiredMixin, PermissionRequiredMixin, L
     model = IndustrialSpaceLead
     template_name = 'leads/industrial_spaces/all_industrial_space_leads.html'
     context_object_name = 'all_industrial_space_leads'
-    permission_required = 'leads.view_industrial_space_lead'
+    permission_required = 'industrialspaceleads.view_industrialspacelead'
 
     def get_queryset(self):
         return IndustrialSpaceLead.objects.all().order_by('-updated_at')
@@ -473,32 +546,38 @@ class IndustrialSpaceLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin,
     form_class = IndustrialSpaceLeadUpdateForm
     template_name = 'leads/industrial_spaces/edit_industrial_space_lead.html'
     success_url = reverse_lazy('leads:industrial_space_lead_details')
-    permission_required = 'leads.change_industrial_space_lead'
+    permission_required = 'industrialspaceleads.change_industrialspacelead'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        return context
 
     def form_valid(self, form):
-        try:
-            form.clean()
-        except ValidationError as err:
-            form.add_error('field_name', str(err))
-            return self.form_invalid(form)
-
+        form.instance.updated_at = timezone.now()
         form.instance.updated_by = self.request.user
 
-        update_success = form.save()
-        return HttpResponseRedirect(reverse('leads:industrial_space_lead_details', args=[update_success.pk]))
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        errors = form.errors.get_json_data()
+        return JsonResponse({'errors': errors}, status=400)
+
+    def get_success_url(self):
+        return reverse_lazy('leads:industrial_space_lead_details', kwargs={'pk': self.object.pk})
 
 
 class IndustrialSpaceLeadDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = IndustrialSpaceLead
     template_name = 'leads/industrial_spaces/delete_industrial_space_lead.html'
     success_url = reverse_lazy('leads:lead_deleted')
-    permission_required = 'leads.delete_industrial_space_lead'
+    permission_required = 'industrialspaceleads.delete_industrialspacelead'
 
 
 class IndustrialSpaceLeadDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = IndustrialSpaceLead
     template_name = 'leads/industrial_spaces/industrial_space_lead_details.html'
-    permission_required = 'leads.view_industrial_space_lead_details'
+    permission_required = 'industrialspaceleads.view_industrialspacelead_details'
 
 
 ########################################################################################################################

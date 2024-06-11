@@ -184,7 +184,7 @@ class OfficeSpaceLead(Lead):
     nr_floors = IntegerField(null=True, blank=True, verbose_name='Număr etaje')
 
     useful_surface = DecimalField(max_digits=6, decimal_places=2, null=True, blank=True, verbose_name='Suprafață utilă (mp)')
-    minimum_area = DecimalField(max_digits=4, decimal_places=2, null=True, blank=True, verbose_name='Suprafață minimă (mp)')
+    minimum_area = DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name='Suprafață minimă (mp)')
     maximum_area = DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name='Suprafață maximă (mp)')
     total_surface_offices = DecimalField(max_digits=6, decimal_places=2, null=True, blank=True, verbose_name='Suprafață totală birouri (mp)')
     space_compart = CharField(choices=COMPARTIMENTARE_SPATIU, null=True, blank=True, verbose_name='Compartimentare')

@@ -1,31 +1,336 @@
-{% extends 'partials/base.html' %}
+{% extends "partials/base.html" %}
 
-{% block title %} Actualizează cererea {% endblock title %}
+{% block title %} Actualizare cerere | Spațiu de birouri {% endblock title %}
 
 {% block content %}
     
     {% block pagetitle %}
-    {% include "partials/page_title.html" with pagetitle="Cereri" title="Actualizează cererea"%}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Actualizare cerere | Spațiu de birouri"%}
     {% endblock pagetitle %}
     
     {% if user.is_authenticated %}
-        {% if perms.leads.change_office_space_lead %}
-            <div class="row justify-content-center">
-                <div class="col-md-6">
+        {% if perms.officespaceleads.change_officespacelead %}
+            <div class="row">
+                <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h4><i class="bi bi-database-add"></i> Actualizează informațiile cererii</h4>
-                        </div>
                         <div class="card-body">
-                            <form method="post" enctype="multipart/form-data" class="row g-3">
+                            <form id="edit_office_space_lead" method="post" enctype="multipart/form-data" class="row" 
+                                  action="{% url "leads:edit_office_space_lead" officespacelead.pk %}">
                                 {% csrf_token %}
-                                <div class="col-md-12 mb-3">
-                                    {{ form.as_p }}
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="contactInfo">
+                                                <h5><span id="firstName">{{ officespacelead.contact.first_name }}</span> 
+                                                    <span id="lastName">{{ officespacelead.contact.last_name }}</span></h5>
+                                                <div id="phoneNumber">{{ officespacelead.contact.phone_number }}</div>
+                                                <div id="email">{{ officespacelead.contact.email }}</div>
+                                            </div>
+                                            <input id="contact" name="contact" type="hidden" value="{{ officespacelead.contact.id }}" 
+                                                   required>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="property_type" class="form-label">Tip cerere <span 
+                                                        class="firebrick-message">*</span></label>
+                                                <input id="property_type" class="form-control text-muted" 
+                                                       name="property_type" value="{{ officespacelead.property_type }}" 
+                                                       readonly required>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="space_type" class="form-label">Tip spațiu de birouri <span 
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="space_type" class="form-select" name="space_type" required>
+                                                    {% for value, label in form.fields.space_type.choices %}
+                                                        <option value="{{ value }}" {% if officespacelead.space_type == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="transaction_type" class="form-label">Tip tranzacție <span
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="transaction_type" class="form-select" name="transaction_type" 
+                                                        required>
+                                                    {% for value, label in form.fields.transaction_type.choices %}
+                                                        <option value="{{ value }}" {% if officespacelead.transaction_type == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <label for="lead_status" class="form-label">Status cerere <span
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="lead_status" class="form-select" name="lead_status" required>
+                                                    {% for value, label in form.fields.lead_status.choices %}
+                                                        <option value="{{ value }}" {% if officespacelead.lead_status == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="county" class="form-label">Județ <span
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="county" class="form-control" name="county" data-choices 
+                                                        required>
+                                                    {% for value, label in form.fields.county.choices %}
+                                                        <option value="{{ value }}" {% if officespacelead.county == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="city" class="form-label">Localitate <span
+                                                        class="firebrick-message">*</span></label>
+                                                <input id="city" class="form-control" name="city" type="text" 
+                                                       value="{{ officespacelead.city|default_if_none:'' }}" required>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="zone" class="form-label">Zonă</label>
+                                                <input id="zone" class="form-control" name="zone" type="text" 
+                                                       value="{{ officespacelead.zone|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <label for="street" class="form-label">Stradă</label>
+                                                <input id="street" class="form-control" name="street" type="text" 
+                                                       value="{{ officespacelead.street|default_if_none:'' }}">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-footer text-center">
-                                    <button type="submit" class="btn btn-subtle-success">
-                                        Actualizează cererea
-                                    </button>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="space_class" class="form-label">Clasă</label>
+                                                <select id="space_class" class="form-select" name="space_class">
+                                                    {% for value, label in form.fields.space_class.choices %}
+                                                        <option value="{{ value }}" {% if officespacelead.space_class == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="rooms_number" class="form-label">Număr camere</label>
+                                                <input id="rooms_number" class="form-control" name="rooms_number" type="text" 
+                                                       value="{{ officespacelead.rooms_number|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="nr_bathrooms" class="form-label">Număr băi</label>
+                                                <input id="nr_bathrooms" class="form-control" name="nr_bathrooms" type="text" 
+                                                       value="{{ officespacelead.nr_bathrooms|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="floor" class="form-label">Etaj</label>
+                                                <select id="floor" class="form-select" name="floor">
+                                                    {% for value, label in form.fields.floor.choices %}
+                                                        <option value="{{ value }}" {% if officespacelead.floor == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <p></p>
+                                                <div id="floor-error" class="firebrick-message"></div>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="nr_floors" class="form-label">Număr etaje</label>
+                                                <input id="nr_floors" class="form-control" name="nr_floors" type="text" 
+                                                       value="{{ officespacelead.nr_floors|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="useful_surface" class="form-label">
+                                                    Suprafață utilă (mp)</label>
+                                                <input id="useful_surface" class="form-control" name="useful_surface" type="text" 
+                                                       value="{{ officespacelead.useful_surface|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="minimum_area" class="form-label">
+                                                    Suprafață minimă (mp)</label>
+                                                <input id="minimum_area" class="form-control" name="minimum_area" type="text" 
+                                                       value="{{ officespacelead.minimum_area|default_if_none:'' }}">
+                                                <p></p>
+                                                <div id="minimum_area-error" class="firebrick-message"></div>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="maximum_area" class="form-label">
+                                                    Suprafață maximă (mp)</label>
+                                                <input id="maximum_area" class="form-control" name="maximum_area" type="text" 
+                                                       value="{{ officespacelead.maximum_area|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="total_surface_offices" class="form-label">
+                                                    Suprafață totală birouri (mp)</label>
+                                                <input id="total_surface_offices" class="form-control" 
+                                                       name="total_surface_offices" type="text" 
+                                                       value="{{ officespacelead.total_surface_offices|default_if_none:'' }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="space_compart" class="form-label">Compartimentare</label>
+                                                <select id="space_compart" class="form-select" name="space_compart">
+                                                    {% for value, label in form.fields.space_compart.choices %}
+                                                        <option value="{{ value }}" {% if officespacelead.space_compart == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="nr_underground_parking" class="form-label">
+                                                    Nr. locuri parcare subterană</label>
+                                                <input id="nr_underground_parking" class="form-control" 
+                                                       name="nr_underground_parking" type="text" 
+                                                       value="{{ officespacelead.nr_underground_parking|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="underground_parking_cost" class="form-label">
+                                                    Cost loc parcare subterană</label>
+                                                <input id="underground_parking_cost" class="form-control" 
+                                                       name="underground_parking_cost" type="text" 
+                                                       value="{{ officespacelead.underground_parking_cost|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="nr_surface_parking" class="form-label">
+                                                    Nr. locuri parcare suprafață</label>
+                                                <input id="nr_surface_parking" class="form-control" 
+                                                       name="nr_surface_parking" type="text" 
+                                                       value="{{ officespacelead.nr_surface_parking|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="surface_parking_cost" class="form-label">
+                                                    Cost loc parcare suprafață</label>
+                                                <input id="surface_parking_cost" class="form-control" 
+                                                       name="surface_parking_cost" type="text" 
+                                                       value="{{ officespacelead.surface_parking_cost|default_if_none:'' }}">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="basement" class="form-check-input" name="basement" 
+                                                               type="checkbox" 
+                                                               {% if officespacelead.basement %}checked{% endif %}>
+                                                        <label for="basement" class="form-check-label">Subsol</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="semi_basement" class="form-check-input" 
+                                                               name="semi_basement" type="checkbox" 
+                                                               {% if officespacelead.semi_basement %}checked{% endif %}>
+                                                        <label for="semi_basement" class="form-check-label">
+                                                            Demisol</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="technical_floor" class="form-check-input" 
+                                                               name="technical_floor" type="checkbox" 
+                                                               {% if officespacelead.technical_floor %}checked{% endif %}>
+                                                        <label for="technical_floor" class="form-check-label">
+                                                            Etaj tehnic</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="loft" class="form-check-input" name="loft" 
+                                                               type="checkbox" {% if officespacelead.loft %}checked{% endif %}>
+                                                        <label for="loft" class="form-check-label">Mansardă</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-3">
+                                                    <div class="form-check">
+                                                        <input id="elevator" class="form-check-input" name="elevator" 
+                                                               type="checkbox" {% if officespacelead.elevator %}checked{% endif %}>
+                                                        <label for="elevator" class="form-check-label">Lift</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="other_details" class="form-label">Alte detalii</label>
+                                                <textarea id="other_details" class="form-control" name="other_details" type="text" 
+                                                          rows="4">{{ officespacelead.other_details|default_if_none:'' }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="budget" class="form-label">Buget alocat</label>
+                                                <input id="budget" class="form-control" name="budget" type="text" 
+                                                       value="{{ officespacelead.budget|default_if_none:'' }}">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="payment_method" class="form-label">Metodă de plată</label>
+                                                <select id="payment_method" class="form-select" name="payment_method">
+                                                    {% for value, label in form.fields.payment_method.choices %}
+                                                        <option value="{{ value }}" {% if officespacelead.payment_method == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="urgency" class="form-label">Urgență</label>
+                                                <select id="urgency" class="form-select" name="urgency">
+                                                    {% for value, label in form.fields.urgency.choices %}
+                                                        <option value="{{ value }}" {% if officespacelead.urgency == value %}
+                                                                selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="deadline_date" class="form-label">Data limită</label>
+                                                <input id="deadline_date" class="form-control" name="deadline_date" 
+                                                       type="date" value="{{ officespacelead.deadline_date|default_if_none:'' }}" 
+                                                       placeholder="zz.ll.aaaa">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="deadline_time" class="form-label">Ora limită</label>
+                                                <input id="deadline_time" class="form-control" name="deadline_time" 
+                                                       type="time" value="{{ officespacelead.deadline_time|default_if_none:'' }}" 
+                                                       step="600" placeholder="oo:mm">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="assigned_listings" class="form-label">
+                                                    Proprietăți asociate</label>
+                                                <select id="assigned_listings" class="form-control" 
+                                                        name="assigned_listings" multiple>
+                                                    {% for value, label in form.fields.assigned_listings.choices %}
+                                                        <option value="{{ value }}" {% if value in officespacelead.assigned_listings %}
+                                                                selected{% endif %}></option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="labels" class="form-label">Etichete</label>
+                                                <select id="labels" class="form-select" name="labels" multiple>
+                                                    {% for value, label in form.fields.labels.choices %}
+                                                        <option value="{{ value }}" {% if value in officespacelead.labels %}
+                                                                selected{% endif %}></option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <label for="notes" class="form-label">Notițe proprii</label>
+                                                <textarea id="notes" class="form-control" name="notes" type="text" 
+                                                          rows="4">{{ officespacelead.notes|default_if_none:'' }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-subtle-success float-end">
+                                                Actualizează cererea
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -36,3 +341,118 @@
     {% endif %}
     
 {% endblock content %}
+
+{% block extra_javascript %}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Conținutul DOM a fost încărcat.');
+            
+            var storedContactId = "{{ officespacelead.contact.id }}";
+            var pk = "{{ officespacelead.id }}";
+            
+            console.log('ID contact:', storedContactId);
+            
+            fetch(`/contacts/api/contact-details/${storedContactId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Eroare la solicitarea datelor contactului!');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('firstName').innerText = data.first_name;
+                    document.getElementById('lastName').innerText = data.last_name;
+                    document.getElementById('phoneNumber').innerText = data.phone_number;
+                    document.getElementById('email').innerText = data.email;
+                })
+                .catch(error => {
+                    console.error('Eroare:', error);
+                });
+            
+            // Inițializez flatpickr pentru câmpul de dată
+            flatpickr('#deadline_date', {
+                dateFormat: 'd.m.Y',
+                altInput: true,
+                altFormat: 'd.m.Y',
+                allowInput: true,
+                locale: {
+                    firstDayOfWeek: 1,
+                    weekdays: {
+                        shorthand: ['Dum', 'Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sâm'],
+                        longhand: ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă']
+                    },
+                    months: {
+                        shorthand: ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Noi', 'Dec'],
+                        longhand: ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 
+                            'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie']
+                    }
+                }
+            });
+            
+            // Inițializez flatpickr pentru câmpul de timp
+            flatpickr('#deadline_time', {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                allowInput: true,
+                minuteIncrement: 10
+            });
+            
+            var leadAssignedListings = document.getElementById('assigned_listings');
+            new Choices(leadAssignedListings, {
+                loadingText: 'Se încarcă...',
+                noResultsText: 'Nu există proprietăți disponibile.'
+            });
+            
+            var leadLabels = document.getElementById('labels');
+            new Choices(leadLabels, {
+                loadingText: 'Se încarcă...',
+                noResultsText: 'Nu există alte etichete.'
+            });
+            
+            document.getElementById('edit_office_space_lead').addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                var formData = new FormData(this);
+                
+                // Convertesc virgula în punct pentru toate zecimalele
+                formData.forEach(function(value, key) {
+                    if (typeof value === 'string') {
+                        formData.set(key, value.replace(/,/g, '.'));
+                    }
+                });
+                
+                console.log('Datele trimise sunt:', formData);
+                
+                fetch(`/leads/edit-office-space-lead/${pk}`, {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = `/leads/office-space-lead-details/${pk}`;
+                    } else {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    if (data && data.errors) {
+                        Object.keys(data.errors).forEach(field => {
+                            const errorMessage = data.errors[field][0].message;
+                            const fieldElement = document.getElementById(field + '-error');
+                            if (fieldElement) {
+                                fieldElement.textContent = errorMessage;
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Eroare în timpul salvării:', error);
+                });
+            });
+        });
+    </script>
+
+{% endblock extra_javascript %}

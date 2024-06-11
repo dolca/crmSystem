@@ -1,21 +1,21 @@
-{% extends 'partials/base.html' %}
+{% extends "partials/base.html" %}
 {% load static %}
-{% block title %} Cerere nouă | Apartament {% endblock title %}
+{% block title %} Adăugare cerere | Apartament {% endblock title %}
 
 {% block content %}
     
     {% block pagetitle %}
-        {% include "partials/page_title.html" with pagetitle="Cereri" title="Cerere nouă | Apartament" %}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Adăugare cerere | Apartament" %}
     {% endblock pagetitle %}
     
     {% if user.is_authenticated %}
-        {% if perms.leads.add_apartmentlead %}
+        {% if perms.apartmentleads.add_apartmentlead %}
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <form id="add_lead_form" method="post" enctype="multipart/form-data" class="row" 
-                                  action="{% url 'leads:add_apartment_lead' %}">
+                            <form id="add_apartment_lead" method="post" enctype="multipart/form-data" class="row" 
+                                  action="{% url "leads:add_apartment_lead" %}">
                                 {% csrf_token %}
                                 <div class="col-lg-3 col-md-6 col-sm-6">
                                     <div class="card">
@@ -30,13 +30,13 @@
                                             <hr class="border-secondary-subtle">
                                             <div class="col-lg-12 mb-3">
                                                 <label for="property_type" class="form-label">Tip cerere <span 
-                                                        class="text-danger">*</span></label>
+                                                        class="firebrick-message">*</span></label>
                                                 <input id="property_type" class="form-control text-muted" 
                                                        name="property_type" value="{{ storedType }}" readonly required>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="apartment_type" class="form-label">
-                                                    Tip apartament <span class="text-danger">*</span></label>
+                                                <label for="apartment_type" class="form-label">Tip apartament <span 
+                                                        class="firebrick-message">*</span></label>
                                                 <select id="apartment_type" class="form-select" name="apartment_type" 
                                                         required>
                                                     {% for value, label in form.fields.apartment_type.choices %}
@@ -46,7 +46,7 @@
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="transaction_type" class="form-label">Tip tranzacție <span
-                                                        class="text-danger">*</span></label>
+                                                        class="firebrick-message">*</span></label>
                                                 <select id="transaction_type" class="form-select" name="transaction_type" 
                                                         required>
                                                     {% for value, label in form.fields.transaction_type.choices %}
@@ -56,7 +56,7 @@
                                             </div>
                                             <div class="col-lg-12">
                                                 <label for="lead_status" class="form-label">Status cerere <span
-                                                        class="text-danger">*</span></label>
+                                                        class="firebrick-message">*</span></label>
                                                 <select id="lead_status" class="form-select" name="lead_status" required>
                                                     {% for value, label in form.fields.lead_status.choices %}
                                                         <option value="{{ value }}">{{ label }}</option>
@@ -66,7 +66,7 @@
                                             <hr class="border-secondary-subtle">
                                             <div class="col-lg-12 mb-3">
                                                 <label for="county" class="form-label">Județ <span
-                                                        class="text-danger">*</span></label>
+                                                        class="firebrick-message">*</span></label>
                                                 <select id="county" class="form-control" name="county" data-choices 
                                                         required>
                                                     {% for value, label in form.fields.county.choices %}
@@ -76,7 +76,7 @@
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="city" class="form-label">Localitate <span
-                                                        class="text-danger">*</span></label>
+                                                        class="firebrick-message">*</span></label>
                                                 <input id="city" class="form-control" name="city" type="text" required>
                                             </div>
                                             <div class="col-lg-12 mb-3">
@@ -95,7 +95,7 @@
                                         <div class="card-body">
                                             <div class="col-lg-12 mb-3">
                                                 <label for="destination" class="form-label">Destinație <span
-                                                        class="text-danger">*</span></label>
+                                                        class="firebrick-message">*</span></label>
                                                 <select id="destination" class="form-select" name="destination" required>
                                                     {% for value, label in form.fields.destination.choices %}
                                                         <option value="{{ value }}">{{ label }}</option>
@@ -112,7 +112,7 @@
                                                 <input id="nr_bedrooms" class="form-control" name="nr_bedrooms" 
                                                        type="text">
                                                 <p></p>
-                                                <div id="nr_bedrooms-error" class="error-message"></div>
+                                                <div id="nr_bedrooms-error" class="firebrick-message"></div>
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="nr_bathrooms" class="form-label">Număr băi</label>
@@ -141,7 +141,7 @@
                                                     {% endfor %}
                                                 </select>
                                                 <p></p>
-                                                <div id="floor-error" class="error-message"></div>
+                                                <div id="floor-error" class="firebrick-message"></div>
                                             </div>
                                             <div class="col-lg-12 mb-2">
                                                 <div class="form-check">
@@ -311,12 +311,12 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="deadline_date" class="form-label">Data limită</label>
                                                 <input id="deadline_date" class="form-control" name="deadline_date" 
-                                                       type="date" placeholder="ZZ.LL.AAAA">
+                                                       type="date" placeholder="zz.ll.aaaa">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="deadline_time" class="form-label">Ora limită</label>
                                                 <input id="deadline_time" class="form-control" name="deadline_time" 
-                                                       type="time" step="600" placeholder="OO:MM">
+                                                       type="time" step="600" placeholder="oo:mm">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="assigned_listings" class="form-label">
@@ -400,6 +400,36 @@
                         console.error('Eroare:', error);
                     });
             }
+            
+            // Inițializez flatpickr pentru câmpul de dată
+            flatpickr('#deadline_date', {
+                dateFormat: 'd.m.Y',
+                altInput: true,
+                altFormat: 'd.m.Y',
+                allowInput: true,
+                locale: {
+                    firstDayOfWeek: 1,
+                    weekdays: {
+                        shorthand: ['Dum', 'Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sâm'],
+                        longhand: ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă']
+                    },
+                    months: {
+                        shorthand: ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Noi', 'Dec'],
+                        longhand: ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 
+                            'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie']
+                    }
+                }
+            });
+            
+            // Inițializez flatpickr pentru câmpul de timp
+            flatpickr('#deadline_time', {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                allowInput: true,
+                minuteIncrement: 10
+            });
 
             var leadAssignedListings = document.getElementById('assigned_listings');
             new Choices(leadAssignedListings, {
@@ -412,12 +442,19 @@
                 loadingText: 'Se încarcă...',
                 noResultsText: 'Nu există alte etichete.'
             });
-
-            document.getElementById('add_lead_form').addEventListener('submit', function(event) {
+            
+            document.getElementById('add_apartment_lead').addEventListener('submit', function(event) {
                 event.preventDefault();
-
+                
                 var formData = new FormData(this);
-
+                
+                // Convertesc virgula în punct pentru toate zecimalele
+                formData.forEach(function(value, key) {
+                    if (typeof value === 'string') {
+                        formData.set(key, value.replace(/,/g, '.'));
+                    }
+                });
+                
                 console.log('Datele trimise sunt:', formData);
 
                 fetch('/leads/add-apartment-lead', {

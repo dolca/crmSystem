@@ -1,11 +1,11 @@
-{% extends 'partials/base.html' %}
+{% extends "partials/base.html" %}
 {% load static %}
-{% block title %} Adaugă cerere nouă {% endblock title %}
+{% block title %} Adăugare cerere nouă {% endblock title %}
 
 {% block content %}
     
     {% block pagetitle %}
-        {% include 'partials/page_title.html' with pagetitle='Cereri' title='Adaugă cerere nouă' %}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Adăugare cerere nouă" %}
     {% endblock pagetitle %}
     
     {% if user.is_authenticated %}
@@ -21,18 +21,20 @@
                         <div class="row">
                             <div class="col-lg-12 col-sm-12">
                                 <div class="mb-2">
-                                    <form method='post' action='' id='leadForm'>
+                                    <form method="post" action="" id="add_new_lead">
                                         {% csrf_token %}
 
                                         <div class="row mb-2">
                                             <label for="contact" class="form-label">Contact asociat <span
-                                                    class="text-danger">*</span></label>
+                                                    class="firebrick-message">*</span></label>
                                             <div class="col-lg-10 col-sm-10 mb-2">
                                                 <select id="contact" class="form-select" name="contact" required>
                                                     <option value="" disabled selected>Selectează un contact</option>
                                                     {% for contact in contacts %}
                                                         <option value="{{ contact.id }}">
-                                                            {{ contact.first_name }} {{ contact.last_name|default_if_none:"" }} - {{ contact.phone_number|default_if_none:"" }} {{ contact.email|default_if_none:"" }}
+                                                            {{ contact.first_name }} {{ contact.last_name|default_if_none:"" }} - 
+                                                            {{ contact.phone_number|default_if_none:"" }} 
+                                                            {{ contact.email|default_if_none:"" }}
                                                         </option>
                                                     {% endfor %}
                                                 </select>
@@ -46,7 +48,7 @@
                                     
                                         <div class="form-group">
                                             <label for="property_type" class="form-label">Tip cerere <span 
-                                                    class="text-danger">*</span></label>
+                                                    class="firebrick-message">*</span></label>
                                             <select id="property_type" class="form-select mb-4" name="property_type">
                                                 {% for value, label in form.fields.property_type.choices %}
                                                     <option value="{{ value }}">{{ label }}</option>
@@ -77,8 +79,9 @@
 
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="first_name" class="form-label">Prenume <span class="text-danger">*</span></label>
-                        <div id="firstNameError" class="error-message text-danger"></div>
+                        <label for="first_name" class="form-label">Prenume <span 
+                                class="firebrick-message">*</span></label>
+                        <div id="firstNameError" class="firebrick-message"></div>
                         <input id="first_name" class="form-control" name="first_name" type="text" required>
                     </div>
                     <p>
@@ -89,14 +92,14 @@
                     <p>
                     <div class="form-group">
                         <label for="phone_number" class="form-label">Număr de telefon <span
-                                class="text-danger">*</span></label>
-                        <div id="phoneError" class="error-message text-danger"></div>
+                                class="firebrick-message">*</span></label>
+                        <div id="phoneError" class="firebrick-message"></div>
                         <input id="phone_number" class="form-control" name="phone_number" type="text">
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="email" class="form-label">Adresă de e-mail</label>
-                        <div id="emailError" class="error-message text-danger"></div>
+                        <div id="emailError" class="firebrick-message"></div>
                         <input id="email" class="form-control" name="email" type="email">
                     </div>
                     <hr class="border-secondary-subtle">
@@ -162,25 +165,25 @@
                     <p>
                     <div class="form-group">
                         <label for="id_series_nr" class="form-label">Serie / Număr document</label>
-                        <div id="idSeriesNrError" class="error-message text-danger"></div>
+                        <div id="idSeriesNrError" class="firebrick-message"></div>
                         <input id="id_series_nr" class="form-control" name="id_series_nr" type="text">
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="cnp" class="form-label">CNP</label>
-                        <div id="cnpError" class="error-message text-danger"></div>
+                        <div id="cnpError" class="firebrick-message"></div>
                         <input id="cnp" class="form-control" name="cnp" type="number">
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="issue_date" class="form-label">Data emiterii</label>
-                        <div id="issueDateError" class="error-message text-danger"></div>
+                        <div id="issueDateError" class="firebrick-message"></div>
                         <input id="issue_date" class="form-control" name="issue_date" type="date">
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="passport_country" class="form-label">Țara emitentă (doar pentru pașaport)</label>
-                        <div id="passportCountryError" class="error-message text-danger"></div>
+                        <div id="passportCountryError" class="firebrick-message"></div>
                         <input id="passport_country" class="form-control" name="passport_country" type="text">
                     </div>
                     <hr class="border-secondary-subtle">
@@ -324,7 +327,7 @@
                 }
             });
         
-            document.getElementById('leadForm').addEventListener('submit', handleFormSubmit);
+            document.getElementById('add_new_lead').addEventListener('submit', handleFormSubmit);
         
             isFormDirty = false;
             myModal.hide();
@@ -339,7 +342,7 @@
                 return fetch(`/contacts/api/check-duplicate/?field=${fieldName}&value=${value}`)
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error(`Eroare HTTP! Status: ${response.status}`);
+                            throw new Error('Eroare HTTP! Status: ${response.status}');
                         }
                         return response.json();
                     })

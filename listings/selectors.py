@@ -199,7 +199,7 @@ ALTE_FACILITATI = [
 ]
 
 TIP_IMOBIL_SPATIU = [
-    ('Bloc de apartamente', 'Bloc de apartamente'), ('Clădire birouri', 'Clădire birouri'),
+    ('Bloc de apartamente', 'Bloc de apartamente'), ('Clădire de birouri', 'Clădire de birouri'),
     ('Casă / Vilă', 'Casă / Vilă'), ('Centru comercial', 'Centru comercial'), ('Hală / Depozit', 'Hală / Depozit'),
     ('Stradal', 'Stradal')
 ]
