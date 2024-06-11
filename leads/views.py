@@ -6,6 +6,7 @@ from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, DetailView, TemplateView
 from contacts.models import Contact
+from contacts.selectors import TIP_DOCUMENT, TIP_CONTACT, CATEGORIE_CONTACT
 from leads.forms import ApartmentLeadCreateForm, ApartmentLeadUpdateForm, HouseLeadCreateForm, HouseLeadUpdateForm, \
     TerrainLeadCreateForm, TerrainLeadUpdateForm, CommercialSpaceLeadCreateForm, CommercialSpaceLeadUpdateForm, \
     OfficeSpaceLeadCreateForm, OfficeSpaceLeadUpdateForm, IndustrialSpaceLeadCreateForm, IndustrialSpaceLeadUpdateForm
@@ -591,7 +592,11 @@ class DeleteLeadDoneView(TemplateView):
 
 
 def add_new_lead(request):
-    contacts = Contact.objects.all()
+    contacts = Contact.objects.all().order_by('first_name')
+
+    document_type = TIP_DOCUMENT
+    contact_type = TIP_CONTACT
+    contact_category = CATEGORIE_CONTACT
 
     if request.method == 'POST':
         contact_id = request.POST.get('id_contact')
@@ -611,4 +616,10 @@ def add_new_lead(request):
             return redirect(reverse('leads:add_industrial_space_lead') + f'?id_contact={contact_id}')
 
     form = ApartmentLeadCreateForm()
-    return render(request, 'leads/add_new_lead.html', {'form': form, 'contacts': contacts})
+    return render(request, 'leads/add_new_lead.html', {
+        'form': form,
+        'contacts': contacts,
+        'document_type': document_type,
+        'contact_type': contact_type,
+        'contact_category': contact_category
+    })

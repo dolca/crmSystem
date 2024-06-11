@@ -23,7 +23,7 @@
                                 <div class="mb-2">
                                     <form method="post" action="" id="add_new_lead">
                                         {% csrf_token %}
-
+                                    
                                         <div class="row mb-2">
                                             <label for="contact" class="form-label">Contact asociat <span
                                                     class="firebrick-message">*</span></label>
@@ -32,15 +32,15 @@
                                                     <option value="" disabled selected>Selectează un contact</option>
                                                     {% for contact in contacts %}
                                                         <option value="{{ contact.id }}">
-                                                            {{ contact.first_name }} {{ contact.last_name|default_if_none:"" }} - 
-                                                            {{ contact.phone_number|default_if_none:"" }} 
+                                                            {{ contact.first_name }} {{ contact.last_name|default_if_none:"" }} -
+                                                            {{ contact.phone_number|default_if_none:"" }}
                                                             {{ contact.email|default_if_none:"" }}
                                                         </option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
                                             <div class="col-lg-2 col-sm-2 d-flex justify-content-md-end justify-content-center mb-2">
-                                                <button id="open-modal" class="btn btn-subtle-primary add-btn" type="button" 
+                                                <button id="open-modal" class="btn btn-subtle-primary add-btn" type="button"
                                                         data-bs-toggle="modal" data-bs-target="#addContact"><strong>+</strong>
                                                 </button>
                                             </div>
@@ -55,7 +55,7 @@
                                                 {% endfor %}
                                             </select>
                                         </div>
-
+                                    
                                         <div class="d-flex justify-content-center w-100">
                                             <button type="submit" class="btn btn-subtle-success col-12">Continuă</button>
                                         </div>
@@ -68,18 +68,18 @@
             </div>
         </div>
     {% endif %}
-
+    
     <div class="modal fade" id="addContact" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-
+            
                 <div class="modal-header bg-light p-3">
                     <h5 class="modal-title">Adaugă un contact nou</h5>
                 </div>
-
+            
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="first_name" class="form-label">Prenume <span 
+                        <label for="first_name" class="form-label">Prenume <span
                                 class="firebrick-message">*</span></label>
                         <div id="firstNameError" class="firebrick-message"></div>
                         <input id="first_name" class="form-control" name="first_name" type="text" required>
@@ -92,13 +92,14 @@
                     <p>
                     <div class="form-group">
                         <label for="phone_number" class="form-label">Număr de telefon <span
-                                class="firebrick-message">*</span></label>
+                                class="text-muted">*</span></label>
                         <div id="phoneError" class="firebrick-message"></div>
                         <input id="phone_number" class="form-control" name="phone_number" type="text">
                     </div>
                     <p>
                     <div class="form-group">
-                        <label for="email" class="form-label">Adresă de e-mail</label>
+                        <label for="email" class="form-label">Adresă de e-mail <span
+                                class="text-muted">*</span></label>
                         <div id="emailError" class="firebrick-message"></div>
                         <input id="email" class="form-control" name="email" type="email">
                     </div>
@@ -156,10 +157,10 @@
                     <div class="form-group">
                         <label for="document_type" class="form-label">Tip document</label>
                         <select id="document_type" class="form-select" name="document_type">
-                            <option value="">--------</option>
-                            <option value="Carte de identitate">Carte de identitate</option>
-                            <option value="Pașaport">Pașaport</option>
-                            <option value="Alt document">Alt document</option>
+                            <option value="" class="text-muted" selected>---------</option>
+                            {% for value, label in document_type %}
+                                <option value="{{ value }}">{{ label }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <p>
@@ -178,7 +179,8 @@
                     <div class="form-group">
                         <label for="issue_date" class="form-label">Data emiterii</label>
                         <div id="issueDateError" class="firebrick-message"></div>
-                        <input id="issue_date" class="form-control" name="issue_date" type="date">
+                        <input id="issue_date" class="form-control" name="issue_date" type="date" 
+                               placeholder="zz.ll.aaaa">
                     </div>
                     <p>
                     <div class="form-group">
@@ -190,29 +192,20 @@
                     <div class="form-group">
                         <label for="contact_type" class="form-label">Tip contact</label>
                         <select id="contact_type" class="form-select" name="contact_type">
-                            <option value="">--------</option>
-                            <option value="Administrator">Administrator</option>
-                            <option value="Agent imobiliar">Agent imobiliar</option>
-                            <option value="Chiriaș">Chiriaș</option>
-                            <option value="Colaborator">Colaborator</option>
-                            <option value="Cumpărător">Cumpărător</option>
-                            <option value="Dezvoltator imobiliar">Dezvoltator imobiliar</option>
-                            <option value="Investitor">Investitor</option>
-                            <option value="Proprietar">Proprietar</option>
-                            <option value="Reprezentant">Reprezentant</option>
+                            <option value="" class="text-muted" selected>---------</option>
+                            {% for value, label in contact_type %}
+                                <option value="{{ value }}">{{ label }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="contact_category" class="form-label">Categorie</label>
                         <select id="contact_category" class="form-select" name="contact_category">
-                            <option value="">--------</option>
-                            <option value="Client vechi">Client vechi</option>
-                            <option value="Concurență">Concurență</option>
-                            <option value="Cunoștință">Cunoștință</option>
-                            <option value="De evitat">De evitat</option>
-                            <option value="Important">Important</option>
-                            <option value="Neserios">Neserios</option>
+                            <option value="" class="text-muted" selected>---------</option>
+                            {% for value, label in contact_category %}
+                                <option value="{{ value }}">{{ label }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <hr class="border-secondary-subtle">
@@ -221,7 +214,7 @@
                         <textarea id="other_details" class="form-control" name="other_details" rows="3"></textarea>
                     </div>
                 </div>
-
+            
                 <div class="modal-footer border-top">
                     <div class="hstack gap-2 justify-content-end">
                         <button id="close-modal" class="btn btn-light" type="button" data-bs-dismiss="modal" 
@@ -229,11 +222,11 @@
                         <button id="save-modal" class="btn btn-subtle-success" type="submit">Salvează contactul</button>
                     </div>
                 </div>
-
+            
             </div>
         </div>
     </div>
-
+    
 {% endblock content %}
 
 {% block extra_javascript %}
@@ -270,28 +263,30 @@
             document.getElementById('open-modal').addEventListener('click', function () {
                 myModal.show();
             });
-        
+            
             document.getElementById('close-modal').addEventListener('click', function () {
                 myModal.hide();
             });
-        
+            
             var formFields = ['first_name', 'last_name', 'phone_number', 'email', 'company', 'job_title', 'city', 
                 'street_address', 'street_number', 'block', 'scale', 'apartment_number', 'county', 'country', 
                 'document_type', 'id_series_nr', 'cnp', 'issue_date', 'passport_country', 'contact_type', 
                 'contact_category', 'other_details'];
-        
+            
             formFields.forEach(function (field) {
                 document.getElementById(field).addEventListener('input', function () {
                     isFormDirty = true;
                 });
             });
-        
+            
             window.addEventListener('beforeunload', function (event) {
                 if (isFormDirty) {
+                    event.preventDefault();
                     event.returnValue = 'Modificările nesalvate vor fi pierdute. Sigur vrei să părăsești pagina?';
+                    return 'Modificările nesalvate vor fi pierdute. Sigur vrei să părăsești pagina?';
                 }
             });
-        
+            
             document.getElementById('save-modal').addEventListener('click', function (event) {
                 event.preventDefault();
                 if (validateForm()) {
@@ -316,7 +311,7 @@
                         document.getElementById('document_type').value,
                         document.getElementById('id_series_nr').value,
                         document.getElementById('cnp').value,
-                        document.getElementById('issue_date').value,
+                        formatDateToServer(document.getElementById('issue_date').value),
                         document.getElementById('passport_country').value,
                         
                         document.getElementById('contact_type').value,
@@ -326,23 +321,23 @@
                     );
                 }
             });
-        
+            
             document.getElementById('add_new_lead').addEventListener('submit', handleFormSubmit);
-        
+            
             isFormDirty = false;
             myModal.hide();
-        
+            
             function checkDuplicateField(fieldName, value) {
                 console.log('Verificare duplicare: "', fieldName, '", cu valoarea:', value);
-            
+                
                 if (!value) {
                     return Promise.resolve(false);
                 }
-            
+                
                 return fetch(`/contacts/api/check-duplicate/?field=${fieldName}&value=${value}`)
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error('Eroare HTTP! Status: ${response.status}');
+                            throw new Error(`Eroare HTTP! Status: ${response.status}`);
                         }
                         return response.json();
                     })
@@ -373,10 +368,10 @@
                     last_name: lastName,
                     phone_number: phoneNumber,
                     email: email,
-            
+                    
                     company: company,
                     job_title: jobTitle,
-            
+                    
                     city: city,
                     street_address: streetAddress,
                     street_number: streetNumber,
@@ -385,7 +380,7 @@
                     apartment_number: apartmentNumber,
                     county: county,
                     country: country,
-            
+                    
                     document_type: documentType,
                     id_series_nr: idSeriesNr,
                     cnp: cnp,
@@ -394,7 +389,7 @@
                     
                     contact_type: contactType,
                     contact_category: contactCategory,
-            
+                    
                     other_details: otherDetails,
                 };
                 
@@ -410,11 +405,11 @@
                         headers: headers,
                         body: JSON.stringify(filteredData),
                     });
-            
+                    
                     const responseData = await response.json();
                     
                     console.log('Date trimise către server:', filteredData);
-            
+                    
                     if (responseData.success) {
                         console.log('Contactul a fost salvat cu succes!');
                         myModal.hide();
@@ -429,7 +424,31 @@
                     console.error('Eroare la comunicarea cu serverul:', error);
                 }
             }
-
+            
+            flatpickr('#issue_date', {
+                dateFormat: 'd.m.Y',
+                altInput: true,
+                altFormat: 'd.m.Y',
+                allowInput: true,
+                locale: {
+                    firstDayOfWeek: 1,
+                    weekdays: {
+                        shorthand: ['Dum', 'Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sâm'],
+                        longhand: ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă']
+                    },
+                    months: {
+                        shorthand: ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Noi', 'Dec'],
+                        longhand: ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 
+                            'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie']
+                    }
+                }
+            });
+            
+            function formatDateToServer(dateString) {
+                var parts = dateString.split('.');
+                return `${parts[2]}-${parts[1]}-${parts[0]}`;
+            }
+            
             function getCSRFToken() {
                 return document.cookie.split('; ')
                     .find(row => row.startsWith('csrftoken='))
@@ -447,7 +466,7 @@
             function validateCnp(cnp) {
                 return cnp.length === 13 && /^\d+$/.test(cnp);
             }
-
+            
             function validateForm() {
                 var firstNameValue = document.getElementById('first_name').value;
                 var phoneValue = document.getElementById('phone_number').value;
@@ -544,14 +563,14 @@
                     console.error('Eroare în "Promise":', error);
                 });
             }
-
+            
             function displayError(elementId, errorMessage) {
                 var errorElement = document.getElementById(elementId);
                 if (errorElement) {
                     errorElement.innerText = errorMessage;
                 }
             }
-
+            
             function clearErrorMessages() {
                 displayError('firstNameError', '');
                 displayError('phoneError', '');
@@ -565,7 +584,7 @@
         
         function handleFormSubmit(event) {
             event.preventDefault();
-        
+            
             var selectedContact = document.getElementById('contact').value;
             var selectedType = document.getElementById('property_type').value;
             
@@ -574,17 +593,17 @@
             
             var redirectUrl = '';
             if (selectedType === 'Apartament') {
-                redirectUrl = '{% url 'leads:add_apartment_lead' %}';
+                redirectUrl = '{% url "leads:add_apartment_lead" %}';
             } else if (selectedType === 'Casă') {
-                redirectUrl = '{% url 'leads:add_house_lead' %}';
+                redirectUrl = '{% url "leads:add_house_lead" %}';
             } else if (selectedType === 'Teren') {
-                redirectUrl = '{% url 'leads:add_terrain_lead' %}';
+                redirectUrl = '{% url "leads:add_terrain_lead" %}';
             } else if (selectedType === 'Spațiu comercial') {
-                redirectUrl = '{% url 'leads:add_commercial_space_lead' %}';
+                redirectUrl = '{% url "leads:add_commercial_space_lead" %}';
             } else if (selectedType === 'Spațiu de birouri') {
-                redirectUrl = '{% url 'leads:add_office_space_lead' %}';
+                redirectUrl = '{% url "leads:add_office_space_lead" %}';
             } else if (selectedType === 'Spațiu industrial') {
-                redirectUrl = '{% url 'leads:add_industrial_space_lead' %}';
+                redirectUrl = '{% url "leads:add_industrial_space_lead" %}';
             }
             window.location.href = redirectUrl;
         }

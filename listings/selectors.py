@@ -1,4 +1,4 @@
-#                              --- SELECTORI PROPRIETATI ---
+#                              --- SELECTORI PROPRIETĂȚI ---
 
 STATUS_PROPRIETATE = [
     ('Activă', 'Activă'), ('Incompletă', 'Incompletă'), ('Retrasă', 'Retrasă'), ('Pierdută', 'Pierdută')

@@ -12,7 +12,7 @@ TIP_CONTACT = [
     ('Investitor', 'Investitor'), ('Proprietar', 'Proprietar'), ('Reprezentant', 'Reprezentant')
 ]
 
-CATEGORIE = [
+CATEGORIE_CONTACT = [
     ('Client vechi', 'Client vechi'), ('Concurență', 'Concurență'), ('Cunoștință', 'Cunoștință'),
     ('De evitat', 'De evitat'), ('Important', 'Important'), ('Neserios', 'Neserios')
 ]

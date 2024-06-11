@@ -1,5 +1,5 @@
 from django.db.models import Model, CharField, IntegerField, TextField, EmailField, DateField, DateTimeField
-from contacts.selectors import TIP_DOCUMENT, TIP_CONTACT, CATEGORIE
+from contacts.selectors import TIP_DOCUMENT, TIP_CONTACT, CATEGORIE_CONTACT
 
 
 class Contact(Model):
@@ -27,7 +27,7 @@ class Contact(Model):
     passport_country = CharField(max_length=50, blank=True, null=True, verbose_name='Țara emitentă (doar pentru pașaport)')
 
     contact_type = CharField(choices=TIP_CONTACT, null=True, blank=True, verbose_name='Tip contact')
-    contact_category = CharField(choices=CATEGORIE, null=True, blank=True, verbose_name='Categorie')
+    contact_category = CharField(choices=CATEGORIE_CONTACT, null=True, blank=True, verbose_name='Categorie')
 
     other_details = TextField(max_length=2000, null=True, blank=True, verbose_name='Alte detalii')
 
