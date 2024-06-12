@@ -1,1 +1,1 @@
-A fost trimit un e-mail de confirmare la adresa "{{email}}".
+A fost trimis un e-mail de confirmare la adresa "{{email}}".

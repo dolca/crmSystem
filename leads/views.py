@@ -592,7 +592,7 @@ class DeleteLeadDoneView(TemplateView):
 
 
 def add_new_lead(request):
-    contacts = Contact.objects.all().order_by('first_name')
+    contacts = Contact.objects.all().order_by('first_name', 'last_name')
 
     document_type = TIP_DOCUMENT
     contact_type = TIP_CONTACT
