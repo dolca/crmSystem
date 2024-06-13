@@ -9,7 +9,7 @@
     {% endblock pagetitle %}
     
     {% if user.is_authenticated %}
-        {% if perms.apartmentleads.change_apartmentlead %}
+        {% if perms.apartmentlead.change_apartmentlead %}
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -333,16 +333,18 @@
                                                 </select>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="deadline_date" class="form-label">Data limită</label>
+                                                <label for="deadline_date" class="form-label">Data limită <span 
+                                                        class="firebrick-message">*</span></label>
                                                 <input id="deadline_date" class="form-control" name="deadline_date" 
                                                        type="date" value="{{ apartmentlead.deadline_date|default_if_none:'' }}" 
-                                                       placeholder="zz.ll.aaaa">
+                                                       placeholder="zz lll aaaa" required>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="deadline_time" class="form-label">Ora limită</label>
+                                                <label for="deadline_time" class="form-label">Ora limită <span 
+                                                        class="firebrick-message">*</span></label>
                                                 <input id="deadline_time" class="form-control" name="deadline_time" 
                                                        type="time" value="{{ apartmentlead.deadline_time|default_if_none:'' }}" 
-                                                       step="600" placeholder="oo:mm">
+                                                       step="600" placeholder="oo:mm" required>
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="assigned_listings" class="form-label">
@@ -420,23 +422,12 @@
                 });
             
             // Inițializez flatpickr pentru câmpul de dată
-            flatpickr('#deadline_date', {
+            flatpickr('#issue_date', {
                 dateFormat: 'd.m.Y',
                 altInput: true,
-                altFormat: 'd.m.Y',
+                altFormat: 'd M Y',
                 allowInput: true,
-                locale: {
-                    firstDayOfWeek: 1,
-                    weekdays: {
-                        shorthand: ['Dum', 'Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sâm'],
-                        longhand: ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă']
-                    },
-                    months: {
-                        shorthand: ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Noi', 'Dec'],
-                        longhand: ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 
-                            'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie']
-                    }
-                }
+                locale: 'ro'
             });
             
             // Inițializez flatpickr pentru câmpul de timp

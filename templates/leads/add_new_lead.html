@@ -180,7 +180,7 @@
                         <label for="issue_date" class="form-label">Data emiterii</label>
                         <div id="issueDateError" class="firebrick-message"></div>
                         <input id="issue_date" class="form-control" name="issue_date" type="date" 
-                               placeholder="zz.ll.aaaa">
+                               placeholder="zz lll aaaa">
                     </div>
                     <p>
                     <div class="form-group">
@@ -428,20 +428,9 @@
             flatpickr('#issue_date', {
                 dateFormat: 'd.m.Y',
                 altInput: true,
-                altFormat: 'd.m.Y',
+                altFormat: 'd M Y',
                 allowInput: true,
-                locale: {
-                    firstDayOfWeek: 1,
-                    weekdays: {
-                        shorthand: ['Dum', 'Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sâm'],
-                        longhand: ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă']
-                    },
-                    months: {
-                        shorthand: ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Noi', 'Dec'],
-                        longhand: ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 
-                            'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie']
-                    }
-                }
+                locale: 'ro'
             });
             
             function formatDateToServer(dateString) {

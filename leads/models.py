@@ -76,8 +76,18 @@ class ApartmentLead(Lead):
                             verbose_name='Actualizată de')
     assigned_listings = ForeignKey(Apartment, on_delete=SET_NULL, null=True, blank=True, verbose_name='Proprietăți asociate')
 
+    custom_id = CharField(max_length=15, unique=True, editable=False, verbose_name='ID')
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if not self.custom_id:
+            prefix = 'CA' if self.transaction_type == 'Cumpărare' else 'IA'
+            self.custom_id = f'{prefix}-{self.id}'
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return f'{self.id}. {self.property_type} (Tip: {self.apartment_type}) - Contact: {self.contact} | Agent: {self.created_by}'
+        return f'{self.custom_id}. {self.property_type} (Tip: {self.apartment_type}) - Contact: {self.contact} | Agent: {self.created_by}'
 
 
 class HouseLead(Lead):
@@ -110,8 +120,18 @@ class HouseLead(Lead):
                             verbose_name='Actualizată de')
     assigned_listings = ForeignKey(House, on_delete=SET_NULL, null=True, blank=True, verbose_name='Proprietăți asociate')
 
+    custom_id = CharField(max_length=15, unique=True, editable=False, verbose_name='ID')
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if not self.custom_id:
+            prefix = 'CC' if self.transaction_type == 'Cumpărare' else 'IC'
+            self.custom_id = f'{prefix}-{self.id}'
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return f'{self.id}. {self.property_type} (Tip: {self.house_type}) - Contact: {self.contact} | Agent: {self.created_by}'
+        return f'{self.custom_id}. {self.property_type} (Tip: {self.house_type}) - Contact: {self.contact} | Agent: {self.created_by}'
 
 
 class TerrainLead(Lead):
@@ -139,8 +159,18 @@ class TerrainLead(Lead):
                             verbose_name='Actualizată de')
     assigned_listings = ForeignKey(Terrain, on_delete=SET_NULL, null=True, blank=True, verbose_name='Proprietăți asociate')
 
+    custom_id = CharField(max_length=15, unique=True, editable=False, verbose_name='ID')
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if not self.custom_id:
+            prefix = 'CT' if self.transaction_type == 'Cumpărare' else 'IT'
+            self.custom_id = f'{prefix}-{self.id}'
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return f'{self.id}. {self.property_type} (Tip: {self.terrain_type}) - Contact: {self.contact} | Agent: {self.created_by}'
+        return f'{self.custom_id}. {self.property_type} (Tip: {self.terrain_type}) - Contact: {self.contact} | Agent: {self.created_by}'
 
 
 class CommercialSpaceLead(Lead):
@@ -170,8 +200,18 @@ class CommercialSpaceLead(Lead):
                             verbose_name='Actualizată de')
     assigned_listings = ForeignKey(CommercialSpace, on_delete=SET_NULL, null=True, blank=True, verbose_name='Proprietăți asociate')
 
+    custom_id = CharField(max_length=15, unique=True, editable=False, verbose_name='ID')
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if not self.custom_id:
+            prefix = 'CSC' if self.transaction_type == 'Cumpărare' else 'ISC'
+            self.custom_id = f'{prefix}-{self.id}'
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return f'{self.id}. {self.property_type} (Tip: {self.space_type}) - Contact: {self.contact} | Agent: {self.created_by}'
+        return f'{self.custom_id}. {self.property_type} (Tip: {self.space_type}) - Contact: {self.contact} | Agent: {self.created_by}'
 
 
 class OfficeSpaceLead(Lead):
@@ -206,8 +246,18 @@ class OfficeSpaceLead(Lead):
                             verbose_name='Actualizată de')
     assigned_listings = ForeignKey(OfficeSpace, on_delete=SET_NULL, null=True, blank=True, verbose_name='Proprietăți asociate')
 
+    custom_id = CharField(max_length=15, unique=True, editable=False, verbose_name='ID')
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if not self.custom_id:
+            prefix = 'CSB' if self.transaction_type == 'Cumpărare' else 'ISB'
+            self.custom_id = f'{prefix}-{self.id}'
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return f'{self.id}. {self.property_type} (Tip: {self.space_type}) - Contact: {self.contact} | Agent: {self.created_by}'
+        return f'{self.custom_id}. {self.property_type} (Tip: {self.space_type}) - Contact: {self.contact} | Agent: {self.created_by}'
 
 
 class IndustrialSpaceLead(Lead):
@@ -234,5 +284,15 @@ class IndustrialSpaceLead(Lead):
                             verbose_name='Actualizată de')
     assigned_listings = ForeignKey(IndustrialSpace, on_delete=SET_NULL, null=True, blank=True, verbose_name='Proprietăți asociate')
 
+    custom_id = CharField(max_length=15, unique=True, editable=False, verbose_name='ID')
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if not self.custom_id:
+            prefix = 'CSI' if self.transaction_type == 'Cumpărare' else 'ISI'
+            self.custom_id = f'{prefix}-{self.id}'
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return f'{self.id}. {self.property_type} (Tip: {self.space_type}) - Contact: {self.contact} | Agent: {self.created_by}'
+        return f'{self.custom_id}. {self.property_type} (Tip: {self.space_type}) - Contact: {self.contact} | Agent: {self.created_by}'

@@ -36,8 +36,8 @@ class ApartmentLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
         form.instance.created_at = timezone.now()
         form.instance.updated_at = timezone.now()
         form.instance.created_by = self.request.user
-
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        return response
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()
@@ -46,7 +46,8 @@ class ApartmentLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
 
 @login_required
 def my_apartment_leads_view(request):
-    my_apartment_leads = ApartmentLead.objects.filter(created_by=request.user).order_by('-updated_at', '-deadline_date')
+    my_apartment_leads = (ApartmentLead.objects.filter(updated_by=request.user).
+                          order_by('-deadline_date', '-deadline_time', '-updated_at'))
     return render(request, 'leads/apartments/my_apartment_leads.html', {
         'my_apartment_leads': my_apartment_leads
     })
@@ -78,14 +79,13 @@ class ApartmentLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin, Updat
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         return context
 
     def form_valid(self, form):
         form.instance.updated_at = timezone.now()
         form.instance.updated_by = self.request.user
-
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        return response
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()
@@ -130,8 +130,8 @@ class HouseLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
         form.instance.created_at = timezone.now()
         form.instance.updated_at = timezone.now()
         form.instance.created_by = self.request.user
-
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        return response
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()
@@ -140,7 +140,8 @@ class HouseLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
 
 @login_required
 def my_house_leads_view(request):
-    my_house_leads = HouseLead.objects.filter(created_by=request.user).order_by('-updated_at', '-deadline_date')
+    my_house_leads = (HouseLead.objects.filter(updated_by=request.user).
+                      order_by('-deadline_date', '-deadline_time', '-updated_at'))
     return render(request, 'leads/houses/my_house_leads.html', {'my_house_leads': my_house_leads})
 
 
@@ -171,14 +172,13 @@ class HouseLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateVie
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         return context
 
     def form_valid(self, form):
         form.instance.updated_at = timezone.now()
         form.instance.updated_by = self.request.user
-
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        return response
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()
@@ -223,8 +223,8 @@ class TerrainLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateV
         form.instance.created_at = timezone.now()
         form.instance.updated_at = timezone.now()
         form.instance.created_by = self.request.user
-
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        return response
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()
@@ -233,7 +233,8 @@ class TerrainLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateV
 
 @login_required
 def my_terrain_leads_view(request):
-    my_terrain_leads = TerrainLead.objects.filter(created_by=request.user).order_by('-updated_at', '-deadline_date')
+    my_terrain_leads = (TerrainLead.objects.filter(updated_by=request.user).
+                        order_by('-deadline_date', '-deadline_time', '-updated_at'))
     return render(request, 'leads/terrains/my_terrain_leads.html', {
         'my_terrain_leads': my_terrain_leads
     })
@@ -266,14 +267,13 @@ class TerrainLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateV
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         return context
 
     def form_valid(self, form):
         form.instance.updated_at = timezone.now()
         form.instance.updated_by = self.request.user
-
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        return response
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()
@@ -318,8 +318,8 @@ class CommercialSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin,
         form.instance.created_at = timezone.now()
         form.instance.updated_at = timezone.now()
         form.instance.created_by = self.request.user
-
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        return response
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()
@@ -328,7 +328,8 @@ class CommercialSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin,
 
 @login_required
 def my_commercial_space_leads_view(request):
-    my_commercial_space_leads = CommercialSpaceLead.objects.filter(created_by=request.user).order_by('-updated_at', '-deadline_date')
+    my_commercial_space_leads = (CommercialSpaceLead.objects.filter(updated_by=request.user).
+                                 order_by('-deadline_date', '-deadline_time', '-updated_at'))
     return render(request, 'leads/commercial_spaces/my_commercial_space_leads.html', {
         'my_commercial_space_leads': my_commercial_space_leads
     })
@@ -361,14 +362,13 @@ class CommercialSpaceLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin,
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         return context
 
     def form_valid(self, form):
         form.instance.updated_at = timezone.now()
         form.instance.updated_by = self.request.user
-
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        return response
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()
@@ -413,8 +413,8 @@ class OfficeSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, Cre
         form.instance.created_at = timezone.now()
         form.instance.updated_at = timezone.now()
         form.instance.created_by = self.request.user
-
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        return response
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()
@@ -423,7 +423,8 @@ class OfficeSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, Cre
 
 @login_required
 def my_office_space_leads_view(request):
-    my_office_space_leads = OfficeSpaceLead.objects.filter(created_by=request.user).order_by('-updated_at', '-deadline_date')
+    my_office_space_leads = (OfficeSpaceLead.objects.filter(updated_by=request.user).
+                             order_by('-deadline_date', '-deadline_time', '-updated_at'))
     return render(request, 'leads/office_spaces/my_office_space_leads.html', {
         'my_office_space_leads': my_office_space_leads
     })
@@ -456,14 +457,13 @@ class OfficeSpaceLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin, Upd
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         return context
 
     def form_valid(self, form):
         form.instance.updated_at = timezone.now()
         form.instance.updated_by = self.request.user
-
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        return response
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()
@@ -508,8 +508,8 @@ class IndustrialSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin,
         form.instance.created_at = timezone.now()
         form.instance.updated_at = timezone.now()
         form.instance.created_by = self.request.user
-
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        return response
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()
@@ -518,7 +518,8 @@ class IndustrialSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin,
 
 @login_required
 def my_industrial_space_leads_view(request):
-    my_industrial_space_leads = IndustrialSpaceLead.objects.filter(created_by=request.user).order_by('-updated_at', '-deadline_date')
+    my_industrial_space_leads = (IndustrialSpaceLead.objects.filter(updated_by=request.user).
+                                 order_by('-deadline_date', '-deadline_time', '-updated_at'))
     return render(request, 'leads/industrial_spaces/my_industrial_space_leads.html', {
         'my_industrial_space_leads': my_industrial_space_leads
     })
@@ -551,14 +552,13 @@ class IndustrialSpaceLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin,
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         return context
 
     def form_valid(self, form):
         form.instance.updated_at = timezone.now()
         form.instance.updated_by = self.request.user
-
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        return response
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()

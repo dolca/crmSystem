@@ -12,7 +12,7 @@
     {% endblock pagetitle %}
 
     {% if user.is_authenticated %}
-        {% if perms.industrialspaceleads.view_industrialspacelead %}
+        {% if perms.industrialspacelead.view_industrialspacelead %}
             <div class="row">
                 <div class="col-lg-12">
                 
@@ -42,15 +42,15 @@
                                                         <label for="sort-by" class="form-label">Sortează după</label>
                                                         <select id="sort-by" class="form-select">
                                                             <option value="customer_name">Nume client</option>
-                                                            <option value="date">Data adăugării</option>
+                                                            <option value="deadline_date">Data limită</option>
                                                             <option value="id">ID cerere</option>
                                                         </select>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="sort-order" class="form-label">Ordine</label>
+                                                        <label for="sort-order" class="form-label">În ordine</label>
                                                         <select id="sort-order" class="form-select">
-                                                            <option value="asc">Ascendent</option>
-                                                            <option value="desc">Descendent</option>
+                                                            <option value="asc">Ascendentă</option>
+                                                            <option value="desc">Descendentă</option>
                                                         </select>
                                                     </div>
                                                     <div class="d-grid">
@@ -82,7 +82,7 @@
                                                 <th>Buget alocat</th>
                                                 <th>Adresă</th>
                                                 <th>Urgență</th>
-                                                <th>Adăugată în</th>
+                                                <th>Termen limită</th>
                                                 <th>Proprietăți asociate</th>
                                                 <th></th>
                                             </tr>
@@ -98,7 +98,7 @@
                                                             </div>
                                                         </th>
                                                         <td class="id">
-                                                            {{ ind_sp.id }}
+                                                            {{ ind_sp.custom_id }}
                                                         </td>
                                                         <td>
                                                             <div class="customer_name">
@@ -120,7 +120,7 @@
                                                         <td>
                                                             <div class="budget">{% if ind_sp.budget %}
                                                                 <strong>{{ ind_sp.budget }}</strong>
-                                                            {% else %}Buget necunoscut{% endif %}</div>
+                                                            {% else %}Nespecificat{% endif %}</div>
                                                             <div class="payment_method">{% if ind_sp.payment_method %}
                                                                 {{ ind_sp.payment_method }}
                                                             {% else %}Metodă plată<br>nespecificată{% endif %}</div>
@@ -136,8 +136,11 @@
                                                         <td class="urgency">
                                                             {{ ind_sp.urgency }}
                                                         </td>
-                                                        <td class="date">
-                                                            {{ ind_sp.created_at|date:'d M Y' }}
+                                                        <td>
+                                                            <div class="deadline_date">{% if ind_sp.deadline_date %}
+                                                                {{ ind_sp.deadline_date }}{% else %}Fără dată limită{% endif %}</div>
+                                                            <div class="deadline_time">{% if ind_sp.deadline_time %}
+                                                                {{ ind_sp.deadline_time }}{% else %}Fără oră limită{% endif %}</div>
                                                         </td>
                                                         <td class="assigned_listings">
                                                             {% if ind_sp.assigned_listings.exists %}
@@ -150,21 +153,19 @@
                                                             {% endif %}
                                                         </td>
                                                         <td>
-                                                            {% if perms.industrialspaceleads.view_industrialspacelead_details %}
+                                                            {% if perms.industrialspacelead.view_industrialspacelead_details %}
                                                                 {% if ind_sp.id %}
-                                                                    <a class='btn btn-subtle-primary btn-custom-width'
-                                                                       data-exclude-clickthrough='true'
-                                                                       href="{% url 'leads:industrial_space_lead_details' ind_sp.id %}">
+                                                                    <a class="btn btn-subtle-primary btn-custom-width"
+                                                                       href="{% url "leads:industrial_space_lead_details" ind_sp.id %}">
                                                                         Detalii
                                                                     </a>
                                                                 {% endif %}
                                                             {% endif %}
                                                             <br>
-                                                            {% if perms.industrialspaceleads.change_industrialspacelead %}
+                                                            {% if perms.industrialspacelead.change_industrialspacelead %}
                                                                 {% if ind_sp.id %}
-                                                                    <a class='btn btn-subtle-info btn-custom-width'
-                                                                       data-exclude-clickthrough='true'
-                                                                       href="{% url 'leads:edit_industrial_space_lead' ind_sp.id %}">
+                                                                    <a class="btn btn-subtle-info btn-custom-width"
+                                                                       href="{% url "leads:edit_industrial_space_lead" ind_sp.id %}">
                                                                         Editează
                                                                     </a>
                                                                 {% endif %}
@@ -217,11 +218,26 @@
         document.addEventListener('DOMContentLoaded', function() {
             var options = {
                 valueNames: ['id', 'customer_name', 'email', 'phone_number', 'transaction_type', 'space_type', 
-                    'destination', 'budget', 'payment_method', 'street', 'zone', 'city', 'county', 'urgency', 'date', 
-                    'assigned_listings']
+                    'destination', 'budget', 'payment_method', 'street', 'zone', 'city', 'county', 'urgency', 
+                    'deadline_date', 'deadline_time', 'assigned_listings']
             };
             
             var leadList = new List('industrialSpaceLeadsTable', options);
+            
+            // Funcția pentru a formata și afișa data în limba română
+            function formatDate(element) {
+                const text = element.textContent.trim();
+                if (text && text !== 'Fără dată limită') {
+                    const date = new Date(text);
+                    element.textContent = flatpickr.formatDate(date, 'd M Y', flatpickr.l10ns.ro);
+                }
+            }
+            
+            // Selectez câmpul care conține elementul dată
+            const dateElements = document.querySelectorAll('.deadline_date');
+            
+            // Formatez și afișez data
+            dateElements.forEach(formatDate);
             
             // Funcția pentru sortare
             document.querySelector('#apply-sort').addEventListener('click', function() {
