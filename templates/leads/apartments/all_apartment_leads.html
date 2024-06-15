@@ -1,9 +1,6 @@
 {% extends "partials/base.html" %}
-{% load static %}
-{% block title %} Toate cererile | Apartamente {% endblock title %}
 
-{% block extra_css %}
-{% endblock extra_css %}
+{% block title %} Toate cererile | Apartamente {% endblock title %}
 
 {% block content %}
 
@@ -12,7 +9,7 @@
     {% endblock pagetitle %}
 
     {% if user.is_authenticated %}
-        {% if perms.apartmentlead.view_apartmentlead %}
+        {% if perms.leads.view_apartmentlead %}
             <div class="row">
                 <div class="col-lg-12">
                 
@@ -44,7 +41,7 @@
                                                             <option value="customer_name">Nume client</option>
                                                             <option value="transaction_type">Tip tranzacție</option>
                                                             <option value="budget">Buget</option>
-                                                            <option value="deadline_date">Data limită</option>
+                                                            <option value="deadline_date">Ziua limită</option>
                                                             <option value="deadline_time">Ora limită</option>
                                                             <option value="id">ID cerere</option>
                                                         </select>
@@ -74,17 +71,12 @@
                                     <table class="table align-middle table-nowrap table-hover">
                                         <thead class="table-light">
                                             <tr>
-                                                <th scope="col" style="width: 50px;">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="checkAll" value="option">
-                                                    </div>
-                                                </th>
                                                 <th>ID</th>
                                                 <th>Date contact</th>
                                                 <th>Tip cerere</th>
                                                 <th>Buget alocat</th>
                                                 <th>Adresă</th>
-                                                <th>Urgență</th>
+                                                <th>Etichetă</th>
                                                 <th>Termen limită</th>
                                                 <th>Proprietăți asociate</th>
                                                 <th></th>
@@ -94,12 +86,6 @@
                                             {% if all_apartment_leads %}
                                                 {% for apartment in all_apartment_leads %}
                                                     <tr>
-                                                        <th scope="row">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" 
-                                                                       name="chk_child" value="option1">
-                                                            </div>
-                                                        </th>
                                                         <td class="id">
                                                             {{ apartment.custom_id }}
                                                         </td>
@@ -129,15 +115,15 @@
                                                             {% else %}Metodă plată<br>nespecificată{% endif %}</div>
                                                         </td>
                                                         <td>
-                                                            <div class="street">{% if apartment.street %}{{ apartment.street }}
-                                                            {% else %}Stradă nespecificată{% endif %}</div>
-                                                            <div class="zone">{% if apartment.zone %}{{ apartment.zone }}
-                                                            {% else %}Zonă nespecificată{% endif %}</div>
+                                                            <div class="street">{% if apartment.street %}{{ apartment.street }}{% else %}
+                                                                Stradă nespecificată{% endif %}</div>
+                                                            <div class="zone">{% if apartment.zone %}{{ apartment.zone }}{% else %}
+                                                                Zonă nespecificată{% endif %}</div>
                                                             <div class="city">{{ apartment.city }}</div>
                                                             <div class="county">{{ apartment.county }}</div>
                                                         </td>
-                                                        <td class="urgency">
-                                                            {{ apartment.urgency }}
+                                                        <td class="label">
+                                                            {% if apartment.label %}{{ apartment.label }}{% else %}Fără etichetă{% endif %}
                                                         </td>
                                                         <td>
                                                             <div class="deadline_date">{% if apartment.deadline_date %}
@@ -156,7 +142,7 @@
                                                             {% endif %}
                                                         </td>
                                                         <td>
-                                                            {% if perms.apartmentlead.view_apartmentlead_details %}
+                                                            {% if perms.leads.view_apartmentlead_details %}
                                                                 {% if apartment.id %}
                                                                     <a class="btn btn-subtle-primary btn-custom-width"
                                                                        href="{% url "leads:apartment_lead_details" apartment.id %}">
@@ -165,7 +151,7 @@
                                                                 {% endif %}
                                                             {% endif %}
                                                             <br>
-                                                            {% if perms.apartmentlead.change_apartmentlead %}
+                                                            {% if perms.leads.change_apartmentlead %}
                                                                 {% if apartment.id %}
                                                                     <a class="btn btn-subtle-info btn-custom-width"
                                                                        href="{% url "leads:edit_apartment_lead" apartment.id %}">
@@ -178,7 +164,7 @@
                                                 {% endfor %}
                                             {% else %}
                                                 <tr>
-                                                    <td colspan="10"><h5 class="d-flex justify-content-md-center justify-content-sm-start">
+                                                    <td colspan="9"><h5 class="d-flex justify-content-md-center justify-content-sm-start">
                                                         Nu există cereri disponibile!</h5>
                                                     </td>
                                                 </tr>
@@ -221,7 +207,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             var options = {
                 valueNames: ['id', 'customer_name', 'email', 'phone_number', 'transaction_type', 'apartment_type', 
-                    'destination', 'budget', 'payment_method', 'street', 'zone', 'city', 'county', 'urgency', 
+                    'destination', 'budget', 'payment_method', 'street', 'zone', 'city', 'county', 'label',
                     'deadline_date', 'deadline_time', 'assigned_listings']
             };
             

@@ -1,0 +1,62 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Detalii cerere {% endblock title %}
+
+{% block content %}
+
+    {% block pagetitle %}
+    {% include "partials/page_title.html" with pagetitle="Cereri" title="Detalii cerere"%}
+    {% endblock pagetitle %}
+
+    {% if user.is_authenticated %}
+        {% if perms.leads.view_apartmentlead_details %}
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4><i class="bi bi-info-square"></i> Detalii - {{ apartmentlead.contact }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"><strong>Număr de telefon:</strong> {% if lead.phone_number %}
+                                {{ lead.phone_number }}{% else %} . . . {% endif %}</p>
+                            <p class="card-text"><strong>Adresă de e-mail:</strong> {% if lead.email %}
+                                {{ lead.email }}{% else %} . . . {% endif %}</p>
+                            <p class="card-text"><strong>Detalii cerere:</strong> {% if lead.lead_details %}
+                                {{ lead.lead_details }}{% else %} . . . {% endif %}</p>
+                            <p class="card-text"><strong>Urgență cerere:</strong> {% if lead.lead_urgency %}
+                                {{ demand.lead_urgency }}{% else %} . . . {% endif %}</p>
+                            <p class="card-text"><strong>Notițe agent:</strong> {% if lead.agent_notes %}
+                                {{ lead.agent_notes }}{% else %} . . . {% endif %}</p>
+                            <p class="card-text"><strong>Etichete cerere:</strong> {% if lead.lead_labels %}
+                                {{ lead.lead_labels }}{% else %} . . . {% endif %}</p>
+                            <p class="card-text"><strong>Proprietăți asociate:</strong>
+                                {% if lead.assigned_listings.exists %}
+                                    {% for listing in lead.assigned_listings.all %}
+                                        {{ listing.id }}
+                                        {% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    . . .
+                                {% endif %}</p>
+                            {% if perms.apartmentleads.change_apartmentlead %}
+                                <a href="{% url 'leads:edit_apartment_lead' apartmentlead.id %}" class="btn btn-subtle-success my-1 mx-1">Editează</a>
+                            {% endif %}
+                            {% if perms.apartmentleads.view_apartmentlead %}
+                                <a href="{% url 'leads:my_apartment_leads' %}" class="btn btn-subtle-primary my-1">Cererile mele</a>
+                                <a href="{% url 'leads:general_apartment_leads' %}" class="btn btn-subtle-primary my-1">Cereri generale</a>
+                            {% endif %}
+                            {% if perms.apartmentleads.delete_apartmentlead %}
+                                <a href="{% url 'leads:delete_apartment_lead' apartmentlead.id %}" class="btn btn-subtle-danger my-1 mx-1">Șterge</a>
+                            {% endif %}
+                        </div>
+                        <div class="card-footer text-body-secondary">
+                            Adăugată în data de {{ apartmentlead.created_at|date:"d M Y" }}<br>
+                            Ultima actualizare în data de {{ apartmentlead.updated_at|date:"d M Y" }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock content %}

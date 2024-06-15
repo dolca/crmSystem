@@ -16,7 +16,7 @@ span.sidebar-text {
     font-size: 14px;
 }
 
-/* Container Allauth acasă */
+/* Container Allauth în meniul acasă */
 .alert-container {
     display: none;
     z-index: 9999;
@@ -39,7 +39,13 @@ span.sidebar-text {
     right: 0 !important;
 }
 
-/* Culoare mesaj */
+/* Culoare mesaje eroare și câmpuri obligatorii */
 .firebrick-message {
     color: firebrick;
+}
+
+/* Căsuța checkbox inactivă și non-opacă la vizualizare */
+.readonly-checkbox {
+    pointer-events: none;
+    opacity: 1;
 }

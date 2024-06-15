@@ -27,13 +27,12 @@ class LeadCreateForm(ModelForm):
             'payment_method': Select(attrs={'class': 'form-control'}),
 
             'urgency': Select(attrs={'class': 'form-control'}),
-            'other_details': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
-
-            'labels': Select(attrs={'class': 'form-control'}),
-            'notes': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
-
             'deadline_date': DateInput(attrs={'type': 'date'}),
             'deadline_time': TimeInput(attrs={'type': 'time', 'step': '600'}),
+            'other_details': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
+
+            'label': Select(attrs={'class': 'form-control'}),
+            'notes': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
 
             'created_at': DateInput(attrs={'class': 'form-control'}),
             'updated_at': DateInput(attrs={'class': 'form-control'}),
@@ -46,26 +45,25 @@ class ApartmentLeadCreateForm(LeadCreateForm):
         fields = '__all__'
         widgets = {
             'apartment_type': Select(attrs={'class': 'form-control'}),
-            'destination': Select(attrs={'class': 'form-control'}),
 
+            'destination': Select(attrs={'class': 'form-control'}),
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
             'nr_bedrooms': NumberInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': NumberInput(attrs={'class': 'form-control'}),
             'bathroom_window': CheckboxInput(attrs={'class': 'form-check-input'}),
+            'minimal_surface': NumberInput(attrs={'class': 'form-control'}),
             'floor': Select(attrs={'class': 'form-control'}),
             'excluded_ground_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
             'excluding_top_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
             'nr_floors': NumberInput(attrs={'class': 'form-control'}),
+            'construction_year': NumberInput(attrs={'class': 'form-control'}),
 
-            'minimal_surface': NumberInput(attrs={'class': 'form-control'}),
             'construction_status': Select(attrs={'class': 'form-control'}),
             'furniture': Select(attrs={'class': 'form-control'}),
             'comfort': Select(attrs={'class': 'form-control'}),
             'ap_compart': Select(attrs={'class': 'form-control'}),
             'orientation': Select(attrs={'class': 'form-control'}),
             'interior_finishes': Select(attrs={'class': 'form-control'}),
-            'construction_year': NumberInput(attrs={'class': 'form-control'}),
-
             'basement': CheckboxInput(attrs={'class': 'form-check-input'}),
             'semi_basement': CheckboxInput(attrs={'class': 'form-check-input'}),
             'technical_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -103,27 +101,26 @@ class HouseLeadCreateForm(LeadCreateForm):
         fields = '__all__'
         widgets = {
             'house_type': Select(attrs={'class': 'form-control'}),
-            'destination': Select(attrs={'class': 'form-control'}),
 
+            'destination': Select(attrs={'class': 'form-control'}),
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
             'nr_bedrooms': NumberInput(attrs={'class': 'form-control'}),
             'nr_kitchens': NumberInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': NumberInput(attrs={'class': 'form-control'}),
             'bathroom_window': CheckboxInput(attrs={'class': 'form-check-input'}),
-            'nr_floors': NumberInput(attrs={'class': 'form-control'}),
-
             'minimal_surface': NumberInput(attrs={'class': 'form-control'}),
-            'terrain_surface': NumberInput(attrs={'class': 'form-control'}),
+            'nr_floors': NumberInput(attrs={'class': 'form-control'}),
+            'construction_year': NumberInput(attrs={'class': 'form-control'}),
+
             'construction_status': Select(attrs={'class': 'form-control'}),
             'furniture': Select(attrs={'class': 'form-control'}),
             'interior_finishes': Select(attrs={'class': 'form-control'}),
-            'construction_year': NumberInput(attrs={'class': 'form-control'}),
-
             'basement': CheckboxInput(attrs={'class': 'form-check-input'}),
             'semi_basement': CheckboxInput(attrs={'class': 'form-check-input'}),
             'loft': CheckboxInput(attrs={'class': 'form-check-input'}),
             'attic': CheckboxInput(attrs={'class': 'form-check-input'}),
             'garage': CheckboxInput(attrs={'class': 'form-check-input'}),
+            'terrain_surface': NumberInput(attrs={'class': 'form-control'}),
 
             'assigned_listings': TextInput(attrs={'class': 'form-control'}),
         }
@@ -147,9 +144,9 @@ class TerrainLeadCreateForm(LeadCreateForm):
         fields = '__all__'
         widgets = {
             'terrain_type': Select(attrs={'class': 'form-control'}),
+
             'destination': Select(attrs={'class': 'form-control'}),
             'classification': Select(attrs={'class': 'form-control'}),
-
             'terrain_surface': NumberInput(attrs={'class': 'form-control'}),
             'unit': Select(attrs={'class': 'form-control'}),
             'street_front': NumberInput(attrs={'class': 'form-control'}),
@@ -174,21 +171,20 @@ class CommercialSpaceLeadCreateForm(LeadCreateForm):
         fields = '__all__'
         widgets = {
             'space_type': Select(attrs={'class': 'form-control'}),
+
             'destination': Select(attrs={'class': 'form-control'}),
             'pedestrian_traffic': Select(attrs={'class': 'form-control'}),
-
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
             'nr_locker_rooms': NumberInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': NumberInput(attrs={'class': 'form-control'}),
             'floor': Select(attrs={'class': 'form-control'}),
             'nr_floors': NumberInput(attrs={'class': 'form-control'}),
-
             'minimal_surface': NumberInput(attrs={'class': 'form-control'}),
+
             'glass_case': NumberInput(attrs={'class': 'form-control'}),
             'inside_height': NumberInput(attrs={'class': 'form-control'}),
             'space_compart': Select(attrs={'class': 'form-control'}),
             'nr_parking_spaces': NumberInput(attrs={'class': 'form-control'}),
-
             'semi_basement': CheckboxInput(attrs={'class': 'form-check-input'}),
             'technical_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
             'loft': CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -216,24 +212,22 @@ class OfficeSpaceLeadCreateForm(LeadCreateForm):
         fields = '__all__'
         widgets = {
             'space_type': Select(attrs={'class': 'form-control'}),
-            'space_class': Select(attrs={'class': 'form-control'}),
 
+            'space_class': Select(attrs={'class': 'form-control'}),
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': NumberInput(attrs={'class': 'form-control'}),
             'floor': Select(attrs={'class': 'form-control'}),
             'nr_floors': NumberInput(attrs={'class': 'form-control'}),
-
             'useful_surface': NumberInput(attrs={'class': 'form-control'}),
             'minimum_area': NumberInput(attrs={'class': 'form-control'}),
             'maximum_area': NumberInput(attrs={'class': 'form-control'}),
             'total_surface_offices': NumberInput(attrs={'class': 'form-control'}),
-            'space_compart': Select(attrs={'class': 'form-control'}),
 
+            'space_compart': Select(attrs={'class': 'form-control'}),
             'nr_underground_parking': NumberInput(attrs={'class': 'form-control'}),
             'underground_parking_cost': NumberInput(attrs={'class': 'form-control'}),
             'nr_surface_parking': NumberInput(attrs={'class': 'form-control'}),
             'surface_parking_cost': NumberInput(attrs={'class': 'form-control'}),
-
             'basement': CheckboxInput(attrs={'class': 'form-check-input'}),
             'semi_basement': CheckboxInput(attrs={'class': 'form-check-input'}),
             'technical_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -270,19 +264,18 @@ class IndustrialSpaceLeadCreateForm(LeadCreateForm):
         fields = '__all__'
         widgets = {
             'space_type': Select(attrs={'class': 'form-control'}),
-            'destination': Select(attrs={'class': 'form-control'}),
 
+            'destination': Select(attrs={'class': 'form-control'}),
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
             'nr_locker_rooms': NumberInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': NumberInput(attrs={'class': 'form-control'}),
             'floor': Select(attrs={'class': 'form-control'}),
-
             'minimal_surface': NumberInput(attrs={'class': 'form-control'}),
-            'space_compart': Select(attrs={'class': 'form-control'}),
             'terrain_surface': NumberInput(attrs={'class': 'form-control'}),
+
+            'space_compart': Select(attrs={'class': 'form-control'}),
             'entrance_door_dimensions': TextInput(attrs={'class': 'form-control'}),
             'inside_height': NumberInput(attrs={'class': 'form-control'}),
-
             'powerline': CheckboxInput(attrs={'class': 'form-check-input'}),
             'truck_access': CheckboxInput(attrs={'class': 'form-check-input'}),
 
@@ -299,10 +292,10 @@ class LeadUpdateForm(ModelForm):
         fields = '__all__'
         widgets = {
             'status': Select(attrs={'class': 'form-control'}),
-            'property_type': TextInput(attrs={'readonly': 'readonly'}),
-            'transaction_type': TextInput(attrs={'readonly': 'readonly'}),
+            'property_type': Select(attrs={'class': 'form-control'}),
+            'transaction_type': Select(attrs={'class': 'form-control'}),
 
-            'contact': TextInput(attrs={'readonly': 'readonly'}),
+            'contact': Select(attrs={'class': 'form-control'}),
 
             'county': TextInput(attrs={'class': 'form-control'}),
             'city': TextInput(attrs={'class': 'form-control'}),
@@ -313,16 +306,15 @@ class LeadUpdateForm(ModelForm):
             'payment_method': Select(attrs={'class': 'form-control'}),
 
             'urgency': Select(attrs={'class': 'form-control'}),
-            'other_details': Textarea(attrs={'readonly': 'readonly', 'rows': '3'}),
-
-            'labels': Select(attrs={'class': 'form-control'}),
-            'notes': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
-
             'deadline_date': DateInput(attrs={'type': 'date'}),
             'deadline_time': TimeInput(attrs={'type': 'time', 'step': '600'}),
+            'other_details': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
 
-            'created_at': DateInput(attrs={'readonly': 'readonly'}),
-            'updated_at': DateInput(attrs={'readonly': 'readonly'}),
+            'label': Select(attrs={'class': 'form-control'}),
+            'notes': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
+
+            'created_at': DateInput(attrs={'class': 'form-control'}),
+            'updated_at': DateInput(attrs={'class': 'form-control'}),
         }
 
 
@@ -332,26 +324,25 @@ class ApartmentLeadUpdateForm(LeadUpdateForm):
         fields = '__all__'
         widgets = {
             'apartment_type': Select(attrs={'class': 'form-control'}),
-            'destination': Select(attrs={'class': 'form-control'}),
 
+            'destination': Select(attrs={'class': 'form-control'}),
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
             'nr_bedrooms': NumberInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': NumberInput(attrs={'class': 'form-control'}),
             'bathroom_window': CheckboxInput(attrs={'class': 'form-check-input'}),
+            'minimal_surface': NumberInput(attrs={'class': 'form-control'}),
             'floor': Select(attrs={'class': 'form-control'}),
             'excluded_ground_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
             'excluding_top_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
             'nr_floors': NumberInput(attrs={'class': 'form-control'}),
+            'construction_year': NumberInput(attrs={'class': 'form-control'}),
 
-            'minimal_surface': NumberInput(attrs={'class': 'form-control'}),
             'construction_status': Select(attrs={'class': 'form-control'}),
             'furniture': Select(attrs={'class': 'form-control'}),
             'comfort': Select(attrs={'class': 'form-control'}),
             'ap_compart': Select(attrs={'class': 'form-control'}),
             'orientation': Select(attrs={'class': 'form-control'}),
             'interior_finishes': Select(attrs={'class': 'form-control'}),
-            'construction_year': NumberInput(attrs={'class': 'form-control'}),
-
             'basement': CheckboxInput(attrs={'class': 'form-check-input'}),
             'semi_basement': CheckboxInput(attrs={'class': 'form-check-input'}),
             'technical_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -389,27 +380,26 @@ class HouseLeadUpdateForm(LeadUpdateForm):
         fields = '__all__'
         widgets = {
             'house_type': Select(attrs={'class': 'form-control'}),
-            'destination': Select(attrs={'class': 'form-control'}),
 
+            'destination': Select(attrs={'class': 'form-control'}),
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
             'nr_bedrooms': NumberInput(attrs={'class': 'form-control'}),
             'nr_kitchens': NumberInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': NumberInput(attrs={'class': 'form-control'}),
             'bathroom_window': CheckboxInput(attrs={'class': 'form-check-input'}),
-            'nr_floors': NumberInput(attrs={'class': 'form-control'}),
-
             'minimal_surface': NumberInput(attrs={'class': 'form-control'}),
-            'terrain_surface': NumberInput(attrs={'class': 'form-control'}),
+            'nr_floors': NumberInput(attrs={'class': 'form-control'}),
+            'construction_year': NumberInput(attrs={'class': 'form-control'}),
+
             'construction_status': Select(attrs={'class': 'form-control'}),
             'furniture': Select(attrs={'class': 'form-control'}),
             'interior_finishes': Select(attrs={'class': 'form-control'}),
-            'construction_year': NumberInput(attrs={'class': 'form-control'}),
-
             'basement': CheckboxInput(attrs={'class': 'form-check-input'}),
             'semi_basement': CheckboxInput(attrs={'class': 'form-check-input'}),
             'loft': CheckboxInput(attrs={'class': 'form-check-input'}),
             'attic': CheckboxInput(attrs={'class': 'form-check-input'}),
             'garage': CheckboxInput(attrs={'class': 'form-check-input'}),
+            'terrain_surface': NumberInput(attrs={'class': 'form-control'}),
 
             'assigned_listings': TextInput(attrs={'class': 'form-control'}),
         }
@@ -433,9 +423,9 @@ class TerrainLeadUpdateForm(LeadUpdateForm):
         fields = '__all__'
         widgets = {
             'terrain_type': Select(attrs={'class': 'form-control'}),
+
             'destination': Select(attrs={'class': 'form-control'}),
             'classification': Select(attrs={'class': 'form-control'}),
-
             'terrain_surface': NumberInput(attrs={'class': 'form-control'}),
             'unit': Select(attrs={'class': 'form-control'}),
             'street_front': NumberInput(attrs={'class': 'form-control'}),
@@ -460,21 +450,20 @@ class CommercialSpaceLeadUpdateForm(LeadUpdateForm):
         fields = '__all__'
         widgets = {
             'space_type': Select(attrs={'class': 'form-control'}),
+
             'destination': Select(attrs={'class': 'form-control'}),
             'pedestrian_traffic': Select(attrs={'class': 'form-control'}),
-
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
             'nr_locker_rooms': NumberInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': NumberInput(attrs={'class': 'form-control'}),
             'floor': Select(attrs={'class': 'form-control'}),
             'nr_floors': NumberInput(attrs={'class': 'form-control'}),
-
             'minimal_surface': NumberInput(attrs={'class': 'form-control'}),
+
             'glass_case': NumberInput(attrs={'class': 'form-control'}),
             'inside_height': NumberInput(attrs={'class': 'form-control'}),
             'space_compart': Select(attrs={'class': 'form-control'}),
             'nr_parking_spaces': NumberInput(attrs={'class': 'form-control'}),
-
             'semi_basement': CheckboxInput(attrs={'class': 'form-check-input'}),
             'technical_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
             'loft': CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -502,24 +491,22 @@ class OfficeSpaceLeadUpdateForm(LeadUpdateForm):
         fields = '__all__'
         widgets = {
             'space_type': Select(attrs={'class': 'form-control'}),
-            'space_class': Select(attrs={'class': 'form-control'}),
 
+            'space_class': Select(attrs={'class': 'form-control'}),
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': NumberInput(attrs={'class': 'form-control'}),
             'floor': Select(attrs={'class': 'form-control'}),
             'nr_floors': NumberInput(attrs={'class': 'form-control'}),
-
             'useful_surface': NumberInput(attrs={'class': 'form-control'}),
             'minimum_area': NumberInput(attrs={'class': 'form-control'}),
             'maximum_area': NumberInput(attrs={'class': 'form-control'}),
             'total_surface_offices': NumberInput(attrs={'class': 'form-control'}),
-            'space_compart': Select(attrs={'class': 'form-control'}),
 
+            'space_compart': Select(attrs={'class': 'form-control'}),
             'nr_underground_parking': NumberInput(attrs={'class': 'form-control'}),
             'underground_parking_cost': NumberInput(attrs={'class': 'form-control'}),
             'nr_surface_parking': NumberInput(attrs={'class': 'form-control'}),
             'surface_parking_cost': NumberInput(attrs={'class': 'form-control'}),
-
             'basement': CheckboxInput(attrs={'class': 'form-check-input'}),
             'semi_basement': CheckboxInput(attrs={'class': 'form-check-input'}),
             'technical_floor': CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -556,19 +543,18 @@ class IndustrialSpaceLeadUpdateForm(LeadUpdateForm):
         fields = '__all__'
         widgets = {
             'space_type': Select(attrs={'class': 'form-control'}),
-            'destination': Select(attrs={'class': 'form-control'}),
 
+            'destination': Select(attrs={'class': 'form-control'}),
             'rooms_number': NumberInput(attrs={'class': 'form-control'}),
             'nr_locker_rooms': NumberInput(attrs={'class': 'form-control'}),
             'nr_bathrooms': NumberInput(attrs={'class': 'form-control'}),
             'floor': Select(attrs={'class': 'form-control'}),
-
             'minimal_surface': NumberInput(attrs={'class': 'form-control'}),
-            'space_compart': Select(attrs={'class': 'form-control'}),
             'terrain_surface': NumberInput(attrs={'class': 'form-control'}),
+
+            'space_compart': Select(attrs={'class': 'form-control'}),
             'entrance_door_dimensions': TextInput(attrs={'class': 'form-control'}),
             'inside_height': NumberInput(attrs={'class': 'form-control'}),
-
             'powerline': CheckboxInput(attrs={'class': 'form-check-input'}),
             'truck_access': CheckboxInput(attrs={'class': 'form-check-input'}),
 

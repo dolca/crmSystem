@@ -9,7 +9,7 @@
     {% endblock pagetitle %}
     
     {% if user.is_authenticated %}
-        {% if perms.officespaceleads.delete_officespacelead %}
+        {% if perms.leads.delete_officespacelead %}
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="card">

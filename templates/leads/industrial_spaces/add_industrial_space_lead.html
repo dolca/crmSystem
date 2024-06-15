@@ -1,5 +1,5 @@
 {% extends "partials/base.html" %}
-{% load static %}
+
 {% block title %} Adăugare cerere | Spațiu industrial {% endblock title %}
 
 {% block content %}
@@ -9,7 +9,7 @@
     {% endblock pagetitle %}
     
     {% if user.is_authenticated %}
-        {% if perms.industrialspacelead.add_industrialspacelead %}
+        {% if perms.leads.add_industrialspacelead %}
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -93,9 +93,8 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="destination" class="form-label">Destinație <span
-                                                        class="firebrick-message">*</span></label>
-                                                <select id="destination" class="form-select" name="destination" required>
+                                                <label for="destination" class="form-label">Destinație</label>
+                                                <select id="destination" class="form-select" name="destination">
                                                     {% for value, label in form.fields.destination.choices %}
                                                         <option value="{{ value }}">{{ label }}</option>
                                                     {% endfor %}
@@ -125,12 +124,14 @@
                                                 </select>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="minimal_surface" class="form-label">Suprafață minimă (mp)</label>
+                                                <label for="minimal_surface" class="form-label">
+                                                    Suprafață minimă (mp)</label>
                                                 <input id="minimal_surface" class="form-control" name="minimal_surface" 
                                                        type="text">
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="terrain_surface" class="form-label">Suprafață teren (mp)</label>
+                                                <label for="terrain_surface" class="form-label">
+                                                    Suprafață teren (mp)</label>
                                                 <input id="terrain_surface" class="form-control" name="terrain_surface" 
                                                        type="text">
                                             </div>
@@ -155,7 +156,8 @@
                                                        name="entrance_door_dimensions" type="text">
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="inside_height" class="form-label">Înălțime interioară (m)</label>
+                                                <label for="inside_height" class="form-label">
+                                                    Înălțime interioară (m)</label>
                                                 <input id="inside_height" class="form-control" name="inside_height" 
                                                        type="text">
                                             </div>
@@ -164,14 +166,16 @@
                                                     <div class="form-check">
                                                         <input id="powerline" class="form-check-input" name="powerline" 
                                                                type="checkbox">
-                                                        <label for="powerline" class="form-check-label">Trifazic (380V)</label>
+                                                        <label for="powerline" class="form-check-label">
+                                                            Trifazic (380V)</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-sm-6 mb-3">
                                                     <div class="form-check">
-                                                        <input id="truck_access" class="form-check-input" name="truck_access" 
-                                                               type="checkbox">
-                                                        <label for="truck_access" class="form-check-label">Acces camion</label>
+                                                        <input id="truck_access" class="form-check-input" 
+                                                               name="truck_access" type="checkbox">
+                                                        <label for="truck_access" class="form-check-label">
+                                                            Acces camion</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -232,10 +236,10 @@
                                                 </select>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="labels" class="form-label">Etichete</label>
-                                                <select id="labels" class="form-select" name="labels" multiple>
-                                                    {% for value, label in form.fields.labels.choices %}
-                                                        <option value="{{ value }}"></option>
+                                                <label for="label" class="form-label">Etichetă</label>
+                                                <select id="label" class="form-select" name="label">
+                                                    {% for value, label in form.fields.label.choices %}
+                                                        <option value="{{ value }}">{{ label }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
@@ -339,13 +343,7 @@
                 loadingText: 'Se încarcă...',
                 noResultsText: 'Nu există proprietăți disponibile.'
             });
-
-            var leadLabels = document.getElementById('labels');
-            new Choices(leadLabels, {
-                loadingText: 'Se încarcă...',
-                noResultsText: 'Nu există alte etichete.'
-            });
-
+            
             document.getElementById('add_industrial_space_lead').addEventListener('submit', function(event) {
                 event.preventDefault();
 

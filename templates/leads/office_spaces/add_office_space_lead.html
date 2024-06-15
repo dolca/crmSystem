@@ -1,5 +1,5 @@
 {% extends "partials/base.html" %}
-{% load static %}
+
 {% block title %} Adăugare cerere | Spațiu de birouri {% endblock title %}
 
 {% block content %}
@@ -9,7 +9,7 @@
     {% endblock pagetitle %}
     
     {% if user.is_authenticated %}
-        {% if perms.officespacelead.add_officespacelead %}
+        {% if perms.leads.add_officespacelead %}
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -281,10 +281,10 @@
                                                 </select>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="labels" class="form-label">Etichete</label>
-                                                <select id="labels" class="form-select" name="labels" multiple>
-                                                    {% for value, label in form.fields.labels.choices %}
-                                                        <option value="{{ value }}"></option>
+                                                <label for="label" class="form-label">Etichetă</label>
+                                                <select id="label" class="form-select" name="label">
+                                                    {% for value, label in form.fields.label.choices %}
+                                                        <option value="{{ value }}">{{ label }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
@@ -382,17 +382,11 @@
                 allowInput: true,
                 minuteIncrement: 10
             });
-
+            
             var leadAssignedListings = document.getElementById('assigned_listings');
             new Choices(leadAssignedListings, {
                 loadingText: 'Se încarcă...',
                 noResultsText: 'Nu există proprietăți disponibile.'
-            });
-
-            var leadLabels = document.getElementById('labels');
-            new Choices(leadLabels, {
-                loadingText: 'Se încarcă...',
-                noResultsText: 'Nu există alte etichete.'
             });
             
             document.getElementById('add_office_space_lead').addEventListener('submit', function(event) {

@@ -22,7 +22,7 @@ class ApartmentLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
     form_class = ApartmentLeadCreateForm
     template_name = 'leads/apartments/add_apartment_lead.html'
     success_url = reverse_lazy('leads:lead_added')
-    permission_required = 'apartmentleads.add_apartmentlead'
+    permission_required = 'leads.add_apartmentlead'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -65,7 +65,7 @@ class ApartmentLeadListView(LoginRequiredMixin, PermissionRequiredMixin, ListVie
     model = ApartmentLead
     template_name = 'leads/apartments/all_apartment_leads.html'
     context_object_name = 'all_apartment_leads'
-    permission_required = 'apartmentleads.view_apartmentlead'
+    permission_required = 'leads.view_apartmentlead'
 
     def get_queryset(self):
         return ApartmentLead.objects.all().order_by('-updated_at')
@@ -75,7 +75,7 @@ class ApartmentLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin, Updat
     model = ApartmentLead
     form_class = ApartmentLeadUpdateForm
     template_name = 'leads/apartments/edit_apartment_lead.html'
-    permission_required = 'apartmentleads.change_apartmentlead'
+    permission_required = 'leads.change_apartmentlead'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -99,13 +99,13 @@ class ApartmentLeadDeleteView(LoginRequiredMixin, PermissionRequiredMixin, Delet
     model = ApartmentLead
     template_name = 'leads/apartments/delete_apartment_lead.html'
     success_url = reverse_lazy('leads:lead_deleted')
-    permission_required = 'apartmentleads.delete_apartmentlead'
+    permission_required = 'leads.delete_apartmentlead'
 
 
 class ApartmentLeadDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = ApartmentLead
     template_name = 'leads/apartments/apartment_lead_details.html'
-    permission_required = 'apartmentleads.view_apartmentlead_details'
+    permission_required = 'leads.view_apartmentlead_details'
 
 
 ########################################################################################################################
@@ -116,7 +116,7 @@ class HouseLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
     form_class = HouseLeadCreateForm
     template_name = 'leads/houses/add_house_lead.html'
     success_url = reverse_lazy('leads:lead_added')
-    permission_required = 'houseleads.add_houselead'
+    permission_required = 'leads.add_houselead'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -157,7 +157,7 @@ class HouseLeadListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = HouseLead
     template_name = 'leads/houses/all_house_leads.html'
     context_object_name = 'all_house_leads'
-    permission_required = 'houseleads.view_houselead'
+    permission_required = 'leads.view_houselead'
 
     def get_queryset(self):
         return HouseLead.objects.all().order_by('-updated_at')
@@ -168,7 +168,7 @@ class HouseLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateVie
     form_class = HouseLeadUpdateForm
     template_name = 'leads/houses/edit_house_lead.html'
     success_url = reverse_lazy('leads:house_lead_details')
-    permission_required = 'houseleads.change_houselead'
+    permission_required = 'leads.change_houselead'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -192,13 +192,13 @@ class HouseLeadDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteVie
     model = HouseLead
     template_name = 'leads/houses/delete_house_lead.html'
     success_url = reverse_lazy('leads:lead_deleted')
-    permission_required = 'houseleads.delete_houselead'
+    permission_required = 'leads.delete_houselead'
 
 
 class HouseLeadDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = HouseLead
     template_name = 'leads/houses/house_lead_details.html'
-    permission_required = 'houseleads.view_houselead_details'
+    permission_required = 'leads.view_houselead_details'
 
 
 ########################################################################################################################
@@ -209,7 +209,7 @@ class TerrainLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateV
     form_class = TerrainLeadCreateForm
     template_name = 'leads/terrains/add_terrain_lead.html'
     success_url = reverse_lazy('leads:lead_added')
-    permission_required = 'terrainleads.add_terrainlead'
+    permission_required = 'leads.add_terrainlead'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -252,7 +252,7 @@ class TerrainLeadListView(LoginRequiredMixin, PermissionRequiredMixin, ListView)
     model = TerrainLead
     template_name = 'leads/terrains/all_terrain_leads.html'
     context_object_name = 'all_terrain_leads'
-    permission_required = 'terrainleads.view_terrainlead'
+    permission_required = 'leads.view_terrainlead'
 
     def get_queryset(self):
         return TerrainLead.objects.all().order_by('-updated_at')
@@ -263,7 +263,7 @@ class TerrainLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateV
     form_class = TerrainLeadUpdateForm
     template_name = 'leads/terrains/edit_terrain_lead.html'
     success_url = reverse_lazy('leads:terrain_lead_details')
-    permission_required = 'terrainleads.change_terrainlead'
+    permission_required = 'leads.change_terrainlead'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -287,13 +287,13 @@ class TerrainLeadDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteV
     model = TerrainLead
     template_name = 'leads/terrains/delete_terrain_lead.html'
     success_url = reverse_lazy('leads:lead_deleted')
-    permission_required = 'terrainleads.delete_terrainlead'
+    permission_required = 'leads.delete_terrainlead'
 
 
 class TerrainLeadDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = TerrainLead
     template_name = 'leads/terrains/terrain_lead_details.html'
-    permission_required = 'terrainleads.view_terrainlead_details'
+    permission_required = 'leads.view_terrainlead_details'
 
 
 ########################################################################################################################
@@ -304,7 +304,7 @@ class CommercialSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin,
     form_class = CommercialSpaceLeadCreateForm
     template_name = 'leads/commercial_spaces/add_commercial_space_lead.html'
     success_url = reverse_lazy('leads:lead_added')
-    permission_required = 'commercialspaceleads.add_commercialspacelead'
+    permission_required = 'leads.add_commercialspacelead'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -347,7 +347,7 @@ class CommercialSpaceLeadListView(LoginRequiredMixin, PermissionRequiredMixin, L
     model = CommercialSpaceLead
     template_name = 'leads/commercial_spaces/all_commercial_space_leads.html'
     context_object_name = 'all_commercial_space_leads'
-    permission_required = 'commercialspaceleads.view_commercialspacelead'
+    permission_required = 'leads.view_commercialspacelead'
 
     def get_queryset(self):
         return CommercialSpaceLead.objects.all().order_by('-updated_at')
@@ -358,7 +358,7 @@ class CommercialSpaceLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin,
     form_class = CommercialSpaceLeadUpdateForm
     template_name = 'leads/commercial_spaces/edit_commercial_space_lead.html'
     success_url = reverse_lazy('leads:commercial_space_lead_details')
-    permission_required = 'commercialspaceleads.change_commercialspacelead'
+    permission_required = 'leads.change_commercialspacelead'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -382,13 +382,13 @@ class CommercialSpaceLeadDeleteView(LoginRequiredMixin, PermissionRequiredMixin,
     model = CommercialSpaceLead
     template_name = 'leads/commercial_spaces/delete_commercial_space_lead.html'
     success_url = reverse_lazy('leads:lead_deleted')
-    permission_required = 'commercialspaceleads.delete_commercialspacelead'
+    permission_required = 'leads.delete_commercialspacelead'
 
 
 class CommercialSpaceLeadDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = CommercialSpaceLead
     template_name = 'leads/commercial_spaces/commercial_space_lead_details.html'
-    permission_required = 'commercialspaceleads.view_commercialspacelead_details'
+    permission_required = 'leads.view_commercialspacelead_details'
 
 
 ########################################################################################################################
@@ -399,7 +399,7 @@ class OfficeSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, Cre
     form_class = OfficeSpaceLeadCreateForm
     template_name = 'leads/office_spaces/add_office_space_lead.html'
     success_url = reverse_lazy('leads:lead_added')
-    permission_required = 'officespaceleads.add_officespacelead'
+    permission_required = 'leads.add_officespacelead'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -442,7 +442,7 @@ class OfficeSpaceLeadListView(LoginRequiredMixin, PermissionRequiredMixin, ListV
     model = OfficeSpaceLead
     template_name = 'leads/office_spaces/all_office_space_leads.html'
     context_object_name = 'all_office_space_leads'
-    permission_required = 'officespaceleads.view_officespacelead'
+    permission_required = 'leads.view_officespacelead'
 
     def get_queryset(self):
         return OfficeSpaceLead.objects.all().order_by('-updated_at')
@@ -453,7 +453,7 @@ class OfficeSpaceLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin, Upd
     form_class = OfficeSpaceLeadUpdateForm
     template_name = 'leads/office_spaces/edit_office_space_lead.html'
     success_url = reverse_lazy('leads:office_space_lead_details')
-    permission_required = 'officespaceleads.change_officespacelead'
+    permission_required = 'leads.change_officespacelead'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -477,13 +477,13 @@ class OfficeSpaceLeadDeleteView(LoginRequiredMixin, PermissionRequiredMixin, Del
     model = OfficeSpaceLead
     template_name = 'leads/office_spaces/delete_office_space_lead.html'
     success_url = reverse_lazy('leads:lead_deleted')
-    permission_required = 'officespaceleads.delete_officespacelead'
+    permission_required = 'leads.delete_officespacelead'
 
 
 class OfficeSpaceLeadDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = OfficeSpaceLead
     template_name = 'leads/office_spaces/office_space_lead_details.html'
-    permission_required = 'officespaceleads.view_officespacelead_details'
+    permission_required = 'leads.view_officespacelead_details'
 
 
 ########################################################################################################################
@@ -494,7 +494,7 @@ class IndustrialSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin,
     form_class = IndustrialSpaceLeadCreateForm
     template_name = 'leads/industrial_spaces/add_industrial_space_lead.html'
     success_url = reverse_lazy('leads:lead_added')
-    permission_required = 'industrialspaceleads.add_industrialspacelead'
+    permission_required = 'leads.add_industrialspacelead'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -537,7 +537,7 @@ class IndustrialSpaceLeadListView(LoginRequiredMixin, PermissionRequiredMixin, L
     model = IndustrialSpaceLead
     template_name = 'leads/industrial_spaces/all_industrial_space_leads.html'
     context_object_name = 'all_industrial_space_leads'
-    permission_required = 'industrialspaceleads.view_industrialspacelead'
+    permission_required = 'leads.view_industrialspacelead'
 
     def get_queryset(self):
         return IndustrialSpaceLead.objects.all().order_by('-updated_at')
@@ -548,7 +548,7 @@ class IndustrialSpaceLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin,
     form_class = IndustrialSpaceLeadUpdateForm
     template_name = 'leads/industrial_spaces/edit_industrial_space_lead.html'
     success_url = reverse_lazy('leads:industrial_space_lead_details')
-    permission_required = 'industrialspaceleads.change_industrialspacelead'
+    permission_required = 'leads.change_industrialspacelead'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -572,13 +572,13 @@ class IndustrialSpaceLeadDeleteView(LoginRequiredMixin, PermissionRequiredMixin,
     model = IndustrialSpaceLead
     template_name = 'leads/industrial_spaces/delete_industrial_space_lead.html'
     success_url = reverse_lazy('leads:lead_deleted')
-    permission_required = 'industrialspaceleads.delete_industrialspacelead'
+    permission_required = 'leads.delete_industrialspacelead'
 
 
 class IndustrialSpaceLeadDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = IndustrialSpaceLead
     template_name = 'leads/industrial_spaces/industrial_space_lead_details.html'
-    permission_required = 'industrialspaceleads.view_industrialspacelead_details'
+    permission_required = 'leads.view_industrialspacelead_details'
 
 
 ########################################################################################################################

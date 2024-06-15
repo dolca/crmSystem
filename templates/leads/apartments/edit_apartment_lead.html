@@ -9,7 +9,7 @@
     {% endblock pagetitle %}
     
     {% if user.is_authenticated %}
-        {% if perms.apartmentlead.change_apartmentlead %}
+        {% if perms.leads.change_apartmentlead %}
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -50,8 +50,7 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="transaction_type" class="form-label">Tip tranzacție <span
                                                         class="firebrick-message">*</span></label>
-                                                <select id="transaction_type" class="form-select" name="transaction_type" 
-                                                        required>
+                                                <select id="transaction_type" class="form-select" name="transaction_type" required>
                                                     {% for value, label in form.fields.transaction_type.choices %}
                                                         <option value="{{ value }}" {% if apartmentlead.transaction_type == value %}
                                                                 selected{% endif %}>{{ label }}</option>
@@ -72,8 +71,7 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="county" class="form-label">Județ <span
                                                         class="firebrick-message">*</span></label>
-                                                <select id="county" class="form-control" name="county" data-choices 
-                                                        required>
+                                                <select id="county" class="form-control" name="county" data-choices required>
                                                     {% for value, label in form.fields.county.choices %}
                                                         <option value="{{ value }}" {% if apartmentlead.county == value %}
                                                                 selected{% endif %}>{{ label }}</option>
@@ -84,7 +82,7 @@
                                                 <label for="city" class="form-label">Localitate <span
                                                         class="firebrick-message">*</span></label>
                                                 <input id="city" class="form-control" name="city" type="text" 
-                                                       value="{{ apartmentlead.city|default_if_none:'' }}" required>
+                                                       value="{{ apartmentlead.city }}" required>
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="zone" class="form-label">Zonă</label>
@@ -103,9 +101,8 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="destination" class="form-label">Destinație <span
-                                                        class="firebrick-message">*</span></label>
-                                                <select id="destination" class="form-select" name="destination" required>
+                                                <label for="destination" class="form-label">Destinație</label>
+                                                <select id="destination" class="form-select" name="destination">
                                                     {% for value, label in form.fields.destination.choices %}
                                                         <option value="{{ value }}" {% if apartmentlead.destination == value %}
                                                                 selected{% endif %}>{{ label }}</option>
@@ -134,13 +131,11 @@
                                                     <input id="bathroom_window" class="form-check-input" 
                                                            name="bathroom_window" type="checkbox" 
                                                            {% if apartmentlead.bathroom_window %}checked{% endif %}>
-                                                    <label for="bathroom_window" class="form-check-label">
-                                                        Geam la baie</label>
+                                                    <label for="bathroom_window" class="form-check-label">Geam la baie</label>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="minimal_surface" class="form-label">
-                                                    Suprafață minimă (mp)</label>
+                                                <label for="minimal_surface" class="form-label">Suprafață minimă (mp)</label>
                                                 <input id="minimal_surface" class="form-control" name="minimal_surface" 
                                                        type="text" value="{{ apartmentlead.minimal_surface|default_if_none:'' }}">
                                             </div>
@@ -179,8 +174,7 @@
                                                        value="{{ apartmentlead.nr_floors|default_if_none:'' }}">
                                             </div>
                                             <div class="col-lg-12">
-                                                <label for="construction_year" class="form-label">
-                                                    Anul construcției</label>
+                                                <label for="construction_year" class="form-label">Anul construcției</label>
                                                 <input id="construction_year" class="form-control" 
                                                        name="construction_year" type="text" 
                                                        value="{{ apartmentlead.construction_year|default_if_none:'' }}">
@@ -192,10 +186,8 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="construction_status" class="form-label">
-                                                    Stadiu construcție</label>
-                                                <select id="construction_status" class="form-select" 
-                                                        name="construction_status">
+                                                <label for="construction_status" class="form-label">Stadiu construcție</label>
+                                                <select id="construction_status" class="form-select" name="construction_status">
                                                     {% for value, label in form.fields.construction_status.choices %}
                                                         <option value="{{ value }}" {% if apartmentlead.construction_status == value %}
                                                                 selected{% endif %}>{{ label }}
@@ -240,8 +232,7 @@
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="interior_finishes" class="form-label">Stare interior</label>
-                                                <select id="interior_finishes" class="form-select" 
-                                                        name="interior_finishes">
+                                                <select id="interior_finishes" class="form-select" name="interior_finishes">
                                                     {% for value, label in form.fields.interior_finishes.choices %}
                                                         <option value="{{ value }}" {% if apartmentlead.interior_finishes == value %}
                                                                 selected{% endif %}>{{ label }}</option>
@@ -251,8 +242,8 @@
                                             <div class="row">
                                                 <div class="col-lg-6 col-sm-6 mb-2">
                                                     <div class="form-check">
-                                                        <input id="basement" class="form-check-input" 
-                                                               name="basement" type="checkbox" 
+                                                        <input id="basement" class="form-check-input" name="basement" 
+                                                               type="checkbox" 
                                                                {% if apartmentlead.basement %}checked{% endif %}>
                                                         <label for="basement" class="form-check-label">Subsol</label>
                                                     </div>
@@ -336,15 +327,15 @@
                                                 <label for="deadline_date" class="form-label">Data limită <span 
                                                         class="firebrick-message">*</span></label>
                                                 <input id="deadline_date" class="form-control" name="deadline_date" 
-                                                       type="date" value="{{ apartmentlead.deadline_date|default_if_none:'' }}" 
-                                                       placeholder="zz lll aaaa" required>
+                                                       value="{{ apartmentlead.deadline_date|default_if_none:'' }}" 
+                                                       type="date" placeholder="zz lll aaaa" required>
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="deadline_time" class="form-label">Ora limită <span 
                                                         class="firebrick-message">*</span></label>
                                                 <input id="deadline_time" class="form-control" name="deadline_time" 
-                                                       type="time" value="{{ apartmentlead.deadline_time|default_if_none:'' }}" 
-                                                       step="600" placeholder="oo:mm" required>
+                                                       value="{{ apartmentlead.deadline_time|default_if_none:'' }}" 
+                                                       type="time" step="600" placeholder="oo:mm" required>
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="assigned_listings" class="form-label">
@@ -358,11 +349,12 @@
                                                 </select>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="labels" class="form-label">Etichete</label>
-                                                <select id="labels" class="form-select" name="labels" multiple>
-                                                    {% for value, label in form.fields.labels.choices %}
-                                                        <option value="{{ value }}" {% if value in apartmentlead.labels %}
-                                                                selected{% endif %}></option>
+                                                <label for="label" class="form-label">Etichetă <span 
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="label" class="form-select" name="label" required>
+                                                    {% for value, label in form.fields.label.choices %}
+                                                        <option value="{{ value }}" {% if value in apartmentlead.label %}
+                                                                selected{% endif %}>{{ label }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
@@ -455,12 +447,6 @@
             new Choices(leadAssignedListings, {
                 loadingText: 'Se încarcă...',
                 noResultsText: 'Nu există proprietăți disponibile.'
-            });
-            
-            var leadLabels = document.getElementById('labels');
-            new Choices(leadLabels, {
-                loadingText: 'Se încarcă...',
-                noResultsText: 'Nu există alte etichete.'
             });
             
             document.getElementById('edit_apartment_lead').addEventListener('submit', function(event) {

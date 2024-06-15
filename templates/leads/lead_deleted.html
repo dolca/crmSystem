@@ -1,12 +1,13 @@
 {% extends "partials/base.html" %}
+
 {% block title %} Cerere ștearsă {% endblock title %}
 
 {% block content %}
-    
+
     {% block pagetitle %}
-    {% include "partials/page_title.html" with pagetitle="Cereri" title="Cerere ștearsă"%}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Cerere ștearsă" %}
     {% endblock pagetitle %}
-    
+
     {% if user.is_authenticated %}
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -22,5 +23,5 @@
             </div>
         </div>
     {% endif %}
-    
+
 {% endblock content %}

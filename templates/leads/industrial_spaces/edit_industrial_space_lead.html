@@ -9,7 +9,7 @@
     {% endblock pagetitle %}
     
     {% if user.is_authenticated %}
-        {% if perms.industrialspacelead.change_industrialspacelead %}
+        {% if perms.leads.change_industrialspacelead %}
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -83,7 +83,7 @@
                                                 <label for="city" class="form-label">Localitate <span
                                                         class="firebrick-message">*</span></label>
                                                 <input id="city" class="form-control" name="city" type="text" 
-                                                       value="{{ industrialspacelead.city|default_if_none:'' }}" required>
+                                                       value="{{ industrialspacelead.city }}" required>
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="zone" class="form-label">Zonă</label>
@@ -102,9 +102,8 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="destination" class="form-label">Destinație <span
-                                                        class="firebrick-message">*</span></label>
-                                                <select id="destination" class="form-select" name="destination" required>
+                                                <label for="destination" class="form-label">Destinație</label>
+                                                <select id="destination" class="form-select" name="destination">
                                                     {% for value, label in form.fields.destination.choices %}
                                                         <option value="{{ value }}" {% if industrialspacelead.destination == value %}
                                                                 selected{% endif %}>{{ label }}</option>
@@ -229,15 +228,15 @@
                                                 <label for="deadline_date" class="form-label">Data limită <span
                                                         class="firebrick-message">*</span></label>
                                                 <input id="deadline_date" class="form-control" name="deadline_date" 
-                                                       type="date" value="{{ industrialspacelead.deadline_date|default_if_none:'' }}" 
-                                                       placeholder="zz lll aaaa" required>
+                                                       value="{{ industrialspacelead.deadline_date|default_if_none:'' }}" 
+                                                       type="date" placeholder="zz lll aaaa" required>
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="deadline_time" class="form-label">Ora limită <span
                                                         class="firebrick-message">*</span></label>
                                                 <input id="deadline_time" class="form-control" name="deadline_time" 
-                                                       type="time" value="{{ industrialspacelead.deadline_time|default_if_none:'' }}" 
-                                                       step="600" placeholder="oo:mm" required>
+                                                       value="{{ industrialspacelead.deadline_time|default_if_none:'' }}" 
+                                                       type="time" step="600" placeholder="oo:mm" required>
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="assigned_listings" class="form-label">
@@ -251,11 +250,12 @@
                                                 </select>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="labels" class="form-label">Etichete</label>
-                                                <select id="labels" class="form-select" name="labels" multiple>
-                                                    {% for value, label in form.fields.labels.choices %}
-                                                        <option value="{{ value }}" {% if value in industrialspacelead.labels %}
-                                                                selected{% endif %}></option>
+                                                <label for="label" class="form-label">Etichetă <span 
+                                                        class="firebrick-message">*</span></label>
+                                                <select id="label" class="form-select" name="label" required>
+                                                    {% for value, label in form.fields.label.choices %}
+                                                        <option value="{{ value }}" {% if value in industrialspacelead.label %}
+                                                                selected{% endif %}>{{ label }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
@@ -348,12 +348,6 @@
             new Choices(leadAssignedListings, {
                 loadingText: 'Se încarcă...',
                 noResultsText: 'Nu există proprietăți disponibile.'
-            });
-            
-            var leadLabels = document.getElementById('labels');
-            new Choices(leadLabels, {
-                loadingText: 'Se încarcă...',
-                noResultsText: 'Nu există alte etichete.'
             });
             
             document.getElementById('edit_industrial_space_lead').addEventListener('submit', function(event) {

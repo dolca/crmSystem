@@ -1,9 +1,6 @@
 {% extends "partials/base.html" %}
-{% load static %}
-{% block title %} Cererile mele | Spații industriale {% endblock title %}
 
-{% block extra_css %}
-{% endblock extra_css %}
+{% block title %} Cererile mele | Spații industriale {% endblock title %}
 
 {% block content %}
 
@@ -12,7 +9,7 @@
     {% endblock pagetitle %}
 
     {% if user.is_authenticated %}
-        {% if perms.industrialspacelead.view_industrialspacelead %}
+        {% if perms.leads.view_industrialspacelead %}
             <div class="row">
                 <div class="col-lg-12">
                 
@@ -44,7 +41,7 @@
                                                             <option value="customer_name">Nume client</option>
                                                             <option value="transaction_type">Tip tranzacție</option>
                                                             <option value="budget">Buget</option>
-                                                            <option value="deadline_date">Data limită</option>
+                                                            <option value="deadline_date">Ziua limită</option>
                                                             <option value="deadline_time">Ora limită</option>
                                                             <option value="id">ID cerere</option>
                                                         </select>
@@ -74,17 +71,12 @@
                                     <table class="table align-middle table-nowrap table-hover">
                                         <thead class="table-light">
                                             <tr>
-                                                <th scope="col" style="width: 50px;">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="checkAll" value="option">
-                                                    </div>
-                                                </th>
                                                 <th>ID</th>
                                                 <th>Date contact</th>
                                                 <th>Tip cerere</th>
                                                 <th>Buget alocat</th>
                                                 <th>Adresă</th>
-                                                <th>Urgență</th>
+                                                <th>Etichetă</th>
                                                 <th>Termen limită</th>
                                                 <th>Proprietăți asociate</th>
                                                 <th></th>
@@ -94,12 +86,6 @@
                                             {% if my_industrial_space_leads %}
                                                 {% for ind_sp in my_industrial_space_leads %}
                                                     <tr>
-                                                        <th scope="row">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" 
-                                                                       name="chk_child" value="option1">
-                                                            </div>
-                                                        </th>
                                                         <td class="id">
                                                             {{ ind_sp.custom_id }}
                                                         </td>
@@ -129,15 +115,15 @@
                                                             {% else %}Metodă plată<br>nespecificată{% endif %}</div>
                                                         </td>
                                                         <td>
-                                                            <div class="street">{% if ind_sp.street %}{{ ind_sp.street }}
-                                                            {% else %}Stradă nespecificată{% endif %}</div>
-                                                            <div class="zone">{% if ind_sp.zone %}{{ ind_sp.zone }}
-                                                            {% else %}Zonă nespecificată{% endif %}</div>
+                                                            <div class="street">{% if ind_sp.street %}{{ ind_sp.street }}{% else %}
+                                                                Stradă nespecificată{% endif %}</div>
+                                                            <div class="zone">{% if ind_sp.zone %}{{ ind_sp.zone }}{% else %}
+                                                                Zonă nespecificată{% endif %}</div>
                                                             <div class="city">{{ ind_sp.city }}</div>
                                                             <div class="county">{{ ind_sp.county }}</div>
                                                         </td>
-                                                        <td class="urgency">
-                                                            {{ ind_sp.urgency }}
+                                                        <td class="label">
+                                                            {% if ind_sp.label %}{{ ind_sp.label }}{% else %}Fără etichetă{% endif %}
                                                         </td>
                                                         <td>
                                                             <div class="deadline_date">{% if ind_sp.deadline_date %}
@@ -156,7 +142,7 @@
                                                             {% endif %}
                                                         </td>
                                                         <td>
-                                                            {% if perms.industrialspaceleads.view_industrialspacelead_details %}
+                                                            {% if perms.leads.view_industrialspacelead_details %}
                                                                 {% if ind_sp.id %}
                                                                     <a class="btn btn-subtle-primary btn-custom-width"
                                                                        href="{% url "leads:industrial_space_lead_details" ind_sp.id %}">
@@ -165,7 +151,7 @@
                                                                 {% endif %}
                                                             {% endif %}
                                                             <br>
-                                                            {% if perms.industrialspaceleads.change_industrialspacelead %}
+                                                            {% if perms.leads.change_industrialspacelead %}
                                                                 {% if ind_sp.id %}
                                                                     <a class="btn btn-subtle-info btn-custom-width"
                                                                        href="{% url "leads:edit_industrial_space_lead" ind_sp.id %}">
@@ -178,7 +164,7 @@
                                                 {% endfor %}
                                             {% else %}
                                                 <tr>
-                                                    <td colspan="10"><h5 class="d-flex justify-content-md-center justify-content-sm-start">
+                                                    <td colspan="9"><h5 class="d-flex justify-content-md-center justify-content-sm-start">
                                                         Nu ai cereri disponibile!</h5>
                                                     </td>
                                                 </tr>
@@ -221,7 +207,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             var options = {
                 valueNames: ['id', 'customer_name', 'email', 'phone_number', 'transaction_type', 'space_type', 
-                    'destination', 'budget', 'payment_method', 'street', 'zone', 'city', 'county', 'urgency', 
+                    'destination', 'budget', 'payment_method', 'street', 'zone', 'city', 'county', 'label', 
                     'deadline_date', 'deadline_time', 'assigned_listings']
             };
             
