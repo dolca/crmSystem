@@ -1,57 +1,240 @@
-{% extends 'partials/base.html' %}
+{% extends "partials/base.html" %}
 
-{% block title %} Detalii cerere {% endblock title %}
+{% block title %} Detalii cerere | Casă {% endblock title %}
 
 {% block content %}
 
     {% block pagetitle %}
-    {% include "partials/page_title.html" with pagetitle="Cereri" title="Detalii cerere"%}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Detalii cerere | Casă" %}
     {% endblock pagetitle %}
 
     {% if user.is_authenticated %}
-        {% if perms.leads.view_apartmentlead_details %}
-            <div class="row justify-content-center">
-                <div class="col-md-6">
+        {% if perms.leads.view_houselead_details %}
+            <div class="row">
+                <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h4><i class="bi bi-info-square"></i> Detalii - {{ apartmentlead.contact }}</h4>
-                        </div>
                         <div class="card-body">
-                            <p class="card-text"><strong>Număr de telefon:</strong> {% if lead.phone_number %}
-                                {{ lead.phone_number }}{% else %} . . . {% endif %}</p>
-                            <p class="card-text"><strong>Adresă de e-mail:</strong> {% if lead.email %}
-                                {{ lead.email }}{% else %} . . . {% endif %}</p>
-                            <p class="card-text"><strong>Detalii cerere:</strong> {% if lead.lead_details %}
-                                {{ lead.lead_details }}{% else %} . . . {% endif %}</p>
-                            <p class="card-text"><strong>Urgență cerere:</strong> {% if lead.lead_urgency %}
-                                {{ demand.lead_urgency }}{% else %} . . . {% endif %}</p>
-                            <p class="card-text"><strong>Notițe agent:</strong> {% if lead.agent_notes %}
-                                {{ lead.agent_notes }}{% else %} . . . {% endif %}</p>
-                            <p class="card-text"><strong>Etichete cerere:</strong> {% if lead.lead_labels %}
-                                {{ lead.lead_labels }}{% else %} . . . {% endif %}</p>
-                            <p class="card-text"><strong>Proprietăți asociate:</strong>
-                                {% if lead.assigned_listings.exists %}
-                                    {% for listing in lead.assigned_listings.all %}
-                                        {{ listing.id }}
-                                        {% if not forloop.last %}, {% endif %}
-                                    {% endfor %}
-                                {% else %}
-                                    . . .
-                                {% endif %}</p>
-                            {% if perms.apartmentleads.change_apartmentlead %}
-                                <a href="{% url 'leads:edit_apartment_lead' apartmentlead.id %}" class="btn btn-subtle-success my-1 mx-1">Editează</a>
-                            {% endif %}
-                            {% if perms.apartmentleads.view_apartmentlead %}
-                                <a href="{% url 'leads:my_apartment_leads' %}" class="btn btn-subtle-primary my-1">Cererile mele</a>
-                                <a href="{% url 'leads:general_apartment_leads' %}" class="btn btn-subtle-primary my-1">Cereri generale</a>
-                            {% endif %}
-                            {% if perms.apartmentleads.delete_apartmentlead %}
-                                <a href="{% url 'leads:delete_apartment_lead' apartmentlead.id %}" class="btn btn-subtle-danger my-1 mx-1">Șterge</a>
-                            {% endif %}
-                        </div>
-                        <div class="card-footer text-body-secondary">
-                            Adăugată în data de {{ apartmentlead.created_at|date:"d M Y" }}<br>
-                            Ultima actualizare în data de {{ apartmentlead.updated_at|date:"d M Y" }}
+                            <div id="view_house_lead_details" class="row">
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="contactInfo">
+                                                <h5><span>{{ houselead.contact.first_name }}</span>
+                                                    <span>{{ houselead.contact.last_name|default:'' }}</span></h5>
+                                                <div>{{ houselead.contact.phone_number|default:'' }}</div>
+                                                <div>{{ houselead.contact.email|default:'' }}</div>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Tip cerere: </strong>
+                                                    {{ houselead.property_type }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Tip casă: </strong>
+                                                    {{ houselead.house_type }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Tip tranzacție: </strong>
+                                                    {{ houselead.transaction_type }}</p>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <p class="card-text"><strong>Status cerere: </strong>
+                                                    {{ houselead.lead_status }}</p>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Județ: </strong>
+                                                    {{ houselead.county }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Localitate: </strong>
+                                                    {{ houselead.city }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Zonă: </strong>
+                                                    {{ houselead.zone|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <p class="card-text"><strong>Stradă: </strong>
+                                                    {{ houselead.street|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Destinație: </strong>
+                                                    {{ houselead.destination|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Număr camere: </strong>
+                                                    {{ houselead.rooms_number|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Număr dormitoare: </strong>
+                                                    {{ houselead.nr_bedrooms|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Număr bucătării: </strong>
+                                                    {{ houselead.nr_kitchens|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Număr băi: </strong>
+                                                    {{ houselead.nr_bathrooms|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <div class="form-check">
+                                                    <input id="bathroom_window" class="form-check-input"
+                                                           name="bathroom_window" type="checkbox">
+                                                    <label for="bathroom_window" class="form-check-label">
+                                                        Geam la baie</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Suprafață minimă (mp): </strong>
+                                                    {{ houselead.minimal_surface|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Număr etaje: </strong>
+                                                    {{ houselead.nr_floors|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <p class="card-text"><strong>Anul construcției: </strong>
+                                                    {{ houselead.construction_year|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Stadiu construcție: </strong>
+                                                    {{ houselead.construction_status|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Mobilier: </strong>
+                                                    {{ houselead.furniture|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Stare interior: </strong>
+                                                    {{ houselead.interior_finishes|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="basement" class="form-check-input" name="basement"
+                                                               type="checkbox">
+                                                        <label for="basement" class="form-check-label">Subsol</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="semi_basement" class="form-check-input"
+                                                               name="semi_basement" type="checkbox">
+                                                        <label for="semi_basement" class="form-check-label">
+                                                            Demisol</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="loft" class="form-check-input" name="loft"
+                                                               type="checkbox">
+                                                        <label for="loft" class="form-check-label">Mansardă</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="attic" class="form-check-input" name="attic"
+                                                               type="checkbox">
+                                                        <label for="attic" class="form-check-label">Pod</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-3">
+                                                    <div class="form-check">
+                                                        <input id="garage" class="form-check-input" name="garage"
+                                                               type="checkbox">
+                                                        <label for="garage" class="form-check-label">Garaj</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Suprafață teren (mp): </strong>
+                                                    {{ houselead.terrain_surface|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Alte detalii: </strong>
+                                                    {{ houselead.other_details|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Buget (€): </strong>
+                                                    {{ houselead.budget|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Metodă de plată: </strong>
+                                                    {{ houselead.payment_method|default:'. . .' }}</p>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Urgență: </strong>
+                                                    {{ houselead.urgency|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Data limită: </strong><span id="deadline_date"
+                                                        data-deadline-date="{{ houselead.deadline_date|default:'. . .' }}">
+                                                    {{ houselead.deadline_date|default:'. . .' }}</span>
+                                                </p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Ora limită: </strong>
+                                                    {{ houselead.deadline_time|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Proprietăți asociate: </strong>
+                                                    {{ houselead.assigned_listings|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Etichetă: </strong>
+                                                    {{ houselead.label|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <p class="card-text"><strong>Notițe proprii: </strong>
+                                                    {{ houselead.notes|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-body-secondary d-flex flex-column flex-md-row justify-content-md-between">
+                                    <div>
+                                        Adăugată în data de <span id="created-at"
+                                                                  data-created-at="{{ houselead.created_at }}"></span><br>
+                                        Ultima actualizare în data de <span id="updated-at"
+                                                                            data-updated-at="{{ houselead.updated_at }}"></span>
+                                    </div>
+                                    <div class="mt-2 mt-md-0 ms-md-auto">
+                                        {% if perms.leads.change_houselead %}
+                                            <a href="{% url 'leads:edit_house_lead' houselead.id %}"
+                                               class="btn btn-subtle-info my-1">
+                                                Editează
+                                            </a>
+                                        {% endif %}
+                                        {% if perms.leads.delete_houselead %}
+                                            <a href="{% url 'leads:delete_house_lead' houselead.id %}"
+                                               class="btn btn-subtle-danger mx-1 my-1">
+                                                Șterge
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -60,3 +243,53 @@
     {% endif %}
 
 {% endblock content %}
+
+{% block extra_javascript %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Conținutul DOM a fost încărcat.');
+
+            // Lista de ID-uri pentru checkbox-urile readonly
+            const readonlyCheckboxes = ['bathroom_window', 'basement', 'semi_basement', 'loft', 'attic', 'garage'];
+
+            readonlyCheckboxes.forEach(function(id) {
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    checkbox.addEventListener('click', function(e) {
+                        e.preventDefault();
+                    });
+                }
+            });
+
+            // Funcția pentru a formata și afișa data în limba română
+            function formatDate(dateString) {
+                if (!dateString || dateString === '. . .') {
+                    return '. . .';
+                }
+                var date = new Date(dateString);
+                var day = date.getDate();
+                var monthNames = ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Noi', 'Dec'];
+                var month = monthNames[date.getMonth()];
+                var year = date.getFullYear();
+                return day + ' ' + month + ' ' + year;
+            }
+
+            // Format dată "deadline_date"
+            var deadlineDateElement = document.getElementById('deadline_date');
+            var deadlineDate = deadlineDateElement.getAttribute('data-deadline-date');
+            deadlineDateElement.textContent = formatDate(deadlineDate);
+
+            // Format dată "created_at"
+            var createdAtElement = document.getElementById('created-at');
+            var createdAtDate = createdAtElement.getAttribute('data-created-at');
+            createdAtElement.innerText = formatDate(createdAtDate);
+
+            // Format dată "updated_at"
+            var updatedAtElement = document.getElementById('updated-at');
+            var updatedAtDate = updatedAtElement.getAttribute('data-updated-at');
+            updatedAtElement.innerText = formatDate(updatedAtDate);
+        });
+    </script>
+
+{% endblock extra_javascript %}

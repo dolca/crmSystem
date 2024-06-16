@@ -1,0 +1,296 @@
+{% extends "partials/base.html" %}
+
+{% block title %} Detalii cerere | Spațiu de birouri {% endblock title %}
+
+{% block content %}
+
+    {% block pagetitle %}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Detalii cerere | Spațiu de birouri" %}
+    {% endblock pagetitle %}
+
+    {% if user.is_authenticated %}
+        {% if perms.leads.view_officespacelead_details %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="view_office_space_lead_details" class="row">
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="contactInfo">
+                                                <h5><span>{{ officespacelead.contact.first_name }}</span>
+                                                    <span>{{ officespacelead.contact.last_name|default:'' }}</span></h5>
+                                                <div>{{ officespacelead.contact.phone_number|default:'' }}</div>
+                                                <div>{{ officespacelead.contact.email|default:'' }}</div>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Tip cerere: </strong>
+                                                    {{ officespacelead.property_type }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Tip spațiu de birouri: </strong>
+                                                    {{ officespacelead.space_type }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Tip tranzacție: </strong>
+                                                    {{ officespacelead.transaction_type }}</p>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <p class="card-text"><strong>Status cerere: </strong>
+                                                    {{ officespacelead.lead_status }}</p>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Județ: </strong>
+                                                    {{ officespacelead.county }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Localitate: </strong>
+                                                    {{ officespacelead.city }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Zonă: </strong>
+                                                    {{ officespacelead.zone|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <p class="card-text"><strong>Stradă: </strong>
+                                                    {{ officespacelead.street|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Clasă: </strong>
+                                                    {{ officespacelead.space_class|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Număr camere: </strong>
+                                                    {{ officespacelead.rooms_number|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Număr băi: </strong>
+                                                    {{ officespacelead.nr_bathrooms|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Etaj: </strong>
+                                                    {{ officespacelead.floor|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Număr etaje: </strong>
+                                                    {{ officespacelead.nr_floors|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Suprafață utilă (mp): </strong>
+                                                    {{ officespacelead.useful_surface|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Suprafață minimă (mp): </strong>
+                                                    {{ officespacelead.minimum_area|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Suprafață maximă (mp): </strong>
+                                                    {{ officespacelead.maximum_area|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Suprafață totală birouri (mp): </strong>
+                                                    {{ officespacelead.total_surface_offices|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Compartimentare: </strong>
+                                                    {{ officespacelead.space_compart|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Nr. locuri parcare subterană: </strong>
+                                                    {{ officespacelead.nr_underground_parking|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Cost loc parcare subterană: </strong>
+                                                    {{ officespacelead.underground_parking_cost|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Nr. locuri parcare suprafață: </strong>
+                                                    {{ officespacelead.nr_surface_parking|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Cost loc parcare suprafață: </strong>
+                                                    {{ officespacelead.surface_parking_cost|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="basement" class="form-check-input" name="basement"
+                                                               type="checkbox">
+                                                        <label for="basement" class="form-check-label">Subsol</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="semi_basement" class="form-check-input"
+                                                               name="semi_basement" type="checkbox">
+                                                        <label for="semi_basement" class="form-check-label">
+                                                            Demisol</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="technical_floor" class="form-check-input"
+                                                               name="technical_floor" type="checkbox">
+                                                        <label for="technical_floor" class="form-check-label">
+                                                            Etaj tehnic</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="loft" class="form-check-input" name="loft"
+                                                               type="checkbox">
+                                                        <label for="loft" class="form-check-label">Mansardă</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-3">
+                                                    <div class="form-check">
+                                                        <input id="elevator" class="form-check-input" name="elevator"
+                                                               type="checkbox">
+                                                        <label for="elevator" class="form-check-label">Lift</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Alte detalii: </strong>
+                                                    {{ officespacelead.other_details|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Buget (€): </strong>
+                                                    {{ officespacelead.budget|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Metodă de plată: </strong>
+                                                    {{ officespacelead.payment_method|default:'. . .' }}</p>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Urgență: </strong>
+                                                    {{ officespacelead.urgency|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Data limită: </strong><span id="deadline_date"
+                                                        data-deadline-date="{{ officespacelead.deadline_date|default:'. . .' }}">
+                                                    {{ officespacelead.deadline_date|default:'. . .' }}</span>
+                                                </p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Ora limită: </strong>
+                                                    {{ officespacelead.deadline_time|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Proprietăți asociate: </strong>
+                                                    {{ officespacelead.assigned_listings|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Etichetă: </strong>
+                                                    {{ officespacelead.label|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <p class="card-text"><strong>Notițe proprii: </strong>
+                                                    {{ officespacelead.notes|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-body-secondary d-flex flex-column flex-md-row justify-content-md-between">
+                                    <div>
+                                        Adăugată în data de <span id="created-at"
+                                                                  data-created-at="{{ officespacelead.created_at }}"></span><br>
+                                        Ultima actualizare în data de <span id="updated-at"
+                                                                            data-updated-at="{{ officespacelead.updated_at }}"></span>
+                                    </div>
+                                    <div class="mt-2 mt-md-0 ms-md-auto">
+                                        {% if perms.leads.change_officespacelead %}
+                                            <a href="{% url 'leads:edit_office_space_lead' officespacelead.id %}"
+                                               class="btn btn-subtle-info my-1">
+                                                Editează
+                                            </a>
+                                        {% endif %}
+                                        {% if perms.leads.delete_officespacelead %}
+                                            <a href="{% url 'leads:delete_office_space_lead' officespacelead.id %}"
+                                               class="btn btn-subtle-danger mx-1 my-1">
+                                                Șterge
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock content %}
+
+{% block extra_javascript %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Conținutul DOM a fost încărcat.');
+
+            // Lista de ID-uri pentru checkbox-urile readonly
+            const readonlyCheckboxes = ['basement', 'semi_basement', 'technical_floor', 'loft', 'elevator'];
+
+            readonlyCheckboxes.forEach(function(id) {
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    checkbox.addEventListener('click', function(e) {
+                        e.preventDefault();
+                    });
+                }
+            });
+
+            // Funcția pentru a formata și afișa data în limba română
+            function formatDate(dateString) {
+                if (!dateString || dateString === '. . .') {
+                    return '. . .';
+                }
+                var date = new Date(dateString);
+                var day = date.getDate();
+                var monthNames = ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Noi', 'Dec'];
+                var month = monthNames[date.getMonth()];
+                var year = date.getFullYear();
+                return day + ' ' + month + ' ' + year;
+            }
+
+            // Format dată "deadline_date"
+            var deadlineDateElement = document.getElementById('deadline_date');
+            var deadlineDate = deadlineDateElement.getAttribute('data-deadline-date');
+            deadlineDateElement.textContent = formatDate(deadlineDate);
+
+            // Format dată "created_at"
+            var createdAtElement = document.getElementById('created-at');
+            var createdAtDate = createdAtElement.getAttribute('data-created-at');
+            createdAtElement.innerText = formatDate(createdAtDate);
+
+            // Format dată "updated_at"
+            var updatedAtElement = document.getElementById('updated-at');
+            var updatedAtDate = updatedAtElement.getAttribute('data-updated-at');
+            updatedAtElement.innerText = formatDate(updatedAtDate);
+        });
+    </script>
+
+{% endblock extra_javascript %}

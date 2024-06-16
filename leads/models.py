@@ -22,7 +22,7 @@ class Lead(Model):
     zone = CharField(max_length=30, null=True, blank=True, verbose_name='Zonă')
     street = CharField(max_length=40, null=True, blank=True, verbose_name='Stradă')
 
-    budget = IntegerField(null=True, blank=True, verbose_name='Buget alocat')
+    budget = IntegerField(null=True, blank=True, verbose_name='Buget (€)')
     payment_method = CharField(choices=MODALITATE_PLATA, null=True, blank=True, verbose_name='Modalitate plată', )
 
     urgency = CharField(choices=URGENTA, default='Normal', verbose_name='Urgență')

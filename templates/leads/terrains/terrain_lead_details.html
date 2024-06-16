@@ -1,0 +1,276 @@
+{% extends "partials/base.html" %}
+
+{% block title %} Detalii cerere | Teren {% endblock title %}
+
+{% block content %}
+
+    {% block pagetitle %}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Detalii cerere | Teren" %}
+    {% endblock pagetitle %}
+
+    {% if user.is_authenticated %}
+        {% if perms.leads.view_terrainlead_details %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="view_terrain_lead_details" class="row">
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="contactInfo">
+                                                <h5><span>{{ terrainlead.contact.first_name }}</span>
+                                                    <span>{{ terrainlead.contact.last_name|default:'' }}</span></h5>
+                                                <div>{{ terrainlead.contact.phone_number|default:'' }}</div>
+                                                <div>{{ terrainlead.contact.email|default:'' }}</div>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Tip cerere: </strong>
+                                                    {{ terrainlead.property_type }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Tip teren: </strong>
+                                                    {{ terrainlead.terrain_type }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Tip tranzacție: </strong>
+                                                    {{ terrainlead.transaction_type }}</p>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <p class="card-text"><strong>Status cerere: </strong>
+                                                    {{ terrainlead.lead_status }}</p>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Județ: </strong>
+                                                    {{ terrainlead.county }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Localitate: </strong>
+                                                    {{ terrainlead.city }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Zonă: </strong>
+                                                    {{ terrainlead.zone|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <p class="card-text"><strong>Stradă: </strong>
+                                                    {{ terrainlead.street|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Destinație: </strong>
+                                                    {{ terrainlead.destination|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Clasificare: </strong>
+                                                    {{ terrainlead.classification|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Suprafață teren: </strong>
+                                                    {{ terrainlead.terrain_surface|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Unitate suprafață: </strong>
+                                                    {{ terrainlead.unit|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Front stradal (m): </strong>
+                                                    {{ terrainlead.street_front|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Deschidere la: </strong>
+                                                    {{ terrainlead.opening_to|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Lățime drum acces (m): </strong>
+                                                    {{ terrainlead.access_road_width|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>POT (%): </strong>
+                                                    {{ terrainlead.pot|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>CUT: </strong>
+                                                    {{ terrainlead.cut|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="urban_certificate" class="form-check-input"
+                                                               name="urban_certificate" type="checkbox">
+                                                        <label for="urban_certificate" class="form-check-label">
+                                                            Certificat de urbanism</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="building_permit" class="form-check-input"
+                                                               name="building_permit" type="checkbox">
+                                                        <label for="building_permit" class="form-check-label">
+                                                            Autorizație de construcție</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="pug" class="form-check-input" name="pug"
+                                                               type="checkbox">
+                                                        <label for="pug" class="form-check-label">PUG aprobat</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="puz" class="form-check-input" name="puz"
+                                                               type="checkbox">
+                                                        <label for="puz" class="form-check-label">PUZ aprobat</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-3">
+                                                    <div class="form-check">
+                                                        <input id="pud" class="form-check-input" name="pud"
+                                                               type="checkbox">
+                                                        <label for="pud" class="form-check-label">PUD aprobat</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Alte detalii: </strong>
+                                                    {{ terrainlead.other_details|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Buget (€): </strong>
+                                                    {{ terrainlead.budget|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Metodă de plată: </strong>
+                                                    {{ terrainlead.payment_method|default:'. . .' }}</p>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Urgență: </strong>
+                                                    {{ terrainlead.urgency|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Data limită: </strong><span id="deadline_date"
+                                                        data-deadline-date="{{ terrainlead.deadline_date|default:'. . .' }}">
+                                                    {{ terrainlead.deadline_date|default:'. . .' }}</span>
+                                                </p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Ora limită: </strong>
+                                                    {{ terrainlead.deadline_time|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Proprietăți asociate: </strong>
+                                                    {{ terrainlead.assigned_listings|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Etichetă: </strong>
+                                                    {{ terrainlead.label|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <p class="card-text"><strong>Notițe proprii: </strong>
+                                                    {{ terrainlead.notes|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-body-secondary d-flex flex-column flex-md-row justify-content-md-between">
+                                    <div>
+                                        Adăugată în data de <span id="created-at"
+                                                                  data-created-at="{{ terrainlead.created_at }}"></span><br>
+                                        Ultima actualizare în data de <span id="updated-at"
+                                                                            data-updated-at="{{ terrainlead.updated_at }}"></span>
+                                    </div>
+                                    <div class="mt-2 mt-md-0 ms-md-auto">
+                                        {% if perms.leads.change_terrainlead %}
+                                            <a href="{% url 'leads:edit_terrain_lead' terrainlead.id %}"
+                                               class="btn btn-subtle-info my-1">
+                                                Editează
+                                            </a>
+                                        {% endif %}
+                                        {% if perms.leads.delete_terrainlead %}
+                                            <a href="{% url 'leads:delete_terrain_lead' terrainlead.id %}"
+                                               class="btn btn-subtle-danger mx-1 my-1">
+                                                Șterge
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock content %}
+
+{% block extra_javascript %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Conținutul DOM a fost încărcat.');
+
+            // Lista de ID-uri pentru checkbox-urile readonly
+            const readonlyCheckboxes = ['urban_certificate', 'building_permit', 'pug', 'puz', 'pud'];
+
+            readonlyCheckboxes.forEach(function(id) {
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    checkbox.addEventListener('click', function(e) {
+                        e.preventDefault();
+                    });
+                }
+            });
+
+            // Funcția pentru a formata și afișa data în limba română
+            function formatDate(dateString) {
+                if (!dateString || dateString === '. . .') {
+                    return '. . .';
+                }
+                var date = new Date(dateString);
+                var day = date.getDate();
+                var monthNames = ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Noi', 'Dec'];
+                var month = monthNames[date.getMonth()];
+                var year = date.getFullYear();
+                return day + ' ' + month + ' ' + year;
+            }
+
+            // Format dată "deadline_date"
+            var deadlineDateElement = document.getElementById('deadline_date');
+            var deadlineDate = deadlineDateElement.getAttribute('data-deadline-date');
+            deadlineDateElement.textContent = formatDate(deadlineDate);
+
+            // Format dată "created_at"
+            var createdAtElement = document.getElementById('created-at');
+            var createdAtDate = createdAtElement.getAttribute('data-created-at');
+            createdAtElement.innerText = formatDate(createdAtDate);
+
+            // Format dată "updated_at"
+            var updatedAtElement = document.getElementById('updated-at');
+            var updatedAtDate = updatedAtElement.getAttribute('data-updated-at');
+            updatedAtElement.innerText = formatDate(updatedAtDate);
+        });
+    </script>
+
+{% endblock extra_javascript %}

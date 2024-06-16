@@ -19,7 +19,7 @@
                                 <div class="row g-4 mb-3">
                                     <div class="col-sm-auto">
                                         <div>
-                                            <a href="{% url "leads:add_new_lead" %}" class="btn btn-subtle-success">
+                                            <a href="{% url 'leads:add_new_lead' %}" class="btn btn-subtle-success">
                                                 <strong><i class="ri-add-line align-bottom me-1"></i></strong> 
                                                 Adaugă cerere nouă
                                             </a>
@@ -74,7 +74,7 @@
                                                 <th>ID</th>
                                                 <th>Date contact</th>
                                                 <th>Tip cerere</th>
-                                                <th>Buget alocat</th>
+                                                <th>Buget (€)</th>
                                                 <th>Adresă</th>
                                                 <th>Etichetă</th>
                                                 <th>Termen limită</th>
@@ -145,7 +145,7 @@
                                                             {% if perms.leads.view_industrialspacelead_details %}
                                                                 {% if ind_sp.id %}
                                                                     <a class="btn btn-subtle-primary btn-custom-width"
-                                                                       href="{% url "leads:industrial_space_lead_details" ind_sp.id %}">
+                                                                       href="{% url 'leads:industrial_space_lead_details' ind_sp.id %}">
                                                                         Detalii
                                                                     </a>
                                                                 {% endif %}
@@ -154,7 +154,7 @@
                                                             {% if perms.leads.change_industrialspacelead %}
                                                                 {% if ind_sp.id %}
                                                                     <a class="btn btn-subtle-info btn-custom-width"
-                                                                       href="{% url "leads:edit_industrial_space_lead" ind_sp.id %}">
+                                                                       href="{% url 'leads:edit_industrial_space_lead' ind_sp.id %}">
                                                                         Editează
                                                                     </a>
                                                                 {% endif %}

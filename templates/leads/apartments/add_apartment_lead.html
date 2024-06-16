@@ -15,7 +15,7 @@
                     <div class="card">
                         <div class="card-body">
                             <form id="add_apartment_lead" method="post" enctype="multipart/form-data" class="row" 
-                                  action="{% url "leads:add_apartment_lead" %}">
+                                  action="{% url 'leads:add_apartment_lead' %}">
                                 {% csrf_token %}
                                 <div class="col-lg-3 col-md-6 col-sm-6">
                                     <div class="card">
@@ -25,7 +25,7 @@
                                                 <div id="phoneNumber"></div>
                                                 <div id="email"></div>
                                             </div>
-                                            <input id="contact" name="contact" type="hidden" value="{{ storedContactId }}" 
+                                            <input id="contact" name="contact" type="hidden" value="{{ storedContactId }}"
                                                    required>
                                             <hr class="border-secondary-subtle">
                                             <div class="col-lg-12 mb-3">
@@ -283,7 +283,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="budget" class="form-label">Buget alocat</label>
+                                                <label for="budget" class="form-label">Buget (€)</label>
                                                 <input id="budget" class="form-control" name="budget" type="text">
                                             </div>
                                             <div class="col-lg-12 mb-3">

@@ -15,16 +15,16 @@
                     <div class="card">
                         <div class="card-body">
                             <form id="edit_apartment_lead" method="post" enctype="multipart/form-data" class="row" 
-                                  action="{% url "leads:edit_apartment_lead" apartmentlead.pk %}">
+                                  action="{% url 'leads:edit_apartment_lead' apartmentlead.pk %}">
                                 {% csrf_token %}
                                 <div class="col-lg-3 col-md-6 col-sm-6">
                                     <div class="card">
                                         <div class="card-body">
                                             <div id="contactInfo">
-                                                <h5><span id="firstName">{{ apartmentlead.contact.first_name }}</span> 
-                                                    <span id="lastName">{{ apartmentlead.contact.last_name }}</span></h5>
-                                                <div id="phoneNumber">{{ apartmentlead.contact.phone_number }}</div>
-                                                <div id="email">{{ apartmentlead.contact.email }}</div>
+                                                <h5><span>{{ apartmentlead.contact.first_name }}</span> 
+                                                    <span>{{ apartmentlead.contact.last_name|default:'' }}</span></h5>
+                                                <div>{{ apartmentlead.contact.phone_number|default:'' }}</div>
+                                                <div>{{ apartmentlead.contact.email|default:'' }}</div>
                                             </div>
                                             <input id="contact" name="contact" type="hidden" value="{{ apartmentlead.contact.id }}" 
                                                    required>
@@ -87,12 +87,12 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="zone" class="form-label">Zonă</label>
                                                 <input id="zone" class="form-control" name="zone" type="text" 
-                                                       value="{{ apartmentlead.zone|default_if_none:'' }}">
+                                                       value="{{ apartmentlead.zone|default:'' }}">
                                             </div>
                                             <div class="col-lg-12">
                                                 <label for="street" class="form-label">Stradă</label>
                                                 <input id="street" class="form-control" name="street" type="text" 
-                                                       value="{{ apartmentlead.street|default_if_none:'' }}">
+                                                       value="{{ apartmentlead.street|default:'' }}">
                                             </div>
                                         </div>
                                     </div>
@@ -112,19 +112,19 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="rooms_number" class="form-label">Număr camere</label>
                                                 <input id="rooms_number" class="form-control" name="rooms_number" 
-                                                       type="text" value="{{ apartmentlead.rooms_number|default_if_none:'' }}">
+                                                       type="text" value="{{ apartmentlead.rooms_number|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="nr_bedrooms" class="form-label">Număr dormitoare</label>
                                                 <input id="nr_bedrooms" class="form-control" name="nr_bedrooms" 
-                                                       type="text" value="{{ apartmentlead.nr_bedrooms|default_if_none:'' }}">
+                                                       type="text" value="{{ apartmentlead.nr_bedrooms|default:'' }}">
                                                 <p></p>
                                                 <div id="nr_bedrooms-error" class="firebrick-message"></div>
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="nr_bathrooms" class="form-label">Număr băi</label>
                                                 <input id="nr_bathrooms" class="form-control" name="nr_bathrooms" 
-                                                       type="text" value="{{ apartmentlead.nr_bathrooms|default_if_none:'' }}">
+                                                       type="text" value="{{ apartmentlead.nr_bathrooms|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <div class="form-check">
@@ -137,7 +137,7 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="minimal_surface" class="form-label">Suprafață minimă (mp)</label>
                                                 <input id="minimal_surface" class="form-control" name="minimal_surface" 
-                                                       type="text" value="{{ apartmentlead.minimal_surface|default_if_none:'' }}">
+                                                       type="text" value="{{ apartmentlead.minimal_surface|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="floor" class="form-label">Etaj</label>
@@ -171,13 +171,13 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="nr_floors" class="form-label">Număr etaje</label>
                                                 <input id="nr_floors" class="form-control" name="nr_floors" type="text" 
-                                                       value="{{ apartmentlead.nr_floors|default_if_none:'' }}">
+                                                       value="{{ apartmentlead.nr_floors|default:'' }}">
                                             </div>
                                             <div class="col-lg-12">
                                                 <label for="construction_year" class="form-label">Anul construcției</label>
                                                 <input id="construction_year" class="form-control" 
                                                        name="construction_year" type="text" 
-                                                       value="{{ apartmentlead.construction_year|default_if_none:'' }}">
+                                                       value="{{ apartmentlead.construction_year|default:'' }}">
                                             </div>
                                         </div>
                                     </div>
@@ -291,7 +291,7 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="other_details" class="form-label">Alte detalii</label>
                                                 <textarea id="other_details" class="form-control" name="other_details" type="text" 
-                                                          rows="4">{{ apartmentlead.other_details|default_if_none:'' }}</textarea>
+                                                          rows="4">{{ apartmentlead.other_details|default:'' }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -300,9 +300,9 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="budget" class="form-label">Buget alocat</label>
+                                                <label for="budget" class="form-label">Buget (€)</label>
                                                 <input id="budget" class="form-control" name="budget" type="text" 
-                                                       value="{{ apartmentlead.budget|default_if_none:'' }}">
+                                                       value="{{ apartmentlead.budget|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="payment_method" class="form-label">Metodă de plată</label>
@@ -327,14 +327,14 @@
                                                 <label for="deadline_date" class="form-label">Data limită <span 
                                                         class="firebrick-message">*</span></label>
                                                 <input id="deadline_date" class="form-control" name="deadline_date" 
-                                                       value="{{ apartmentlead.deadline_date|default_if_none:'' }}" 
+                                                       value="{{ apartmentlead.deadline_date|default:'' }}" 
                                                        type="date" placeholder="zz lll aaaa" required>
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="deadline_time" class="form-label">Ora limită <span 
                                                         class="firebrick-message">*</span></label>
                                                 <input id="deadline_time" class="form-control" name="deadline_time" 
-                                                       value="{{ apartmentlead.deadline_time|default_if_none:'' }}" 
+                                                       value="{{ apartmentlead.deadline_time|default:'' }}" 
                                                        type="time" step="600" placeholder="oo:mm" required>
                                             </div>
                                             <div class="col-lg-12 mb-3">
@@ -361,7 +361,7 @@
                                             <div class="col-lg-12">
                                                 <label for="notes" class="form-label">Notițe proprii</label>
                                                 <textarea id="notes" class="form-control" name="notes" type="text" 
-                                                          rows="4">{{ apartmentlead.notes|default_if_none:'' }}</textarea>
+                                                          rows="4">{{ apartmentlead.notes|default:'' }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -391,27 +391,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             console.log('Conținutul DOM a fost încărcat.');
             
-            var storedContactId = "{{ apartmentlead.contact.id }}";
-            var pk = "{{ apartmentlead.id }}";
-            
-            console.log('ID contact:', storedContactId);
-            
-            fetch(`/contacts/api/contact-details/${storedContactId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Eroare la solicitarea datelor contactului!');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    document.getElementById('firstName').innerText = data.first_name;
-                    document.getElementById('lastName').innerText = data.last_name;
-                    document.getElementById('phoneNumber').innerText = data.phone_number;
-                    document.getElementById('email').innerText = data.email;
-                })
-                .catch(error => {
-                    console.error('Eroare:', error);
-                });
+            var pk = '{{ apartmentlead.id }}';
             
             // Inițializez flatpickr pentru câmpul de dată
             flatpickr('#deadline_date', {

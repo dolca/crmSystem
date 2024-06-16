@@ -14,56 +14,49 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <div id="view_apartment_lead" class="row">
+                            <div id="view_apartment_lead_details" class="row">
                                 <div class="col-lg-3 col-md-6 col-sm-6">
                                     <div class="card">
                                         <div class="card-body">
                                             <div id="contactInfo">
-                                                <h5><span id="firstName"></span> <span id="lastName"></span></h5>
-                                                <div id="phoneNumber"></div>
-                                                <div id="email"></div>
+                                                <h5><span>{{ apartmentlead.contact.first_name }}</span>
+                                                    <span>{{ apartmentlead.contact.last_name|default:'' }}</span></h5>
+                                                <div>{{ apartmentlead.contact.phone_number|default:'' }}</div>
+                                                <div>{{ apartmentlead.contact.email|default:'' }}</div>
                                             </div>
                                             <hr class="border-secondary-subtle">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="property_type" class="form-label">Tip cerere</label>
-                                                <input id="property_type" class="form-control" type="text" 
-                                                       value="{{ apartmentlead.property_type }}" readonly>
+                                                <p class="card-text"><strong>Tip cerere: </strong>
+                                                    {{ apartmentlead.property_type }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="apartment_type" class="form-label">Tip apartament</label>
-                                                <input id="apartment_type" class="form-control" type="text" 
-                                                       value="{{ apartmentlead.apartment_type }}" readonly>
+                                                <p class="card-text"><strong>Tip apartament: </strong>
+                                                    {{ apartmentlead.apartment_type }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="transaction_type" class="form-label">Tip tranzacție</label>
-                                                <input id="transaction_type" class="form-control" type="text" 
-                                                       value="{{ apartmentlead.transaction_type }}" readonly>
+                                                <p class="card-text"><strong>Tip tranzacție: </strong>
+                                                    {{ apartmentlead.transaction_type }}</p>
                                             </div>
                                             <div class="col-lg-12">
-                                                <label for="lead_status" class="form-label">Status cerere</label>
-                                                <input id="lead_status" class="form-control" type="text" 
-                                                       value="{{ apartmentlead.lead_status }}" readonly>
+                                                <p class="card-text"><strong>Status cerere: </strong>
+                                                    {{ apartmentlead.lead_status }}</p>
                                             </div>
                                             <hr class="border-secondary-subtle">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="county" class="form-label">Județ</label>
-                                                <input id="county" class="form-control" type="text" 
-                                                       value="{{ apartmentlead.county }}" readonly>
+                                                <p class="card-text"><strong>Județ: </strong>
+                                                    {{ apartmentlead.county }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="city" class="form-label">Localitate</label>
-                                                <input id="city" class="form-control" type="text" 
-                                                       value="{{ apartmentlead.city }}" readonly>
+                                                <p class="card-text"><strong>Localitate: </strong>
+                                                    {{ apartmentlead.city }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="zone" class="form-label">Zonă</label>
-                                                <input id="zone" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.zone|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Zonă: </strong>
+                                                    {{ apartmentlead.zone|default:'. . .' }}</p>
                                             </div>
                                             <div class="col-lg-12">
-                                                <label for="street" class="form-label">Stradă</label>
-                                                <input id="street" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.street|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Stradă: </strong>
+                                                    {{ apartmentlead.street|default:'. . .' }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -72,24 +65,20 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="destination" class="form-label">Destinație</label>
-                                                <input id="destination" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.destination|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Destinație: </strong>
+                                                    {{ apartmentlead.destination|default:'. . .' }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="rooms_number" class="form-label">Număr camere</label>
-                                                <input id="rooms_number" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.rooms_number|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Număr camere: </strong>
+                                                    {{ apartmentlead.rooms_number|default:'. . .' }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="nr_bedrooms" class="form-label">Număr dormitoare</label>
-                                                <input id="nr_bedrooms" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.nr_bedrooms|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Număr dormitoare: </strong>
+                                                    {{ apartmentlead.nr_bedrooms|default:'. . .' }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="nr_bathrooms" class="form-label">Număr băi</label>
-                                                <input id="nr_bathrooms" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.nr_bathrooms|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Număr băi: </strong>
+                                                    {{ apartmentlead.nr_bathrooms|default:'. . .' }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <div class="form-check">
@@ -99,14 +88,12 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="minimal_surface" class="form-label">Suprafață minimă (mp)</label>
-                                                <input id="minimal_surface" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.minimal_surface|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Suprafață minimă (mp): </strong>
+                                                    {{ apartmentlead.minimal_surface|default:'. . .' }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="floor" class="form-label">Etaj</label>
-                                                <input id="floor" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.floor|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Etaj: </strong>
+                                                    {{ apartmentlead.floor|default:'. . .' }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-2">
                                                 <div class="form-check">
@@ -123,14 +110,12 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="nr_floors" class="form-label">Număr etaje</label>
-                                                <input id="nr_floors" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.nr_floors|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Număr etaje: </strong>
+                                                    {{ apartmentlead.nr_floors|default:'. . .' }}</p>
                                             </div>
                                             <div class="col-lg-12">
-                                                <label for="construction_year" class="form-label">Anul construcției</label>
-                                                <input id="construction_year" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.construction_year|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Anul construcției: </strong>
+                                                    {{ apartmentlead.construction_year|default:'. . .' }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -139,34 +124,28 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="construction_status" class="form-label">Stadiu construcție</label>
-                                                <input id="construction_status" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.construction_status|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Stadiu construcție: </strong>
+                                                    {{ apartmentlead.construction_status|default:'. . .' }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="furniture" class="form-label">Mobilier</label>
-                                                <input id="furniture" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.furniture|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Mobilier: </strong>
+                                                    {{ apartmentlead.furniture|default:'. . .' }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="comfort" class="form-label">Confort</label>
-                                                <input id="comfort" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.comfort|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Confort: </strong>
+                                                    {{ apartmentlead.comfort|default:'. . .' }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="ap_compart" class="form-label">Compartimentare</label>
-                                                <input id="ap_compart" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.ap_compart|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Compartimentare: </strong>
+                                                    {{ apartmentlead.ap_compart|default:'. . .' }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="orientation" class="form-label">Orientare</label>
-                                                <input id="orientation" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.orientation|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Orientare: </strong>
+                                                    {{ apartmentlead.orientation|default:'. . .' }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="interior_finishes" class="form-label">Stare interior</label>
-                                                <input id="interior_finishes" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.interior_finishes|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Stare interior: </strong>
+                                                    {{ apartmentlead.interior_finishes|default:'. . .' }}</p>
                                             </div>
                                             <div class="row">
                                                 <div class="col-lg-6 col-sm-6 mb-2">
@@ -213,9 +192,8 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="other_details" class="form-label">Alte detalii</label>
-                                                <textarea id="other_details" class="form-control" type="text" rows="4" 
-                                                          readonly>{{ apartmentlead.other_details }}</textarea>
+                                                <p class="card-text"><strong>Alte detalii: </strong>
+                                                    {{ apartmentlead.other_details|default:'. . .' }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -224,67 +202,60 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="budget" class="form-label">Buget alocat</label>
-                                                <input id="budget" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.budget|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Buget (€): </strong>
+                                                    {{ apartmentlead.budget|default:'. . .' }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="payment_method" class="form-label">Metodă de plată</label>
-                                                <input id="payment_method" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.payment_method|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Metodă de plată: </strong>
+                                                    {{ apartmentlead.payment_method|default:'. . .' }}</p>
                                             </div>
                                             <hr class="border-secondary-subtle">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="urgency" class="form-label">Urgență</label>
-                                                <input id="urgency" class="form-control" type="text" readonly
-                                                       value="{{ apartmentlead.urgency|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Urgență: </strong>
+                                                    {{ apartmentlead.urgency|default:'. . .' }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="deadline_date" class="form-label">Data limită</label>
-                                                <input id="deadline_date" class="form-control" type="text" readonly 
-                                                       data-deadline-date="{{ apartmentlead.deadline_date|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Data limită: </strong><span id="deadline_date"
+                                                        data-deadline-date="{{ apartmentlead.deadline_date|default:'. . .' }}">
+                                                    {{ apartmentlead.deadline_date|default:'. . .' }}</span>
+                                                </p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="deadline_time" class="form-label">Ora limită</label>
-                                                <input id="deadline_time" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.deadline_time|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Ora limită: </strong>
+                                                    {{ apartmentlead.deadline_time|default:'. . .' }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="assigned_listings" class="form-label">
-                                                    Proprietăți asociate</label>
-                                                <input id="assigned_listings" class="form-control" type="text" multiple readonly 
-                                                       value="{{ apartmentlead.assigned_listings|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Proprietăți asociate: </strong>
+                                                    {{ apartmentlead.assigned_listings|default:'. . .' }}</p>
                                             </div>
                                             <div class="col-lg-12 mb-3">
-                                                <label for="label" class="form-label">Etichetă</label>
-                                                <input id="label" class="form-control" type="text" readonly 
-                                                       value="{{ apartmentlead.label|default_if_none:'---' }}">
+                                                <p class="card-text"><strong>Etichetă: </strong>
+                                                    {{ apartmentlead.label|default:'. . .' }}</p>
                                             </div>
                                             <div class="col-lg-12">
-                                                <label for="notes" class="form-label">Notițe proprii</label>
-                                                <textarea id="notes" class="form-control" type="text" rows="4" 
-                                                          readonly>{{ apartmentlead.notes }}</textarea>
+                                                <p class="card-text"><strong>Notițe proprii: </strong>
+                                                    {{ apartmentlead.notes|default:'. . .' }}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-footer text-body-secondary d-flex flex-column flex-md-row justify-content-md-between">
                                     <div>
-                                        Adăugată în data de <span id="created-at" 
+                                        Adăugată în data de <span id="created-at"
                                                                   data-created-at="{{ apartmentlead.created_at }}"></span><br>
-                                        Ultima actualizare în data de <span id="updated-at" 
+                                        Ultima actualizare în data de <span id="updated-at"
                                                                             data-updated-at="{{ apartmentlead.updated_at }}"></span>
                                     </div>
                                     <div class="mt-2 mt-md-0 ms-md-auto">
                                         {% if perms.leads.change_apartmentlead %}
                                             <a href="{% url 'leads:edit_apartment_lead' apartmentlead.id %}" 
-                                               class="btn btn-subtle-info">
+                                               class="btn btn-subtle-info my-1">
                                                 Editează
                                             </a>
                                         {% endif %}
                                         {% if perms.leads.delete_apartmentlead %}
                                             <a href="{% url 'leads:delete_apartment_lead' apartmentlead.id %}" 
-                                               class="btn btn-subtle-danger mx-1">
+                                               class="btn btn-subtle-danger mx-1 my-1">
                                                 Șterge
                                             </a>
                                         {% endif %}
@@ -305,29 +276,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             console.log('Conținutul DOM a fost încărcat.');
-            
-            var storedContactId = "{{ apartmentlead.contact.id }}";
-            
-            console.log('ID contact:', storedContactId);
-            
-            // Funcția de afișare a detaliilor contactului
-            fetch(`/contacts/api/contact-details/${storedContactId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Eroare la solicitarea datelor contactului!');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    document.getElementById('firstName').innerText = data.first_name;
-                    document.getElementById('lastName').innerText = data.last_name;
-                    document.getElementById('phoneNumber').innerText = data.phone_number;
-                    document.getElementById('email').innerText = data.email;
-                })
-                .catch(error => {
-                    console.error('Eroare:', error);
-                });
-            
+
             // Lista de ID-uri pentru checkbox-urile readonly
             const readonlyCheckboxes = ['bathroom_window', 'excluded_ground_floor', 'excluded_top_floor', 'basement', 
                 'semi_basement', 'technical_floor', 'loft', 'attic', 'elevator'];
@@ -343,8 +292,8 @@
             
             // Funcția pentru a formata și afișa data în limba română
             function formatDate(dateString) {
-                if (!dateString || dateString === '---') {
-                    return '---';
+                if (!dateString || dateString === '. . .') {
+                    return '. . .';
                 }
                 var date = new Date(dateString);
                 var day = date.getDate();
@@ -353,12 +302,12 @@
                 var year = date.getFullYear();
                 return day + ' ' + month + ' ' + year;
             }
-            
+
             // Format dată "deadline_date"
-            var deadlineDateInput = document.getElementById('deadline_date');
-            var deadlineDate = deadlineDateInput.getAttribute('data-deadline-date');
-            deadlineDateInput.value = formatDate(deadlineDate);
-            
+            var deadlineDateElement = document.getElementById('deadline_date');
+            var deadlineDate = deadlineDateElement.getAttribute('data-deadline-date');
+            deadlineDateElement.textContent = formatDate(deadlineDate);
+
             // Format dată "created_at"
             var createdAtElement = document.getElementById('created-at');
             var createdAtDate = createdAtElement.getAttribute('data-created-at');

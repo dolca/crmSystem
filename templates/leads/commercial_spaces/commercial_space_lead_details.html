@@ -1,0 +1,275 @@
+{% extends "partials/base.html" %}
+
+{% block title %} Detalii cerere | Spațiu comercial {% endblock title %}
+
+{% block content %}
+
+    {% block pagetitle %}
+        {% include "partials/page_title.html" with pagetitle="Cereri" title="Detalii cerere | Spațiu comercial"%}
+    {% endblock pagetitle %}
+
+    {% if user.is_authenticated %}
+        {% if perms.leads.view_commercialspacelead_details %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="view_commercial_space_lead_details" class="row">
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="contactInfo">
+                                                <h5><span>{{ commercialspacelead.contact.first_name }}</span>
+                                                    <span>{{ commercialspacelead.contact.last_name|default:'' }}</span></h5>
+                                                <div>{{ commercialspacelead.contact.phone_number|default:'' }}</div>
+                                                <div>{{ commercialspacelead.contact.email|default:'' }}</div>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Tip cerere: </strong>
+                                                    {{ commercialspacelead.property_type }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Tip spațiu comercial: </strong>
+                                                    {{ commercialspacelead.space_type }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Tip tranzacție: </strong>
+                                                    {{ commercialspacelead.transaction_type }}</p>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <p class="card-text"><strong>Status cerere: </strong>
+                                                    {{ commercialspacelead.lead_status }}</p>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Județ: </strong>
+                                                    {{ commercialspacelead.county }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Localitate: </strong>
+                                                    {{ commercialspacelead.city }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Zonă: </strong>
+                                                    {{ commercialspacelead.zone|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <p class="card-text"><strong>Stradă: </strong>
+                                                    {{ commercialspacelead.street|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Destinație: </strong>
+                                                    {{ commercialspacelead.destination|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Trafic pietonal: </strong>
+                                                    {{ commercialspacelead.pedestrian_traffic|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Număr camere: </strong>
+                                                    {{ commercialspacelead.rooms_number|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Număr vestiare: </strong>
+                                                    {{ commercialspacelead.nr_locker_rooms|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Număr băi: </strong>
+                                                    {{ commercialspacelead.nr_bathrooms|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Etaj: </strong>
+                                                    {{ commercialspacelead.floor|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Număr etaje: </strong>
+                                                    {{ commercialspacelead.nr_floors|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Suprafață minimă (mp): </strong>
+                                                    {{ commercialspacelead.minimal_surface|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Vitrină (m): </strong>
+                                                    {{ commercialspacelead.glass_case|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Înălțime interioară (m): </strong>
+                                                    {{ commercialspacelead.inside_height|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Compartimentare: </strong>
+                                                    {{ commercialspacelead.space_compart|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Număr locuri parcare: </strong>
+                                                    {{ commercialspacelead.nr_parking_spaces|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="semi_basement" class="form-check-input"
+                                                               name="semi_basement" type="checkbox"
+                                                               {% if commercialspacelead.semi_basement %}checked{% endif %}>
+                                                        <label for="semi_basement" class="form-check-label">Demisol</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input id="technical_floor" class="form-check-input"
+                                                               name="technical_floor" type="checkbox"
+                                                               {% if commercialspacelead.technical_floor %}checked{% endif %}>
+                                                        <label for="technical_floor" class="form-check-label">
+                                                            Etaj tehnic</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 mb-3">
+                                                    <div class="form-check">
+                                                        <input id="loft" class="form-check-input" name="loft"
+                                                               type="checkbox" {% if commercialspacelead.loft %}checked{% endif %}>
+                                                        <label for="loft" class="form-check-label">Mansardă</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Alte detalii: </strong>
+                                                    {{ commercialspacelead.other_details|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Buget (€): </strong>
+                                                    {{ commercialspacelead.budget|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Metodă de plată: </strong>
+                                                    {{ commercialspacelead.payment_method|default:'. . .' }}</p>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Urgență: </strong>
+                                                    {{ commercialspacelead.urgency|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Data limită: </strong><span id="deadline_date"
+                                                        data-deadline-date="{{ commercialspacelead.deadline_date|default:'. . .' }}">
+                                                    {{ commercialspacelead.deadline_date|default:'. . .' }}</span>
+                                                </p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Ora limită: </strong>
+                                                    {{ commercialspacelead.deadline_time|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Proprietăți asociate: </strong>
+                                                    {{ commercialspacelead.assigned_listings|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Etichetă: </strong>
+                                                    {{ commercialspacelead.label|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <p class="card-text"><strong>Notițe proprii: </strong>
+                                                    {{ commercialspacelead.notes|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-body-secondary d-flex flex-column flex-md-row justify-content-md-between">
+                                    <div>
+                                        Adăugată în data de <span id="created-at"
+                                                                  data-created-at="{{ commercialspacelead.created_at }}"></span><br>
+                                        Ultima actualizare în data de <span id="updated-at"
+                                                                            data-updated-at="{{ commercialspacelead.updated_at }}"></span>
+                                    </div>
+                                    <div class="mt-2 mt-md-0 ms-md-auto">
+                                        {% if perms.leads.change_commercialspacelead %}
+                                            <a href="{% url 'leads:edit_commercial_space_lead' commercialspacelead.id %}"
+                                               class="btn btn-subtle-info my-1">
+                                                Editează
+                                            </a>
+                                        {% endif %}
+                                        {% if perms.leads.delete_commercialspacelead %}
+                                            <a href="{% url 'leads:delete_commercial_space_lead' commercialspacelead.id %}"
+                                               class="btn btn-subtle-danger mx-1 my-1">
+                                                Șterge
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock content %}
+
+{% block extra_javascript %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Conținutul DOM a fost încărcat.');
+
+            // Lista de ID-uri pentru checkbox-urile readonly
+            const readonlyCheckboxes = ['semi_basement', 'technical_floor', 'loft'];
+
+            readonlyCheckboxes.forEach(function(id) {
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    checkbox.addEventListener('click', function(e) {
+                        e.preventDefault();
+                    });
+                }
+            });
+
+            // Funcția pentru a formata și afișa data în limba română
+            function formatDate(dateString) {
+                if (!dateString || dateString === '. . .') {
+                    return '. . .';
+                }
+                var date = new Date(dateString);
+                var day = date.getDate();
+                var monthNames = ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Noi', 'Dec'];
+                var month = monthNames[date.getMonth()];
+                var year = date.getFullYear();
+                return day + ' ' + month + ' ' + year;
+            }
+
+            // Format dată "deadline_date"
+            var deadlineDateElement = document.getElementById('deadline_date');
+            var deadlineDate = deadlineDateElement.getAttribute('data-deadline-date');
+            deadlineDateElement.textContent = formatDate(deadlineDate);
+
+            // Format dată "created_at"
+            var createdAtElement = document.getElementById('created-at');
+            var createdAtDate = createdAtElement.getAttribute('data-created-at');
+            createdAtElement.innerText = formatDate(createdAtDate);
+
+            // Format dată "updated_at"
+            var updatedAtElement = document.getElementById('updated-at');
+            var updatedAtDate = updatedAtElement.getAttribute('data-updated-at');
+            updatedAtElement.innerText = formatDate(updatedAtDate);
+        });
+    </script>
+
+{% endblock extra_javascript %}

@@ -15,16 +15,16 @@
                     <div class="card">
                         <div class="card-body">
                             <form id="edit_terrain_lead" method="post" enctype="multipart/form-data" class="row" 
-                                  action="{% url "leads:edit_terrain_lead" terrainlead.pk %}">
+                                  action="{% url 'leads:edit_terrain_lead' terrainlead.pk %}">
                                 {% csrf_token %}
                                 <div class="col-lg-3 col-md-6 col-sm-6">
                                     <div class="card">
                                         <div class="card-body">
                                             <div id="contactInfo">
-                                                <h5><span id="firstName">{{ terrainlead.contact.first_name }}</span> 
-                                                    <span id="lastName">{{ terrainlead.contact.last_name }}</span></h5>
-                                                <div id="phoneNumber">{{ terrainlead.contact.phone_number }}</div>
-                                                <div id="email">{{ terrainlead.contact.email }}</div>
+                                                <h5><span>{{ terrainlead.contact.first_name }}</span> 
+                                                    <span>{{ terrainlead.contact.last_name|default:'' }}</span></h5>
+                                                <div>{{ terrainlead.contact.phone_number|default:'' }}</div>
+                                                <div>{{ terrainlead.contact.email|default:'' }}</div>
                                             </div>
                                             <input id="contact" name="contact" type="hidden" value="{{ terrainlead.contact.id }}" 
                                                    required>
@@ -89,12 +89,12 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="zone" class="form-label">Zonă</label>
                                                 <input id="zone" class="form-control" name="zone" type="text" 
-                                                       value="{{ terrainlead.zone|default_if_none:'' }}">
+                                                       value="{{ terrainlead.zone|default:'' }}">
                                             </div>
                                             <div class="col-lg-12">
                                                 <label for="street" class="form-label">Stradă</label>
                                                 <input id="street" class="form-control" name="street" type="text" 
-                                                       value="{{ terrainlead.street|default_if_none:'' }}">
+                                                       value="{{ terrainlead.street|default:'' }}">
                                             </div>
                                         </div>
                                     </div>
@@ -123,7 +123,7 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="terrain_surface" class="form-label">Suprafață teren</label>
                                                 <input id="terrain_surface" class="form-control" name="terrain_surface" 
-                                                       type="text" value="{{ terrainlead.terrain_surface|default_if_none:'' }}">
+                                                       type="text" value="{{ terrainlead.terrain_surface|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="unit" class="form-label">Unitate suprafață</label>
@@ -137,7 +137,7 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="street_front" class="form-label">Front stradal (m)</label>
                                                 <input id="street_front" class="form-control" name="street_front" 
-                                                       type="text" value="{{ terrainlead.street_front|default_if_none:'' }}">
+                                                       type="text" value="{{ terrainlead.street_front|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="opening_to" class="form-label">Deschidere la</label>
@@ -151,7 +151,7 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="access_road_width" class="form-label">Lățime drum acces (m)</label>
                                                 <input id="access_road_width" class="form-control" name="access_road_width" 
-                                                       type="text" value="{{ terrainlead.access_road_width|default_if_none:'' }}">
+                                                       type="text" value="{{ terrainlead.access_road_width|default:'' }}">
                                             </div>
                                         </div>
                                     </div>
@@ -162,12 +162,12 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="pot" class="form-label">POT (%)</label>
                                                 <input id="pot" class="form-control" name="pot" type="text" 
-                                                       value="{{ terrainlead.pot|default_if_none:'' }}">
+                                                       value="{{ terrainlead.pot|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="cut" class="form-label">CUT</label>
                                                 <input id="cut" class="form-control" name="cut" type="text" 
-                                                       value="{{ terrainlead.cut|default_if_none:'' }}">
+                                                       value="{{ terrainlead.cut|default:'' }}">
                                             </div>
                                             <div class="row">
                                                 <div class="col-lg-6 col-sm-6 mb-2">
@@ -213,7 +213,7 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="other_details" class="form-label">Alte detalii</label>
                                                 <textarea id="other_details" class="form-control" name="other_details" type="text" 
-                                                          rows="4">{{ terrainlead.other_details|default_if_none:'' }}</textarea>
+                                                          rows="4">{{ terrainlead.other_details|default:'' }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -222,9 +222,9 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="budget" class="form-label">Buget alocat</label>
+                                                <label for="budget" class="form-label">Buget (€)</label>
                                                 <input id="budget" class="form-control" name="budget" type="text" 
-                                                       value="{{ terrainlead.budget|default_if_none:'' }}">
+                                                       value="{{ terrainlead.budget|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="payment_method" class="form-label">Metodă de plată</label>
@@ -249,14 +249,14 @@
                                                 <label for="deadline_date" class="form-label">Data limită <span 
                                                         class="firebrick-message">*</span></label>
                                                 <input id="deadline_date" class="form-control" name="deadline_date" 
-                                                       value="{{ terrainlead.deadline_date|default_if_none:'' }}" 
+                                                       value="{{ terrainlead.deadline_date|default:'' }}" 
                                                        type="date" placeholder="zz lll aaaa" required>
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="deadline_time" class="form-label">Ora limită <span 
                                                         class="firebrick-message">*</span></label>
                                                 <input id="deadline_time" class="form-control" name="deadline_time" 
-                                                       value="{{ terrainlead.deadline_time|default_if_none:'' }}" 
+                                                       value="{{ terrainlead.deadline_time|default:'' }}" 
                                                        type="time" step="600" placeholder="oo:mm" required>
                                             </div>
                                             <div class="col-lg-12 mb-3">
@@ -282,7 +282,7 @@
                                             <div class="col-lg-12">
                                                 <label for="notes" class="form-label">Notițe proprii</label>
                                                 <textarea id="notes" class="form-control" name="notes" type="text" 
-                                                          rows="4">{{ terrainlead.notes|default_if_none:'' }}</textarea>
+                                                          rows="4">{{ terrainlead.notes|default:'' }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -312,27 +312,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             console.log('Conținutul DOM a fost încărcat.');
             
-            var storedContactId = "{{ terrainlead.contact.id }}";
-            var pk = "{{ terrainlead.id }}";
-            
-            console.log('ID contact:', storedContactId);
-            
-            fetch(`/contacts/api/contact-details/${storedContactId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Eroare la solicitarea datelor contactului!');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    document.getElementById('firstName').innerText = data.first_name;
-                    document.getElementById('lastName').innerText = data.last_name;
-                    document.getElementById('phoneNumber').innerText = data.phone_number;
-                    document.getElementById('email').innerText = data.email;
-                })
-                .catch(error => {
-                    console.error('Eroare:', error);
-                });
+            var pk = '{{ terrainlead.id }}';
             
             // Inițializez flatpickr pentru câmpul de dată
             flatpickr('#deadline_date', {

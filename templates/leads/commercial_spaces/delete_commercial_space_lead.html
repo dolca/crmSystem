@@ -19,13 +19,13 @@
                                 <div class="col-md-12 mb-3">
                                     <h4 class="text-center"><i class="bi bi-exclamation-triangle"></i> 
                                         Sigur vrei să ștergi cererea asociată contactului cu numele 
-                                        {{ commercialspacelead.contact.first_name|default_if_none:"" }} 
-                                        {{ commercialspacelead.contact.last_name|default_if_none:"" }}?
+                                        {{ commercialspacelead.contact.first_name|default:'' }} 
+                                        {{ commercialspacelead.contact.last_name|default:'' }}?
                                     </h4>
                                 </div>
                                 <div class="card-footer text-center">
                                     <button type="submit" class="btn btn-subtle-danger"><strong>DA</strong></button>
-                                    <a href="{% url "leads:commercial_space_lead_details" commercialspacelead.id %}" 
+                                    <a href="{% url 'leads:commercial_space_lead_details' commercialspacelead.id %}" 
                                        class="btn btn-subtle-primary"><strong>NU</strong></a>
                                 </div>
                             </form>

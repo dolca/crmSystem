@@ -32,9 +32,9 @@
                                                     <option value="" disabled selected>Selectează un contact</option>
                                                     {% for contact in contacts %}
                                                         <option value="{{ contact.id }}">
-                                                            {{ contact.first_name }} {{ contact.last_name|default_if_none:"" }} -
-                                                            {{ contact.phone_number|default_if_none:"" }}
-                                                            {{ contact.email|default_if_none:"" }}
+                                                            {{ contact.first_name }} {{ contact.last_name|default:'' }} -
+                                                            {{ contact.phone_number|default:'' }}
+                                                            {{ contact.email|default:'' }}
                                                         </option>
                                                     {% endfor %}
                                                 </select>
@@ -597,5 +597,5 @@
             window.location.href = redirectUrl;
         }
     </script>
-
+    
 {% endblock extra_javascript %}

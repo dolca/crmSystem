@@ -15,7 +15,7 @@
                     <div class="card">
                         <div class="card-body">
                             <form id="add_commercial_space_lead" method="post" enctype="multipart/form-data" class="row" 
-                                  action="{% url "leads:add_commercial_space_lead" %}">
+                                  action="{% url 'leads:add_commercial_space_lead' %}">
                                 {% csrf_token %}
                                 <div class="col-lg-3 col-md-6 col-sm-6">
                                     <div class="card">
@@ -206,7 +206,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="budget" class="form-label">Buget alocat</label>
+                                                <label for="budget" class="form-label">Buget (€)</label>
                                                 <input id="budget" class="form-control" name="budget" type="text">
                                             </div>
                                             <div class="col-lg-12 mb-3">

@@ -15,16 +15,16 @@
                     <div class="card">
                         <div class="card-body">
                             <form id="edit_office_space_lead" method="post" enctype="multipart/form-data" class="row" 
-                                  action="{% url "leads:edit_office_space_lead" officespacelead.pk %}">
+                                  action="{% url 'leads:edit_office_space_lead' officespacelead.pk %}">
                                 {% csrf_token %}
                                 <div class="col-lg-3 col-md-6 col-sm-6">
                                     <div class="card">
                                         <div class="card-body">
                                             <div id="contactInfo">
-                                                <h5><span id="firstName">{{ officespacelead.contact.first_name }}</span> 
-                                                    <span id="lastName">{{ officespacelead.contact.last_name }}</span></h5>
-                                                <div id="phoneNumber">{{ officespacelead.contact.phone_number }}</div>
-                                                <div id="email">{{ officespacelead.contact.email }}</div>
+                                                <h5><span>{{ officespacelead.contact.first_name }}</span> 
+                                                    <span>{{ officespacelead.contact.last_name|default:'' }}</span></h5>
+                                                <div>{{ officespacelead.contact.phone_number|default:'' }}</div>
+                                                <div>{{ officespacelead.contact.email|default:'' }}</div>
                                             </div>
                                             <input id="contact" name="contact" type="hidden" value="{{ officespacelead.contact.id }}" 
                                                    required>
@@ -88,12 +88,12 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="zone" class="form-label">Zonă</label>
                                                 <input id="zone" class="form-control" name="zone" type="text" 
-                                                       value="{{ officespacelead.zone|default_if_none:'' }}">
+                                                       value="{{ officespacelead.zone|default:'' }}">
                                             </div>
                                             <div class="col-lg-12">
                                                 <label for="street" class="form-label">Stradă</label>
                                                 <input id="street" class="form-control" name="street" type="text" 
-                                                       value="{{ officespacelead.street|default_if_none:'' }}">
+                                                       value="{{ officespacelead.street|default:'' }}">
                                             </div>
                                         </div>
                                     </div>
@@ -113,12 +113,12 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="rooms_number" class="form-label">Număr camere</label>
                                                 <input id="rooms_number" class="form-control" name="rooms_number" type="text" 
-                                                       value="{{ officespacelead.rooms_number|default_if_none:'' }}">
+                                                       value="{{ officespacelead.rooms_number|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="nr_bathrooms" class="form-label">Număr băi</label>
                                                 <input id="nr_bathrooms" class="form-control" name="nr_bathrooms" type="text" 
-                                                       value="{{ officespacelead.nr_bathrooms|default_if_none:'' }}">
+                                                       value="{{ officespacelead.nr_bathrooms|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="floor" class="form-label">Etaj</label>
@@ -134,19 +134,19 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="nr_floors" class="form-label">Număr etaje</label>
                                                 <input id="nr_floors" class="form-control" name="nr_floors" type="text" 
-                                                       value="{{ officespacelead.nr_floors|default_if_none:'' }}">
+                                                       value="{{ officespacelead.nr_floors|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="useful_surface" class="form-label">
                                                     Suprafață utilă (mp)</label>
                                                 <input id="useful_surface" class="form-control" name="useful_surface" type="text" 
-                                                       value="{{ officespacelead.useful_surface|default_if_none:'' }}">
+                                                       value="{{ officespacelead.useful_surface|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="minimum_area" class="form-label">
                                                     Suprafață minimă (mp)</label>
                                                 <input id="minimum_area" class="form-control" name="minimum_area" type="text" 
-                                                       value="{{ officespacelead.minimum_area|default_if_none:'' }}">
+                                                       value="{{ officespacelead.minimum_area|default:'' }}">
                                                 <p></p>
                                                 <div id="minimum_area-error" class="firebrick-message"></div>
                                             </div>
@@ -154,14 +154,14 @@
                                                 <label for="maximum_area" class="form-label">
                                                     Suprafață maximă (mp)</label>
                                                 <input id="maximum_area" class="form-control" name="maximum_area" type="text" 
-                                                       value="{{ officespacelead.maximum_area|default_if_none:'' }}">
+                                                       value="{{ officespacelead.maximum_area|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="total_surface_offices" class="form-label">
                                                     Suprafață totală birouri (mp)</label>
                                                 <input id="total_surface_offices" class="form-control" 
                                                        name="total_surface_offices" type="text" 
-                                                       value="{{ officespacelead.total_surface_offices|default_if_none:'' }}">
+                                                       value="{{ officespacelead.total_surface_offices|default:'' }}">
                                             </div>
                                         </div>
                                     </div>
@@ -183,28 +183,28 @@
                                                     Nr. locuri parcare subterană</label>
                                                 <input id="nr_underground_parking" class="form-control" 
                                                        name="nr_underground_parking" type="text" 
-                                                       value="{{ officespacelead.nr_underground_parking|default_if_none:'' }}">
+                                                       value="{{ officespacelead.nr_underground_parking|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="underground_parking_cost" class="form-label">
                                                     Cost loc parcare subterană</label>
                                                 <input id="underground_parking_cost" class="form-control" 
                                                        name="underground_parking_cost" type="text" 
-                                                       value="{{ officespacelead.underground_parking_cost|default_if_none:'' }}">
+                                                       value="{{ officespacelead.underground_parking_cost|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="nr_surface_parking" class="form-label">
                                                     Nr. locuri parcare suprafață</label>
                                                 <input id="nr_surface_parking" class="form-control" 
                                                        name="nr_surface_parking" type="text" 
-                                                       value="{{ officespacelead.nr_surface_parking|default_if_none:'' }}">
+                                                       value="{{ officespacelead.nr_surface_parking|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="surface_parking_cost" class="form-label">
                                                     Cost loc parcare suprafață</label>
                                                 <input id="surface_parking_cost" class="form-control" 
                                                        name="surface_parking_cost" type="text" 
-                                                       value="{{ officespacelead.surface_parking_cost|default_if_none:'' }}">
+                                                       value="{{ officespacelead.surface_parking_cost|default:'' }}">
                                             </div>
                                             <div class="row">
                                                 <div class="col-lg-6 col-sm-6 mb-2">
@@ -251,7 +251,7 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="other_details" class="form-label">Alte detalii</label>
                                                 <textarea id="other_details" class="form-control" name="other_details" type="text" 
-                                                          rows="4">{{ officespacelead.other_details|default_if_none:'' }}</textarea>
+                                                          rows="4">{{ officespacelead.other_details|default:'' }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -260,9 +260,9 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="budget" class="form-label">Buget alocat</label>
+                                                <label for="budget" class="form-label">Buget (€)</label>
                                                 <input id="budget" class="form-control" name="budget" type="text" 
-                                                       value="{{ officespacelead.budget|default_if_none:'' }}">
+                                                       value="{{ officespacelead.budget|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="payment_method" class="form-label">Metodă de plată</label>
@@ -287,14 +287,14 @@
                                                 <label for="deadline_date" class="form-label">Data limită <span
                                                         class="firebrick-message">*</span></label>
                                                 <input id="deadline_date" class="form-control" name="deadline_date" 
-                                                       value="{{ officespacelead.deadline_date|default_if_none:'' }}" 
+                                                       value="{{ officespacelead.deadline_date|default:'' }}" 
                                                        type="date" placeholder="zz lll aaaa" required>
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="deadline_time" class="form-label">Ora limită <span
                                                         class="firebrick-message">*</span></label>
                                                 <input id="deadline_time" class="form-control" name="deadline_time" 
-                                                       value="{{ officespacelead.deadline_time|default_if_none:'' }}" 
+                                                       value="{{ officespacelead.deadline_time|default:'' }}" 
                                                        type="time" step="600" placeholder="oo:mm" required>
                                             </div>
                                             <div class="col-lg-12 mb-3">
@@ -321,7 +321,7 @@
                                             <div class="col-lg-12">
                                                 <label for="notes" class="form-label">Notițe proprii</label>
                                                 <textarea id="notes" class="form-control" name="notes" type="text" 
-                                                          rows="4">{{ officespacelead.notes|default_if_none:'' }}</textarea>
+                                                          rows="4">{{ officespacelead.notes|default:'' }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -351,27 +351,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             console.log('Conținutul DOM a fost încărcat.');
             
-            var storedContactId = "{{ officespacelead.contact.id }}";
-            var pk = "{{ officespacelead.id }}";
-            
-            console.log('ID contact:', storedContactId);
-            
-            fetch(`/contacts/api/contact-details/${storedContactId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Eroare la solicitarea datelor contactului!');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    document.getElementById('firstName').innerText = data.first_name;
-                    document.getElementById('lastName').innerText = data.last_name;
-                    document.getElementById('phoneNumber').innerText = data.phone_number;
-                    document.getElementById('email').innerText = data.email;
-                })
-                .catch(error => {
-                    console.error('Eroare:', error);
-                });
+            var pk = '{{ officespacelead.id }}';
             
             // Inițializez flatpickr pentru câmpul de dată
             flatpickr('#deadline_date', {

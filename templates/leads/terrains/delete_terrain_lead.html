@@ -19,13 +19,13 @@
                                 <div class="col-md-12 mb-3">
                                     <h4 class="text-center"><i class="bi bi-exclamation-triangle"></i> 
                                         Sigur vrei să ștergi cererea asociată contactului cu numele 
-                                        {{ apartmentlead.contact.first_name|default_if_none:"" }} 
-                                        {{ apartmentlead.contact.last_name|default_if_none:"" }}?
+                                        {{ apartmentlead.contact.first_name|default:'' }} 
+                                        {{ apartmentlead.contact.last_name|default:'' }}?
                                     </h4>
                                 </div>
                                 <div class="card-footer text-center">
                                     <button type="submit" class="btn btn-subtle-danger"><strong>DA</strong></button>
-                                    <a href="{% url "leads:terrain_lead_details" terrainlead.id %}" 
+                                    <a href="{% url 'leads:terrain_lead_details' terrainlead.id %}" 
                                        class="btn btn-subtle-primary"><strong>NU</strong></a>
                                 </div>
                             </form>
