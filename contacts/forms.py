@@ -1,11 +1,12 @@
-from django.forms import ModelForm, TextInput, NumberInput, Textarea, Select, EmailInput, DateInput, SelectMultiple
+from django.forms import ModelForm, TextInput, NumberInput, Textarea, Select, EmailInput, DateInput, SelectMultiple, \
+    ClearableFileInput
 from .models import Contact
 
 
 class ContactCreateForm(ModelForm):
     class Meta:
         model = Contact
-        exclude = ['created_at', 'updated_at']
+        fields = '__all__'
         widgets = {
             'first_name': TextInput(attrs={'class': 'form-control'}),
             'last_name': TextInput(attrs={'class': 'form-control'}),
@@ -71,6 +72,7 @@ class ContactUpdateForm(ModelForm):
             'contact_type': SelectMultiple(attrs={'class': 'form-control'}),
             'contact_category': SelectMultiple(attrs={'class': 'form-control'}),
 
+            'avatar': ClearableFileInput(attrs={'class': 'form-control'}),
             'other_details': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
 
             'created_at': DateInput(attrs={'readonly': 'readonly'}),

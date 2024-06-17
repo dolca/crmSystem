@@ -1,0 +1,39 @@
+{% extends "partials/base.html" %}
+
+{% block title %} Șterge contact {% endblock title %}
+
+{% block content %}
+    
+    {% block pagetitle %}
+        {% include "partials/page_title.html" with pagetitle="Contacte" title="Șterge contact" %}
+    {% endblock pagetitle %}
+    
+    {% if user.is_authenticated %}
+        {% if perms.contacts.delete_contact %}
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="col-md-12 mb-3">
+                                    <h4 class="text-center"><i class="bi bi-exclamation-triangle"></i> 
+                                        Sigur vrei să ștergi contactul cu numele 
+                                        {{ contact.first_name }} 
+                                        {{ contact.last_name|default:'' }}?
+                                    </h4>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <button type="submit" class="btn btn-subtle-danger"><strong>DA</strong></button>
+                                    <a href="{% url 'contacts:contact_details' contact.id %}" 
+                                       class="btn btn-subtle-primary"><strong>NU</strong></a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+    
+{% endblock content %}

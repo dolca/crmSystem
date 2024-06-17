@@ -21,7 +21,7 @@
                                         <div>
                                             <a href="{% url 'leads:add_new_lead' %}" class="btn btn-subtle-success">
                                                 <strong><i class="ri-add-line align-bottom me-1"></i></strong> 
-                                                Adaugă cerere nouă
+                                                Adaugă cerere
                                             </a>
                                         </div>
                                     </div>
@@ -146,7 +146,7 @@
                                                                 {% if terrain.id %}
                                                                     <a class="btn btn-subtle-primary btn-custom-width"
                                                                        href="{% url 'leads:terrain_lead_details' terrain.id %}">
-                                                                        Detalii
+                                                                        <i class="bi bi-info-square"></i> Detalii
                                                                     </a>
                                                                 {% endif %}
                                                             {% endif %}
@@ -155,7 +155,7 @@
                                                                 {% if terrain.id %}
                                                                     <a class="btn btn-subtle-info btn-custom-width"
                                                                        href="{% url 'leads:edit_terrain_lead' terrain.id %}">
-                                                                        Editează
+                                                                        <i class="bi bi-pencil-square"></i> Editează
                                                                     </a>
                                                                 {% endif %}
                                                             {% endif %}

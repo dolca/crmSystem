@@ -115,9 +115,6 @@ def save_contact(request):
 
         other_details = data.get('other_details', None) or None
 
-        if issue_date in ['', 'undefined-undefined-', 'null']:
-            issue_date = None
-
         if not first_name:
             raise ValueError('Trebuie să introduci obligatoriu un prenume.')
 

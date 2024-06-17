@@ -1,4 +1,6 @@
-from django.db.models import Model, CharField, IntegerField, TextField, EmailField, DateField, DateTimeField
+from django.contrib.auth.models import User
+from django.db.models import Model, CharField, IntegerField, TextField, EmailField, DateField, ForeignKey, \
+    DateTimeField, ImageField, SET_NULL
 from contacts.selectors import TIP_DOCUMENT, TIP_CONTACT, CATEGORIE_CONTACT
 
 
@@ -29,10 +31,15 @@ class Contact(Model):
     contact_type = CharField(choices=TIP_CONTACT, null=True, blank=True, verbose_name='Tip contact')
     contact_category = CharField(choices=CATEGORIE_CONTACT, null=True, blank=True, verbose_name='Categorie')
 
+    avatar = ImageField(upload_to='media/contact_avatars', null=True, blank=True, verbose_name='Avatar')
     other_details = TextField(max_length=2000, null=True, blank=True, verbose_name='Alte detalii')
 
-    created_at = DateTimeField(auto_now_add=True, verbose_name='Data adăugării')
-    updated_at = DateTimeField(auto_now=True, verbose_name='Data ultimei actualizări')
+    created_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='created_contact',
+                            verbose_name='Adăugat de')
+    updated_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='updated_contact',
+                            verbose_name='Actualizat de')
+    created_at = DateTimeField(auto_now_add=True, verbose_name='Adăugat în')
+    updated_at = DateTimeField(auto_now=True, verbose_name='Actualizat în')
 
     def save(self, *args, **kwargs):
         if self.first_name:

@@ -35,15 +35,21 @@
 
                     <li class="menu-title"><span>Meniu</span></li>
                     <li class="nav-item">
-                        <a href="{% url 'dashboard:dashboard' %}" class="nav-link menu-link"> <i 
-                                class='bi bi-grid fs-2xl'></i> <span class="sidebar-text">Acasă</span> 
+                        <a href="{% url 'dashboard:dashboard' %}" class="nav-link menu-link"><i 
+                                class="bi bi-speedometer2"></i> <span class="sidebar-text">Acasă</span> 
                         </a>
                     </li>
-
+                    
+                    <li class="nav-item">
+                        <a href="{% url 'contacts:contacts_list' %}" class="nav-link menu-link"> <i 
+                                class="bi bi-person-vcard"></i> <span class="sidebar-text">Contacte</span> 
+                        </a>
+                    </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link menu-link collapsed" href="#leadsMultilevel" data-bs-toggle="collapse"
-                           role="button" aria-expanded="false" aria-controls="leadsMultilevel">
-                            <i class="bi bi-person"></i> <span class="sidebar-text">Cereri</span>
+                           role="button" aria-expanded="false" aria-controls="leadsMultilevel"><i 
+                                class="bi bi-people"></i> <span class="sidebar-text">Cereri</span>
                         </a>
                         <div class="collapse menu-dropdown" id="leadsMultilevel">
                             <ul class="nav nav-sm flex-column">
