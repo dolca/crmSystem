@@ -31,11 +31,7 @@
                                                 <select id="contact" class="form-select" name="contact" required>
                                                     <option value="" disabled selected>Selectează un contact</option>
                                                     {% for contact in contacts %}
-                                                        <option value="{{ contact.id }}">
-                                                            {{ contact.first_name }} {{ contact.last_name|default:'' }} -
-                                                            {{ contact.phone_number|default:'' }}
-                                                            {{ contact.email|default:'' }}
-                                                        </option>
+                                                        <option value="{{ contact.id }}">{{ contact.first_name }} {{ contact.last_name|default:'' }} - {{ contact.phone_number|default:'' }} {{ contact.email|default:'' }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
@@ -240,14 +236,22 @@
             var idContactElement = document.getElementById('contact');
             console.log('Elementul ID "Choices":', idContactElement);
             
-            var realOptions = idContactElement.querySelectorAll('option:not([disabled])');
+            var realOptions = Array.from(idContactElement.querySelectorAll('option:not([disabled])')).map(option => ({
+                value: option.value,
+                label: option.textContent.trim()
+            }));
+            
+            realOptions.unshift({ value: '', label: 'Selectează un contact' });
+            
+            idContactElement.innerHTML = '';
+            
             realOptions.forEach(function(option) {
-                idContactElement.append(new Option(option.textContent.trim(), option.value));
+                idContactElement.append(new Option(option.label, option.value));
             });
             
             console.log('Datele opțiunilor:', realOptions);
             
-            new Choices(idContactElement, {
+            var choices = new Choices(idContactElement, {
                 loadingText: 'Se încarcă...',
                 noResultsText: 'Niciun rezultat găsit',
                 searchFields: ['label'],
@@ -268,9 +272,9 @@
                 myModal.hide();
             });
             
-            var formFields = ['first_name', 'last_name', 'phone_number', 'email', 'company', 'job_title', 'city', 
-                'street_address', 'street_number', 'block', 'scale', 'apartment_number', 'county', 'country', 
-                'document_type', 'id_series_nr', 'cnp', 'issue_date', 'passport_country', 'contact_type', 
+            var formFields = ['first_name', 'last_name', 'phone_number', 'email', 'company', 'job_title', 'city',
+                'street_address', 'street_number', 'block', 'scale', 'apartment_number', 'county', 'country',
+                'document_type', 'id_series_nr', 'cnp', 'issue_date', 'passport_country', 'contact_type',
                 'contact_category', 'other_details'];
             
             formFields.forEach(function (field) {
@@ -354,9 +358,9 @@
                     });
             }
             
-            async function saveContact(firstName, lastName, phoneNumber, email, company, jobTitle, city, streetAddress, 
-                                       streetNumber, block, scale, apartmentNumber, county, country, documentType, 
-                                       idSeriesNr, cnp, issueDate, passportCountry, contactType, contactCategory, 
+            async function saveContact(firstName, lastName, phoneNumber, email, company, jobTitle, city, streetAddress,
+                                       streetNumber, block, scale, apartmentNumber, county, country, documentType,
+                                       idSeriesNr, cnp, issueDate, passportCountry, contactType, contactCategory,
                                        otherDetails) {
                 const csrfToken = getCSRFToken();
                 const headers = {
@@ -417,6 +421,14 @@
                         formFields.forEach(function (field) {
                             document.getElementById(field).value = '';
                         });
+                        
+                        const newOption = new Option(responseData.contact_name, responseData.contact_id, false, true);
+                        idContactElement.append(newOption);
+                        choices.setChoices([...choices._currentState.items, {
+                            value: responseData.contact_id,
+                            label: responseData.contact_name,
+                            selected: true
+                        }], 'value', 'label', true);
                     } else {
                         console.error('Eroare la salvarea contactului:', responseData.message);
                     }
