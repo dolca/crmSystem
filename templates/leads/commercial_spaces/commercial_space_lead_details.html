@@ -203,13 +203,13 @@
                                         {% if perms.leads.change_commercialspacelead %}
                                             <a href="{% url 'leads:edit_commercial_space_lead' commercialspacelead.id %}"
                                                class="btn btn-subtle-info my-1">
-                                                Editează
+                                                <i class="bi bi-pencil-square"></i>&nbsp;&nbsp;Editează
                                             </a>
                                         {% endif %}
                                         {% if perms.leads.delete_commercialspacelead %}
                                             <a href="{% url 'leads:delete_commercial_space_lead' commercialspacelead.id %}"
                                                class="btn btn-subtle-danger mx-1 my-1">
-                                                Șterge
+                                                <i class="bi bi-trash3"></i>&nbsp;&nbsp;Șterge
                                             </a>
                                         {% endif %}
                                     </div>

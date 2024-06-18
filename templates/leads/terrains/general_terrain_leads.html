@@ -91,7 +91,7 @@
                                                         </td>
                                                         <td>
                                                             <div class="customer_name">
-                                                                <strong>{{ terrain.contact.first_name }} 
+                                                                <strong>{{ terrain.contact.first_name }}
                                                                     {{ terrain.contact.last_name|default:'' }}</strong>
                                                             </div>
                                                             <div class="phone_number">{% if terrain.contact.phone_number %}
@@ -152,7 +152,7 @@
                                                                 {% if terrain.id %}
                                                                     <a class="btn btn-subtle-primary btn-custom-width"
                                                                        href="{% url 'leads:terrain_lead_details' terrain.id %}">
-                                                                        <i class="bi bi-info-square"></i> Detalii
+                                                                        <i class="bi bi-info-square"></i>&nbsp;&nbsp;Detalii
                                                                     </a>
                                                                 {% endif %}
                                                             {% endif %}
@@ -161,7 +161,7 @@
                                                                 {% if terrain.id %}
                                                                     <a class="btn btn-subtle-info btn-custom-width"
                                                                        href="{% url 'leads:edit_terrain_lead' terrain.id %}">
-                                                                        <i class="bi bi-pencil-square"></i> Editează
+                                                                        <i class="bi bi-pencil-square"></i>&nbsp;&nbsp;Editează
                                                                     </a>
                                                                 {% endif %}
                                                             {% endif %}

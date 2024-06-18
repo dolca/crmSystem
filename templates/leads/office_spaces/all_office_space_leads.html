@@ -91,7 +91,7 @@
                                                         </td>
                                                         <td>
                                                             <div class="customer_name">
-                                                                <strong>{{ off_sp.contact.first_name }} 
+                                                                <strong>{{ off_sp.contact.first_name }}
                                                                     {{ off_sp.contact.last_name|default:'' }}</strong>
                                                             </div>
                                                             <div class="phone_number">{% if off_sp.contact.phone_number %}
@@ -149,7 +149,7 @@
                                                                 {% if off_sp.id %}
                                                                     <a class="btn btn-subtle-primary btn-custom-width"
                                                                        href="{% url 'leads:office_space_lead_details' off_sp.id %}">
-                                                                        <i class="bi bi-info-square"></i> Detalii
+                                                                        <i class="bi bi-info-square"></i>&nbsp;&nbsp;Detalii
                                                                     </a>
                                                                 {% endif %}
                                                             {% endif %}
@@ -158,7 +158,7 @@
                                                                 {% if off_sp.id %}
                                                                     <a class="btn btn-subtle-info btn-custom-width" 
                                                                        href="{% url 'leads:edit_office_space_lead' off_sp.id %}">
-                                                                        <i class="bi bi-pencil-square"></i> Editează
+                                                                        <i class="bi bi-pencil-square"></i>&nbsp;&nbsp;Editează
                                                                     </a>
                                                                 {% endif %}
                                                             {% endif %}

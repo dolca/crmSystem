@@ -17,16 +17,18 @@
                             <form method="post">
                                 {% csrf_token %}
                                 <div class="col-md-12 mb-3">
-                                    <h4 class="text-center"><i class="bi bi-exclamation-triangle"></i> 
+                                    <h4 class="text-center"><i class="bi bi-exclamation-triangle"></i>&nbsp;
                                         Sigur vrei să ștergi cererea asociată contactului cu numele 
                                         {{ officespacelead.contact.first_name }} 
                                         {{ officespacelead.contact.last_name|default:'' }}?
                                     </h4>
                                 </div>
                                 <div class="card-footer text-center">
-                                    <button type="submit" class="btn btn-subtle-danger"><strong>DA</strong></button>
+                                    <button type="submit" class="btn btn-subtle-danger"><i 
+                                            class="bi bi-trash3"></i>&nbsp;&nbsp;<strong>DA</strong></button>
                                     <a href="{% url 'leads:office_space_lead_details' officespacelead.id %}" 
-                                       class="btn btn-subtle-primary"><strong>NU</strong></a>
+                                       class="btn btn-subtle-primary"><i class="bi bi-x-lg"></i>&nbsp;
+                                        <strong>NU</strong></a>
                                 </div>
                             </form>
                         </div>

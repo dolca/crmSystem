@@ -224,13 +224,13 @@
                                         {% if perms.leads.change_officespacelead %}
                                             <a href="{% url 'leads:edit_office_space_lead' officespacelead.id %}"
                                                class="btn btn-subtle-info my-1">
-                                                Editează
+                                                <i class="bi bi-pencil-square"></i>&nbsp;&nbsp;Editează
                                             </a>
                                         {% endif %}
                                         {% if perms.leads.delete_officespacelead %}
                                             <a href="{% url 'leads:delete_office_space_lead' officespacelead.id %}"
                                                class="btn btn-subtle-danger mx-1 my-1">
-                                                Șterge
+                                                <i class="bi bi-trash3"></i>&nbsp;&nbsp;Șterge
                                             </a>
                                         {% endif %}
                                     </div>
