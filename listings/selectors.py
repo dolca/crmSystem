@@ -40,11 +40,8 @@ DESTINATIE_AP = [
 ]
 
 COMPARTIMENTARE_AP = [
-    ('Decomandat', 'Decomandat'),
-    ('Semidecomandat', 'Semidecomandat'),
-    ('Nedecomandat', 'Nedecomandat'),
-    ('Circular', 'Circular'),
-    ('Vagon', 'Vagon')
+    ('Decomandat', 'Decomandat'), ('Semidecomandat', 'Semidecomandat'), ('Nedecomandat', 'Nedecomandat'),
+    ('Circular', 'Circular'), ('Vagon', 'Vagon')
 ]
 
 ETAJ_AP = [

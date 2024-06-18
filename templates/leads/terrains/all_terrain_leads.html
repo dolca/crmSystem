@@ -91,45 +91,51 @@
                                                         </td>
                                                         <td>
                                                             <div class="customer_name">
-                                                                <strong>{{ terrain.contact.first_name|default_if_none:"" }} 
-                                                                    {{ terrain.contact.last_name|default_if_none:"" }}</strong>
+                                                                <strong>{{ terrain.contact.first_name }} 
+                                                                    {{ terrain.contact.last_name|default:'' }}</strong>
                                                             </div>
                                                             <div class="phone_number">{% if terrain.contact.phone_number %}
-                                                                {{ terrain.contact.phone_number }}{% else %}Fără nr. telefon{% endif %}
+                                                                {{ terrain.contact.phone_number }}{% else %}
+                                                                <i>Fără nr. telefon</i>{% endif %}
                                                             </div>
                                                             <div class="email">{% if terrain.contact.email %}
-                                                                {{ terrain.contact.email }}{% else %}Fără e-mail{% endif %}
+                                                                {{ terrain.contact.email }}{% else %}
+                                                                <i>Fără e-mail</i>{% endif %}
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div class="transaction_type">{{ terrain.transaction_type }}</div>
                                                             <div class="terrain_type">{{ terrain.terrain_type }}</div>
-                                                            <div class="destination">{{ terrain.destination }}</div>
+                                                            <div class="destination">{% if terrain.destination %}
+                                                                {{ terrain.destination }}{% else %}
+                                                                <i>Nicio destinație</i>{% endif %}</div>
                                                         </td>
                                                         <td>
                                                             <div class="budget">{% if terrain.budget %}
-                                                                <strong>{{ terrain.budget }}</strong>
-                                                            {% else %}Nespecificat{% endif %}</div>
+                                                                <strong>{{ terrain.budget }}</strong>{% else %}
+                                                                <i>Nespecificat</i>{% endif %}</div>
                                                             <div class="payment_method">{% if terrain.payment_method %}
-                                                                {{ terrain.payment_method }}
-                                                            {% else %}Metodă plată<br>nespecificată{% endif %}</div>
+                                                                {{ terrain.payment_method }}{% else %}{% endif %}</div>
                                                         </td>
                                                         <td>
-                                                            <div class="street">{% if terrain.street %}{{ terrain.street }}
-                                                            {% else %}Stradă nespecificată{% endif %}</div>
-                                                            <div class="zone">{% if terrain.zone %}{{ terrain.zone }}
-                                                            {% else %}Zonă nespecificată{% endif %}</div>
+                                                            <div class="street">{% if terrain.street %}{{ terrain.street }}{% else %}
+                                                                <i>Stradă nespecificată</i>{% endif %}</div>
+                                                            <div class="zone">{% if terrain.zone %}{{ terrain.zone }}{% else %}
+                                                                <i>Zonă nespecificată</i>{% endif %}</div>
                                                             <div class="city">{{ terrain.city }}</div>
                                                             <div class="county">{{ terrain.county }}</div>
                                                         </td>
                                                         <td class="label">
-                                                            {% if terrain.label %}{{ terrain.label }}{% else %}Fără etichetă{% endif %}
+                                                            {% if terrain.label %}{{ terrain.label }}{% else %}
+                                                                <i>Fără etichetă</i>{% endif %}
                                                         </td>
                                                         <td>
                                                             <div class="deadline_date">{% if terrain.deadline_date %}
-                                                                {{ terrain.deadline_date }}{% else %}Fără dată limită{% endif %}</div>
+                                                                {{ terrain.deadline_date }}{% else %}
+                                                                <i>Fără dată limită</i>{% endif %}</div>
                                                             <div class="deadline_time">{% if terrain.deadline_time %}
-                                                                {{ terrain.deadline_time }}{% else %}Fără oră limită{% endif %}</div>
+                                                                Ora {{ terrain.deadline_time }}{% else %}
+                                                                <i>Fără oră limită</i>{% endif %}</div>
                                                         </td>
                                                         <td class="assigned_listings">
                                                             {% if terrain.assigned_listings.exists %}
@@ -138,7 +144,7 @@
                                                                     {% if not forloop.last %}, {% endif %}
                                                                 {% endfor %}
                                                             {% else %}
-                                                                Nu există
+                                                                <i>Nu există</i>
                                                             {% endif %}
                                                         </td>
                                                         <td>

@@ -91,45 +91,51 @@
                                                         </td>
                                                         <td>
                                                             <div class="customer_name">
-                                                                <strong>{{ apartment.contact.first_name|default_if_none:"" }} 
-                                                                    {{ apartment.contact.last_name|default_if_none:"" }}</strong>
+                                                                <strong>{{ apartment.contact.first_name }} 
+                                                                    {{ apartment.contact.last_name|default:'' }}</strong>
                                                             </div>
                                                             <div class="phone_number">{% if apartment.contact.phone_number %}
-                                                                {{ apartment.contact.phone_number }}{% else %}Fără nr. telefon{% endif %}
+                                                                {{ apartment.contact.phone_number }}{% else %}
+                                                                <i>Fără nr. telefon</i>{% endif %}
                                                             </div>
                                                             <div class="email">{% if apartment.contact.email %}
-                                                                {{ apartment.contact.email }}{% else %}Fără e-mail{% endif %}
+                                                                {{ apartment.contact.email }}{% else %}
+                                                                <i>Fără e-mail</i>{% endif %}
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div class="transaction_type">{{ apartment.transaction_type }}</div>
                                                             <div class="apartment_type">{{ apartment.apartment_type }}</div>
-                                                            <div class="destination">{{ apartment.destination }}</div>
+                                                            <div class="destination">{% if apartment.destination %}
+                                                                {{ apartment.destination }}{% else %}
+                                                                <i>Nicio destinație</i>{% endif %}</div>
                                                         </td>
                                                         <td>
                                                             <div class="budget">{% if apartment.budget %}
-                                                                <strong>{{ apartment.budget }}</strong>
-                                                            {% else %}Nespecificat{% endif %}</div>
+                                                                <strong>{{ apartment.budget }}</strong>{% else %}
+                                                                <i>Nespecificat</i>{% endif %}</div>
                                                             <div class="payment_method">{% if apartment.payment_method %}
-                                                                {{ apartment.payment_method }}
-                                                            {% else %}Metodă plată<br>nespecificată{% endif %}</div>
+                                                                {{ apartment.payment_method }}{% else %}{% endif %}</div>
                                                         </td>
                                                         <td>
                                                             <div class="street">{% if apartment.street %}{{ apartment.street }}{% else %}
-                                                                Stradă nespecificată{% endif %}</div>
+                                                                <i>Stradă nespecificată</i>{% endif %}</div>
                                                             <div class="zone">{% if apartment.zone %}{{ apartment.zone }}{% else %}
-                                                                Zonă nespecificată{% endif %}</div>
+                                                                <i>Zonă nespecificată</i>{% endif %}</div>
                                                             <div class="city">{{ apartment.city }}</div>
                                                             <div class="county">{{ apartment.county }}</div>
                                                         </td>
                                                         <td class="label">
-                                                            {% if apartment.label %}{{ apartment.label }}{% else %}Fără etichetă{% endif %}
+                                                            {% if apartment.label %}{{ apartment.label }}{% else %}
+                                                                <i>Fără etichetă</i>{% endif %}
                                                         </td>
                                                         <td>
                                                             <div class="deadline_date">{% if apartment.deadline_date %}
-                                                                {{ apartment.deadline_date }}{% else %}Fără dată limită{% endif %}</div>
+                                                                {{ apartment.deadline_date }}{% else %}
+                                                                <i>Fără dată limită</i>{% endif %}</div>
                                                             <div class="deadline_time">{% if apartment.deadline_time %}
-                                                                {{ apartment.deadline_time }}{% else %}Fără oră limită{% endif %}</div>
+                                                                Ora {{ apartment.deadline_time }}{% else %}
+                                                                <i>Fără oră limită</i>{% endif %}</div>
                                                         </td>
                                                         <td class="assigned_listings">
                                                             {% if apartment.assigned_listings.exists %}
@@ -138,7 +144,7 @@
                                                                     {% if not forloop.last %}, {% endif %}
                                                                 {% endfor %}
                                                             {% else %}
-                                                                Nu există
+                                                                <i>Nu există</i>
                                                             {% endif %}
                                                         </td>
                                                         <td>
