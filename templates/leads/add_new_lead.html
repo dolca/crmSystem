@@ -23,13 +23,13 @@
                                 <div class="mb-2">
                                     <form method="post" action="" id="add_new_lead">
                                         {% csrf_token %}
-
+                                    
                                         <div class="row mb-2">
                                             <label for="contact" class="form-label">Contact asociat <span
                                                     class="firebrick-message">*</span></label>
                                             <div class="col-lg-10 col-sm-10 mb-2">
                                                 <select id="contact" class="form-select" name="contact" required>
-                                                    <option value="" disabled selected>Selectează un contact</option>
+                                                    <option value="">Selectează un contact</option>
                                                     {% for contact in contacts %}
                                                         <option value="{{ contact.id }}">{{ contact.first_name }} {{ contact.last_name|default:'' }} - {{ contact.phone_number|default:'' }} {{ contact.email|default:'' }}</option>
                                                     {% endfor %}
@@ -41,7 +41,7 @@
                                                 </button>
                                             </div>
                                         </div>
-
+                                    
                                         <div class="form-group">
                                             <label for="property_type" class="form-label">Tip cerere <span 
                                                     class="firebrick-message">*</span></label>
@@ -51,7 +51,7 @@
                                                 {% endfor %}
                                             </select>
                                         </div>
-
+                                    
                                         <div class="d-flex justify-content-center w-100">
                                             <button type="submit" class="btn btn-subtle-success col-12">
                                                 Continuă&nbsp;&nbsp;<i class="bi bi-caret-right-fill"></i></button>
@@ -65,15 +65,15 @@
             </div>
         </div>
     {% endif %}
-
+    
     <div class="modal fade" id="addContact" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-
+            
                 <div class="modal-header bg-light p-3">
                     <h5 class="modal-title">Adaugă contact</h5>
                 </div>
-
+            
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="first_name" class="form-label">Prenume <span
@@ -176,8 +176,7 @@
                     <div class="form-group">
                         <label for="issue_date" class="form-label">Data emiterii</label>
                         <div id="issueDateError" class="firebrick-message"></div>
-                        <input id="issue_date" class="form-control" name="issue_date" type="date" 
-                               placeholder="zz lll aaaa">
+                        <input id="issue_date" class="form-control" name="issue_date" type="date">
                     </div>
                     <p>
                     <div class="form-group">
@@ -211,80 +210,78 @@
                         <textarea id="other_details" class="form-control" name="other_details" rows="3"></textarea>
                     </div>
                 </div>
-
+            
                 <div class="modal-footer border-top">
                     <div class="hstack gap-2 justify-content-end">
-                        <button id="close-modal" class="btn btn-light" type="button" data-bs-dismiss="modal" 
+                        <button id="close-modal" class="btn btn-light" type="button" data-bs-dismiss="modal"
                                 aria-label="Close"><i class="bi bi-x-lg"></i>&nbsp;&nbsp;Închide</button>
-                        <button id="save-modal" class="btn btn-subtle-success" type="submit"><i 
+                        <button id="save-modal" class="btn btn-subtle-success" type="submit"><i
                                 class="bi bi-check-lg"></i>&nbsp;&nbsp;Salvează contactul</button>
                     </div>
                 </div>
-
+            
             </div>
         </div>
     </div>
-
+    
 {% endblock content %}
 
 {% block extra_javascript %}
-
+    
     <script>
-        var isFormDirty = false;
-
         document.addEventListener('DOMContentLoaded', function () {
             console.log('Conținutul DOM a fost încărcat.');
-
+            
+            var isFormDirty = false;
             var idContactElement = document.getElementById('contact');
             console.log('Elementul ID "Choices":', idContactElement);
-
+            
             var realOptions = Array.from(idContactElement.querySelectorAll('option:not([disabled])')).map(option => ({
                 value: option.value,
                 label: option.textContent.trim()
             }));
-
-            realOptions.unshift({ value: '', label: 'Selectează un contact' });
-
+            
             idContactElement.innerHTML = '';
-
+            
             realOptions.forEach(function(option) {
                 idContactElement.append(new Option(option.label, option.value));
             });
-
+            
             console.log('Datele opțiunilor:', realOptions);
-
-            var choices = new Choices(idContactElement, {
+            
+            new Choices(idContactElement, {
+                placeholder: true,
                 loadingText: 'Se încarcă...',
-                noResultsText: 'Niciun rezultat găsit',
-                searchFields: ['label'],
+                noChoicesText: 'Niciun contact disponibil',
                 searchEnabled: true,
-                shouldSort: false,
-                renderSelectedChoices: 'always'
+                searchFields: ['label'],
+                searchResultLimit: 6,
+                noResultsText: 'Niciun rezultat găsit'
             });
-
+            
             console.log('Inițializare "Choices" cu succes!');
-
+            
             var myModal = new bootstrap.Modal(document.getElementById('addContact'));
-
+            
             document.getElementById('open-modal').addEventListener('click', function () {
                 myModal.show();
             });
-
+            
             document.getElementById('close-modal').addEventListener('click', function () {
                 myModal.hide();
             });
-
+            
             var formFields = ['first_name', 'last_name', 'phone_number', 'email', 'company', 'job_title', 'city',
                 'street_address', 'street_number', 'block', 'scale', 'apartment_number', 'county', 'country',
                 'document_type', 'id_series_nr', 'cnp', 'issue_date', 'passport_country', 'contact_type',
                 'contact_category', 'other_details'];
-
+            
             formFields.forEach(function (field) {
                 document.getElementById(field).addEventListener('input', function () {
                     isFormDirty = true;
                 });
             });
-
+            
             window.addEventListener('beforeunload', function (event) {
                 if (isFormDirty) {
                     event.preventDefault();
@@ -292,7 +289,7 @@
                     return 'Modificările nesalvate vor fi pierdute. Sigur vrei să părăsești pagina?';
                 }
             });
-
+            
             document.getElementById('save-modal').addEventListener('click', function (event) {
                 event.preventDefault();
                 if (validateForm()) {
@@ -301,10 +298,10 @@
                         document.getElementById('last_name').value,
                         document.getElementById('phone_number').value,
                         document.getElementById('email').value,
-
+                        
                         document.getElementById('company').value,
                         document.getElementById('job_title').value,
-
+                        
                         document.getElementById('city').value,
                         document.getElementById('street_address').value,
                         document.getElementById('street_number').value,
@@ -313,33 +310,32 @@
                         document.getElementById('apartment_number').value,
                         document.getElementById('county').value,
                         document.getElementById('country').value,
-
+                        
                         document.getElementById('document_type').value,
                         document.getElementById('id_series_nr').value,
                         document.getElementById('cnp').value,
                         formatDateToServer(document.getElementById('issue_date').value),
                         document.getElementById('passport_country').value,
-
+                        
                         document.getElementById('contact_type').value,
                         document.getElementById('contact_category').value,
-
+                        
                         document.getElementById('other_details').value
                     );
                 }
             });
-
+            
             document.getElementById('add_new_lead').addEventListener('submit', handleFormSubmit);
-
-            isFormDirty = false;
+            
             myModal.hide();
-
+            
             function checkDuplicateField(fieldName, value) {
-                console.log('Verificare duplicare: "', fieldName, '", cu valoarea:', value);
-
+                console.log('Verificare duplicare:', fieldName, 'cu valoarea:', value);
+                
                 if (!value) {
                     return Promise.resolve(false);
                 }
-
+                
                 return fetch(`/contacts/api/check-duplicate/?field=${fieldName}&value=${value}`)
                     .then(response => {
                         if (!response.ok) {
@@ -359,7 +355,7 @@
                         return false;
                     });
             }
-
+            
             async function saveContact(firstName, lastName, phoneNumber, email, company, jobTitle, city, streetAddress,
                                        streetNumber, block, scale, apartmentNumber, county, country, documentType,
                                        idSeriesNr, cnp, issueDate, passportCountry, contactType, contactCategory,
@@ -374,10 +370,10 @@
                     last_name: lastName,
                     phone_number: phoneNumber,
                     email: email,
-
+                    
                     company: company,
                     job_title: jobTitle,
-
+                    
                     city: city,
                     street_address: streetAddress,
                     street_number: streetNumber,
@@ -386,51 +382,47 @@
                     apartment_number: apartmentNumber,
                     county: county,
                     country: country,
-
+                    
                     document_type: documentType,
                     id_series_nr: idSeriesNr,
                     cnp: cnp,
                     issue_date: issueDate,
                     passport_country: passportCountry,
-
+                    
                     contact_type: contactType,
                     contact_category: contactCategory,
-
+                    
                     other_details: otherDetails,
                 };
-
+                
                 const filteredData = Object.fromEntries(
                     Object.entries(data).filter(([_, value]) => value !== null && value !== undefined && value !== '')
                 );
-
+                
                 console.log('Date prezente în "saveContact":', filteredData);
-
+                
                 try {
                     const response = await fetch('/contacts/api/save-contact/', {
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify(filteredData),
                     });
-
+                    
                     const responseData = await response.json();
-
+                    
                     console.log('Date trimise către server:', filteredData);
-
+                    
                     if (responseData.success) {
                         console.log('Contactul a fost salvat cu succes!');
                         myModal.hide();
-                        isFormDirty = false;
                         formFields.forEach(function (field) {
                             document.getElementById(field).value = '';
                         });
-
-                        const newOption = new Option(responseData.contact_name, responseData.contact_id, false, true);
-                        idContactElement.append(newOption);
-                        choices.setChoices([...choices._currentState.items, {
-                            value: responseData.contact_id,
-                            label: responseData.contact_name,
-                            selected: true
-                        }], 'value', 'label', true);
+                        
+                        document.getElementById('issue_date')._flatpickr.clear();
+                        
+                        isFormDirty = false;
+                        
                     } else {
                         console.error('Eroare la salvarea contactului:', responseData.message);
                     }
@@ -438,7 +430,7 @@
                     console.error('Eroare la comunicarea cu serverul:', error);
                 }
             }
-
+            
             flatpickr('#issue_date', {
                 dateFormat: 'd.m.Y',
                 altInput: true,
@@ -446,116 +438,117 @@
                 allowInput: true,
                 locale: 'ro'
             });
-
+            
             function formatDateToServer(dateString) {
                 var parts = dateString.split('.');
                 return `${parts[2]}-${parts[1]}-${parts[0]}`;
             }
-
+            
             function getCSRFToken() {
                 return document.cookie.split('; ')
                     .find(row => row.startsWith('csrftoken='))
                     .split('=')[1];
             }
-
+            
             function validatePhoneNumber(phoneNumber) {
                 return phoneNumber.length >= 10 && phoneNumber.length <= 14 && /^\d+$/.test(phoneNumber);
             }
-
+            
             function validateIdSeriesNr(idSeriesNr) {
                 return idSeriesNr.length >= 8 && idSeriesNr.length <= 9 && /^[A-Z0-9\s]+$/.test(idSeriesNr);
             }
-
+            
             function validateCnp(cnp) {
                 return cnp.length === 13 && /^\d+$/.test(cnp);
             }
-
+            
             function validateForm() {
                 var firstNameValue = document.getElementById('first_name').value;
                 var phoneValue = document.getElementById('phone_number').value;
                 var emailValue = document.getElementById('email').value;
                 var isDuplicatePhone = checkDuplicateField('phone_number', phoneValue);
                 var isDuplicateEmail = checkDuplicateField('email', emailValue);
-
+                
                 var documentTypeValue = document.getElementById('document_type').value;
                 var idSeriesNrValue = document.getElementById('id_series_nr').value;
                 var cnpValue = document.getElementById('cnp').value;
                 var issueDateValue = document.getElementById('issue_date').value;
                 var passportCountryValue = document.getElementById('passport_country').value;
-
-                clearErrorMessages()
-
+                
+                clearErrorMessages();
+                
                 if (!firstNameValue) {
                     displayError('firstNameError', 'Trebuie să introduci obligatoriu un prenume.');
                     return false;
                 }
-
+                
                 if (phoneValue && !validatePhoneNumber(phoneValue)) {
                     displayError('phoneError', 'Numărul de telefon trebuie să conțină între 10 și 14 cifre legate.');
                     return false;
                 }
-
+                
                 if (!phoneValue && !emailValue) {
                     displayError('phoneError', 'Trebuie să introduci obligatoriu cel puțin ' +
                         'un număr de telefon sau o adresă de e-mail.');
                     return false;
                 }
-
+                
                 return Promise.all([isDuplicatePhone, isDuplicateEmail]).then(([duplicatePhone, duplicateEmail]) => {
                     console.log('Nr. tel. duplicat:', duplicatePhone);
                     console.log('E-mail duplicat:', duplicateEmail);
+                    
                     if (duplicatePhone) {
                         displayError('phoneError', 'Există deja un contact cu acest număr de telefon. ' +
                             'Introdu alt număr de telefon sau actualizează contactul existent.');
                         return false;
                     }
-
+                    
                     if (duplicateEmail) {
                         displayError('emailError', 'Există deja un contact cu această adresă de e-mail. ' +
                             'Introdu altă adresă de e-mail sau actualizează contactul existent.');
                         return false;
                     }
-
+                    
                     if (documentTypeValue === 'Carte de identitate') {
                         if (!idSeriesNrValue) {
                             displayError('idSeriesNrError', 'Seria și numărul cărții de identitate sunt obligatorii.');
                             return false;
                         }
-
+                        
                         if (idSeriesNrValue && !validateIdSeriesNr(idSeriesNrValue)) {
                             displayError('idSeriesNrError', 'Seria și numărul cărții de identitate sunt invalide. ' +
                                 '(ex. corect: "AZ 123456", cu majuscule)');
                             return false;
                         }
-
+                        
                         if (cnpValue && !validateCnp(cnpValue)) {
                             displayError('cnpError', 'CNP-ul este invalid. Trebuie să conțină exact 13 cifre.');
                             return false;
                         }
-
+                        
                         if (!issueDateValue) {
                             displayError('issueDateError', 'Data emiterii cărții de identitate este obligatorie.');
                             return false;
                         }
                     }
-
+                    
                     if (documentTypeValue === 'Pașaport') {
                         if (!idSeriesNrValue) {
                             displayError('idSeriesNrError', 'Numărul pașaportului este obligatoriu.');
                             return false;
                         }
-
+                        
                         if (idSeriesNrValue && !validateIdSeriesNr(idSeriesNrValue)) {
                             displayError('idSeriesNrError', 'Numărul pașaportului este invalid. ' +
                                 '(ex. corect, după caz: "123456789" sau "AZ1234567", cu majuscule)');
                             return false;
                         }
-
+                        
                         if (!issueDateValue) {
                             displayError('issueDateError', 'Data emiterii pașaportului este obligatorie.');
                             return false;
                         }
-
+                        
                         if (!passportCountryValue) {
                             displayError('passportCountryError', 'Țara emitentă a pașaportului este obligatorie.');
                             return false;
@@ -566,14 +559,14 @@
                     console.error('Eroare în "Promise":', error);
                 });
             }
-
+            
             function displayError(elementId, errorMessage) {
                 var errorElement = document.getElementById(elementId);
                 if (errorElement) {
                     errorElement.innerText = errorMessage;
                 }
             }
-
+            
             function clearErrorMessages() {
                 displayError('firstNameError', '');
                 displayError('phoneError', '');
@@ -584,16 +577,16 @@
                 displayError('passportCountryError', '');
             }
         });
-
+        
         function handleFormSubmit(event) {
             event.preventDefault();
-
+            
             var selectedContact = document.getElementById('contact').value;
             var selectedType = document.getElementById('property_type').value;
-
+            
             sessionStorage.setItem('selectedContact', selectedContact);
             sessionStorage.setItem('selectedType', selectedType);
-
+            
             var redirectUrl = '';
             if (selectedType === 'Apartament') {
                 redirectUrl = '{% url "leads:add_apartment_lead" %}';
@@ -611,5 +604,5 @@
             window.location.href = redirectUrl;
         }
     </script>
-
+    
 {% endblock extra_javascript %}

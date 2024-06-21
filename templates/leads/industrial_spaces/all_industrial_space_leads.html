@@ -96,11 +96,11 @@
                                                             </div>
                                                             <div class="phone_number">{% if ind_sp.contact.phone_number %}
                                                                 {{ ind_sp.contact.phone_number }}{% else %}
-                                                                <i>Fără nr. telefon</i>{% endif %}
+                                                                <span class="text-muted"><i>Fără nr. telefon</i></span>{% endif %}
                                                             </div>
                                                             <div class="email">{% if ind_sp.contact.email %}
                                                                 {{ ind_sp.contact.email }}{% else %}
-                                                                <i>Fără e-mail</i>{% endif %}
+                                                                <span class="text-muted"><i>Fără e-mail</i></span>{% endif %}
                                                             </div>
                                                         </td>
                                                         <td>
@@ -108,34 +108,34 @@
                                                             <div class="space_type">{{ ind_sp.space_type }}</div>
                                                             <div class="destination">{% if ind_sp.destination %}
                                                                 {{ ind_sp.destination }}{% else %}
-                                                                <i>Nicio destinație</i>{% endif %}</div>
+                                                                <span class="text-muted"><i>Nicio destinație</i></span>{% endif %}</div>
                                                         </td>
                                                         <td>
                                                             <div class="budget">{% if ind_sp.budget %}
                                                                 <strong>{{ ind_sp.budget }}</strong>{% else %}
-                                                                <i>Nespecificat</i>{% endif %}</div>
+                                                                <span class="text-muted"><i>Nespecificat</i></span>{% endif %}</div>
                                                             <div class="payment_method">{% if ind_sp.payment_method %}
                                                                 {{ ind_sp.payment_method }}{% else %}{% endif %}</div>
                                                         </td>
                                                         <td>
                                                             <div class="street">{% if ind_sp.street %}{{ ind_sp.street }}{% else %}
-                                                                <i>Stradă nespecificată</i>{% endif %}</div>
+                                                                <span class="text-muted"><i>Stradă nespecificată</i></span>{% endif %}</div>
                                                             <div class="zone">{% if ind_sp.zone %}{{ ind_sp.zone }}{% else %}
-                                                                <i>Zonă nespecificată</i>{% endif %}</div>
+                                                                <span class="text-muted"><i>Zonă nespecificată</i></span>{% endif %}</div>
                                                             <div class="city">{{ ind_sp.city }}</div>
                                                             <div class="county">{{ ind_sp.county }}</div>
                                                         </td>
                                                         <td class="label">
                                                             {% if ind_sp.label %}{{ ind_sp.label }}{% else %}
-                                                                <i>Fără etichetă</i>{% endif %}
+                                                                <span class="text-muted"><i>Fără etichetă</i></span>{% endif %}
                                                         </td>
                                                         <td>
                                                             <div class="deadline_date">{% if ind_sp.deadline_date %}
                                                                 {{ ind_sp.deadline_date }}{% else %}
-                                                                <i>Fără dată limită</i>{% endif %}</div>
+                                                                <span class="text-muted"><i>Fără dată limită</i></span>{% endif %}</div>
                                                             <div class="deadline_time">{% if ind_sp.deadline_time %}
                                                                 Ora {{ ind_sp.deadline_time }}{% else %}
-                                                                <i>Fără oră limită</i>{% endif %}</div>
+                                                                <span class="text-muted"><i>Fără oră limită</i></span>{% endif %}</div>
                                                         </td>
                                                         <td class="assigned_listings">
                                                             {% if ind_sp.assigned_listings.exists %}
@@ -144,7 +144,7 @@
                                                                     {% if not forloop.last %}, {% endif %}
                                                                 {% endfor %}
                                                             {% else %}
-                                                                <i>Nu există</i>
+                                                                <span class="text-muted"><i>Nu există</i></span>
                                                             {% endif %}
                                                         </td>
                                                         <td>
@@ -171,7 +171,7 @@
                                             {% else %}
                                                 <tr>
                                                     <td colspan="9"><h5 class="d-flex justify-content-md-center justify-content-sm-start">
-                                                        Nu există cereri disponibile!</h5>
+                                                        Nicio cerere disponibilă</h5>
                                                     </td>
                                                 </tr>
                                             {% endif %}
@@ -181,7 +181,7 @@
                             
                                 <div id="noResultsMessage" class="d-none">
                                     <h5 class="d-flex justify-content-md-center justify-content-sm-start">
-                                        Nu există cereri pentru căutarea ta!
+                                        Niciun rezultat găsit
                                     </h5>
                                 </div>
                             

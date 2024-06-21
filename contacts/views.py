@@ -8,6 +8,7 @@ from django.views.decorators.http import require_GET, require_POST
 from django.http import JsonResponse
 from django.db.models import Q
 import json
+from contacts.selectors import TIP_DOCUMENT, TIP_CONTACT, CATEGORIE_CONTACT
 
 
 class ContactCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
@@ -27,6 +28,16 @@ class ContactListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     template_name = 'contacts/contacts.html'
     context_object_name = 'all_contacts'
     permission_required = 'contacts.view_contact'
+
+    def get_queryset(self):
+        return Contact.objects.all().order_by('first_name', 'last_name')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['document_type'] = TIP_DOCUMENT
+        context['contact_type'] = TIP_CONTACT
+        context['contact_category'] = CATEGORIE_CONTACT
+        return context
 
 
 class ContactUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -114,6 +125,9 @@ def save_contact(request):
         contact_category = data.get('contact_category', None) or None
 
         other_details = data.get('other_details', None) or None
+
+        if issue_date == 'undefined-undefined-':
+            issue_date = None
 
         if not first_name:
             raise ValueError('Trebuie să introduci obligatoriu un prenume.')

@@ -96,11 +96,11 @@
                                                             </div>
                                                             <div class="phone_number">{% if terrain.contact.phone_number %}
                                                                 {{ terrain.contact.phone_number }}{% else %}
-                                                                <i>Fără nr. telefon</i>{% endif %}
+                                                                <span class="text-muted"><i>Fără nr. telefon</i></span>{% endif %}
                                                             </div>
                                                             <div class="email">{% if terrain.contact.email %}
                                                                 {{ terrain.contact.email }}{% else %}
-                                                                <i>Fără e-mail</i>{% endif %}
+                                                                <span class="text-muted"><i>Fără e-mail</i></span>{% endif %}
                                                             </div>
                                                         </td>
                                                         <td>
@@ -108,34 +108,34 @@
                                                             <div class="terrain_type">{{ terrain.terrain_type }}</div>
                                                             <div class="destination">{% if terrain.destination %}
                                                                 {{ terrain.destination }}{% else %}
-                                                                <i>Nicio destinație</i>{% endif %}</div>
+                                                                <span class="text-muted"><i>Nicio destinație</i></span>{% endif %}</div>
                                                         </td>
                                                         <td>
                                                             <div class="budget">{% if terrain.budget %}
                                                                 <strong>{{ terrain.budget }}</strong>{% else %}
-                                                                <i>Nespecificat</i>{% endif %}</div>
+                                                                <span class="text-muted"><i>Nespecificat</i></span>{% endif %}</div>
                                                             <div class="payment_method">{% if terrain.payment_method %}
                                                                 {{ terrain.payment_method }}{% else %}{% endif %}</div>
                                                         </td>
                                                         <td>
                                                             <div class="street">{% if terrain.street %}{{ terrain.street }}{% else %}
-                                                                <i>Stradă nespecificată</i>{% endif %}</div>
+                                                                <span class="text-muted"><i>Stradă nespecificată</i></span>{% endif %}</div>
                                                             <div class="zone">{% if terrain.zone %}{{ terrain.zone }}{% else %}
-                                                                <i>Zonă nespecificată</i>{% endif %}</div>
+                                                                <span class="text-muted"><i>Zonă nespecificată</i></span>{% endif %}</div>
                                                             <div class="city">{{ terrain.city }}</div>
                                                             <div class="county">{{ terrain.county }}</div>
                                                         </td>
                                                         <td class="label">
                                                             {% if terrain.label %}{{ terrain.label }}{% else %}
-                                                                <i>Fără etichetă</i>{% endif %}
+                                                                <span class="text-muted"><i>Fără etichetă</i></span>{% endif %}
                                                         </td>
                                                         <td>
                                                             <div class="deadline_date">{% if terrain.deadline_date %}
                                                                 {{ terrain.deadline_date }}{% else %}
-                                                                <i>Fără dată limită</i>{% endif %}</div>
+                                                                <span class="text-muted"><i>Fără dată limită</i></span>{% endif %}</div>
                                                             <div class="deadline_time">{% if terrain.deadline_time %}
                                                                 Ora {{ terrain.deadline_time }}{% else %}
-                                                                <i>Fără oră limită</i>{% endif %}</div>
+                                                                <span class="text-muted"><i>Fără oră limită</i></span>{% endif %}</div>
                                                         </td>
                                                         <td class="assigned_listings">
                                                             {% if terrain.assigned_listings.exists %}
@@ -144,7 +144,7 @@
                                                                     {% if not forloop.last %}, {% endif %}
                                                                 {% endfor %}
                                                             {% else %}
-                                                                <i>Nu există</i>
+                                                                <span class="text-muted"><i>Nu există</i></span>
                                                             {% endif %}
                                                         </td>
                                                         <td>
@@ -171,7 +171,7 @@
                                             {% else %}
                                                 <tr>
                                                     <td colspan="9"><h5 class="d-flex justify-content-md-center justify-content-sm-start">
-                                                        Nu există cereri generale disponibile!</h5>
+                                                        Nicio cerere disponibilă</h5>
                                                     </td>
                                                 </tr>
                                             {% endif %}
@@ -181,7 +181,7 @@
                             
                                 <div id="noResultsMessage" class="d-none">
                                     <h5 class="d-flex justify-content-md-center justify-content-sm-start">
-                                        Nu există cereri pentru căutarea ta!
+                                        Niciun rezultat găsit
                                     </h5>
                                 </div>
                             
