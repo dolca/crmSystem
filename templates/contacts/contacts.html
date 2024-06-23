@@ -63,10 +63,10 @@
                                                 class="text-muted"><i>Fără e-mail</i></span>{% endif %}</p>
                                     <p class="mb-0 address"><i class="bi bi-geo-alt align-baseline me-1"></i> 
                                         {% if contact.city %}{{ contact.city }}{% else %}<span class="text-muted"><i>
-                                            Fără adresă</i></span>{% endif %}{% if contact.street_address %}, str. 
-                                            {{ contact.street_address }}{% else %}{% endif %}{% if contact.street_number %}, nr. 
-                                            {{ contact.street_number }}{% else %}{% endif %}{% if contact.apartment_number %}, ap. 
-                                            {{ contact.apartment_number }}{% else %}{% endif %}{% if contact.county %}, jud. 
+                                            Fără adresă</i></span>{% endif %}{% if contact.street_address %}, str.
+                                            {{ contact.street_address }}{% else %}{% endif %}{% if contact.street_number %}, nr.
+                                            {{ contact.street_number }}{% else %}{% endif %}{% if contact.apartment_number %}, ap.
+                                            {{ contact.apartment_number }}{% else %}{% endif %}{% if contact.county %}, jud.
                                             {{ contact.county }}{% else %}{% endif %}</p>
                                 </div>
                                 <div class="d-flex gap-2 pt-3">
@@ -286,7 +286,7 @@
             var cards = document.querySelectorAll('.contact-card');
             var noResultsMessage = document.getElementById('noResultsMessage');
             var currentPage = 1;
-            var itemsPerPage = 16;
+            var itemsPerPage = 20;
             var currentContactsCount = document.getElementById('currentContactsCount');
             
             function filterCards() {
@@ -349,31 +349,55 @@
                 document.querySelector('.pagination-prev').classList.toggle('disabled', page === 1);
                 document.querySelector('.pagination-next').classList.toggle('disabled', page === totalPages);
                 
-                var paginationItems = document.querySelectorAll('.pagination.listjs-pagination li');
-                paginationItems.forEach(function(item) {
-                    item.classList.remove('active');
-                });
-                if (paginationItems[page - 1]) {
-                    paginationItems[page - 1].classList.add('active');
-                }
+                createPagination(totalPages);
             }
             
             function createPagination(totalPages) {
                 var paginationList = document.querySelector('.pagination.listjs-pagination');
                 paginationList.innerHTML = '';
                 
-                for (var i = 1; i <= totalPages; i++) {
+                function createPageItem(page) {
                     var li = document.createElement('li');
                     li.classList.add('page-item');
-                    li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                    if (page === currentPage) {
+                        li.classList.add('active');
+                    }
+                    li.innerHTML = `<a class="page-link" href="#">${page}</a>`;
+                    li.addEventListener('click', function() {
+                        currentPage = page;
+                        showPage(currentPage);
+                    });
                     paginationList.appendChild(li);
+                }
+                
+                if (totalPages <= 5) {
+                    for (var i = 1; i <= totalPages; i++) {
+                        createPageItem(i);
+                    }
+                } else {
+                    createPageItem(1);
+                    if (currentPage > 3) {
+                        var li = document.createElement('li');
+                        li.classList.add('page-item', 'disabled');
+                        li.innerHTML = `<span class="page-link">...</span>`;
+                        paginationList.appendChild(li);
+                    }
                     
-                    li.addEventListener('click', (function(page) {
-                        return function() {
-                            currentPage = page;
-                            showPage(currentPage);
-                        };
-                    })(i));
+                    var startPage = Math.max(2, currentPage - 1);
+                    var endPage = Math.min(totalPages - 1, currentPage + 1);
+                    
+                    for (var i = startPage; i <= endPage; i++) {
+                        createPageItem(i);
+                    }
+                    
+                    if (currentPage < totalPages - 2) {
+                        var li = document.createElement('li');
+                        li.classList.add('page-item', 'disabled');
+                        li.innerHTML = `<span class="page-link">...</span>`;
+                        paginationList.appendChild(li);
+                    }
+                    
+                    createPageItem(totalPages);
                 }
             }
             
@@ -389,6 +413,7 @@
                 if (currentPage > 1) {
                     currentPage--;
                     showPage(currentPage);
+                    createPagination(Math.ceil(filterCards().length / itemsPerPage));
                 }
             });
             
@@ -398,6 +423,7 @@
                 if (currentPage < totalPages) {
                     currentPage++;
                     showPage(currentPage);
+                    createPagination(totalPages);
                 }
             });
             

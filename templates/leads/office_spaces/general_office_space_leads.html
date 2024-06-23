@@ -3,11 +3,11 @@
 {% block title %} Cereri generale | Spații de birouri {% endblock title %}
 
 {% block content %}
-
+    
     {% block pagetitle %}
         {% include "partials/page_title.html" with pagetitle="Cereri" title="Cereri generale | Spații de birouri" %}
     {% endblock pagetitle %}
-
+    
     {% if user.is_authenticated %}
         {% if perms.leads.view_officespacelead %}
             <div class="row">
@@ -66,7 +66,7 @@
                                         </div>
                                     </div>
                                 </div>
-
+                            
                                 <div class="table-responsive table-card mt-3 mb-1">
                                     <table class="table align-middle table-nowrap table-hover">
                                         <thead class="table-light">
@@ -168,7 +168,7 @@
                                             {% else %}
                                                 <tr>
                                                     <td colspan="9"><h5 class="d-flex justify-content-md-center justify-content-sm-start">
-                                                        Nicio cerere disponibilă</h5>
+                                                        Nicio cerere disponibilă.</h5>
                                                     </td>
                                                 </tr>
                                             {% endif %}
@@ -178,11 +178,11 @@
                             
                                 <div id="noResultsMessage" class="d-none">
                                     <h5 class="d-flex justify-content-md-center justify-content-sm-start">
-                                        Niciun rezultat găsit
+                                        Niciun rezultat găsit.
                                     </h5>
                                 </div>
                             
-                                <div class="d-flex justify-content-end">
+                                <div class="d-flex justify-content-center justify-content-sm-end">
                                     <div class="pagination-wrap hstack gap-2">
                                         <a class="page-item pagination-prev disabled" href="#">
                                             <i class="bi bi-caret-left-fill"></i>
@@ -196,7 +196,7 @@
                             </div>
                         </div>
                     </div>
-
+                
                 </div>
             </div>
         {% endif %}
@@ -210,8 +210,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             var options = {
                 valueNames: ['id', 'customer_name', 'email', 'phone_number', 'transaction_type', 'space_type', 
-                    'destination', 'budget', 'payment_method', 'street', 'zone', 'city', 'county', 'label', 
-                    'deadline_date', 'deadline_time', 'assigned_listings']
+                    'budget', 'payment_method', 'street', 'zone', 'city', 'county', 'label', 'deadline_date', 
+                    'deadline_time', 'assigned_listings']
             };
             
             var leadList = new List('officeSpaceLeadsTable', options);
@@ -235,7 +235,7 @@
             document.querySelector('#apply-sort').addEventListener('click', function() {
                 var sortBy = document.querySelector('#sort-by').value;
                 var sortOrder = document.querySelector('#sort-order').value;
-                
+        
                 leadList.sort(sortBy, { order: sortOrder });
             });
             
@@ -278,12 +278,20 @@
                 var rows = document.querySelectorAll('table tbody tr');
                 var totalPages = Math.ceil(rows.length / itemsPerPage);
                 
-                // Ascund toate rândurile
+                if (page > totalPages) {
+                    page = totalPages;
+                }
+                
+                if (page < 1) {
+                    page = 1;
+                }
+                
+                currentPage = page;
+                
                 rows.forEach(function(row, index) {
                     row.style.display = 'none';
                 });
                 
-                // Afișez rândurile pentru pagina curentă
                 var start = (page - 1) * itemsPerPage;
                 var end = start + itemsPerPage;
                 for (var i = start; i < end; i++) {
@@ -292,18 +300,10 @@
                     }
                 }
                 
-                // Actualizez starea butoanelor de paginare
                 document.querySelector('.pagination-prev').classList.toggle('disabled', page === 1);
                 document.querySelector('.pagination-next').classList.toggle('disabled', page === totalPages);
                 
-                // Actualizez stilul pentru pagina activă
-                var paginationItems = document.querySelectorAll('.pagination.listjs-pagination li');
-                paginationItems.forEach(function(item) {
-                    item.classList.remove('active');
-                });
-                if (paginationItems[page - 1]) {
-                    paginationItems[page - 1].classList.add('active');
-                }
+                createPagination(totalPages); // Actualizez paginarea pentru a reflecta pagina curentă
             }
             
             // Evenimentele pentru butoanele de paginare
@@ -323,23 +323,53 @@
                 }
             });
             
-            // Evenimentele pentru numerele de pagină
+            // Funcția pentru a crea butoanele de paginare
             function createPagination(totalPages) {
                 var paginationList = document.querySelector('.pagination.listjs-pagination');
                 paginationList.innerHTML = '';
                 
-                for (var i = 1; i <= totalPages; i++) {
+                function createPageItem(page) {
                     var li = document.createElement('li');
                     li.classList.add('page-item');
-                    li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                    if (page === currentPage) {
+                        li.classList.add('active');
+                    }
+                    li.innerHTML = `<a class="page-link" href="#">${page}</a>`;
+                    li.addEventListener('click', function() {
+                        currentPage = page;
+                        showPage(currentPage);
+                    });
                     paginationList.appendChild(li);
+                }
+                
+                if (totalPages <= 5) {
+                    for (var i = 1; i <= totalPages; i++) {
+                        createPageItem(i);
+                    }
+                } else {
+                    createPageItem(1);
+                    if (currentPage > 3) {
+                        var li = document.createElement('li');
+                        li.classList.add('page-item', 'disabled');
+                        li.innerHTML = `<span class="page-link">...</span>`;
+                        paginationList.appendChild(li);
+                    }
                     
-                    li.addEventListener('click', (function(page) {
-                        return function() {
-                            currentPage = page;
-                            showPage(currentPage);
-                        };
-                    })(i));
+                    var startPage = Math.max(2, currentPage - 1);
+                    var endPage = Math.min(totalPages - 1, currentPage + 1);
+                    
+                    for (var i = startPage; i <= endPage; i++) {
+                        createPageItem(i);
+                    }
+                    
+                    if (currentPage < totalPages - 2) {
+                        var li = document.createElement('li');
+                        li.classList.add('page-item', 'disabled');
+                        li.innerHTML = `<span class="page-link">...</span>`;
+                        paginationList.appendChild(li);
+                    }
+                    
+                    createPageItem(totalPages);
                 }
             }
             

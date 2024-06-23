@@ -91,11 +91,11 @@ class ContactUpdateForm(ModelForm):
         passport_country = cleaned_data.get('passport_country')
 
         if not first_name:
-            self.add_error('first_name', 'Trebuie să introduci obligatoriu un prenume!')
+            self.add_error('first_name', 'Trebuie să introduci obligatoriu un prenume.')
 
         if not phone_number and not email:
             self.add_error('phone_number',
-                           'Trebuie să introduci obligatoriu cel puțin un număr de telefon sau o adresă de e-mail!')
+                           'Trebuie să introduci obligatoriu cel puțin un număr de telefon sau o adresă de e-mail.')
 
         if phone_number:
             self.validate_duplicate_field('phone_number', phone_number, contact_id=self.instance.id)
@@ -107,27 +107,27 @@ class ContactUpdateForm(ModelForm):
             if not id_series_nr:
                 self.add_error('id_series_nr', 'Seria și numărul cărții de identitate sunt obligatorii.')
             if not id_series_nr.isupper() or not (len(id_series_nr) == 8 or len(id_series_nr) == 9):
-                self.add_error('id_series_nr', 'Seria și numărul cărții de identitate sunt invalide! '
+                self.add_error('id_series_nr', 'Seria și numărul cărții de identitate sunt invalide. '
                                                '(ex. corect: "AZ 123456", cu majuscule)')
 
             if cnp and len(cnp) != 13:
-                self.add_error('cnp', 'CNP-ul este invalid! Acesta trebuie să conțină exact 13 cifre.')
+                self.add_error('cnp', 'CNP-ul este invalid. Acesta trebuie să conțină exact 13 cifre.')
 
             if not issue_date:
-                self.add_error('issue_date', 'Data emiterii cărții de identitate este obligatorie!')
+                self.add_error('issue_date', 'Data emiterii cărții de identitate este obligatorie.')
 
         if document_type == 'Pașaport':
             if not id_series_nr:
-                self.add_error('id_series_nr', 'Numărul pașaportului este obligatoriu!')
+                self.add_error('id_series_nr', 'Numărul pașaportului este obligatoriu.')
             if not id_series_nr.isupper() or not (len(id_series_nr) == 8 or len(id_series_nr) == 9):
-                self.add_error('id_series_nr', 'Numărul pașaportului este invalid! '
+                self.add_error('id_series_nr', 'Numărul pașaportului este invalid. '
                                                '(ex. corect, după caz: "123456789" sau "AZ1234567", cu majuscule)')
 
             if not issue_date:
-                self.add_error('issue_date', 'Data emiterii pașaportului este obligatorie!')
+                self.add_error('issue_date', 'Data emiterii pașaportului este obligatorie.')
 
             if not passport_country:
-                self.add_error('passport_country', 'Țara emitentă a pașaportului este obligatorie!')
+                self.add_error('passport_country', 'Țara emitentă a pașaportului este obligatorie.')
 
         return cleaned_data
 
