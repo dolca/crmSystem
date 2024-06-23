@@ -47,7 +47,7 @@ class ApartmentLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
 @login_required
 def my_apartment_leads_view(request):
     my_apartment_leads = (ApartmentLead.objects.filter(updated_by=request.user).
-                          order_by('-deadline_date', '-deadline_time', '-updated_at'))
+                          order_by('deadline_date', 'deadline_time', '-updated_at'))
     return render(request, 'leads/apartments/my_apartment_leads.html', {
         'my_apartment_leads': my_apartment_leads
     })
@@ -141,7 +141,7 @@ class HouseLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
 @login_required
 def my_house_leads_view(request):
     my_house_leads = (HouseLead.objects.filter(updated_by=request.user).
-                      order_by('-deadline_date', '-deadline_time', '-updated_at'))
+                      order_by('deadline_date', 'deadline_time', '-updated_at'))
     return render(request, 'leads/houses/my_house_leads.html', {'my_house_leads': my_house_leads})
 
 
@@ -234,7 +234,7 @@ class TerrainLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateV
 @login_required
 def my_terrain_leads_view(request):
     my_terrain_leads = (TerrainLead.objects.filter(updated_by=request.user).
-                        order_by('-deadline_date', '-deadline_time', '-updated_at'))
+                        order_by('deadline_date', 'deadline_time', '-updated_at'))
     return render(request, 'leads/terrains/my_terrain_leads.html', {
         'my_terrain_leads': my_terrain_leads
     })
@@ -329,7 +329,7 @@ class CommercialSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin,
 @login_required
 def my_commercial_space_leads_view(request):
     my_commercial_space_leads = (CommercialSpaceLead.objects.filter(updated_by=request.user).
-                                 order_by('-deadline_date', '-deadline_time', '-updated_at'))
+                                 order_by('deadline_date', 'deadline_time', '-updated_at'))
     return render(request, 'leads/commercial_spaces/my_commercial_space_leads.html', {
         'my_commercial_space_leads': my_commercial_space_leads
     })
@@ -424,7 +424,7 @@ class OfficeSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, Cre
 @login_required
 def my_office_space_leads_view(request):
     my_office_space_leads = (OfficeSpaceLead.objects.filter(updated_by=request.user).
-                             order_by('-deadline_date', '-deadline_time', '-updated_at'))
+                             order_by('deadline_date', 'deadline_time', '-updated_at'))
     return render(request, 'leads/office_spaces/my_office_space_leads.html', {
         'my_office_space_leads': my_office_space_leads
     })
@@ -519,7 +519,7 @@ class IndustrialSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin,
 @login_required
 def my_industrial_space_leads_view(request):
     my_industrial_space_leads = (IndustrialSpaceLead.objects.filter(updated_by=request.user).
-                                 order_by('-deadline_date', '-deadline_time', '-updated_at'))
+                                 order_by('deadline_date', 'deadline_time', '-updated_at'))
     return render(request, 'leads/industrial_spaces/my_industrial_space_leads.html', {
         'my_industrial_space_leads': my_industrial_space_leads
     })
