@@ -91,8 +91,12 @@
                                                         </td>
                                                         <td>
                                                             <div class="customer_name">
-                                                                <strong>{{ terrain.contact.first_name }} 
-                                                                    {{ terrain.contact.last_name|default:'' }}</strong>
+                                                                <div class="mb-1">
+                                                                    <a href="{% url 'contacts:contact_details' terrain.contact.id %}">
+                                                                        <strong>{{ terrain.contact.first_name }} 
+                                                                            {{ terrain.contact.last_name|default:'' }}</strong>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                             <div class="phone_number">{% if terrain.contact.phone_number %}
                                                                 {{ terrain.contact.phone_number }}{% else %}

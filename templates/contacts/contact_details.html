@@ -20,8 +20,7 @@
                                         <div class="card-body">
                                             <div class="col-lg-12 mb-3">
                                                 {% if contact.avatar %}
-                                                    <img src="{{ contact.avatar.url }}" alt="" class="avatar-lg rounded" 
-                                                         style="width: auto; max-width: 200px; height: 150px;">
+                                                    <img src="{{ contact.avatar.url }}" alt="" class="avatar-lg rounded" style="width: auto; max-width: 200px; height: 150px;">
                                                 {% else %}
                                                     <div class="avatar-lg" style="width: auto; max-width: 200px; height: 150px;">
                                                         <div class="avatar-title fs-lg bg-dark-subtle text-info rounded">
@@ -31,12 +30,18 @@
                                                 {% endif %}
                                             </div>
                                             <div class="col-lg-12">
-                                                <h5 class="mb-4"><span>{{ contact.first_name }}</span> 
+                                                <h5 class="mb-2"><span>{{ contact.first_name }}</span> 
                                                     <span>{{ contact.last_name|default:'' }}</span></h5>
-                                                <p class="card-text"><strong>Nr. telefon: </strong>
-                                                    {{ contact.phone_number|default:'. . .' }}</p>
-                                                <p class="card-text"><strong>E-mail: </strong>
-                                                    {{ contact.email|default:'. . .' }}</p>
+                                                <p class="card-text mb-0">
+                                                    <a href="tel:{{ contact.phone_number|default:'' }}">
+                                                        {{ contact.phone_number|default:'' }}
+                                                    </a>
+                                                </p>
+                                                <p class="card-text">
+                                                    <a href="mailto:{{ contact.email|default:'' }}">
+                                                        {{ contact.email|default:'' }}
+                                                    </a>
+                                                </p>
                                             </div>
                                             <hr class="border-secondary-subtle">
                                             <div class="col-lg-12 mb-3">
@@ -186,9 +191,9 @@
             }
             
             // Format dată "issue_date"
-            var deadlineDateElement = document.getElementById('issue_date');
-            var deadlineDate = deadlineDateElement.getAttribute('data-issue-date');
-            deadlineDateElement.textContent = formatDate(deadlineDate);
+            var issueDateElement = document.getElementById('issue_date');
+            var issueDate = issueDateElement.getAttribute('data-issue-date');
+            issueDateElement.textContent = formatDate(issueDate);
             
             // Format dată "created_at"
             var createdAtElement = document.getElementById('created_at');

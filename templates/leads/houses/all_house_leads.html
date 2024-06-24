@@ -91,8 +91,12 @@
                                                         </td>
                                                         <td>
                                                             <div class="customer_name">
-                                                                <strong>{{ house.contact.first_name }}
-                                                                    {{ house.contact.last_name|default:'' }}</strong>
+                                                                <div class="mb-1">
+                                                                    <a href="{% url 'contacts:contact_details' house.contact.id %}">
+                                                                        <strong>{{ house.contact.first_name }} 
+                                                                            {{ house.contact.last_name|default:'' }}</strong>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                             <div class="phone_number">{% if house.contact.phone_number %}
                                                                 {{ house.contact.phone_number }}{% else %}

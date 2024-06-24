@@ -3,11 +3,11 @@
 {% block title %} Detalii cerere | Spațiu de birouri {% endblock title %}
 
 {% block content %}
-
+    
     {% block pagetitle %}
         {% include "partials/page_title.html" with pagetitle="Cereri" title="Detalii cerere | Spațiu de birouri" %}
     {% endblock pagetitle %}
-
+    
     {% if user.is_authenticated %}
         {% if perms.leads.view_officespacelead_details %}
             <div class="row">
@@ -19,10 +19,22 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div id="contactInfo">
-                                                <h5><span>{{ officespacelead.contact.first_name }}</span>
-                                                    <span>{{ officespacelead.contact.last_name|default:'' }}</span></h5>
-                                                <div>{{ officespacelead.contact.phone_number|default:'' }}</div>
-                                                <div>{{ officespacelead.contact.email|default:'' }}</div>
+                                                <h5>
+                                                    <a href="{% url 'contacts:contact_details' officespacelead.contact.id %}">
+                                                        <span>{{ officespacelead.contact.first_name }}</span> 
+                                                        <span>{{ officespacelead.contact.last_name|default:'' }}</span>
+                                                    </a>
+                                                </h5>
+                                                <div>
+                                                    <a href="tel:{{ officespacelead.contact.phone_number|default:'' }}">
+                                                        {{ officespacelead.contact.phone_number|default:'' }}
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <a href="mailto:{{ officespacelead.contact.email|default:'' }}">
+                                                        {{ officespacelead.contact.email|default:'' }}
+                                                    </a>
+                                                </div>
                                             </div>
                                             <hr class="border-secondary-subtle">
                                             <div class="col-lg-12 mb-3">
@@ -242,18 +254,18 @@
             </div>
         {% endif %}
     {% endif %}
-
+    
 {% endblock content %}
 
 {% block extra_javascript %}
-
+    
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             console.log('Conținutul DOM a fost încărcat.');
-
+            
             // Lista de ID-uri pentru checkbox-urile readonly
             const readonlyCheckboxes = ['basement', 'semi_basement', 'technical_floor', 'loft', 'elevator'];
-
+            
             readonlyCheckboxes.forEach(function(id) {
                 const checkbox = document.getElementById(id);
                 if (checkbox) {
@@ -262,7 +274,7 @@
                     });
                 }
             });
-
+            
             // Funcția pentru a formata și afișa data în limba română
             function formatDate(dateString) {
                 if (!dateString || dateString === '. . .') {
@@ -275,22 +287,22 @@
                 var year = date.getFullYear();
                 return day + ' ' + month + ' ' + year;
             }
-
+            
             // Format dată "deadline_date"
             var deadlineDateElement = document.getElementById('deadline_date');
             var deadlineDate = deadlineDateElement.getAttribute('data-deadline-date');
             deadlineDateElement.textContent = formatDate(deadlineDate);
-
+            
             // Format dată "created_at"
             var createdAtElement = document.getElementById('created_at');
             var createdAtDate = createdAtElement.getAttribute('data-created-at');
             createdAtElement.innerText = formatDate(createdAtDate);
-
+            
             // Format dată "updated_at"
             var updatedAtElement = document.getElementById('updated_at');
             var updatedAtDate = updatedAtElement.getAttribute('data-updated-at');
             updatedAtElement.innerText = formatDate(updatedAtDate);
         });
     </script>
-
+    
 {% endblock extra_javascript %}
