@@ -34,11 +34,9 @@ class ContactUpdateForm(ModelForm):
             'contact_type': SelectMultiple(attrs={'class': 'form-control'}),
             'contact_category': SelectMultiple(attrs={'class': 'form-control'}),
 
-            'avatar': ClearableFileInput(attrs={'class': 'form-control'}),
             'other_details': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
 
-            'created_at': DateInput(attrs={'readonly': 'readonly'}),
-            'updated_at': DateInput(attrs={'readonly': 'readonly'}),
+            'avatar': ClearableFileInput(attrs={'class': 'form-control'}),
         }
 
     def clean(self):

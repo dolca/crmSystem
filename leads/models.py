@@ -12,7 +12,7 @@ from listings.selectors import TIP_PROPRIETATE, TIP_APARTAMENT, DESTINATIE_AP, E
 
 class Lead(Model):
     lead_status = CharField(choices=STATUS, default='Activă', verbose_name='Status cerere')
-    property_type = CharField(choices=TIP_PROPRIETATE, default='Apartament', verbose_name='Tip cerere')
+    property_type = CharField(choices=TIP_PROPRIETATE, verbose_name='Tip cerere')
     transaction_type = CharField(choices=TIP_TRANZACTIE, verbose_name='Tip tranzacție')
 
     contact = ForeignKey(Contact, on_delete=SET_NULL, null=True, verbose_name='Contact asociat')

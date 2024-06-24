@@ -33,9 +33,6 @@ class LeadCreateForm(ModelForm):
 
             'label': Select(attrs={'class': 'form-control'}),
             'notes': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
-
-            'created_at': DateInput(attrs={'class': 'form-control'}),
-            'updated_at': DateInput(attrs={'class': 'form-control'}),
         }
 
 

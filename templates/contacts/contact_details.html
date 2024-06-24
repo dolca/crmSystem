@@ -52,6 +52,14 @@
                                                 <p class="card-text"><strong>Funcție: </strong>
                                                     {{ contact.job_title|default:'. . .' }}</p>
                                             </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12">
+                                                <p class="card-text"><strong>Cereri asociate: </strong>
+                                                    {% for lead in all_leads %}
+                                                        {{ lead.custom_id }}
+                                                    {% endfor %}
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

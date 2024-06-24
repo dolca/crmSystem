@@ -9,6 +9,8 @@ from django.http import JsonResponse
 from django.db.models import Q
 import json
 from contacts.selectors import TIP_DOCUMENT, TIP_CONTACT, CATEGORIE_CONTACT
+from leads.models import ApartmentLead, HouseLead, TerrainLead, CommercialSpaceLead, OfficeSpaceLead, \
+    IndustrialSpaceLead
 
 
 class ContactListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -51,6 +53,28 @@ class ContactDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView)
     model = Contact
     template_name = 'contacts/contact_details.html'
     permission_required = 'contacts.view_contact_details'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        all_leads = []
+
+        apartment_leads = ApartmentLead.objects.filter(contact=self.object)
+        house_leads = HouseLead.objects.filter(contact=self.object)
+        terrain_leads = TerrainLead.objects.filter(contact=self.object)
+        commercial_space_leads = CommercialSpaceLead.objects.filter(contact=self.object)
+        office_space_leads = OfficeSpaceLead.objects.filter(contact=self.object)
+        industrial_space_leads = IndustrialSpaceLead.objects.filter(contact=self.object)
+
+        all_leads.extend(apartment_leads)
+        all_leads.extend(house_leads)
+        all_leads.extend(terrain_leads)
+        all_leads.extend(commercial_space_leads)
+        all_leads.extend(office_space_leads)
+        all_leads.extend(industrial_space_leads)
+
+        context['all_leads'] = all_leads
+        return context
 
 
 ########################################################################################################################

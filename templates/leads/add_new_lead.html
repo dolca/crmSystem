@@ -45,7 +45,7 @@
                                         <div class="form-group">
                                             <label for="property_type" class="form-label">Tip cerere <span 
                                                     class="firebrick-message">*</span></label>
-                                            <select id="property_type" class="form-select mb-4" name="property_type">
+                                            <select id="property_type" class="form-select mb-4" name="property_type" required>
                                                 {% for value, label in form.fields.property_type.choices %}
                                                     <option value="{{ value }}">{{ label }}</option>
                                                 {% endfor %}

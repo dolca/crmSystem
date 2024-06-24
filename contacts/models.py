@@ -31,8 +31,9 @@ class Contact(Model):
     contact_type = CharField(choices=TIP_CONTACT, null=True, blank=True, verbose_name='Tip contact')
     contact_category = CharField(choices=CATEGORIE_CONTACT, null=True, blank=True, verbose_name='Categorie')
 
-    avatar = ImageField(upload_to='media/contact_avatars', null=True, blank=True, verbose_name='Avatar')
     other_details = TextField(max_length=2000, null=True, blank=True, verbose_name='Alte detalii')
+
+    avatar = ImageField(upload_to='media/contact_avatars', null=True, blank=True, verbose_name='Avatar')
 
     created_by = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, related_name='created_contact',
                             verbose_name='Adăugat de')
