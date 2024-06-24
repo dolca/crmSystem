@@ -82,7 +82,7 @@
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <div class="form-check">
-                                                    <input id="bathroom_window" class="form-check-input readonly-checkbox" 
+                                                    <input id="bathroom_window" class="form-check-input readonly-checkbox"
                                                            type="checkbox" {% if apartmentlead.bathroom_window %}checked{% endif %}>
                                                     <label for="bathroom_window" class="form-check-label">Geam la baie</label>
                                                 </div>
@@ -97,14 +97,14 @@
                                             </div>
                                             <div class="col-lg-12 mb-2">
                                                 <div class="form-check">
-                                                    <input id="excluded_ground_floor" class="form-check-input readonly-checkbox" 
+                                                    <input id="excluded_ground_floor" class="form-check-input readonly-checkbox"
                                                            type="checkbox" {% if apartmentlead.excluded_ground_floor %}checked{% endif %}>
                                                     <label for="excluded_ground_floor" class="form-check-label">Exclus parter</label>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <div class="form-check">
-                                                    <input id="excluded_top_floor" class="form-check-input readonly-checkbox" 
+                                                    <input id="excluded_top_floor" class="form-check-input readonly-checkbox"
                                                            type="checkbox" {% if apartmentlead.excluded_top_floor %}checked{% endif %}>
                                                     <label for="excluded_top_floor" class="form-check-label">Exclus ultimul etaj</label>
                                                 </div>
@@ -150,48 +150,48 @@
                                             <div class="row">
                                                 <div class="col-lg-6 col-sm-6 mb-2">
                                                     <div class="form-check">
-                                                        <input id="basement" class="form-check-input readonly-checkbox" 
+                                                        <input id="basement" class="form-check-input readonly-checkbox"
                                                                type="checkbox" {% if apartmentlead.basement %}checked{% endif %}>
                                                         <label for="basement" class="form-check-label">Subsol</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-sm-6 mb-2">
                                                     <div class="form-check">
-                                                        <input id="semi_basement" class="form-check-input readonly-checkbox" 
+                                                        <input id="semi_basement" class="form-check-input readonly-checkbox"
                                                                type="checkbox" {% if apartmentlead.semi_basement %}checked{% endif %}>
                                                         <label for="semi_basement" class="form-check-label">Demisol</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-sm-6 mb-2">
                                                     <div class="form-check">
-                                                        <input id="technical_floor" class="form-check-input readonly-checkbox" 
+                                                        <input id="technical_floor" class="form-check-input readonly-checkbox"
                                                                type="checkbox" {% if apartmentlead.technical_floor %}checked{% endif %}>
                                                         <label for="technical_floor" class="form-check-label">Etaj tehnic</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-sm-6 mb-2">
                                                     <div class="form-check">
-                                                        <input id="loft" class="form-check-input readonly-checkbox" 
+                                                        <input id="loft" class="form-check-input readonly-checkbox"
                                                                type="checkbox" {% if apartmentlead.loft %}checked{% endif %}>
                                                         <label for="loft" class="form-check-label">Mansardă</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-sm-6 mb-2">
                                                     <div class="form-check">
-                                                        <input id="attic" class="form-check-input readonly-checkbox" 
+                                                        <input id="attic" class="form-check-input readonly-checkbox"
                                                                type="checkbox" {% if apartmentlead.attic %}checked{% endif %}>
                                                         <label for="attic" class="form-check-label">Pod</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-sm-6 mb-3">
                                                     <div class="form-check">
-                                                        <input id="elevator" class="form-check-input readonly-checkbox" 
+                                                        <input id="elevator" class="form-check-input readonly-checkbox"
                                                                type="checkbox" {% if apartmentlead.elevator %}checked{% endif %}>
                                                         <label for="elevator" class="form-check-label">Lift</label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12 mb-3">
+                                            <div class="col-lg-12">
                                                 <p class="card-text"><strong>Alte detalii: </strong>
                                                     {{ apartmentlead.other_details|default:'. . .' }}</p>
                                             </div>
@@ -205,7 +205,7 @@
                                                 <p class="card-text"><strong>Buget (€): </strong>
                                                     {{ apartmentlead.budget|default:'. . .' }}</p>
                                             </div>
-                                            <div class="col-lg-12 mb-3">
+                                            <div class="col-lg-12">
                                                 <p class="card-text"><strong>Metodă de plată: </strong>
                                                     {{ apartmentlead.payment_method|default:'. . .' }}</p>
                                             </div>
@@ -241,9 +241,9 @@
                                 </div>
                                 <div class="card-footer text-body-secondary d-flex flex-column flex-md-row justify-content-md-between">
                                     <div>
-                                        Adăugată în data de <span id="created-at"
+                                        Adăugată în data de <span id="created_at"
                                                                   data-created-at="{{ apartmentlead.created_at }}"></span><br>
-                                        Ultima actualizare în data de <span id="updated-at"
+                                        Ultima actualizare în data de <span id="updated_at"
                                                                             data-updated-at="{{ apartmentlead.updated_at }}"></span>
                                     </div>
                                     <div class="mt-2 mt-md-0 ms-md-auto">
@@ -309,12 +309,12 @@
             deadlineDateElement.textContent = formatDate(deadlineDate);
 
             // Format dată "created_at"
-            var createdAtElement = document.getElementById('created-at');
+            var createdAtElement = document.getElementById('created_at');
             var createdAtDate = createdAtElement.getAttribute('data-created-at');
             createdAtElement.innerText = formatDate(createdAtDate);
             
             // Format dată "updated_at"
-            var updatedAtElement = document.getElementById('updated-at');
+            var updatedAtElement = document.getElementById('updated_at');
             var updatedAtDate = updatedAtElement.getAttribute('data-updated-at');
             updatedAtElement.innerText = formatDate(updatedAtDate);
         });

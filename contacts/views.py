@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView, DetailView, TemplateView
+from django.views.generic import ListView, UpdateView, DeleteView, DetailView, TemplateView
 from contacts.models import Contact
-from contacts.forms import ContactCreateForm, ContactUpdateForm
+from contacts.forms import ContactUpdateForm
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_POST
@@ -9,18 +9,6 @@ from django.http import JsonResponse
 from django.db.models import Q
 import json
 from contacts.selectors import TIP_DOCUMENT, TIP_CONTACT, CATEGORIE_CONTACT
-
-
-class ContactCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    model = Contact
-    form_class = ContactCreateForm
-    template_name = 'contacts/add_contact.html'
-    success_url = reverse_lazy('contact_added')
-    permission_required = 'contacts.add_contact'
-
-
-class CreateContactDoneView(TemplateView):
-    template_name = 'contacts/contact_added.html'
 
 
 class ContactListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -64,6 +52,8 @@ class ContactDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView)
     template_name = 'contacts/contact_details.html'
     permission_required = 'contacts.view_contact_details'
 
+
+########################################################################################################################
 
 @login_required
 @require_GET

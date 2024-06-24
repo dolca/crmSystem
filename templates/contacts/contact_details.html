@@ -1,0 +1,205 @@
+{% extends "partials/base.html" %}
+
+{% block title %} Detalii contact {% endblock title %}
+
+{% block content %}
+    
+    {% block pagetitle %}
+        {% include "partials/page_title.html" with pagetitle="Contacte" title="Detalii contact" %}
+    {% endblock pagetitle %}
+    
+    {% if user.is_authenticated %}
+        {% if perms.contacts.view_contact_details %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="view_contact_details" class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                {% if contact.avatar %}
+                                                    <img src="{{ contact.avatar.url }}" alt="" class="avatar-lg rounded" 
+                                                         style="width: auto; max-width: 200px; height: 150px;">
+                                                {% else %}
+                                                    <div class="avatar-lg" style="width: auto; max-width: 200px; height: 150px;">
+                                                        <div class="avatar-title fs-lg bg-dark-subtle text-info rounded">
+                                                            {{ contact.first_name|slice:':1'|upper }}{{ contact.last_name|default:''|slice:':1'|upper }}
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <h5 class="mb-4"><span>{{ contact.first_name }}</span> 
+                                                    <span>{{ contact.last_name|default:'' }}</span></h5>
+                                                <p class="card-text"><strong>Nr. telefon: </strong>
+                                                    {{ contact.phone_number|default:'. . .' }}</p>
+                                                <p class="card-text"><strong>E-mail: </strong>
+                                                    {{ contact.email|default:'. . .' }}</p>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Companie: </strong>
+                                                    {{ contact.company|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <p class="card-text"><strong>Funcție: </strong>
+                                                    {{ contact.job_title|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Localitate: </strong>
+                                                    {{ contact.city|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Stradă: </strong>
+                                                    {{ contact.street_address|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Număr stradă: </strong>
+                                                    {{ contact.street_number|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Bloc: </strong>
+                                                    {{ contact.block|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Scară: </strong>
+                                                    {{ contact.scale|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Număr apartament: </strong>
+                                                    {{ contact.apartment_number|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Județ: </strong>
+                                                    {{ contact.county|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <p class="card-text"><strong>Țară: </strong>
+                                                    {{ contact.country|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Tip document: </strong>
+                                                    {{ contact.document_type|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Serie / Număr: </strong>
+                                                    {{ contact.id_series_nr|default:'. . .' }}</p>
+                                            </div>
+                                            {% if contact.document_type == 'Carte de identitate' or not contact.document_type %}
+                                                <div class="col-lg-12 mb-3">
+                                                    <p class="card-text"><strong>CNP: </strong>
+                                                        {{ contact.cnp|default:'. . .' }}</p>
+                                                </div>
+                                            {% endif %}
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Data emiterii: </strong><span id="issue_date"
+                                                        data-issue-date="{{ contact.issue_date|default:'. . .' }}">
+                                                    {{ contact.issue_date|default:'. . .' }}</span>
+                                                </p>
+                                            </div>
+                                            {% if contact.document_type == 'Pașaport' or not contact.document_type %}
+                                                <div class="col-lg-12">
+                                                    <p class="card-text"><strong>Țara emitentă: </strong>
+                                                        {{ contact.passport_country|default:'. . .' }}</p>
+                                                </div>
+                                            {% endif %}
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12 mb-3">
+                                                <p class="card-text"><strong>Tip contact: </strong>
+                                                    {{ contact.contact_type|default:'. . .' }}</p>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <p class="card-text"><strong>Categorie: </strong>
+                                                    {{ contact.contact_category|default:'. . .' }}</p>
+                                            </div>
+                                            <hr class="border-secondary-subtle">
+                                            <div class="col-lg-12">
+                                                <p class="card-text"><strong>Alte detalii: </strong>
+                                                    {{ contact.other_details|default:'. . .' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-body-secondary d-flex flex-column flex-md-row justify-content-md-between">
+                                    <div>
+                                        Adăugat în data de <span id="created_at"
+                                                                  data-created-at="{{ contact.created_at }}"></span><br>
+                                        Ultima actualizare în data de <span id="updated_at"
+                                                                            data-updated-at="{{ contact.updated_at }}"></span>
+                                    </div>
+                                    <div class="mt-2 mt-md-0 ms-md-auto">
+                                        {% if perms.contacts.change_contact %}
+                                            <a href="{% url 'contacts:edit_contact' contact.id %}" 
+                                               class="btn btn-subtle-info my-1">
+                                                <i class="bi bi-pencil-square"></i>&nbsp;&nbsp;Editează
+                                            </a>
+                                        {% endif %}
+                                        {% if perms.contacts.delete_contact %}
+                                            <a href="{% url 'contacts:delete_contact' contact.id %}" 
+                                               class="btn btn-subtle-danger mx-1 my-1">
+                                                <i class="bi bi-trash3"></i>&nbsp;&nbsp;Șterge
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+    
+{% endblock content %}
+
+{% block extra_javascript %}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Conținutul DOM a fost încărcat.');
+            
+            // Funcția pentru a formata și afișa data în limba română
+            function formatDate(dateString) {
+                if (!dateString || dateString === '. . .') {
+                    return '. . .';
+                }
+                var date = new Date(dateString);
+                var day = date.getDate();
+                var monthNames = ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Noi', 'Dec'];
+                var month = monthNames[date.getMonth()];
+                var year = date.getFullYear();
+                return day + ' ' + month + ' ' + year;
+            }
+            
+            // Format dată "issue_date"
+            var deadlineDateElement = document.getElementById('issue_date');
+            var deadlineDate = deadlineDateElement.getAttribute('data-issue-date');
+            deadlineDateElement.textContent = formatDate(deadlineDate);
+            
+            // Format dată "created_at"
+            var createdAtElement = document.getElementById('created_at');
+            var createdAtDate = createdAtElement.getAttribute('data-created-at');
+            createdAtElement.innerText = formatDate(createdAtDate);
+            
+            // Format dată "updated_at"
+            var updatedAtElement = document.getElementById('updated_at');
+            var updatedAtDate = updatedAtElement.getAttribute('data-updated-at');
+            updatedAtElement.innerText = formatDate(updatedAtDate);
+        });
+    </script>
+    
+{% endblock extra_javascript %}

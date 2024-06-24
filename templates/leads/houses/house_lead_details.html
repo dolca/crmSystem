@@ -164,7 +164,7 @@
                                                 <p class="card-text"><strong>Suprafață teren (mp): </strong>
                                                     {{ houselead.terrain_surface|default:'. . .' }}</p>
                                             </div>
-                                            <div class="col-lg-12 mb-3">
+                                            <div class="col-lg-12">
                                                 <p class="card-text"><strong>Alte detalii: </strong>
                                                     {{ houselead.other_details|default:'. . .' }}</p>
                                             </div>
@@ -178,7 +178,7 @@
                                                 <p class="card-text"><strong>Buget (€): </strong>
                                                     {{ houselead.budget|default:'. . .' }}</p>
                                             </div>
-                                            <div class="col-lg-12 mb-3">
+                                            <div class="col-lg-12">
                                                 <p class="card-text"><strong>Metodă de plată: </strong>
                                                     {{ houselead.payment_method|default:'. . .' }}</p>
                                             </div>
@@ -214,9 +214,9 @@
                                 </div>
                                 <div class="card-footer text-body-secondary d-flex flex-column flex-md-row justify-content-md-between">
                                     <div>
-                                        Adăugată în data de <span id="created-at"
+                                        Adăugată în data de <span id="created_at"
                                                                   data-created-at="{{ houselead.created_at }}"></span><br>
-                                        Ultima actualizare în data de <span id="updated-at"
+                                        Ultima actualizare în data de <span id="updated_at"
                                                                             data-updated-at="{{ houselead.updated_at }}"></span>
                                     </div>
                                     <div class="mt-2 mt-md-0 ms-md-auto">
@@ -281,12 +281,12 @@
             deadlineDateElement.textContent = formatDate(deadlineDate);
 
             // Format dată "created_at"
-            var createdAtElement = document.getElementById('created-at');
+            var createdAtElement = document.getElementById('created_at');
             var createdAtDate = createdAtElement.getAttribute('data-created-at');
             createdAtElement.innerText = formatDate(createdAtDate);
 
             // Format dată "updated_at"
-            var updatedAtElement = document.getElementById('updated-at');
+            var updatedAtElement = document.getElementById('updated_at');
             var updatedAtDate = updatedAtElement.getAttribute('data-updated-at');
             updatedAtElement.innerText = formatDate(updatedAtDate);
         });

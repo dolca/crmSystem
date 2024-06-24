@@ -1,12 +1,10 @@
 from django.urls import path
-from contacts.views import ContactCreateView, CreateContactDoneView, ContactListView, ContactUpdateView, \
-    ContactDeleteView, DeleteContactDoneView, ContactDetailView, check_duplicate, save_contact, get_contact_details
+from contacts.views import ContactListView, ContactUpdateView, ContactDeleteView, DeleteContactDoneView, \
+    ContactDetailView, check_duplicate, save_contact, get_contact_details
 
 app_name = 'contacts'
 
 urlpatterns = [
-    path('add-contact', ContactCreateView.as_view(), name='add_contact'),
-    path('contact-added', CreateContactDoneView.as_view(), name='contact_added'),
     path('all-contacts', ContactListView.as_view(), name='contacts_list'),
     path('edit-contact/<int:pk>', ContactUpdateView.as_view(), name='edit_contact'),
     path('delete-contact/<int:pk>', ContactDeleteView.as_view(), name='delete_contact'),

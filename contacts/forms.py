@@ -3,44 +3,6 @@ from django.forms import ModelForm, TextInput, NumberInput, Textarea, Select, Em
 from .models import Contact
 
 
-class ContactCreateForm(ModelForm):
-    class Meta:
-        model = Contact
-        fields = '__all__'
-        widgets = {
-            'first_name': TextInput(attrs={'class': 'form-control'}),
-            'last_name': TextInput(attrs={'class': 'form-control'}),
-            'phone_number': TextInput(attrs={'class': 'form-control'}),
-            'email': EmailInput(attrs={'class': 'form-control'}),
-
-            'company': TextInput(attrs={'class': 'form-control'}),
-            'job_title': TextInput(attrs={'class': 'form-control'}),
-
-            'city': TextInput(attrs={'class': 'form-control'}),
-            'street_address': TextInput(attrs={'class': 'form-control'}),
-            'street_number': NumberInput(attrs={'class': 'form-control'}),
-            'block': TextInput(attrs={'class': 'form-control'}),
-            'scale': TextInput(attrs={'class': 'form-control'}),
-            'apartment_number': NumberInput(attrs={'class': 'form-control'}),
-            'county': TextInput(attrs={'class': 'form-control'}),
-            'country': TextInput(attrs={'class': 'form-control'}),
-
-            'document_type': Select(attrs={'class': 'form-control'}),
-            'id_series_nr': TextInput(attrs={'class': 'form-control'}),
-            'cnp': TextInput(attrs={'class': 'form-control'}),
-            'issue_date': DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'passport_country': TextInput(attrs={'class': 'form-control'}),
-
-            'contact_type': SelectMultiple(attrs={'class': 'form-control'}),
-            'contact_category': SelectMultiple(attrs={'class': 'form-control'}),
-
-            'other_details': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
-
-            'created_at': DateInput(attrs={'class': 'form-control'}),
-            'updated_at': DateInput(attrs={'class': 'form-control'}),
-        }
-
-
 class ContactUpdateForm(ModelForm):
     class Meta:
         model = Contact

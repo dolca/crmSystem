@@ -139,7 +139,7 @@
                                                 <input id="minimal_surface" class="form-control" name="minimal_surface" type="text" 
                                                        value="{{ industrialspacelead.minimal_surface|default:'' }}">
                                             </div>
-                                            <div class="col-lg-12 mb-3">
+                                            <div class="col-lg-12">
                                                 <label for="terrain_surface" class="form-label">Suprafață teren (mp)</label>
                                                 <input id="terrain_surface" class="form-control" name="terrain_surface" type="text" 
                                                        value="{{ industrialspacelead.terrain_surface|default:'' }}">
@@ -189,7 +189,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12 mb-3">
+                                            <div class="col-lg-12">
                                                 <label for="other_details" class="form-label">Alte detalii</label>
                                                 <textarea id="other_details" class="form-control" name="other_details" type="text" 
                                                           rows="4">{{ industrialspacelead.other_details|default:'' }}</textarea>
@@ -205,7 +205,7 @@
                                                 <input id="budget" class="form-control" name="budget" type="text" 
                                                        value="{{ industrialspacelead.budget|default:'' }}">
                                             </div>
-                                            <div class="col-lg-12 mb-3">
+                                            <div class="col-lg-12">
                                                 <label for="payment_method" class="form-label">Metodă de plată</label>
                                                 <select id="payment_method" class="form-select" name="payment_method">
                                                     {% for value, label in form.fields.payment_method.choices %}
