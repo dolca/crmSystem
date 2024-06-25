@@ -16,7 +16,7 @@ from listings.selectors import STATUS_PROPRIETATE, TIP_PROPRIETATE, TIP_TRANZACT
 
 class Listing(Model):
     property_status = CharField(choices=STATUS_PROPRIETATE, default='Incompletă', verbose_name='Status proprietate')
-    property_type = CharField(choices=TIP_PROPRIETATE, default='Apartament', verbose_name='Tip proprietate')
+    property_type = CharField(choices=TIP_PROPRIETATE, verbose_name='Tip proprietate')
     transaction_type = CharField(choices=TIP_TRANZACTIE, verbose_name='Tip tranzacție')
 
     contact = ForeignKey(Contact, on_delete=SET_NULL, null=True, verbose_name='Contact asociat')
