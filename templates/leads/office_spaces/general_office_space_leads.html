@@ -16,7 +16,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div id="officeSpaceLeadsTable">
-                                <div class="row g-4 mb-3">
+                                <div class="row g-3 mb-3">
                                     <div class="col-sm-auto">
                                         <div>
                                             <a href="{% url 'leads:add_new_lead' %}" class="btn btn-subtle-success">
@@ -186,17 +186,26 @@
                                     </h5>
                                 </div>
                             
-                                <div class="d-flex justify-content-center justify-content-sm-end">
-                                    <div class="pagination-wrap hstack gap-2">
-                                        <a class="page-item pagination-prev disabled" href="#">
-                                            <i class="bi bi-caret-left-fill"></i>
-                                        </a>
-                                        <ul class="pagination listjs-pagination mb-0"></ul>
-                                        <a class="page-item pagination-next" href="#">
-                                            <i class="bi bi-caret-right-fill"></i>
-                                        </a>
-                                    </div>
-                                </div>
+                                <div class="row align-items-center justify-content-between text-center text-sm-start">
+                                    <div class="col-sm mt-1">
+                                        <div class="text-muted">
+                                            Afișare <span class="fw-semibold" id="currentLeadsCount">0</span> din 
+                                            <span class="fw-semibold">{{ general_office_space_leads|length }}</span> cereri
+                                        </div>
+                                    </div><!--end col-->
+                                    
+                                    <div class="col-sm-auto mt-3 mt-sm-0 d-flex justify-content-center justify-content-sm-end">
+                                        <div class="pagination-wrap hstack gap-2">
+                                            <a class="page-item pagination-prev disabled" href="#">
+                                                <i class="bi bi-caret-left-fill"></i>
+                                            </a>
+                                            <ul class="pagination listjs-pagination mb-0"></ul>
+                                            <a class="page-item pagination-next" href="#">
+                                                <i class="bi bi-caret-right-fill"></i>
+                                            </a>
+                                        </div>
+                                    </div><!--end col-->
+                                </div><!--end row-->
                             </div>
                         </div>
                     </div>
@@ -219,6 +228,12 @@
             };
             
             var leadList = new List('officeSpaceLeadsTable', options);
+            
+            // Funcția pentru actualizarea numărului curent de cereri afișate
+            function updateCurrentLeadsCount() {
+                document.getElementById('currentLeadsCount').textContent = Array.from(
+                    document.querySelectorAll('table tbody tr')).filter(row => row.style.display !== 'none').length;
+            }
             
             // Funcția pentru a formata și afișa data în limba română
             function formatDate(element) {
@@ -266,6 +281,8 @@
                     noResultsMessage.classList.add('d-none');
                 }
                 
+                updateCurrentLeadsCount(); // Actualizez numărul curent de cereri afișate
+                
                 // Reinitializez paginarea după căutare
                 currentPage = 1;
                 rows = document.querySelectorAll('table tbody tr');  // actualizez rândurile după căutare
@@ -292,7 +309,7 @@
                 
                 currentPage = page;
                 
-                rows.forEach(function(row, index) {
+                rows.forEach(function(row) {
                     row.style.display = 'none';
                 });
                 
@@ -303,6 +320,8 @@
                         rows[i].style.display = '';
                     }
                 }
+                
+                updateCurrentLeadsCount(); // Actualizez numărul curent de cereri afișate
                 
                 document.querySelector('.pagination-prev').classList.toggle('disabled', page === 1);
                 document.querySelector('.pagination-next').classList.toggle('disabled', page === totalPages);

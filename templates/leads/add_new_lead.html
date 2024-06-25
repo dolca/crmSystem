@@ -31,7 +31,9 @@
                                                 <select id="contact" class="form-select" name="contact" required>
                                                     <option value="">Selectează un contact</option>
                                                     {% for contact in contacts %}
-                                                        <option value="{{ contact.id }}">{{ contact.first_name }} {{ contact.last_name|default:'' }} - {{ contact.phone_number|default:'' }} {{ contact.email|default:'' }}</option>
+                                                        <option value="{{ contact.id }}" data-label="{{ contact.first_name }} {{ contact.last_name }} {{ contact.phone_number }} {{ contact.email }}">
+                                                            {{ contact.first_name }} {{ contact.last_name|default:'' }} - {{ contact.phone_number|default:'' }} {{ contact.email|default:'' }}
+                                                        </option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
@@ -256,7 +258,12 @@
                 searchEnabled: true,
                 searchFields: ['label'],
                 searchResultLimit: 6,
-                noResultsText: 'Niciun rezultat găsit.'
+                noResultsText: 'Niciun rezultat găsit.',
+                fuseOptions: {
+                    includeScore: true,
+                    threshold: 0.4,
+                    keys: ['data-label']
+                }
             });
             
             console.log('Inițializare "Choices" cu succes!');
