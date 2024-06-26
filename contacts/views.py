@@ -38,6 +38,13 @@ class ContactUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     success_url = reverse_lazy('contact_details')
     permission_required = 'contacts.change_contact'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['document_type'] = TIP_DOCUMENT
+        context['contact_type'] = TIP_CONTACT
+        context['contact_category'] = CATEGORIE_CONTACT
+        return context
+
 
 class ContactDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Contact
