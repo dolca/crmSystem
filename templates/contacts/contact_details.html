@@ -46,43 +46,84 @@
                                             <hr class="border-secondary-subtle">
                                             <div class="col-lg-12 mb-3">
                                                 <p class="card-text"><strong>Proprietăți asociate: </strong>
-                                                    </p>
+                                                    {% if all_listings %}
+                                                        {% for listing in all_listings %}
+                                                            {% if listing.property_type == 'Apartament' %}
+                                                                <a href="{% url 'listings:apartment_details' listing.id %}"
+                                                                   class="badge badge-gradient-primary">
+                                                                    {{ listing.custom_id }}
+                                                                </a>
+                                                            {% elif listing.property_type == 'Casă' %}
+                                                                <a href="{% url 'listings:house_details' listing.id %}"
+                                                                   class="badge badge-gradient-primary">
+                                                                    {{ listing.custom_id }}
+                                                                </a>
+                                                            {% elif listing.property_type == 'Teren' %}
+                                                                <a href="{% url 'listings:terrain_details' listing.id %}"
+                                                                   class="badge badge-gradient-primary">
+                                                                    {{ listing.custom_id }}
+                                                                </a>
+                                                            {% elif listing.property_type == 'Spațiu comercial' %}
+                                                                <a href="{% url 'listings:commercial_space_details' listing.id %}"
+                                                                   class="badge badge-gradient-primary">
+                                                                    {{ listing.custom_id }}
+                                                                </a>
+                                                            {% elif listing.property_type == 'Spațiu de birouri' %}
+                                                                <a href="{% url 'listings:office_space_details' listing.id %}"
+                                                                   class="badge badge-gradient-primary">
+                                                                    {{ listing.custom_id }}
+                                                                </a>
+                                                            {% elif listing.property_type == 'Spațiu industrial' %}
+                                                                <a href="{% url 'listings:industrial_space_details' listing.id %}"
+                                                                   class="badge badge-gradient-primary">
+                                                                    {{ listing.custom_id }}
+                                                                </a>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <span class="text-muted"><i>Nicio proprietate asociată</i></span>
+                                                    {% endif %}
+                                                </p>
                                             </div>
                                             <div class="col-lg-12">
                                                 <p class="card-text"><strong>Cereri asociate: </strong>
-                                                    {% for lead in all_leads %}
-                                                        {% if lead.property_type == 'Apartament' %}
-                                                            <a href="{% url 'leads:apartment_lead_details' lead.id %}"
-                                                               class="badge badge-gradient-info">
-                                                                {{ lead.custom_id }}
-                                                            </a>
-                                                        {% elif lead.property_type == 'Casă' %}
-                                                            <a href="{% url 'leads:house_lead_details' lead.id %}"
-                                                               class="badge badge-gradient-info">
-                                                                {{ lead.custom_id }}
-                                                            </a>
-                                                        {% elif lead.property_type == 'Teren' %}
-                                                            <a href="{% url 'leads:terrain_lead_details' lead.id %}"
-                                                               class="badge badge-gradient-info">
-                                                                {{ lead.custom_id }}
-                                                            </a>
-                                                        {% elif lead.property_type == 'Spațiu comercial' %}
-                                                            <a href="{% url 'leads:commercial_space_lead_details' lead.id %}"
-                                                               class="badge badge-gradient-info">
-                                                                {{ lead.custom_id }}
-                                                            </a>
-                                                        {% elif lead.property_type == 'Spațiu de birouri' %}
-                                                            <a href="{% url 'leads:office_space_lead_details' lead.id %}"
-                                                               class="badge badge-gradient-info">
-                                                                {{ lead.custom_id }}
-                                                            </a>
-                                                        {% elif lead.property_type == 'Spațiu industrial' %}
-                                                            <a href="{% url 'leads:industrial_space_lead_details' lead.id %}"
-                                                               class="badge badge-gradient-info">
-                                                                {{ lead.custom_id }}
-                                                            </a>
-                                                        {% endif %}
-                                                    {% endfor %}
+                                                    {% if all_leads %}
+                                                        {% for lead in all_leads %}
+                                                            {% if lead.property_type == 'Apartament' %}
+                                                                <a href="{% url 'leads:apartment_lead_details' lead.id %}"
+                                                                   class="badge badge-gradient-info">
+                                                                    {{ lead.custom_id }}
+                                                                </a>
+                                                            {% elif lead.property_type == 'Casă' %}
+                                                                <a href="{% url 'leads:house_lead_details' lead.id %}"
+                                                                   class="badge badge-gradient-info">
+                                                                    {{ lead.custom_id }}
+                                                                </a>
+                                                            {% elif lead.property_type == 'Teren' %}
+                                                                <a href="{% url 'leads:terrain_lead_details' lead.id %}"
+                                                                   class="badge badge-gradient-info">
+                                                                    {{ lead.custom_id }}
+                                                                </a>
+                                                            {% elif lead.property_type == 'Spațiu comercial' %}
+                                                                <a href="{% url 'leads:commercial_space_lead_details' lead.id %}"
+                                                                   class="badge badge-gradient-info">
+                                                                    {{ lead.custom_id }}
+                                                                </a>
+                                                            {% elif lead.property_type == 'Spațiu de birouri' %}
+                                                                <a href="{% url 'leads:office_space_lead_details' lead.id %}"
+                                                                   class="badge badge-gradient-info">
+                                                                    {{ lead.custom_id }}
+                                                                </a>
+                                                            {% elif lead.property_type == 'Spațiu industrial' %}
+                                                                <a href="{% url 'leads:industrial_space_lead_details' lead.id %}"
+                                                                   class="badge badge-gradient-info">
+                                                                    {{ lead.custom_id }}
+                                                                </a>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <span class="text-muted"><i>Nicio cerere asociată</i></span>
+                                                    {% endif %}
                                                 </p>
                                             </div>
                                         </div>

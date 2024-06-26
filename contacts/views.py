@@ -11,6 +11,7 @@ import json
 from contacts.selectors import TIP_DOCUMENT, TIP_CONTACT, CATEGORIE_CONTACT
 from leads.models import ApartmentLead, HouseLead, TerrainLead, CommercialSpaceLead, OfficeSpaceLead, \
     IndustrialSpaceLead
+from listings.models import Apartment, House, Terrain, CommercialSpace, OfficeSpace, IndustrialSpace
 
 
 class ContactListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -57,7 +58,15 @@ class ContactDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        all_listings = []
         all_leads = []
+
+        apartments = Apartment.objects.filter(contact=self.object)
+        houses = House.objects.filter(contact=self.object)
+        terrains = Terrain.objects.filter(contact=self.object)
+        commercial_spaces = CommercialSpace.objects.filter(contact=self.object)
+        office_spaces = OfficeSpace.objects.filter(contact=self.object)
+        industrial_spaces = IndustrialSpace.objects.filter(contact=self.object)
 
         apartment_leads = ApartmentLead.objects.filter(contact=self.object)
         house_leads = HouseLead.objects.filter(contact=self.object)
@@ -66,6 +75,13 @@ class ContactDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView)
         office_space_leads = OfficeSpaceLead.objects.filter(contact=self.object)
         industrial_space_leads = IndustrialSpaceLead.objects.filter(contact=self.object)
 
+        all_listings.extend(apartments)
+        all_listings.extend(houses)
+        all_listings.extend(terrains)
+        all_listings.extend(commercial_spaces)
+        all_listings.extend(office_spaces)
+        all_listings.extend(industrial_spaces)
+
         all_leads.extend(apartment_leads)
         all_leads.extend(house_leads)
         all_leads.extend(terrain_leads)
@@ -73,6 +89,7 @@ class ContactDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView)
         all_leads.extend(office_space_leads)
         all_leads.extend(industrial_space_leads)
 
+        context['all_listings'] = all_listings
         context['all_leads'] = all_leads
         return context
 
