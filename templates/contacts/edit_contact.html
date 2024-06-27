@@ -39,7 +39,7 @@
                                                 <label for="phone_number" class="form-label">Număr de telefon <span 
                                                         class="text-muted">*</span></label>
                                                 <input id="phone_number" class="form-control" name="phone_number" 
-                                                       value="{{ contact.phone_number|default:'' }}" type="text">
+                                                       value="{{ contact.phone_number|default:'' }}" type="tel">
                                             </div>
                                             <div class="col-lg-12">
                                                 <label for="email" class="form-label">Adresă de e-mail <span 
@@ -48,12 +48,6 @@
                                                        value="{{ contact.email|default:'' }}" type="email">
                                             </div>
                                             <hr class="border-secondary-subtle">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6">
-                                    <div class="card">
-                                        <div class="card-body">
                                             <div class="col-lg-12 mb-3">
                                                 <label for="company" class="form-label">Companie</label>
                                                 <input id="company" class="form-control" name="company"
@@ -64,7 +58,12 @@
                                                 <input id="job_title" class="form-control" name="job_title"
                                                        value="{{ contact.job_title|default:'' }}" type="text">
                                             </div>
-                                            <hr class="border-secondary-subtle">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
                                             <div class="col-lg-12 mb-3">
                                                 <label for="city" class="form-label">Localitate</label>
                                                 <input id="city" class="form-control" name="city"
@@ -137,7 +136,7 @@
                                                        value="{{ contact.issue_date|default:'' }}" type="date" 
                                                        placeholder="zz lll aaaa">
                                             </div>
-                                            <div class="col-lg-12 mb-3">
+                                            <div class="col-lg-12">
                                                 <label for="passport_country" class="form-label">
                                                     Țara emitentă (doar pentru pașaport)</label>
                                                 <input id="passport_country" class="form-control" name="passport_country"
@@ -154,7 +153,7 @@
                                                     {% endfor %}
                                                 </select>
                                             </div>
-                                            <div class="col-lg-12 mb-3">
+                                            <div class="col-lg-12">
                                                 <label for="contact_category" class="form-label">Categorie</label>
                                                 <select id="contact_category" class="form-select" name="contact_category">
                                                     <option value="" selected>--------</option>
@@ -168,7 +167,7 @@
                                             <div class="col-lg-12">
                                                 <label for="other_details" class="form-label">Alte detalii</label>
                                                 <textarea id="other_details" class="form-control" name="other_details" 
-                                                          rows="4">{{ contact.other_details|default:'' }}</textarea>
+                                                          rows="3">{{ contact.other_details|default:'' }}</textarea>
                                             </div>
                                         </div>
                                     </div>

@@ -120,17 +120,17 @@
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="rooms_number" class="form-label">Număr camere</label>
-                                                <input id="rooms_number" class="form-control" name="rooms_number" type="text" 
+                                                <input id="rooms_number" class="form-control" name="rooms_number" type="number" 
                                                        value="{{ commercialspacelead.rooms_number|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="nr_locker_rooms" class="form-label">Număr vestiare</label>
-                                                <input id="nr_locker_rooms" class="form-control" name="nr_locker_rooms" type="text" 
+                                                <input id="nr_locker_rooms" class="form-control" name="nr_locker_rooms" type="number" 
                                                        value="{{ commercialspacelead.nr_locker_rooms|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="nr_bathrooms" class="form-label">Număr băi</label>
-                                                <input id="nr_bathrooms" class="form-control" name="nr_bathrooms" type="text" 
+                                                <input id="nr_bathrooms" class="form-control" name="nr_bathrooms" type="number" 
                                                        value="{{ commercialspacelead.nr_bathrooms|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
@@ -146,12 +146,12 @@
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="nr_floors" class="form-label">Număr etaje</label>
-                                                <input id="nr_floors" class="form-control" name="nr_floors" type="text" 
+                                                <input id="nr_floors" class="form-control" name="nr_floors" type="number" 
                                                        value="{{ commercialspacelead.nr_floors|default:'' }}">
                                             </div>
                                             <div class="col-lg-12">
                                                 <label for="minimal_surface" class="form-label">Suprafață minimă (mp)</label>
-                                                <input id="minimal_surface" class="form-control" name="minimal_surface" type="text" 
+                                                <input id="minimal_surface" class="form-control" name="minimal_surface" type="number" 
                                                        value="{{ commercialspacelead.minimal_surface|default:'' }}">
                                             </div>
                                         </div>
@@ -162,7 +162,7 @@
                                         <div class="card-body">
                                             <div class="col-lg-12 mb-3">
                                                 <label for="glass_case" class="form-label">Vitrină (m)</label>
-                                                <input id="glass_case" class="form-control" name="glass_case" type="text" 
+                                                <input id="glass_case" class="form-control" name="glass_case" type="number" 
                                                        value="{{ commercialspacelead.glass_case|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
@@ -181,7 +181,7 @@
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="nr_parking_spaces" class="form-label">Număr locuri parcare</label>
-                                                <input id="nr_parking_spaces" class="form-control" name="nr_parking_spaces" type="text" 
+                                                <input id="nr_parking_spaces" class="form-control" name="nr_parking_spaces" type="number" 
                                                        value="{{ commercialspacelead.nr_parking_spaces|default:'' }}">
                                             </div>
                                             <div class="row">
@@ -213,7 +213,7 @@
                                             <div class="col-lg-12">
                                                 <label for="other_details" class="form-label">Alte detalii</label>
                                                 <textarea id="other_details" class="form-control" name="other_details" type="text" 
-                                                          rows="4">{{ commercialspacelead.other_details|default:'' }}</textarea>
+                                                          rows="3">{{ commercialspacelead.other_details|default:'' }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -281,7 +281,7 @@
                                             <div class="col-lg-12">
                                                 <label for="notes" class="form-label">Notițe proprii</label>
                                                 <textarea id="notes" class="form-control" name="notes" type="text" 
-                                                          rows="4">{{ commercialspacelead.notes|default:'' }}</textarea>
+                                                          rows="3">{{ commercialspacelead.notes|default:'' }}</textarea>
                                             </div>
                                         </div>
                                     </div>

@@ -112,17 +112,17 @@
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="rooms_number" class="form-label">Număr camere</label>
-                                                <input id="rooms_number" class="form-control" name="rooms_number" type="text" 
+                                                <input id="rooms_number" class="form-control" name="rooms_number" type="number" 
                                                        value="{{ industrialspacelead.rooms_number|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="nr_locker_rooms" class="form-label">Număr vestiare</label>
-                                                <input id="nr_locker_rooms" class="form-control" name="nr_locker_rooms" type="text" 
+                                                <input id="nr_locker_rooms" class="form-control" name="nr_locker_rooms" type="number" 
                                                        value="{{ industrialspacelead.nr_locker_rooms|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="nr_bathrooms" class="form-label">Număr băi</label>
-                                                <input id="nr_bathrooms" class="form-control" name="nr_bathrooms" type="text" 
+                                                <input id="nr_bathrooms" class="form-control" name="nr_bathrooms" type="number" 
                                                        value="{{ industrialspacelead.nr_bathrooms|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
@@ -136,12 +136,14 @@
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="minimal_surface" class="form-label">Suprafață minimă (mp)</label>
-                                                <input id="minimal_surface" class="form-control" name="minimal_surface" type="text" 
+                                                <input id="minimal_surface" class="form-control" name="minimal_surface" type="number" 
                                                        value="{{ industrialspacelead.minimal_surface|default:'' }}">
+                                                <p></p>
+                                                <div id="minimal_surface-error" class="firebrick-message"></div>
                                             </div>
                                             <div class="col-lg-12">
                                                 <label for="terrain_surface" class="form-label">Suprafață teren (mp)</label>
-                                                <input id="terrain_surface" class="form-control" name="terrain_surface" type="text" 
+                                                <input id="terrain_surface" class="form-control" name="terrain_surface" type="number" 
                                                        value="{{ industrialspacelead.terrain_surface|default:'' }}">
                                             </div>
                                         </div>
@@ -192,7 +194,7 @@
                                             <div class="col-lg-12">
                                                 <label for="other_details" class="form-label">Alte detalii</label>
                                                 <textarea id="other_details" class="form-control" name="other_details" type="text" 
-                                                          rows="4">{{ industrialspacelead.other_details|default:'' }}</textarea>
+                                                          rows="3">{{ industrialspacelead.other_details|default:'' }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -262,7 +264,7 @@
                                             <div class="col-lg-12">
                                                 <label for="notes" class="form-label">Notițe proprii</label>
                                                 <textarea id="notes" class="form-control" name="notes" type="text" 
-                                                          rows="4">{{ industrialspacelead.notes|default:'' }}</textarea>
+                                                          rows="3">{{ industrialspacelead.notes|default:'' }}</textarea>
                                             </div>
                                         </div>
                                     </div>

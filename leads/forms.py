@@ -132,6 +132,13 @@ class HouseLeadCreateForm(LeadCreateForm):
             raise ValidationError({'nr_bedrooms': [
                 'Numărul de dormitoare nu poate fi mai mare decât numărul total de camere.']})
 
+        minimal_surface = cleaned_data.get('minimal_surface')
+        terrain_surface = cleaned_data.get('terrain_surface')
+
+        if minimal_surface is not None and terrain_surface is not None and minimal_surface >= terrain_surface:
+            raise ValidationError({'minimal_surface': [
+                'Suprafața minimă a casei nu poate fi mai mare sau egală cu suprafața totală a terenului.']})
+
         return cleaned_data
 
 
@@ -279,6 +286,18 @@ class IndustrialSpaceLeadCreateForm(LeadCreateForm):
             'assigned_listings': TextInput(attrs={'class': 'form-control'}),
         }
 
+    def clean(self):
+        cleaned_data = super().clean()
+
+        minimal_surface = cleaned_data.get('minimal_surface')
+        terrain_surface = cleaned_data.get('terrain_surface')
+
+        if minimal_surface is not None and terrain_surface is not None and minimal_surface >= terrain_surface:
+            raise ValidationError({'minimal_surface': [
+                'Suprafața minimă a spațiului nu poate fi mai mare sau egală cu suprafața totală a terenului.']})
+
+        return cleaned_data
+
 
 ########################################################################################################################
 #                               ---   FORMULARE ACTUALIZARE   ---
@@ -410,6 +429,13 @@ class HouseLeadUpdateForm(LeadUpdateForm):
         if bedrooms_number is not None and rooms_number is not None and bedrooms_number > rooms_number:
             raise ValidationError({'nr_bedrooms': [
                 'Numărul de dormitoare nu poate fi mai mare decât numărul total de camere.']})
+
+        minimal_surface = cleaned_data.get('minimal_surface')
+        terrain_surface = cleaned_data.get('terrain_surface')
+
+        if minimal_surface is not None and terrain_surface is not None and minimal_surface >= terrain_surface:
+            raise ValidationError({'minimal_surface': [
+                'Suprafața minimă a casei nu poate fi mai mare sau egală cu suprafața totală a terenului.']})
 
         return cleaned_data
 
@@ -557,3 +583,15 @@ class IndustrialSpaceLeadUpdateForm(LeadUpdateForm):
 
             'assigned_listings': TextInput(attrs={'class': 'form-control'}),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        minimal_surface = cleaned_data.get('minimal_surface')
+        terrain_surface = cleaned_data.get('terrain_surface')
+
+        if minimal_surface is not None and terrain_surface is not None and minimal_surface >= terrain_surface:
+            raise ValidationError({'minimal_surface': [
+                'Suprafața minimă a spațiului nu poate fi mai mare sau egală cu suprafața totală a terenului.']})
+
+        return cleaned_data

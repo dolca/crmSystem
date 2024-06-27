@@ -123,7 +123,7 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="terrain_surface" class="form-label">Suprafață teren</label>
                                                 <input id="terrain_surface" class="form-control" name="terrain_surface" 
-                                                       type="text" value="{{ terrainlead.terrain_surface|default:'' }}">
+                                                       type="number" value="{{ terrainlead.terrain_surface|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="unit" class="form-label">Unitate suprafață</label>
@@ -137,7 +137,7 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="street_front" class="form-label">Front stradal (m)</label>
                                                 <input id="street_front" class="form-control" name="street_front" 
-                                                       type="text" value="{{ terrainlead.street_front|default:'' }}">
+                                                       type="number" value="{{ terrainlead.street_front|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="opening_to" class="form-label">Deschidere la</label>
@@ -213,7 +213,7 @@
                                             <div class="col-lg-12">
                                                 <label for="other_details" class="form-label">Alte detalii</label>
                                                 <textarea id="other_details" class="form-control" name="other_details" type="text" 
-                                                          rows="4">{{ terrainlead.other_details|default:'' }}</textarea>
+                                                          rows="3">{{ terrainlead.other_details|default:'' }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -282,7 +282,7 @@
                                             <div class="col-lg-12">
                                                 <label for="notes" class="form-label">Notițe proprii</label>
                                                 <textarea id="notes" class="form-control" name="notes" type="text" 
-                                                          rows="4">{{ terrainlead.notes|default:'' }}</textarea>
+                                                          rows="3">{{ terrainlead.notes|default:'' }}</textarea>
                                             </div>
                                         </div>
                                     </div>

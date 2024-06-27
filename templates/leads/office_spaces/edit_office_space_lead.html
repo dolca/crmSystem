@@ -112,12 +112,12 @@
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="rooms_number" class="form-label">Număr camere</label>
-                                                <input id="rooms_number" class="form-control" name="rooms_number" type="text" 
+                                                <input id="rooms_number" class="form-control" name="rooms_number" type="number" 
                                                        value="{{ officespacelead.rooms_number|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="nr_bathrooms" class="form-label">Număr băi</label>
-                                                <input id="nr_bathrooms" class="form-control" name="nr_bathrooms" type="text" 
+                                                <input id="nr_bathrooms" class="form-control" name="nr_bathrooms" type="number" 
                                                        value="{{ officespacelead.nr_bathrooms|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
@@ -133,13 +133,13 @@
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="nr_floors" class="form-label">Număr etaje</label>
-                                                <input id="nr_floors" class="form-control" name="nr_floors" type="text" 
+                                                <input id="nr_floors" class="form-control" name="nr_floors" type="number" 
                                                        value="{{ officespacelead.nr_floors|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="useful_surface" class="form-label">
                                                     Suprafață utilă (mp)</label>
-                                                <input id="useful_surface" class="form-control" name="useful_surface" type="text" 
+                                                <input id="useful_surface" class="form-control" name="useful_surface" type="number" 
                                                        value="{{ officespacelead.useful_surface|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
@@ -160,7 +160,7 @@
                                                 <label for="total_surface_offices" class="form-label">
                                                     Suprafață totală birouri (mp)</label>
                                                 <input id="total_surface_offices" class="form-control" 
-                                                       name="total_surface_offices" type="text" 
+                                                       name="total_surface_offices" type="number" 
                                                        value="{{ officespacelead.total_surface_offices|default:'' }}">
                                             </div>
                                         </div>
@@ -182,7 +182,7 @@
                                                 <label for="nr_underground_parking" class="form-label">
                                                     Nr. locuri parcare subterană</label>
                                                 <input id="nr_underground_parking" class="form-control" 
-                                                       name="nr_underground_parking" type="text" 
+                                                       name="nr_underground_parking" type="number" 
                                                        value="{{ officespacelead.nr_underground_parking|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
@@ -196,7 +196,7 @@
                                                 <label for="nr_surface_parking" class="form-label">
                                                     Nr. locuri parcare suprafață</label>
                                                 <input id="nr_surface_parking" class="form-control" 
-                                                       name="nr_surface_parking" type="text" 
+                                                       name="nr_surface_parking" type="number" 
                                                        value="{{ officespacelead.nr_surface_parking|default:'' }}">
                                             </div>
                                             <div class="col-lg-12 mb-3">
@@ -251,7 +251,7 @@
                                             <div class="col-lg-12">
                                                 <label for="other_details" class="form-label">Alte detalii</label>
                                                 <textarea id="other_details" class="form-control" name="other_details" type="text" 
-                                                          rows="4">{{ officespacelead.other_details|default:'' }}</textarea>
+                                                          rows="3">{{ officespacelead.other_details|default:'' }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -321,7 +321,7 @@
                                             <div class="col-lg-12">
                                                 <label for="notes" class="form-label">Notițe proprii</label>
                                                 <textarea id="notes" class="form-control" name="notes" type="text" 
-                                                          rows="4">{{ officespacelead.notes|default:'' }}</textarea>
+                                                          rows="3">{{ officespacelead.notes|default:'' }}</textarea>
                                             </div>
                                         </div>
                                     </div>
