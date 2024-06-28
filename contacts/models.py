@@ -23,8 +23,8 @@ class Contact(Model):
     country = CharField(max_length=50, null=True, blank=True, verbose_name='Țară')
 
     document_type = CharField(choices=TIP_DOCUMENT, null=True, blank=True, verbose_name='Tip document')
-    id_series_nr = CharField(max_length=20, blank=True, null=True, verbose_name='Serie / Număr')
-    cnp = CharField(max_length=13, null=True, blank=True, verbose_name='CNP')
+    id_series_nr = CharField(max_length=20, blank=True, null=True, verbose_name='Serie / Număr / J')
+    cnp = CharField(max_length=13, null=True, blank=True, verbose_name='CNP / CUI')
     issue_date = DateField(null=True, blank=True, verbose_name='Data emiterii')
     passport_country = CharField(max_length=50, blank=True, null=True, verbose_name='Țara emitentă (doar pentru pașaport)')
 
@@ -82,4 +82,4 @@ class Contact(Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.first_name} {self.last_name} {self.company}'

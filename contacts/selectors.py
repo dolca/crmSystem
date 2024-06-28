@@ -3,6 +3,7 @@
 TIP_DOCUMENT = [
     ('Carte de identitate', 'Carte de identitate'),
     ('Pașaport', 'Pașaport'),
+    ('Certificat de înregistrare', 'Certificat de înregistrare'),
     ('Alt document', 'Alt document'),
 ]
 

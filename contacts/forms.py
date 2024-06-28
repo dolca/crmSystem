@@ -1,6 +1,7 @@
 from django.forms import ModelForm, TextInput, NumberInput, Textarea, Select, EmailInput, DateInput, SelectMultiple, \
     ClearableFileInput
 from .models import Contact
+from django.core.exceptions import ValidationError
 
 
 class ContactUpdateForm(ModelForm):
@@ -39,67 +40,103 @@ class ContactUpdateForm(ModelForm):
             'avatar': ClearableFileInput(attrs={'class': 'form-control'}),
         }
 
-    def clean(self):
-        cleaned_data = super().clean()
-        first_name = cleaned_data.get('first_name')
-        phone_number = cleaned_data.get('phone_number')
-        email = cleaned_data.get('email')
-        document_type = cleaned_data.get('document_type')
-        id_series_nr = cleaned_data.get('id_series_nr')
-        cnp = cleaned_data.get('cnp')
-        issue_date = cleaned_data.get('issue_date')
-        passport_country = cleaned_data.get('passport_country')
-
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get('first_name')
         if not first_name:
-            self.add_error('first_name', 'Trebuie să introduci obligatoriu un prenume.')
+            raise ValidationError('Trebuie să introduci obligatoriu un prenume.')
+        return first_name
 
-        if not phone_number and not email:
-            self.add_error('phone_number',
-                           'Trebuie să introduci obligatoriu cel puțin un număr de telefon sau o adresă de e-mail.')
-
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data.get('phone_number')
+        if phone_number and not (10 <= len(phone_number) <= 14):
+            raise ValidationError('Numărul de telefon trebuie să conțină între 10 și 14 cifre.')
         if phone_number:
             self.validate_duplicate_field('phone_number', phone_number, contact_id=self.instance.id)
+        return phone_number
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
         if email:
             self.validate_duplicate_field('email', email, contact_id=self.instance.id)
+        return email
 
+    def clean_id_series_nr(self):
+        document_type = self.cleaned_data.get('document_type')
+        id_series_nr = self.cleaned_data.get('id_series_nr')
         if document_type == 'Carte de identitate':
             if not id_series_nr:
-                self.add_error('id_series_nr', 'Seria și numărul cărții de identitate sunt obligatorii.')
+                raise ValidationError('Seria și numărul cărții de identitate sunt obligatorii.')
             if not id_series_nr.isupper() or not (len(id_series_nr) == 8 or len(id_series_nr) == 9):
-                self.add_error('id_series_nr', 'Seria și numărul cărții de identitate sunt invalide. '
-                                               '(ex. corect: "AZ 123456", cu majuscule)')
-
-            if cnp and len(cnp) != 13:
-                self.add_error('cnp', 'CNP-ul este invalid. Acesta trebuie să conțină exact 13 cifre.')
-
-            if not issue_date:
-                self.add_error('issue_date', 'Data emiterii cărții de identitate este obligatorie.')
-
-        if document_type == 'Pașaport':
+                raise ValidationError('Seria și numărul cărții de identitate sunt invalide. '
+                                      '(ex. corect: "AZ 123456", cu majuscule)')
+        elif document_type == 'Pașaport':
             if not id_series_nr:
-                self.add_error('id_series_nr', 'Numărul pașaportului este obligatoriu.')
+                raise ValidationError('Numărul pașaportului este obligatoriu.')
             if not id_series_nr.isupper() or not (len(id_series_nr) == 8 or len(id_series_nr) == 9):
-                self.add_error('id_series_nr', 'Numărul pașaportului este invalid. '
-                                               '(ex. corect, după caz: "123456789" sau "AZ1234567", cu majuscule)')
+                raise ValidationError('Numărul pașaportului este invalid. '
+                                      '(ex. corect, după caz: "123456789" sau "AZ1234567", cu majuscule)')
+        return id_series_nr
 
-            if not issue_date:
-                self.add_error('issue_date', 'Data emiterii pașaportului este obligatorie.')
+    def clean_cnp(self):
+        document_type = self.cleaned_data.get('document_type')
+        company = self.cleaned_data.get('company')
+        job_title = self.cleaned_data.get('job_title')
+        cnp = self.cleaned_data.get('cnp')
+        if document_type == 'Carte de identitate' and cnp:
+            if len(cnp) != 13:
+                raise ValidationError('CNP-ul este invalid. Acesta trebuie să conțină exact 13 cifre.')
+        elif document_type == 'Certificat de înregistrare' and cnp:
+            if not cnp:
+                raise ValidationError('CUI-ul companiei este obligatoriu.')
+            if cnp.startswith('RO'):
+                cnp_num = cnp[2:]
+            else:
+                cnp_num = cnp
 
-            if not passport_country:
-                self.add_error('passport_country', 'Țara emitentă a pașaportului este obligatorie.')
+            if not (7 <= len(cnp_num) <= 8 and cnp_num.isdigit()):
+                raise ValidationError('CUI-ul este invalid. (ex. corect, după caz: "12345678" sau "RO12345678", '
+                                      'cu majuscule.)')
+            if not company:
+                raise ValidationError('Numele companiei este obligatoriu.')
+            if not job_title:
+                raise ValidationError('Funcția în companie este obligatorie.')
+        return cnp
 
-        return cleaned_data
+    def clean_issue_date(self):
+        document_type = self.cleaned_data.get('document_type')
+        issue_date = self.cleaned_data.get('issue_date')
+        if issue_date == 'undefined-undefined-':
+            issue_date = None
+        if document_type == 'Carte de identitate' and not issue_date:
+            raise ValidationError('Data emiterii cărții de identitate este obligatorie.')
+        elif document_type == 'Pașaport' and not issue_date:
+            raise ValidationError('Data emiterii pașaportului este obligatorie.')
+        return issue_date
+
+    def clean_passport_country(self):
+        document_type = self.cleaned_data.get('document_type')
+        passport_country = self.cleaned_data.get('passport_country')
+        if document_type == 'Pașaport' and not passport_country:
+            raise ValidationError('Țara emitentă a pașaportului este obligatorie.')
+        return passport_country
 
     def validate_duplicate_field(self, field_name, value, contact_id=None):
         check_field = Contact.objects.exclude(id=contact_id).filter(**{field_name: value})
-
         if check_field.exists():
             if field_name == 'phone_number':
-                msg = f'''Există deja un contact cu acest număr de telefon. 
-                Introdu alt număr de telefon sau actualizează contactul existent.'''
-                self.add_error(field_name, msg)
+                raise ValidationError('Există deja un contact cu acest număr de telefon. '
+                                      'Introdu alt număr de telefon sau actualizează contactul existent.')
             elif field_name == 'email':
-                msg = f'''Există deja un contact cu această adresă de e-mail. 
-                Introdu altă adresă de e-mail sau actualizează contactul existent.'''
-                self.add_error(field_name, msg)
+                raise ValidationError('Există deja un contact cu această adresă de e-mail. '
+                                      'Introdu altă adresă de e-mail sau actualizează contactul existent.')
+
+    def clean(self):
+        cleaned_data = super().clean()
+        phone_number = cleaned_data.get('phone_number')
+        email = cleaned_data.get('email')
+
+        if not phone_number and not email:
+            raise ValidationError('Trebuie să introduci obligatoriu cel puțin un '
+                                  'număr de telefon sau o adresă de e-mail.')
+
+        return cleaned_data

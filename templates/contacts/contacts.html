@@ -148,11 +148,13 @@
                     <hr class="border-secondary-subtle">
                     <div class="form-group">
                         <label for="company" class="form-label">Companie</label>
+                        <div id="companyError" class="firebrick-message"></div>
                         <input id="company" class="form-control" name="company" type="text">
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="job_title" class="form-label">Funcție</label>
+                        <div id="jobTitleError" class="firebrick-message"></div>
                         <input id="job_title" class="form-control" name="job_title" type="text">
                     </div>
                     <hr class="border-secondary-subtle">
@@ -207,15 +209,15 @@
                     </div>
                     <p>
                     <div class="form-group">
-                        <label for="id_series_nr" class="form-label">Serie / Număr document</label>
+                        <label for="id_series_nr" class="form-label">Serie / Număr / J</label>
                         <div id="idSeriesNrError" class="firebrick-message"></div>
                         <input id="id_series_nr" class="form-control" name="id_series_nr" type="text">
                     </div>
                     <p>
                     <div class="form-group">
-                        <label for="cnp" class="form-label">CNP</label>
+                        <label for="cnp" class="form-label">CNP / CUI</label>
                         <div id="cnpError" class="firebrick-message"></div>
-                        <input id="cnp" class="form-control" name="cnp" type="number">
+                        <input id="cnp" class="form-control" name="cnp" type="text">
                     </div>
                     <p>
                     <div class="form-group">
@@ -624,8 +626,16 @@
                 return idSeriesNr.length >= 8 && idSeriesNr.length <= 9 && /^[A-Z0-9\s]+$/.test(idSeriesNr);
             }
             
-            function validateCnp(cnp) {
-                return cnp.length === 13 && /^\d+$/.test(cnp);
+            function validateCnp(cnp, documentType) {
+                if (cnp.startsWith('RO')) {
+                    cnp = cnp.substring(2);
+                }
+                if (documentType === 'Carte de identitate') {
+                    return cnp.length === 13 && /^\d+$/.test(cnp);
+                } else if (documentType === 'Certificat de înregistrare') {
+                    return (cnp.length === 7 || cnp.length === 8) && /^\d+$/.test(cnp);
+                }
+                return false;
             }
             
             function validateForm() {
@@ -634,6 +644,9 @@
                 var emailValue = document.getElementById('email').value;
                 var isDuplicatePhone = checkDuplicateField('phone_number', phoneValue);
                 var isDuplicateEmail = checkDuplicateField('email', emailValue);
+                
+                var companyValue = document.getElementById('company').value;
+                var jobTitleValue = document.getElementById('job_title').value;
                 
                 var documentTypeValue = document.getElementById('document_type').value;
                 var idSeriesNrValue = document.getElementById('id_series_nr').value;
@@ -649,7 +662,7 @@
                 }
                 
                 if (phoneValue && !validatePhoneNumber(phoneValue)) {
-                    displayError('phoneError', 'Numărul de telefon trebuie să conțină între 10 și 14 cifre legate.');
+                    displayError('phoneError', 'Numărul de telefon trebuie să conțină între 10 și 14 cifre.');
                     return false;
                 }
                 
@@ -720,7 +733,31 @@
                             return false;
                         }
                     }
+                    
+                    if (documentTypeValue === 'Certificat de înregistrare') {
+                        if (!cnpValue) {
+                            displayError('cnpError', 'CUI-ul companiei este obligatoriu.');
+                            return false;
+                        }
+                        
+                        if (cnpValue && !validateCnp(cnpValue, documentTypeValue)) {
+                            displayError('cnpError', 'CUI-ul este invalid. (ex. corect, după caz: "12345678" sau ' +
+                                '"RO12345678", cu majuscule.)');
+                            return false;
+                        }
+                        
+                        if (!companyValue) {
+                            displayError('companyError', 'Numele companiei este obligatoriu.');
+                            return false;
+                        }
+                        
+                        if (!jobTitleValue) {
+                            displayError('jobTitleError', 'Funcția în companie este obligatorie.');
+                            return false;
+                        }
+                    }
                     return true;
+                    
                 }).catch(error => {
                     console.error('Eroare în "Promise":', error);
                 });
@@ -737,6 +774,8 @@
                 displayError('firstNameError', '');
                 displayError('phoneError', '');
                 displayError('emailError', '');
+                displayError('companyError', '');
+                displayError('jobTitleError', '');
                 displayError('idSeriesNrError', '');
                 displayError('cnpError', '');
                 displayError('issueDateError', '');

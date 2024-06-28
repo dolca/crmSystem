@@ -170,15 +170,23 @@ def save_contact(request):
         if not first_name:
             raise ValueError('Trebuie să introduci obligatoriu un prenume.')
 
+        if not phone_number and not email:
+            raise ValueError('Trebuie să introduci obligatoriu cel puțin un număr de telefon sau o adresă de e-mail.')
+
+        if phone_number and not (10 <= len(phone_number) <= 14 and phone_number.isdigit()):
+            raise ValueError('Numărul de telefon trebuie să conțină între 10 și 14 cifre legate.')
+
         is_duplicate_phone = check_duplicate(request, 'phone_number', phone_number, None).get('isDuplicate', False)
         if is_duplicate_phone:
-            return JsonResponse({'success': False, 'message': 'Există deja un contact cu acest număr de telefon. ' +
-                            'Introdu alt număr de telefon sau actualizează contactul existent.'})
+            return JsonResponse({'success': False,
+                                 'message': 'Există deja un contact cu acest număr de telefon. '
+                                            'Introdu alt număr de telefon sau actualizează contactul existent.'})
 
         is_duplicate_email = check_duplicate(request, 'email', email, None).get('isDuplicate', False)
         if is_duplicate_email:
-            return JsonResponse({'success': False, 'message': 'Există deja un contact cu această adresă de e-mail. ' +
-                            'Introdu altă adresă de e-mail sau actualizează contactul existent.'})
+            return JsonResponse({'success': False,
+                                 'message': 'Există deja un contact cu această adresă de e-mail. '
+                                            'Introdu altă adresă de e-mail sau actualizează contactul existent.'})
 
         if document_type == 'Carte de identitate':
             if not id_series_nr:
@@ -205,6 +213,22 @@ def save_contact(request):
 
             if not passport_country:
                 raise ValueError('Țara emitentă a pașaportului este obligatorie.')
+
+        if document_type == 'Certificat de înregistrare':
+            if not cnp:
+                raise ValueError('CUI-ul companiei este obligatoriu.')
+            if cnp.startswith('RO'):
+                cnp_num = cnp[2:]
+            else:
+                cnp_num = cnp
+
+            if not (7 <= len(cnp_num) <= 8 and cnp_num.isdigit()):
+                raise ValueError('CUI-ul este invalid. (ex. corect, după caz: "12345678" sau "RO12345678", '
+                                 'cu majuscule.)')
+            if not company:
+                raise ValueError('Numele companiei este obligatoriu.')
+            if not job_title:
+                raise ValueError('Funcția în companie este obligatorie.')
 
         new_contact = Contact.objects.create(
             first_name=first_name,
@@ -253,32 +277,6 @@ def get_contact_details(request, contact_id):
             'last_name': contact.last_name,
             'phone_number': contact.phone_number,
             'email': contact.email,
-
-            'company': contact.company,
-            'job_title': contact.job_title,
-
-            'city': contact.city,
-            'street_address': contact.street_address,
-            'street_number': contact.street_number,
-            'block': contact.block,
-            'scale': contact.scale,
-            'apartment_number': contact.apartment_number,
-            'county': contact.county,
-            'country': contact.country,
-
-            'document_type': contact.document_type,
-            'id_series_nr': contact.id_series_nr,
-            'cnp': contact.cnp,
-            'issue_date': contact.issue_date,
-            'passport_country': contact.passport_country,
-
-            'contact_type': contact.contact_type,
-            'contact_category': contact.contact_category,
-
-            'other_details': contact.other_details,
-
-            'created_at': contact.created_at,
-            'updated_at': contact.updated_at
         }
         return JsonResponse(contact_data)
     except Contact.DoesNotExist:
