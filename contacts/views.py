@@ -35,8 +35,12 @@ class ContactUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     model = Contact
     form_class = ContactUpdateForm
     template_name = 'contacts/edit_contact.html'
-    success_url = reverse_lazy('contact_details')
+    success_url = reverse_lazy('contacts:contact_details')
     permission_required = 'contacts.change_contact'
+
+    def form_valid(self, form):
+        form.instance.updated_by = self.request.user
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -258,6 +262,8 @@ def save_contact(request):
             contact_category=contact_category,
 
             other_details=other_details,
+
+            created_by=request.user
         )
 
         print('Date POST primite:', json.loads(request.body))

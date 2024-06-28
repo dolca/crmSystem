@@ -50,32 +50,32 @@
                                                         {% for listing in all_listings %}
                                                             {% if listing.property_type == 'Apartament' %}
                                                                 <a href="{% url 'listings:apartment_details' listing.id %}"
-                                                                   class="badge badge-gradient-primary">
+                                                                   class="badge badge-gradient-primary mb-1">
                                                                     {{ listing.custom_id }}
                                                                 </a>
                                                             {% elif listing.property_type == 'Casă' %}
                                                                 <a href="{% url 'listings:house_details' listing.id %}"
-                                                                   class="badge badge-gradient-primary">
+                                                                   class="badge badge-gradient-primary mb-1">
                                                                     {{ listing.custom_id }}
                                                                 </a>
                                                             {% elif listing.property_type == 'Teren' %}
                                                                 <a href="{% url 'listings:terrain_details' listing.id %}"
-                                                                   class="badge badge-gradient-primary">
+                                                                   class="badge badge-gradient-primary mb-1">
                                                                     {{ listing.custom_id }}
                                                                 </a>
                                                             {% elif listing.property_type == 'Spațiu comercial' %}
                                                                 <a href="{% url 'listings:commercial_space_details' listing.id %}"
-                                                                   class="badge badge-gradient-primary">
+                                                                   class="badge badge-gradient-primary mb-1">
                                                                     {{ listing.custom_id }}
                                                                 </a>
                                                             {% elif listing.property_type == 'Spațiu de birouri' %}
                                                                 <a href="{% url 'listings:office_space_details' listing.id %}"
-                                                                   class="badge badge-gradient-primary">
+                                                                   class="badge badge-gradient-primary mb-1">
                                                                     {{ listing.custom_id }}
                                                                 </a>
                                                             {% elif listing.property_type == 'Spațiu industrial' %}
                                                                 <a href="{% url 'listings:industrial_space_details' listing.id %}"
-                                                                   class="badge badge-gradient-primary">
+                                                                   class="badge badge-gradient-primary mb-1">
                                                                     {{ listing.custom_id }}
                                                                 </a>
                                                             {% endif %}
@@ -91,32 +91,32 @@
                                                         {% for lead in all_leads %}
                                                             {% if lead.property_type == 'Apartament' %}
                                                                 <a href="{% url 'leads:apartment_lead_details' lead.id %}"
-                                                                   class="badge badge-gradient-info">
+                                                                   class="badge badge-gradient-info mb-1">
                                                                     {{ lead.custom_id }}
                                                                 </a>
                                                             {% elif lead.property_type == 'Casă' %}
                                                                 <a href="{% url 'leads:house_lead_details' lead.id %}"
-                                                                   class="badge badge-gradient-info">
+                                                                   class="badge badge-gradient-info mb-1">
                                                                     {{ lead.custom_id }}
                                                                 </a>
                                                             {% elif lead.property_type == 'Teren' %}
                                                                 <a href="{% url 'leads:terrain_lead_details' lead.id %}"
-                                                                   class="badge badge-gradient-info">
+                                                                   class="badge badge-gradient-info mb-1">
                                                                     {{ lead.custom_id }}
                                                                 </a>
                                                             {% elif lead.property_type == 'Spațiu comercial' %}
                                                                 <a href="{% url 'leads:commercial_space_lead_details' lead.id %}"
-                                                                   class="badge badge-gradient-info">
+                                                                   class="badge badge-gradient-info mb-1">
                                                                     {{ lead.custom_id }}
                                                                 </a>
                                                             {% elif lead.property_type == 'Spațiu de birouri' %}
                                                                 <a href="{% url 'leads:office_space_lead_details' lead.id %}"
-                                                                   class="badge badge-gradient-info">
+                                                                   class="badge badge-gradient-info mb-1">
                                                                     {{ lead.custom_id }}
                                                                 </a>
                                                             {% elif lead.property_type == 'Spațiu industrial' %}
                                                                 <a href="{% url 'leads:industrial_space_lead_details' lead.id %}"
-                                                                   class="badge badge-gradient-info">
+                                                                   class="badge badge-gradient-info mb-1">
                                                                     {{ lead.custom_id }}
                                                                 </a>
                                                             {% endif %}
@@ -132,15 +132,17 @@
                                 <div class="col-lg-4 col-md-4 col-sm-6">
                                     <div class="card">
                                         <div class="card-body">
-                                            <div class="col-lg-12 mb-3">
-                                                <p class="card-text"><strong>Companie: </strong>
-                                                    {{ contact.company|default:'. . .' }}</p>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <p class="card-text"><strong>Funcție: </strong>
-                                                    {{ contact.job_title|default:'. . .' }}</p>
-                                            </div>
-                                            <hr class="border-secondary-subtle">
+                                            {% if contact.company %}
+                                                <div class="col-lg-12 mb-3">
+                                                    <p class="card-text">
+                                                        <strong>Companie: {{ contact.company }}</strong></p>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <p class="card-text"><strong>Funcție: </strong>
+                                                        {{ contact.job_title }}</p>
+                                                </div>
+                                                <hr class="border-secondary-subtle">
+                                            {% endif %}
                                             <div class="col-lg-12 mb-3">
                                                 <p class="card-text"><strong>Localitate: </strong>
                                                     {{ contact.city|default:'. . .' }}</p>
