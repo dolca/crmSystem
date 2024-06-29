@@ -180,7 +180,7 @@
                     <div class="form-group">
                         <label for="issue_date" class="form-label">Data emiterii</label>
                         <div id="issueDateError" class="firebrick-message"></div>
-                        <input id="issue_date" class="form-control" name="issue_date" type="date" 
+                        <input id="issue_date" class="form-control" name="issue_date" type="date"
                                placeholder="zz lll aaaa">
                     </div>
                     <p>
@@ -257,11 +257,11 @@
             new Choices(idContactElement, {
                 placeholder: true,
                 loadingText: 'Se încarcă...',
-                noChoicesText: 'Niciun contact disponibil.',
+                noChoicesText: 'Niciun contact disponibil',
                 searchEnabled: true,
                 searchFields: ['label'],
-                searchResultLimit: 6,
-                noResultsText: 'Niciun rezultat găsit.',
+                searchResultLimit: 8,
+                noResultsText: 'Niciun rezultat găsit',
                 fuseOptions: {
                     includeScore: true,
                     threshold: 0.4,
@@ -448,7 +448,7 @@
                 allowInput: true,
                 locale: 'ro'
             });
-            
+
             function getCSRFToken() {
                 return document.cookie.split('; ')
                     .find(row => row.startsWith('csrftoken='))
