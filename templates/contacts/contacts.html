@@ -26,7 +26,8 @@
                         <div>
                             <button id="open-modal" class="btn btn-subtle-primary add-btn" type="button" 
                                     data-bs-toggle="modal" data-bs-target="#addContact"><strong><i 
-                                    class="ri-add-line align-bottom me-1"></i></strong> Adaugă contact</button>
+                                    class="ri-add-line align-bottom me-1"></i></strong> Adaugă contact
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -40,10 +41,10 @@
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0 position-relative">
                                         {% if contact.avatar %}
-                                            <img src="{{ contact.avatar.url }}" alt="" class="avatar-sm rounded">
+                                            <img src="{{ contact.avatar.url }}" alt="" class="avatar-sm img-thumbnail rounded">
                                         {% else %}
                                             <div class="avatar-sm">
-                                                <div class="avatar-title fs-lg bg-dark-subtle text-info rounded">
+                                                <div class="avatar-title fs-lg bg-dark-subtle text-info img-thumbnail rounded">
                                                     {{ contact.first_name|slice:':1'|upper }}{{ contact.last_name|default:''|slice:':1'|upper }}
                                                 </div>
                                             </div>

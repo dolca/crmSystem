@@ -10,7 +10,7 @@
     
     {% if user.is_authenticated %}
         <div class="row justify-content-center">
-            <div class="col-lg-4 col-sm-6">
+            <div class="col-lg-5 col-sm-6">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title mb-0">
@@ -19,47 +19,47 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-12 col-sm-12">
-                                <div class="mb-2">
-                                    <form method="post" action="" id="add_new_lead">
-                                        {% csrf_token %}
-                                    
-                                        <div class="row mb-2">
-                                            <label for="contact" class="form-label">Contact asociat <span
-                                                    class="firebrick-message">*</span></label>
-                                            <div class="col-lg-10 col-sm-10 mb-2">
-                                                <select id="contact" class="form-select" name="contact" required>
-                                                    <option value="">Selectează un contact</option>
-                                                    {% for contact in contacts %}
-                                                        <option value="{{ contact.id }}" data-label="{{ contact.first_name }} {{ contact.last_name }} {{ contact.phone_number }} {{ contact.email }}">
-                                                            {{ contact.first_name }} {{ contact.last_name|default:'' }} - {{ contact.phone_number|default:'' }} {{ contact.email|default:'' }}
-                                                        </option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-2 col-sm-2 d-flex justify-content-md-end justify-content-center mb-2">
-                                                <button id="open-modal" class="btn btn-subtle-primary add-btn" type="button"
-                                                        data-bs-toggle="modal" data-bs-target="#addContact"><strong>+</strong>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    
-                                        <div class="form-group">
-                                            <label for="property_type" class="form-label">Tip cerere <span 
-                                                    class="firebrick-message">*</span></label>
-                                            <select id="property_type" class="form-select mb-4" name="property_type" required>
-                                                {% for value, label in form.fields.property_type.choices %}
-                                                    <option value="{{ value }}">{{ label }}</option>
+                            <div class="col-12">
+                                <form method="post" action="" id="add_new_lead">
+                                    {% csrf_token %}
+                                
+                                    <div class="row mb-2">
+                                        <label for="contact" class="form-label">Contact asociat <span
+                                                class="firebrick-message">*</span></label>
+                                        <div class="col-md-10 mb-2">
+                                            <select id="contact" class="form-select" name="contact" required>
+                                                <option value="">Selectează un contact</option>
+                                                {% for contact in contacts %}
+                                                    <option value="{{ contact.id }}" data-label="{{ contact.first_name }} {{ contact.last_name }} {{ contact.phone_number }} {{ contact.email }}">
+                                                        {{ contact.first_name }} {{ contact.last_name|default:'' }} - {{ contact.phone_number|default:'' }} {{ contact.email|default:'' }}
+                                                    </option>
                                                 {% endfor %}
                                             </select>
                                         </div>
-                                    
-                                        <div class="d-flex justify-content-center w-100">
-                                            <button type="submit" class="btn btn-subtle-success col-12">
+                                        <div class="col-md-2 d-flex justify-content-md-end justify-content-center mb-2">
+                                            <button id="open-modal" class="btn btn-subtle-primary add-btn" type="button"
+                                                    data-bs-toggle="modal" data-bs-target="#addContact"><strong>+</strong>
+                                            </button>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="form-group">
+                                        <label for="property_type" class="form-label">Tip cerere <span 
+                                                class="firebrick-message">*</span></label>
+                                        <select id="property_type" class="form-select mb-4" name="property_type" required>
+                                            {% for value, label in form.fields.property_type.choices %}
+                                                <option value="{{ value }}">{{ label }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                
+                                    <div class="card-footer">
+                                        <div class="float-end">
+                                            <button type="submit" class="btn btn-subtle-success">
                                                 Continuă&nbsp;&nbsp;<i class="bi bi-caret-right-fill"></i></button>
                                         </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

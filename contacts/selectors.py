@@ -8,12 +8,22 @@ TIP_DOCUMENT = [
 ]
 
 TIP_CONTACT = [
-    ('Administrator', 'Administrator'), ('Agent imobiliar', 'Agent imobiliar'), ('Chiriaș', 'Chiriaș'),
-    ('Colaborator', 'Colaborator'), ('Cumpărător', 'Cumpărător'), ('Dezvoltator imobiliar', 'Dezvoltator imobiliar'),
-    ('Investitor', 'Investitor'), ('Proprietar', 'Proprietar'), ('Reprezentant', 'Reprezentant')
+    ('Administrator', 'Administrator'),
+    ('Agent imobiliar', 'Agent imobiliar'),
+    ('Chiriaș', 'Chiriaș'),
+    ('Colaborator', 'Colaborator'),
+    ('Cumpărător', 'Cumpărător'),
+    ('Dezvoltator imobiliar', 'Dezvoltator imobiliar'),
+    ('Investitor', 'Investitor'),
+    ('Proprietar', 'Proprietar'),
+    ('Reprezentant', 'Reprezentant')
 ]
 
 CATEGORIE_CONTACT = [
-    ('Client vechi', 'Client vechi'), ('Concurență', 'Concurență'), ('Cunoștință', 'Cunoștință'),
-    ('De evitat', 'De evitat'), ('Important', 'Important'), ('Neserios', 'Neserios')
+    ('Client vechi', 'Client vechi'),
+    ('Concurență', 'Concurență'),
+    ('Cunoștință', 'Cunoștință'),
+    ('De evitat', 'De evitat'),
+    ('Important', 'Important'),
+    ('Neserios', 'Neserios')
 ]
