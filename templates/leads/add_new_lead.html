@@ -19,7 +19,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-md-12">
                                 <form method="post" action="" id="add_new_lead">
                                     {% csrf_token %}
                                 
@@ -54,7 +54,7 @@
                                     </div>
                                 
                                     <div class="card-footer">
-                                        <div class="float-end">
+                                        <div class="float-end mb-1">
                                             <button type="submit" class="btn btn-subtle-success">
                                                 Continuă&nbsp;&nbsp;<i class="bi bi-caret-right-fill"></i></button>
                                         </div>
@@ -180,7 +180,8 @@
                     <div class="form-group">
                         <label for="issue_date" class="form-label">Data emiterii</label>
                         <div id="issueDateError" class="firebrick-message"></div>
-                        <input id="issue_date" class="form-control" name="issue_date" type="date">
+                        <input id="issue_date" class="form-control" name="issue_date" type="date" 
+                               placeholder="zz lll aaaa">
                     </div>
                     <p>
                     <div class="form-group">
@@ -323,7 +324,7 @@
                         document.getElementById('document_type').value,
                         document.getElementById('id_series_nr').value,
                         document.getElementById('cnp').value,
-                        formatDateToServer(document.getElementById('issue_date').value),
+                        document.getElementById('issue_date').value,
                         document.getElementById('passport_country').value,
                         
                         document.getElementById('contact_type').value,
@@ -441,17 +442,12 @@
             }
             
             flatpickr('#issue_date', {
-                dateFormat: 'd.m.Y',
+                dateFormat: 'Y-m-d',
                 altInput: true,
                 altFormat: 'd M Y',
                 allowInput: true,
                 locale: 'ro'
             });
-            
-            function formatDateToServer(dateString) {
-                var parts = dateString.split('.');
-                return `${parts[2]}-${parts[1]}-${parts[0]}`;
-            }
             
             function getCSRFToken() {
                 return document.cookie.split('; ')

@@ -32,8 +32,8 @@ class ContactUpdateForm(ModelForm):
             'issue_date': DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'passport_country': TextInput(attrs={'class': 'form-control'}),
 
-            'contact_type': CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
-            'contact_category': CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+            'contact_type': Select(attrs={'class': 'form-control'}),
+            'contact_category': Select(attrs={'class': 'form-control'}),
 
             'other_details': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
 

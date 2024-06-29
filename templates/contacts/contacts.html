@@ -493,7 +493,7 @@
                         document.getElementById('document_type').value,
                         document.getElementById('id_series_nr').value,
                         document.getElementById('cnp').value,
-                        formatDateToServer(document.getElementById('issue_date').value),
+                        document.getElementById('issue_date').value,
                         document.getElementById('passport_country').value,
                         
                         document.getElementById('contact_type').value,
@@ -607,17 +607,12 @@
             }
             
             flatpickr('#issue_date', {
-                dateFormat: 'd.m.Y',
+                dateFormat: 'Y-m-d',
                 altInput: true,
                 altFormat: 'd M Y',
                 allowInput: true,
                 locale: 'ro'
             });
-            
-            function formatDateToServer(dateString) {
-                var parts = dateString.split('.');
-                return `${parts[2]}-${parts[1]}-${parts[0]}`;
-            }
             
             function getCSRFToken() {
                 return document.cookie.split('; ')
