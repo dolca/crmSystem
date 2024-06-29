@@ -35,12 +35,8 @@ class ContactUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     model = Contact
     form_class = ContactUpdateForm
     template_name = 'contacts/edit_contact.html'
-    success_url = reverse_lazy('contacts:contact_details')
+    success_url = reverse_lazy('contact_details')
     permission_required = 'contacts.change_contact'
-
-    def form_valid(self, form):
-        form.instance.updated_by = self.request.user
-        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -48,6 +44,18 @@ class ContactUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
         context['contact_type'] = TIP_CONTACT
         context['contact_category'] = CATEGORIE_CONTACT
         return context
+
+    def form_valid(self, form):
+        form.instance.updated_by = self.request.user
+        response = super().form_valid(form)
+        return response
+
+    def form_invalid(self, form):
+        errors = form.errors.get_json_data()
+        return JsonResponse({'errors': errors}, status=400)
+
+    def get_success_url(self):
+        return reverse_lazy('contacts:contact_details', kwargs={'pk': self.object.pk})
 
 
 class ContactDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):

@@ -1,5 +1,5 @@
-from django.forms import ModelForm, TextInput, NumberInput, Textarea, Select, EmailInput, DateInput, SelectMultiple, \
-    ClearableFileInput
+from django.forms import ModelForm, TextInput, NumberInput, Textarea, Select, CheckboxSelectMultiple, EmailInput, \
+    DateInput, ClearableFileInput
 from .models import Contact
 from django.core.exceptions import ValidationError
 
@@ -32,8 +32,8 @@ class ContactUpdateForm(ModelForm):
             'issue_date': DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'passport_country': TextInput(attrs={'class': 'form-control'}),
 
-            'contact_type': SelectMultiple(attrs={'class': 'form-control'}),
-            'contact_category': SelectMultiple(attrs={'class': 'form-control'}),
+            'contact_type': CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+            'contact_category': CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
 
             'other_details': Textarea(attrs={'class': 'form-control', 'rows': '3'}),
 
