@@ -130,8 +130,8 @@
                     <div class="form-group">
                         <label for="first_name" class="form-label">Prenume <span
                                 class="firebrick-message">*</span></label>
-                        <div id="firstNameError" class="firebrick-message"></div>
                         <input id="first_name" class="form-control" name="first_name" type="text" required>
+                        <div id="firstNameError" class="firebrick-message"></div>
                     </div>
                     <p>
                     <div class="form-group">
@@ -142,27 +142,27 @@
                     <div class="form-group">
                         <label for="phone_number" class="form-label">Număr de telefon <span
                                 class="text-muted">*</span></label>
-                        <div id="phoneError" class="firebrick-message"></div>
                         <input id="phone_number" class="form-control" name="phone_number" type="tel">
+                        <div id="phoneError" class="firebrick-message"></div>
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="email" class="form-label">Adresă de e-mail <span
                                 class="text-muted">*</span></label>
-                        <div id="emailError" class="firebrick-message"></div>
                         <input id="email" class="form-control" name="email" type="email">
+                        <div id="emailError" class="firebrick-message"></div>
                     </div>
                     <hr class="border-secondary-subtle">
                     <div class="form-group">
                         <label for="company" class="form-label">Companie</label>
-                        <div id="companyError" class="firebrick-message"></div>
                         <input id="company" class="form-control" name="company" type="text">
+                        <div id="companyError" class="firebrick-message"></div>
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="job_title" class="form-label">Funcție</label>
-                        <div id="jobTitleError" class="firebrick-message"></div>
                         <input id="job_title" class="form-control" name="job_title" type="text">
+                        <div id="jobTitleError" class="firebrick-message"></div>
                     </div>
                     <hr class="border-secondary-subtle">
                     <div class="form-group">
@@ -217,27 +217,27 @@
                     <p>
                     <div class="form-group">
                         <label for="id_series_nr" class="form-label">Serie / Număr / J</label>
-                        <div id="idSeriesNrError" class="firebrick-message"></div>
                         <input id="id_series_nr" class="form-control" name="id_series_nr" type="text">
+                        <div id="idSeriesNrError" class="firebrick-message"></div>
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="cnp" class="form-label">CNP / CUI</label>
-                        <div id="cnpError" class="firebrick-message"></div>
                         <input id="cnp" class="form-control" name="cnp" type="text">
+                        <div id="cnpError" class="firebrick-message"></div>
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="issue_date" class="form-label">Data emiterii</label>
-                        <div id="issueDateError" class="firebrick-message"></div>
-                        <input id="issue_date" class="form-control" name="issue_date" type="date" 
+                        <input id="issue_date" class="form-control" name="issue_date" type="date"
                                placeholder="zz lll aaaa">
+                        <div id="issueDateError" class="firebrick-message"></div>
                     </div>
                     <p>
                     <div class="form-group">
                         <label for="passport_country" class="form-label">Țara emitentă (doar pentru pașaport)</label>
-                        <div id="passportCountryError" class="firebrick-message"></div>
                         <input id="passport_country" class="form-control" name="passport_country" type="text">
+                        <div id="passportCountryError" class="firebrick-message"></div>
                     </div>
                     <hr class="border-secondary-subtle">
                     <div class="form-group">
@@ -776,8 +776,10 @@
                 displayError('firstNameError', '');
                 displayError('phoneError', '');
                 displayError('emailError', '');
+                
                 displayError('companyError', '');
                 displayError('jobTitleError', '');
+                
                 displayError('idSeriesNrError', '');
                 displayError('cnpError', '');
                 displayError('issueDateError', '');
