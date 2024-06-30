@@ -64,14 +64,14 @@ class Contact(Model):
         if self.street_address:
             self.street_address = self.street_address.title()
 
-        if self.county:
-            self.county = self.county.title()
-
         if self.country:
             self.country = self.country.title()
 
         if self.id_series_nr:
             self.id_series_nr = self.id_series_nr.upper()
+
+        if self.cnp:
+            self.cnp = self.cnp.upper()
 
         if self.passport_country:
             self.passport_country = self.passport_country.title()

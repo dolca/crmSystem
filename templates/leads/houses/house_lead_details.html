@@ -21,8 +21,12 @@
                                             <div id="contactInfo">
                                                 <h5>
                                                     <a href="{% url 'contacts:contact_details' houselead.contact.id %}">
-                                                        <span>{{ houselead.contact.first_name }}</span> 
-                                                        <span>{{ houselead.contact.last_name|default:'' }}</span>
+                                                        {% if houselead.contact.company %}
+                                                            {{ houselead.contact.company }}
+                                                        {% else %}
+                                                            {{ houselead.contact.first_name }} 
+                                                            {{ houselead.contact.last_name|default:'' }}
+                                                        {% endif %}
                                                     </a>
                                                 </h5>
                                                 <div>

@@ -21,8 +21,14 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div id="contactInfo">
-                                                <h5><span>{{ houselead.contact.first_name }}</span> 
-                                                    <span>{{ houselead.contact.last_name|default:'' }}</span></h5>
+                                                <h5>
+                                                    {% if houselead.contact.company %}
+                                                        {{ houselead.contact.company }}
+                                                    {% else %}
+                                                        {{ houselead.contact.first_name }} 
+                                                        {{ houselead.contact.last_name|default:'' }}
+                                                    {% endif %}
+                                                </h5>
                                                 <div>{{ houselead.contact.phone_number|default:'' }}</div>
                                                 <div>{{ houselead.contact.email|default:'' }}</div>
                                             </div>

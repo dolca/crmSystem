@@ -30,8 +30,8 @@
                                             <select id="contact" class="form-select" name="contact" required>
                                                 <option value="">Selectează un contact</option>
                                                 {% for contact in contacts %}
-                                                    <option value="{{ contact.id }}" data-label="{{ contact.first_name }} {{ contact.last_name }} {{ contact.phone_number }} {{ contact.email }}">
-                                                        {{ contact.first_name }} {{ contact.last_name|default:'' }} - {{ contact.phone_number|default:'' }} {{ contact.email|default:'' }}
+                                                    <option value="{{ contact.id }}" data-label="{{ contact.company }} {{ contact.first_name }} {{ contact.last_name }} {{ contact.phone_number }} {{ contact.email }}">
+                                                        {% if contact.company %}{{ contact.company }}{% else %}{{ contact.first_name }} {{ contact.last_name|default:'' }}{% endif %} - {{ contact.phone_number|default:'' }} {{ contact.email|default:'' }}
                                                     </option>
                                                 {% endfor %}
                                             </select>
@@ -460,18 +460,24 @@
                 return phoneNumber.length >= 10 && phoneNumber.length <= 14 && /^\d+$/.test(phoneNumber);
             }
             
-            function validateIdSeriesNr(idSeriesNr) {
-                return idSeriesNr.length >= 8 && idSeriesNr.length <= 9 && /^[A-Z0-9\s]+$/.test(idSeriesNr);
+            function validateIdSeriesNr(idSeriesNr, documentType) {
+                if (documentType === 'Carte de identitate') {
+                    return idSeriesNr.length === 8 && /^[A-Za-z]{2}\d{6}$/.test(idSeriesNr);
+                } else if (documentType === 'Pașaport') {
+                    return idSeriesNr.length >= 6 && idSeriesNr.length <= 9;
+                }
+                return false;
             }
             
             function validateCnp(cnp, documentType) {
-                if (cnp.startsWith('RO')) {
+                if (cnp.substring(0, 2).toLowerCase() === 'ro') {
                     cnp = cnp.substring(2);
                 }
+                
                 if (documentType === 'Carte de identitate') {
                     return cnp.length === 13 && /^\d+$/.test(cnp);
                 } else if (documentType === 'Certificat de înregistrare') {
-                    return (cnp.length === 7 || cnp.length === 8) && /^\d+$/.test(cnp);
+                    return (cnp.length >= 7 && cnp.length <= 9) && /^\d+$/.test(cnp);
                 }
                 return false;
             }
@@ -500,13 +506,13 @@
                 }
                 
                 if (phoneValue && !validatePhoneNumber(phoneValue)) {
-                    displayError('phoneError', 'Numărul de telefon trebuie să conțină între 10 și 14 cifre legate.');
+                    displayError('phoneError', 'Numărul de telefon trebuie să conțină între 10 și 14 cifre.');
                     return false;
                 }
                 
                 if (!phoneValue && !emailValue) {
-                    displayError('phoneError', 'Trebuie să introduci obligatoriu cel puțin ' +
-                        'un număr de telefon sau o adresă de e-mail.');
+                    displayError('phoneError', 'Trebuie să introduci obligatoriu cel puțin un ' +
+                        'număr de telefon sau o adresă de e-mail.');
                     return false;
                 }
                 
@@ -532,14 +538,14 @@
                             return false;
                         }
                         
-                        if (idSeriesNrValue && !validateIdSeriesNr(idSeriesNrValue)) {
-                            displayError('idSeriesNrError', 'Seria și numărul cărții de identitate sunt invalide. ' +
-                                '(ex. corect: "AZ 123456", cu majuscule)');
+                        if (idSeriesNrValue && !validateIdSeriesNr(idSeriesNrValue, documentTypeValue)) {
+                            displayError('idSeriesNrError', 'Seria și numărul cărții de identitate trebuie să conțină ' +
+                                'codul județului format din 2 litere, urmat de 6 cifre.');
                             return false;
                         }
                         
-                        if (cnpValue && !validateCnp(cnpValue)) {
-                            displayError('cnpError', 'CNP-ul este invalid. Trebuie să conțină exact 13 cifre.');
+                        if (cnpValue && !validateCnp(cnpValue, documentTypeValue)) {
+                            displayError('cnpError', 'CNP-ul trebuie să conțină exact 13 cifre.');
                             return false;
                         }
                         
@@ -555,9 +561,9 @@
                             return false;
                         }
                         
-                        if (idSeriesNrValue && !validateIdSeriesNr(idSeriesNrValue)) {
-                            displayError('idSeriesNrError', 'Numărul pașaportului este invalid. ' +
-                                '(ex. corect, după caz: "123456789" sau "AZ1234567", cu majuscule)');
+                        if (idSeriesNrValue && !validateIdSeriesNr(idSeriesNrValue, documentTypeValue)) {
+                            displayError('idSeriesNrError', 
+                                'Numărul pașaportului trebuie să conțină între 6 și 9 caractere.');
                             return false;
                         }
                         
@@ -573,17 +579,6 @@
                     }
                     
                     if (documentTypeValue === 'Certificat de înregistrare') {
-                        if (!cnpValue) {
-                            displayError('cnpError', 'CUI-ul companiei este obligatoriu.');
-                            return false;
-                        }
-                        
-                        if (cnpValue && !validateCnp(cnpValue, documentTypeValue)) {
-                            displayError('cnpError', 'CUI-ul este invalid. (ex. corect, după caz: "12345678" sau ' +
-                                '"RO12345678", cu majuscule.)');
-                            return false;
-                        }
-                        
                         if (!companyValue) {
                             displayError('companyError', 'Numele companiei este obligatoriu.');
                             return false;
@@ -593,9 +588,19 @@
                             displayError('jobTitleError', 'Funcția în companie este obligatorie.');
                             return false;
                         }
+                        
+                        if (!cnpValue) {
+                            displayError('cnpError', 'CUI-ul companiei este obligatoriu.');
+                            return false;
+                        }
+                        
+                        if (cnpValue && !validateCnp(cnpValue, documentTypeValue)) {
+                            displayError('cnpError', 'CUI-ul trebuie să conțină între 7 și 9 cifre, ' +
+                                'cu prefixul "RO" pentru plătitorii de TVA.');
+                            return false;
+                        }
                     }
                     return true;
-                    
                 }).catch(error => {
                     console.error('Eroare în "Promise":', error);
                 });

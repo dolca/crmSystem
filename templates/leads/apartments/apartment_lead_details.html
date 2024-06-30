@@ -21,8 +21,12 @@
                                             <div id="contactInfo">
                                                 <h5>
                                                     <a href="{% url 'contacts:contact_details' apartmentlead.contact.id %}">
-                                                        <span>{{ apartmentlead.contact.first_name }}</span> 
-                                                        <span>{{ apartmentlead.contact.last_name|default:'' }}</span>
+                                                        {% if apartmentlead.contact.company %}
+                                                            {{ apartmentlead.contact.company }}
+                                                        {% else %}
+                                                            {{ apartmentlead.contact.first_name }} 
+                                                            {{ apartmentlead.contact.last_name|default:'' }}
+                                                        {% endif %}
                                                     </a>
                                                 </h5>
                                                 <div>

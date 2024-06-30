@@ -21,8 +21,14 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div id="contactInfo">
-                                                <h5><span>{{ commercialspacelead.contact.first_name }}</span> 
-                                                    <span>{{ commercialspacelead.contact.last_name|default:'' }}</span></h5>
+                                                <h5>
+                                                    {% if commercialspacelead.contact.company %}
+                                                        {{ commercialspacelead.contact.company }}
+                                                    {% else %}
+                                                        {{ commercialspacelead.contact.first_name }} 
+                                                        {{ commercialspacelead.contact.last_name|default:'' }}
+                                                    {% endif %}
+                                                </h5>
                                                 <div>{{ commercialspacelead.contact.phone_number|default:'' }}</div>
                                                 <div>{{ commercialspacelead.contact.email|default:'' }}</div>
                                             </div>

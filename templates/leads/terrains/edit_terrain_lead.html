@@ -21,8 +21,14 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div id="contactInfo">
-                                                <h5><span>{{ terrainlead.contact.first_name }}</span> 
-                                                    <span>{{ terrainlead.contact.last_name|default:'' }}</span></h5>
+                                                <h5>
+                                                    {% if terrainlead.contact.company %}
+                                                        {{ terrainlead.contact.company }}
+                                                    {% else %}
+                                                        {{ terrainlead.contact.first_name }} 
+                                                        {{ terrainlead.contact.last_name|default:'' }}
+                                                    {% endif %}
+                                                </h5>
                                                 <div>{{ terrainlead.contact.phone_number|default:'' }}</div>
                                                 <div>{{ terrainlead.contact.email|default:'' }}</div>
                                             </div>

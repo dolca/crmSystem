@@ -21,8 +21,12 @@
                                             <div id="contactInfo">
                                                 <h5>
                                                     <a href="{% url 'contacts:contact_details' industrialspacelead.contact.id %}">
-                                                        <span>{{ industrialspacelead.contact.first_name }}</span> 
-                                                        <span>{{ industrialspacelead.contact.last_name|default:'' }}</span>
+                                                        {% if industrialspacelead.contact.company %}
+                                                            {{ industrialspacelead.contact.company }}
+                                                        {% else %}
+                                                            {{ industrialspacelead.contact.first_name }} 
+                                                            {{ industrialspacelead.contact.last_name|default:'' }}
+                                                        {% endif %}
                                                     </a>
                                                 </h5>
                                                 <div>

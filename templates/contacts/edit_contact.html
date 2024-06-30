@@ -28,7 +28,10 @@
                                                 <label for="first_name" class="form-label">Prenume <span 
                                                         class="firebrick-message">*</span></label>
                                                 <input id="first_name" class="form-control" name="first_name"
-                                                       value="{{ contact.first_name }}" type="text" required>
+                                                       value="{{ contact.first_name }}" type="text">
+                                                {% for error in form.first_name.errors %}
+                                                    <div class="firebrick-message">{{ error }}</div>
+                                                {% endfor %}
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="last_name" class="form-label">Nume de familie</label>
@@ -40,23 +43,35 @@
                                                         class="text-muted">*</span></label>
                                                 <input id="phone_number" class="form-control" name="phone_number" 
                                                        value="{{ contact.phone_number|default:'' }}" type="tel">
+                                                {% for error in form.phone_number.errors %}
+                                                    <div class="firebrick-message">{{ error }}</div>
+                                                {% endfor %}
                                             </div>
                                             <div class="col-lg-12">
                                                 <label for="email" class="form-label">Adresă de e-mail <span 
                                                         class="text-muted">*</span></label>
                                                 <input id="email" class="form-control" name="email"
                                                        value="{{ contact.email|default:'' }}" type="email">
+                                                {% for error in form.email.errors %}
+                                                    <div class="firebrick-message">{{ error }}</div>
+                                                {% endfor %}
                                             </div>
                                             <hr class="border-secondary-subtle">
                                             <div class="col-lg-12 mb-3">
                                                 <label for="company" class="form-label">Companie</label>
                                                 <input id="company" class="form-control" name="company"
                                                        value="{{ contact.company|default:'' }}" type="text">
+                                                {% for error in form.company.errors %}
+                                                    <div class="firebrick-message">{{ error }}</div>
+                                                {% endfor %}
                                             </div>
                                             <div class="col-lg-12">
                                                 <label for="job_title" class="form-label">Funcție</label>
                                                 <input id="job_title" class="form-control" name="job_title"
                                                        value="{{ contact.job_title|default:'' }}" type="text">
+                                                {% for error in form.job_title.errors %}
+                                                    <div class="firebrick-message">{{ error }}</div>
+                                                {% endfor %}
                                             </div>
                                         </div>
                                     </div>
@@ -124,23 +139,35 @@
                                                 <label for="id_series_nr" class="form-label">Serie / Număr / J</label>
                                                 <input id="id_series_nr" class="form-control" name="id_series_nr"
                                                        value="{{ contact.id_series_nr|default:'' }}" type="text">
+                                                {% for error in form.id_series_nr.errors %}
+                                                    <div class="firebrick-message">{{ error }}</div>
+                                                {% endfor %}
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="cnp" class="form-label">CNP / CUI</label>
                                                 <input id="cnp" class="form-control" name="cnp"
                                                        value="{{ contact.cnp|default:'' }}" type="text">
+                                                {% for error in form.cnp.errors %}
+                                                    <div class="firebrick-message">{{ error }}</div>
+                                                {% endfor %}
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="issue_date" class="form-label">Data emiterii</label>
                                                 <input id="issue_date" class="form-control" name="issue_date"
                                                        value="{{ contact.issue_date|default:'' }}" type="date" 
                                                        placeholder="zz lll aaaa">
+                                                {% for error in form.issue_date.errors %}
+                                                    <div class="firebrick-message">{{ error }}</div>
+                                                {% endfor %}
                                             </div>
                                             <div class="col-lg-12">
                                                 <label for="passport_country" class="form-label">
                                                     Țara emitentă (doar pentru pașaport)</label>
                                                 <input id="passport_country" class="form-control" name="passport_country"
                                                        value="{{ contact.passport_country|default:'' }}" type="text">
+                                                {% for error in form.passport_country.errors %}
+                                                    <div class="firebrick-message">{{ error }}</div>
+                                                {% endfor %}
                                             </div>
                                             <hr class="border-secondary-subtle">
                                             <div class="col-lg-12 mb-3">

@@ -1,3 +1,4 @@
+import re
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import ListView, UpdateView, DeleteView, DetailView, TemplateView
 from contacts.models import Contact
@@ -51,8 +52,8 @@ class ContactUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
         return response
 
     def form_invalid(self, form):
-        errors = form.errors.get_json_data()
-        return JsonResponse({'errors': errors}, status=400)
+        context = self.get_context_data(form=form)
+        return self.render_to_response(context)
 
     def get_success_url(self):
         return reverse_lazy('contacts:contact_details', kwargs={'pk': self.object.pk})
@@ -186,7 +187,7 @@ def save_contact(request):
             raise ValueError('Trebuie să introduci obligatoriu cel puțin un număr de telefon sau o adresă de e-mail.')
 
         if phone_number and not (10 <= len(phone_number) <= 14 and phone_number.isdigit()):
-            raise ValueError('Numărul de telefon trebuie să conțină între 10 și 14 cifre legate.')
+            raise ValueError('Numărul de telefon trebuie să conțină între 10 și 14 cifre.')
 
         is_duplicate_phone = check_duplicate(request, 'phone_number', phone_number, None).get('isDuplicate', False)
         if is_duplicate_phone:
@@ -203,12 +204,12 @@ def save_contact(request):
         if document_type == 'Carte de identitate':
             if not id_series_nr:
                 raise ValueError('Seria și numărul cărții de identitate sunt obligatorii.')
-            if not id_series_nr.isupper() or not (len(id_series_nr) == 8 or len(id_series_nr) == 9):
-                raise ValueError('Seria și numărul cărții de identitate sunt invalide. '
-                                 '(ex. corect: "AZ 123456", cu majuscule)')
+            elif not re.match(r'^[A-Za-z]{2}\d{6}$', id_series_nr):
+                raise ValueError('Seria și numărul cărții de identitate trebuie să conțină codul județului '
+                                 'format din 2 litere, urmat de 6 cifre.')
 
             if cnp and len(cnp) != 13:
-                raise ValueError('CNP-ul este invalid. Acesta trebuie să conțină exact 13 cifre.')
+                raise ValueError('CNP-ul trebuie să conțină exact 13 cifre.')
 
             if not issue_date:
                 raise ValueError('Data emiterii cărții de identitate este obligatorie.')
@@ -216,9 +217,8 @@ def save_contact(request):
         if document_type == 'Pașaport':
             if not id_series_nr:
                 raise ValueError('Numărul pașaportului este obligatoriu.')
-            if not id_series_nr.isupper() or not (len(id_series_nr) == 8 or len(id_series_nr) == 9):
-                raise ValueError('Numărul pașaportului este invalid. '
-                                 '(ex. corect, după caz: "123456789" sau "AZ1234567", cu majuscule)')
+            if not (6 <= len(id_series_nr) <= 9):
+                raise ValueError('Numărul pașaportului trebuie să conțină între 6 și 9 caractere.')
 
             if not issue_date:
                 raise ValueError('Data emiterii pașaportului este obligatorie.')
@@ -227,20 +227,20 @@ def save_contact(request):
                 raise ValueError('Țara emitentă a pașaportului este obligatorie.')
 
         if document_type == 'Certificat de înregistrare':
-            if not cnp:
-                raise ValueError('CUI-ul companiei este obligatoriu.')
-            if cnp.startswith('RO'):
-                cnp_num = cnp[2:]
-            else:
-                cnp_num = cnp
-
-            if not (7 <= len(cnp_num) <= 8 and cnp_num.isdigit()):
-                raise ValueError('CUI-ul este invalid. (ex. corect, după caz: "12345678" sau "RO12345678", '
-                                 'cu majuscule.)')
             if not company:
                 raise ValueError('Numele companiei este obligatoriu.')
+
             if not job_title:
                 raise ValueError('Funcția în companie este obligatorie.')
+
+            if not cnp:
+                raise ValueError('CUI-ul companiei este obligatoriu.')
+
+            cnp_num = cnp[2:] if cnp[:2].lower() == 'ro' else cnp
+
+            if not (7 <= len(cnp_num) <= 9 and cnp_num.isdigit()):
+                raise ValueError(
+                    'CUI-ul trebuie să conțină între 7 și 9 cifre, cu prefixul "RO" pentru plătitorii de TVA.')
 
         new_contact = Contact.objects.create(
             first_name=first_name,
@@ -287,6 +287,7 @@ def get_contact_details(request, contact_id):
     try:
         contact = Contact.objects.get(id=contact_id)
         contact_data = {
+            'company': contact.company,
             'first_name': contact.first_name,
             'last_name': contact.last_name,
             'phone_number': contact.phone_number,

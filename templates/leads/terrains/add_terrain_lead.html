@@ -21,6 +21,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div id="contactInfo">
+                                                <h5><span id="company"></span></h5>
                                                 <h5><span id="firstName"></span> <span id="lastName"></span></h5>
                                                 <div id="phoneNumber"></div>
                                                 <div id="email"></div>
@@ -314,6 +315,7 @@
                         return response.json();
                     })
                     .then(data => {
+                        document.getElementById('company').innerText = data.company;
                         document.getElementById('firstName').innerText = data.first_name;
                         document.getElementById('lastName').innerText = data.last_name;
                         document.getElementById('phoneNumber').innerText = data.phone_number;

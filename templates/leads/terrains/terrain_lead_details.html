@@ -21,8 +21,12 @@
                                             <div id="contactInfo">
                                                 <h5>
                                                     <a href="{% url 'contacts:contact_details' terrainlead.contact.id %}">
-                                                        <span>{{ terrainlead.contact.first_name }}</span> 
-                                                        <span>{{ terrainlead.contact.last_name|default:'' }}</span>
+                                                        {% if terrainlead.contact.company %}
+                                                            {{ terrainlead.contact.company }}
+                                                        {% else %}
+                                                            {{ terrainlead.contact.first_name }} 
+                                                            {{ terrainlead.contact.last_name|default:'' }}
+                                                        {% endif %}
                                                     </a>
                                                 </h5>
                                                 <div>
