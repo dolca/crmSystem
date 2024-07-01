@@ -47,23 +47,3 @@ FINISAJE = [
     ('Finisat modern', 'Finisat modern'), ('Finisat', 'Finisat'), ('Finisat clasic', 'Finisat clasic'),
     ('Semifinisat', 'Semifinisat'), ('Renovabil', 'Renovabil'), ('Nefinisat', 'Nefinisat')
 ]
-
-
-TASK_STATUS_LABELS = [
-    ('De revenit', 'De revenit'),
-    ('Nu răspunde', 'Nu răspunde'),
-    ('Trimis e-mail', 'Trimis e-mail'),
-    ('Trimis contract', 'Trimis contract'),
-    ('Vizionare', 'Vizionare'),
-    ('Negociere', 'Negociere'),
-    ('Pregătire acte', 'Pregătire acte'),
-    ('Avans', 'Avans'),
-    ('Tranzacție', 'Tranzacție'),
-    ('Caut proprietate', 'Caut proprietate'),
-    ('În discuții', 'În discuții'),
-    ('Prospectare', 'Prospectare'),
-    ('Se mai gândește', 'Se mai gândește'),
-    ('Nu colaborează', 'Nu colaborează'),
-    ('Nu este valabil', 'Nu este valabil'),
-    ('Nu mă ocup', 'Nu mă ocup')
-]

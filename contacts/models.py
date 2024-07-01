@@ -64,6 +64,12 @@ class Contact(Model):
         if self.street_address:
             self.street_address = self.street_address.title()
 
+        if self.block:
+            self.block = self.block.upper()
+
+        if self.scale:
+            self.scale = self.scale.upper()
+
         if self.country:
             self.country = self.country.title()
 

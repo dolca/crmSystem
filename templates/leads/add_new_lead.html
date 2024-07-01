@@ -462,7 +462,7 @@
             
             function validateIdSeriesNr(idSeriesNr, documentType) {
                 if (documentType === 'Carte de identitate') {
-                    return idSeriesNr.length === 8 && /^[A-Za-z]{2}\d{6}$/.test(idSeriesNr);
+                    return idSeriesNr.length === 8 && /^[A-Z]{2}\d{6}$/.test(idSeriesNr);
                 } else if (documentType === 'Pașaport') {
                     return idSeriesNr.length >= 6 && idSeriesNr.length <= 9;
                 }
@@ -470,7 +470,7 @@
             }
             
             function validateCnp(cnp, documentType) {
-                if (cnp.substring(0, 2).toLowerCase() === 'ro') {
+                if (cnp.startsWith('RO')) {
                     cnp = cnp.substring(2);
                 }
                 
@@ -485,8 +485,8 @@
             function validateForm() {
                 var firstNameValue = document.getElementById('first_name').value;
                 var phoneValue = document.getElementById('phone_number').value;
-                var emailValue = document.getElementById('email').value;
                 var isDuplicatePhone = checkDuplicateField('phone_number', phoneValue);
+                var emailValue = document.getElementById('email').value;
                 var isDuplicateEmail = checkDuplicateField('email', emailValue);
                 
                 var companyValue = document.getElementById('company').value;
@@ -494,7 +494,9 @@
                 
                 var documentTypeValue = document.getElementById('document_type').value;
                 var idSeriesNrValue = document.getElementById('id_series_nr').value;
+                var isDuplicateIdSeriesNr = checkDuplicateField('id_series_nr', idSeriesNrValue);
                 var cnpValue = document.getElementById('cnp').value;
+                var isDuplicateCnpCui = checkDuplicateField('cnp', cnpValue);
                 var issueDateValue = document.getElementById('issue_date').value;
                 var passportCountryValue = document.getElementById('passport_country').value;
                 
@@ -511,14 +513,17 @@
                 }
                 
                 if (!phoneValue && !emailValue) {
-                    displayError('phoneError', 'Trebuie să introduci obligatoriu cel puțin un ' +
+                    displayError('emailError', 'Trebuie să introduci obligatoriu cel puțin un ' +
                         'număr de telefon sau o adresă de e-mail.');
                     return false;
                 }
                 
-                return Promise.all([isDuplicatePhone, isDuplicateEmail]).then(([duplicatePhone, duplicateEmail]) => {
-                    console.log('Nr. tel. duplicat:', duplicatePhone);
+                return Promise.all([isDuplicatePhone, isDuplicateEmail, isDuplicateIdSeriesNr, isDuplicateCnpCui]).
+                then(([duplicatePhone, duplicateEmail, duplicateIdSeriesNr, duplicateCnpCui]) => {
+                    console.log('Număr telefon duplicat:', duplicatePhone);
                     console.log('E-mail duplicat:', duplicateEmail);
+                    console.log('Serie și număr duplicate:', duplicateIdSeriesNr);
+                    console.log('CNP / CUI duplicat:', duplicateCnpCui);
                     
                     if (duplicatePhone) {
                         displayError('phoneError', 'Există deja un contact cu acest număr de telefon. ' +
@@ -540,12 +545,24 @@
                         
                         if (idSeriesNrValue && !validateIdSeriesNr(idSeriesNrValue, documentTypeValue)) {
                             displayError('idSeriesNrError', 'Seria și numărul cărții de identitate trebuie să conțină ' +
-                                'codul județului format din 2 litere, urmat de 6 cifre.');
+                                'codul județului format din 2 litere, cu majuscule, urmat de 6 cifre.');
+                            return false;
+                        }
+                        
+                        if (duplicateIdSeriesNr) {
+                            displayError('idSeriesNrError', 'Există deja un contact cu aceste date pentru serie și număr. ' +
+                                'Introdu alte date sau actualizează contactul existent.');
                             return false;
                         }
                         
                         if (cnpValue && !validateCnp(cnpValue, documentTypeValue)) {
                             displayError('cnpError', 'CNP-ul trebuie să conțină exact 13 cifre.');
+                            return false;
+                        }
+                        
+                        if (duplicateCnpCui) {
+                            displayError('cnpError', 'Există deja un contact cu acest CNP. ' +
+                                'Introdu alt CNP sau actualizează contactul existent.');
                             return false;
                         }
                         
@@ -567,6 +584,12 @@
                             return false;
                         }
                         
+                        if (duplicateIdSeriesNr) {
+                            displayError('idSeriesNrError', 'Există deja un contact cu acest număr de pașaport. ' +
+                                'Introdu alt număr de pașaport sau actualizează contactul existent.');
+                            return false;
+                        }
+                        
                         if (!issueDateValue) {
                             displayError('issueDateError', 'Data emiterii pașaportului este obligatorie.');
                             return false;
@@ -579,16 +602,6 @@
                     }
                     
                     if (documentTypeValue === 'Certificat de înregistrare') {
-                        if (!companyValue) {
-                            displayError('companyError', 'Numele companiei este obligatoriu.');
-                            return false;
-                        }
-                        
-                        if (!jobTitleValue) {
-                            displayError('jobTitleError', 'Funcția în companie este obligatorie.');
-                            return false;
-                        }
-                        
                         if (!cnpValue) {
                             displayError('cnpError', 'CUI-ul companiei este obligatoriu.');
                             return false;
@@ -597,6 +610,22 @@
                         if (cnpValue && !validateCnp(cnpValue, documentTypeValue)) {
                             displayError('cnpError', 'CUI-ul trebuie să conțină între 7 și 9 cifre, ' +
                                 'cu prefixul "RO" pentru plătitorii de TVA.');
+                            return false;
+                        }
+                        
+                        if (duplicateCnpCui) {
+                            displayError('cnpError', 'Există deja un contact cu acest CUI. ' +
+                                'Introdu alt CUI sau actualizează contactul existent.');
+                            return false;
+                        }
+                        
+                        if (!companyValue) {
+                            displayError('companyError', 'Numele companiei este obligatoriu.');
+                            return false;
+                        }
+                        
+                        if (!jobTitleValue) {
+                            displayError('jobTitleError', 'Funcția în companie este obligatorie.');
                             return false;
                         }
                     }

@@ -93,8 +93,14 @@
                                                             <div class="customer_name">
                                                                 <div class="mb-1">
                                                                     <a href="{% url 'contacts:contact_details' off_sp.contact.id %}">
-                                                                        <strong>{{ off_sp.contact.first_name }} 
-                                                                            {{ off_sp.contact.last_name|default:'' }}</strong>
+                                                                        <strong>
+                                                                            {% if off_sp.contact.company %}
+                                                                                {{ off_sp.contact.company }}
+                                                                            {% else %}
+                                                                                {{ off_sp.contact.first_name }} 
+                                                                                {{ off_sp.contact.last_name|default:'' }}
+                                                                            {% endif %}
+                                                                        </strong>
                                                                     </a>
                                                                 </div>
                                                             </div>

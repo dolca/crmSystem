@@ -135,6 +135,14 @@ def check_duplicate(request):
             is_duplicate = Contact.objects.filter(
                 Q(email=value) & ~Q(id=current_id)
             ).exists()
+        elif field_name == 'id_series_nr' and value is not None:
+            is_duplicate = Contact.objects.filter(
+                Q(id_series_nr=value) & ~Q(id=current_id)
+            ).exists()
+        elif field_name == 'cnp' and value is not None:
+            is_duplicate = Contact.objects.filter(
+                Q(cnp=value) & ~Q(id=current_id)
+            ).exists()
         else:
             raise ValueError('Câmpul specificat nu poate fi verificat pentru duplicare.')
 
@@ -204,12 +212,23 @@ def save_contact(request):
         if document_type == 'Carte de identitate':
             if not id_series_nr:
                 raise ValueError('Seria și numărul cărții de identitate sunt obligatorii.')
-            elif not re.match(r'^[A-Za-z]{2}\d{6}$', id_series_nr):
+            elif not re.match(r'^[A-Z]{2}\d{6}$', id_series_nr):
                 raise ValueError('Seria și numărul cărții de identitate trebuie să conțină codul județului '
-                                 'format din 2 litere, urmat de 6 cifre.')
+                                 'format din 2 litere, cu majuscule, urmat de 6 cifre.')
+            is_duplicate_id_series_number = (check_duplicate(request, 'id_series_nr', id_series_nr, None).
+                                             get('isDuplicate', False))
+            if is_duplicate_id_series_number:
+                return JsonResponse({'success': False,
+                                     'message': 'Există deja un contact cu aceste date pentru serie și număr. '
+                                                'Introdu alte date sau actualizează contactul existent.'})
 
             if cnp and len(cnp) != 13:
                 raise ValueError('CNP-ul trebuie să conțină exact 13 cifre.')
+            is_duplicate_cnp = (check_duplicate(request, 'cnp', cnp, None).get('isDuplicate', False))
+            if is_duplicate_cnp:
+                return JsonResponse({'success': False,
+                                     'message': 'Există deja un contact cu acest CNP. '
+                                                'Introdu alt CNP sau actualizează contactul existent.'})
 
             if not issue_date:
                 raise ValueError('Data emiterii cărții de identitate este obligatorie.')
@@ -219,6 +238,12 @@ def save_contact(request):
                 raise ValueError('Numărul pașaportului este obligatoriu.')
             if not (6 <= len(id_series_nr) <= 9):
                 raise ValueError('Numărul pașaportului trebuie să conțină între 6 și 9 caractere.')
+            is_duplicate_pass_number = (check_duplicate(request, 'id_series_nr', id_series_nr, None).
+                                        get('isDuplicate', False))
+            if is_duplicate_pass_number:
+                return JsonResponse({'success': False,
+                                     'message': 'Există deja un contact cu acest număr de pașaport. '
+                                                'Introdu alt număr de pașaport sau actualizează contactul existent.'})
 
             if not issue_date:
                 raise ValueError('Data emiterii pașaportului este obligatorie.')
@@ -236,11 +261,19 @@ def save_contact(request):
             if not cnp:
                 raise ValueError('CUI-ul companiei este obligatoriu.')
 
-            cnp_num = cnp[2:] if cnp[:2].lower() == 'ro' else cnp
+            if cnp.startswith('RO'):
+                cnp_num = cnp[2:]
+            else:
+                cnp_num = cnp
 
             if not (7 <= len(cnp_num) <= 9 and cnp_num.isdigit()):
                 raise ValueError(
                     'CUI-ul trebuie să conțină între 7 și 9 cifre, cu prefixul "RO" pentru plătitorii de TVA.')
+            is_duplicate_cui = (check_duplicate(request, 'cnp', cnp, None).get('isDuplicate', False))
+            if is_duplicate_cui:
+                return JsonResponse({'success': False,
+                                     'message': 'Există deja un contact cu acest CUI. '
+                                                'Introdu alt CUI sau actualizează contactul existent.'})
 
         new_contact = Contact.objects.create(
             first_name=first_name,

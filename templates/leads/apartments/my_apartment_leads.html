@@ -93,8 +93,14 @@
                                                             <div class="customer_name">
                                                                 <div class="mb-1">
                                                                     <a href="{% url 'contacts:contact_details' apartment.contact.id %}">
-                                                                        <strong>{{ apartment.contact.first_name }} 
-                                                                            {{ apartment.contact.last_name|default:'' }}</strong>
+                                                                        <strong>
+                                                                            {% if apartment.contact.company %}
+                                                                                {{ apartment.contact.company }}
+                                                                            {% else %}
+                                                                                {{ apartment.contact.first_name }} 
+                                                                                {{ apartment.contact.last_name|default:'' }}
+                                                                            {% endif %}
+                                                                        </strong>
                                                                     </a>
                                                                 </div>
                                                             </div>

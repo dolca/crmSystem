@@ -75,9 +75,13 @@ class ContactUpdateForm(ModelForm):
             if not id_series_nr:
                 raise ValidationError('Seria și numărul cărții de identitate sunt obligatorii.')
 
-            if not re.match(r'^[A-Za-z]{2}\d{6}$', id_series_nr):
+            if not re.match(r'^[A-Z]{2}\d{6}$', id_series_nr):
                 raise ValidationError('Seria și numărul cărții de identitate trebuie să conțină codul județului '
-                                      'format din 2 litere, urmat de 6 cifre.')
+                                      'format din 2 litere, cu majuscule, urmat de 6 cifre.')
+
+            if self.is_duplicate('id_series_nr', id_series_nr, self.instance.id):
+                raise ValidationError('Există deja un contact cu aceste date pentru serie și număr. '
+                                      'Introdu alte date sau actualizează contactul existent.')
 
         elif document_type == 'Pașaport':
             if not id_series_nr:
@@ -85,6 +89,10 @@ class ContactUpdateForm(ModelForm):
 
             if not (6 <= len(id_series_nr) <= 9):
                 raise ValidationError('Numărul pașaportului trebuie să conțină între 6 și 9 caractere.')
+
+            if self.is_duplicate('id_series_nr', id_series_nr, self.instance.id):
+                raise ValidationError('Există deja un contact cu acest număr de pașaport. '
+                                      'Introdu alt număr de pașaport sau actualizează contactul existent.')
         return id_series_nr
 
     def clean_cnp(self):
@@ -97,6 +105,10 @@ class ContactUpdateForm(ModelForm):
             if len(cnp) != 13:
                 raise ValidationError('CNP-ul trebuie să conțină exact 13 cifre.')
 
+            if self.is_duplicate('cnp', cnp, self.instance.id):
+                raise ValidationError('Există deja un contact cu acest CNP. '
+                                      'Introdu alt CNP sau actualizează contactul existent.')
+
         elif document_type == 'Certificat de înregistrare':
             if not company:
                 self.add_error('company', 'Numele companiei este obligatoriu.')
@@ -107,11 +119,18 @@ class ContactUpdateForm(ModelForm):
             if not cnp:
                 raise ValidationError('CUI-ul companiei este obligatoriu.')
 
-            cnp_num = cnp[2:] if cnp[:2].lower() == 'ro' else cnp
+            if cnp.startswith('RO'):
+                cnp_num = cnp[2:]
+            else:
+                cnp_num = cnp
 
             if not (7 <= len(cnp_num) <= 9 and cnp_num.isdigit()):
                 raise ValidationError(
                     'CUI-ul trebuie să conțină între 7 și 9 cifre, cu prefixul "RO" pentru plătitorii de TVA.')
+
+            if self.is_duplicate('cnp', cnp, self.instance.id):
+                raise ValidationError('Există deja un contact cu acest CUI. '
+                                      'Introdu alt CUI sau actualizează contactul existent.')
         return cnp
 
     def clean_issue_date(self):
@@ -135,6 +154,10 @@ class ContactUpdateForm(ModelForm):
         if document_type == 'Pașaport' and not passport_country:
             raise ValidationError('Țara emitentă a pașaportului este obligatorie.')
         return passport_country
+
+    def is_duplicate(self, field_name, value, contact_id=None):
+        check_field = Contact.objects.exclude(id=contact_id).filter(**{field_name: value})
+        return check_field.exists()
 
     def validate_duplicate_field(self, field_name, value, contact_id=None):
         check_field = Contact.objects.exclude(id=contact_id).filter(**{field_name: value})

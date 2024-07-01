@@ -3,11 +3,11 @@
 {% block title %} Actualizare contact {% endblock title %}
 
 {% block content %}
-
+    
     {% block pagetitle %}
         {% include "partials/page_title.html" with pagetitle="Cereri" title="Actualizare contact" %}
     {% endblock pagetitle %}
-
+    
     {% if user.is_authenticated %}
         {% if perms.contacts.change_contact %}
             <div class="row">
@@ -215,7 +215,7 @@
             </div>
         {% endif %}
     {% endif %}
-
+    
 {% endblock content %}
 
 {% block extra_javascript %}
