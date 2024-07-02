@@ -226,11 +226,15 @@
                                 </div>
                                 <div class="card-footer text-body-secondary d-flex flex-column flex-md-row justify-content-md-between">
                                     <div>
-                                        Adăugat în data de <span id="created_at"
-                                                                  data-created-at="{{ contact.created_at }}"></span><br>
-                                        Ultima actualizare în data de <span id="updated_at"
-                                                                            data-updated-at="{{ contact.updated_at }}"></span>
+                                        Adăugat de {{ contact.created_by }} în <span 
+                                            id="created_at" data-created-at="{{ contact.created_at }}"></span>
+                                        {% if contact.updated_by %}
+                                            <br>
+                                            Actualizat de {{ contact.updated_by }} în <span 
+                                                id="updated_at" data-updated-at="{{ contact.updated_at }}"></span>
+                                        {% endif %}
                                     </div>
+                                
                                     <div class="mt-2 mt-md-0 ms-md-auto">
                                         {% if perms.contacts.change_contact %}
                                             <a href="{% url 'contacts:edit_contact' contact.id %}" 

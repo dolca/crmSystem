@@ -77,6 +77,8 @@ class ApartmentLead(Lead):
     custom_id = CharField(max_length=15, unique=True, editable=False, verbose_name='ID')
 
     def save(self, *args, **kwargs):
+        if not self.pk and not self.created_by:
+            self.created_by = kwargs.pop('created_by', self.created_by)
         super().save(*args, **kwargs)
 
         if not self.custom_id:
@@ -120,6 +122,8 @@ class HouseLead(Lead):
     custom_id = CharField(max_length=15, unique=True, editable=False, verbose_name='ID')
 
     def save(self, *args, **kwargs):
+        if not self.pk and not self.created_by:
+            self.created_by = kwargs.pop('created_by', self.created_by)
         super().save(*args, **kwargs)
 
         if not self.custom_id:
@@ -159,6 +163,8 @@ class TerrainLead(Lead):
     custom_id = CharField(max_length=15, unique=True, editable=False, verbose_name='ID')
 
     def save(self, *args, **kwargs):
+        if not self.pk and not self.created_by:
+            self.created_by = kwargs.pop('created_by', self.created_by)
         super().save(*args, **kwargs)
 
         if not self.custom_id:
@@ -199,6 +205,8 @@ class CommercialSpaceLead(Lead):
     custom_id = CharField(max_length=15, unique=True, editable=False, verbose_name='ID')
 
     def save(self, *args, **kwargs):
+        if not self.pk and not self.created_by:
+            self.created_by = kwargs.pop('created_by', self.created_by)
         super().save(*args, **kwargs)
 
         if not self.custom_id:
@@ -243,6 +251,8 @@ class OfficeSpaceLead(Lead):
     custom_id = CharField(max_length=15, unique=True, editable=False, verbose_name='ID')
 
     def save(self, *args, **kwargs):
+        if not self.pk and not self.created_by:
+            self.created_by = kwargs.pop('created_by', self.created_by)
         super().save(*args, **kwargs)
 
         if not self.custom_id:
@@ -280,6 +290,8 @@ class IndustrialSpaceLead(Lead):
     custom_id = CharField(max_length=15, unique=True, editable=False, verbose_name='ID')
 
     def save(self, *args, **kwargs):
+        if not self.pk and not self.created_by:
+            self.created_by = kwargs.pop('created_by', self.created_by)
         super().save(*args, **kwargs)
 
         if not self.custom_id:

@@ -85,6 +85,9 @@ class Contact(Model):
         if self.other_details:
             self.other_details = self.other_details.capitalize()
 
+        if not self.pk and not self.created_by:
+            self.created_by = kwargs.pop('created_by', self.created_by)
+
         super().save(*args, **kwargs)
 
     def __str__(self):

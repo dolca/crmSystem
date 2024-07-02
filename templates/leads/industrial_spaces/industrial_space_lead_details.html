@@ -169,7 +169,7 @@
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <p class="card-text"><strong>Data limită: </strong><span id="deadline_date"
-                                                        data-deadline-date="{{ industrialspacelead.deadline_date }}">
+                                                        data-deadline-date="{{ industrialspacelead.deadline_date|default:'. . .' }}">
                                                     {{ industrialspacelead.deadline_date|default:'. . .' }}</span>
                                                 </p>
                                             </div>
@@ -194,11 +194,15 @@
                                 </div>
                                 <div class="card-footer text-body-secondary d-flex flex-column flex-md-row justify-content-md-between">
                                     <div>
-                                        Adăugată în data de <span id="created_at"
-                                                                  data-created-at="{{ industrialspacelead.created_at }}"></span><br>
-                                        Ultima actualizare în data de <span id="updated_at"
-                                                                            data-updated-at="{{ industrialspacelead.updated_at }}"></span>
+                                        Adăugată de {{ industrialspacelead.created_by }} în <span 
+                                            id="created_at" data-created-at="{{ industrialspacelead.created_at }}"></span>
+                                        {% if industrialspacelead.updated_by %}
+                                            <br>
+                                            Actualizată de {{ industrialspacelead.updated_by }} în <span 
+                                                id="updated_at" data-updated-at="{{ industrialspacelead.updated_at }}"></span>
+                                        {% endif %}
                                     </div>
+                                
                                     <div class="mt-2 mt-md-0 ms-md-auto">
                                         {% if perms.leads.change_industrialspacelead %}
                                             <a href="{% url 'leads:edit_industrial_space_lead' industrialspacelead.id %}"

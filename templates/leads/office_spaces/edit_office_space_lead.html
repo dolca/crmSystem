@@ -55,13 +55,9 @@
                                             <div class="col-lg-12 mb-3">
                                                 <label for="transaction_type" class="form-label">Tip tranzacție <span
                                                         class="firebrick-message">*</span></label>
-                                                <select id="transaction_type" class="form-select" name="transaction_type" 
-                                                        required>
-                                                    {% for value, label in form.fields.transaction_type.choices %}
-                                                        <option value="{{ value }}" {% if officespacelead.transaction_type == value %}
-                                                                selected{% endif %}>{{ label }}</option>
-                                                    {% endfor %}
-                                                </select>
+                                                <input id="transaction_type" class="form-control text-muted" 
+                                                       name="transaction_type" value="{{ officespacelead.transaction_type }}" 
+                                                       readonly required>
                                             </div>
                                             <div class="col-lg-12">
                                                 <label for="lead_status" class="form-label">Status cerere <span

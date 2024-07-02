@@ -1,5 +1,6 @@
 import re
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.utils import timezone
 from django.views.generic import ListView, UpdateView, DeleteView, DetailView, TemplateView
 from contacts.models import Contact
 from contacts.forms import ContactUpdateForm
@@ -48,8 +49,13 @@ class ContactUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
 
     def form_valid(self, form):
         form.instance.updated_by = self.request.user
-        response = super().form_valid(form)
-        return response
+        form.instance.updated_at = timezone.now()
+
+        instance = form.save(commit=False)
+        instance.created_by = Contact.objects.get(pk=instance.pk).created_by
+
+        instance.save()
+        return super().form_valid(form)
 
     def form_invalid(self, form):
         context = self.get_context_data(form=form)

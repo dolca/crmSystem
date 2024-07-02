@@ -33,9 +33,8 @@ class ApartmentLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, Creat
         return context
 
     def form_valid(self, form):
-        form.instance.created_at = timezone.now()
-        form.instance.updated_at = timezone.now()
         form.instance.created_by = self.request.user
+        form.instance.created_at = timezone.now()
         response = super().form_valid(form)
         return response
 
@@ -82,10 +81,14 @@ class ApartmentLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin, Updat
         return context
 
     def form_valid(self, form):
-        form.instance.updated_at = timezone.now()
         form.instance.updated_by = self.request.user
-        response = super().form_valid(form)
-        return response
+        form.instance.updated_at = timezone.now()
+
+        instance = form.save(commit=False)
+        instance.created_by = ApartmentLead.objects.get(pk=instance.pk).created_by
+
+        instance.save()
+        return super().form_valid(form)
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()
@@ -127,9 +130,8 @@ class HouseLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
         return context
 
     def form_valid(self, form):
-        form.instance.created_at = timezone.now()
-        form.instance.updated_at = timezone.now()
         form.instance.created_by = self.request.user
+        form.instance.created_at = timezone.now()
         response = super().form_valid(form)
         return response
 
@@ -175,10 +177,14 @@ class HouseLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateVie
         return context
 
     def form_valid(self, form):
-        form.instance.updated_at = timezone.now()
         form.instance.updated_by = self.request.user
-        response = super().form_valid(form)
-        return response
+        form.instance.updated_at = timezone.now()
+
+        instance = form.save(commit=False)
+        instance.created_by = HouseLead.objects.get(pk=instance.pk).created_by
+
+        instance.save()
+        return super().form_valid(form)
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()
@@ -220,9 +226,8 @@ class TerrainLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateV
         return context
 
     def form_valid(self, form):
-        form.instance.created_at = timezone.now()
-        form.instance.updated_at = timezone.now()
         form.instance.created_by = self.request.user
+        form.instance.created_at = timezone.now()
         response = super().form_valid(form)
         return response
 
@@ -270,10 +275,14 @@ class TerrainLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateV
         return context
 
     def form_valid(self, form):
-        form.instance.updated_at = timezone.now()
         form.instance.updated_by = self.request.user
-        response = super().form_valid(form)
-        return response
+        form.instance.updated_at = timezone.now()
+
+        instance = form.save(commit=False)
+        instance.created_by = TerrainLead.objects.get(pk=instance.pk).created_by
+
+        instance.save()
+        return super().form_valid(form)
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()
@@ -315,9 +324,8 @@ class CommercialSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin,
         return context
 
     def form_valid(self, form):
-        form.instance.created_at = timezone.now()
-        form.instance.updated_at = timezone.now()
         form.instance.created_by = self.request.user
+        form.instance.created_at = timezone.now()
         response = super().form_valid(form)
         return response
 
@@ -365,10 +373,14 @@ class CommercialSpaceLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin,
         return context
 
     def form_valid(self, form):
-        form.instance.updated_at = timezone.now()
         form.instance.updated_by = self.request.user
-        response = super().form_valid(form)
-        return response
+        form.instance.updated_at = timezone.now()
+
+        instance = form.save(commit=False)
+        instance.created_by = CommercialSpaceLead.objects.get(pk=instance.pk).created_by
+
+        instance.save()
+        return super().form_valid(form)
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()
@@ -410,9 +422,8 @@ class OfficeSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin, Cre
         return context
 
     def form_valid(self, form):
-        form.instance.created_at = timezone.now()
-        form.instance.updated_at = timezone.now()
         form.instance.created_by = self.request.user
+        form.instance.created_at = timezone.now()
         response = super().form_valid(form)
         return response
 
@@ -460,10 +471,14 @@ class OfficeSpaceLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin, Upd
         return context
 
     def form_valid(self, form):
-        form.instance.updated_at = timezone.now()
         form.instance.updated_by = self.request.user
-        response = super().form_valid(form)
-        return response
+        form.instance.updated_at = timezone.now()
+
+        instance = form.save(commit=False)
+        instance.created_by = OfficeSpaceLead.objects.get(pk=instance.pk).created_by
+
+        instance.save()
+        return super().form_valid(form)
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()
@@ -505,9 +520,8 @@ class IndustrialSpaceLeadCreateView(LoginRequiredMixin, PermissionRequiredMixin,
         return context
 
     def form_valid(self, form):
-        form.instance.created_at = timezone.now()
-        form.instance.updated_at = timezone.now()
         form.instance.created_by = self.request.user
+        form.instance.created_at = timezone.now()
         response = super().form_valid(form)
         return response
 
@@ -555,10 +569,14 @@ class IndustrialSpaceLeadUpdateView(LoginRequiredMixin, PermissionRequiredMixin,
         return context
 
     def form_valid(self, form):
-        form.instance.updated_at = timezone.now()
         form.instance.updated_by = self.request.user
-        response = super().form_valid(form)
-        return response
+        form.instance.updated_at = timezone.now()
+
+        instance = form.save(commit=False)
+        instance.created_by = IndustrialSpaceLead.objects.get(pk=instance.pk).created_by
+
+        instance.save()
+        return super().form_valid(form)
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()

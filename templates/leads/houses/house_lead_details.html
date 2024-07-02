@@ -205,7 +205,7 @@
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <p class="card-text"><strong>Data limită: </strong><span id="deadline_date"
-                                                        data-deadline-date="{{ houselead.deadline_date }}">
+                                                        data-deadline-date="{{ houselead.deadline_date|default:'. . .' }}">
                                                     {{ houselead.deadline_date|default:'. . .' }}</span>
                                                 </p>
                                             </div>
@@ -230,11 +230,15 @@
                                 </div>
                                 <div class="card-footer text-body-secondary d-flex flex-column flex-md-row justify-content-md-between">
                                     <div>
-                                        Adăugată în data de <span id="created_at"
-                                                                  data-created-at="{{ houselead.created_at }}"></span><br>
-                                        Ultima actualizare în data de <span id="updated_at"
-                                                                            data-updated-at="{{ houselead.updated_at }}"></span>
+                                        Adăugată de {{ houselead.created_by }} în <span 
+                                            id="created_at" data-created-at="{{ houselead.created_at }}"></span>
+                                        {% if houselead.updated_by %}
+                                            <br>
+                                            Actualizată de {{ houselead.updated_by }} în <span 
+                                                id="updated_at" data-updated-at="{{ houselead.updated_at }}"></span>
+                                        {% endif %}
                                     </div>
+                                
                                     <div class="mt-2 mt-md-0 ms-md-auto">
                                         {% if perms.leads.change_houselead %}
                                             <a href="{% url 'leads:edit_house_lead' houselead.id %}"
